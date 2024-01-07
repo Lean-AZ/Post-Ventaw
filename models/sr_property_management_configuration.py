@@ -11,11 +11,18 @@
 from odoo import models, fields, _
 
 
+class srPropertyCustomPartialPaymentLines(models.Model):
+    _name = 'sr.property.custom.partial.payment.lines'
+    partial_payment_id = fields.Many2one('sr.property.partial.payment', string="Partial Payment")
+    date = fields.Date("Date")
+    amount = fields.Float("Amount", digits=(16, 3), required=True)
 class srPropertyPartialPayment(models.Model):
     _name = 'sr.property.partial.payment'
 
     name = fields.Char('Name', required=True)
     number_of_installments = fields.Integer("No of Installments", required=True)
+    is_custom = fields.Boolean("Personalizado", default=False, store=True)
+    custom_partial_payment_lines = fields.One2many('sr.property.custom.partial.payment.lines', 'partial_payment_id', string="Custom Partial Payment Lines")
 
 class srPropertyType(models.Model):
     _name = 'sr.property.type'

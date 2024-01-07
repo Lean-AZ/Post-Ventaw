@@ -5,7 +5,7 @@ class PropertyUnit(models.Model):
     _name = 'property.unit'
 
     name = fields.Char(string='Unit')
-    unit_type = fields.Selection([('sale', 'Sale'), ('rent', 'Rent')], string="Unit     For", default="rent")
+    unit_type = fields.Selection([('sale', 'Sale'), ('rent', 'Rent')], string="Unit     For", default="sale")
     unit_rent_price = fields.Float(
         'Unit Rent Price', default=1.0,
         digits='Unit Price',

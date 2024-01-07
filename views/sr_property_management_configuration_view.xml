@@ -194,13 +194,40 @@
 		name="Property Type" parent="sr_property_configuration_menu"
 		action="sr_property_type_configuration_action" sequence="2" />
 
+	<record id="sr_property_partial_payment_form_view"
+		model="ir.ui.view">
+		<field name="name">sr.property.partial.payment.form.view</field>
+		<field name="model">sr.property.partial.payment</field>
+		<field name="arch" type="xml">
+			<form string="Partial Payment">
+				<sheet>
+					<group>
+						<field name="name" />
+						<field name="number_of_installments" />
+						<field name="is_custom" />
+					</group>
+					<notebook>
+                        <page string="Cuotas">
+                            <field name="custom_partial_payment_lines" attrs="{'invisible': [('is_custom', '=', 'True')]}">
+                                <tree string="Cuotas Tree" editable="bottom">
+                                    <field name="partial_payment_id" invisible="1"/>
+                                    <field name="date"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
 
 	<record id="sr_property_partial_payment_tree_view"
 		model="ir.ui.view">
 		<field name="name">sr.property.partial.payment.tree.view</field>
 		<field name="model">sr.property.partial.payment</field>
 		<field name="arch" type="xml">
-			<tree string="Partial Payment" editable="bottom">
+			<tree string="Partial Payment">
 				<field name="name" />
 				<field name="number_of_installments" />
 			</tree>
@@ -212,7 +239,7 @@
 		<field name="name">Partial Payment</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">sr.property.partial.payment</field>
-		<field name="view_mode">tree</field>
+		<field name="view_mode">tree,form</field>
 	</record>
 
 	<menuitem id="sr_property_partial_payment_configuration_menu"

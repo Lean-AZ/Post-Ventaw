@@ -71,7 +71,7 @@ class srPropertytemplate(models.Model):
 
     unit_id = fields.One2many('unit.unit','property_id')
     is_property = fields.Boolean('Is Property?')
-    property_type = fields.Selection([('sale', 'Sale'), ('rent', 'Rent')], string="Property For", default="rent")
+    property_type = fields.Selection([('sale', 'Sale'), ('rent', 'Rent')], string="Property For", default="sale")
     property_sale_price = fields.Float(
         'Property Sales Price', default=1.0,
         digits='Product Price',
@@ -93,7 +93,7 @@ class srPropertytemplate(models.Model):
     property_floor = fields.Integer('Floor', default=1)
     property_badrooms = fields.Integer('Badrooms', default=1)
     property_balconies = fields.Float('Balconies', default=1)
-    property_maintenance_charge = fields.Float('Maintenance Charge', default=1)
+    property_maintenance_charge = fields.Float('Maintenance Charge', default=0)
     property_maintenance_interval_type = fields.Selection([('month', 'Monthly'), ('year', 'Yearly'), ('one_time', 'One Time')], string="Maintenance Interval ", default="month")
     description = fields.Text('Description')
     property_interior_ids = fields.Many2many('sr.property.interior', 'temp_property_interior_rel', 'property_id', 'interior_id', string="Interior")
@@ -126,6 +126,7 @@ class srPropertytemplate(models.Model):
     tenancy_agreement_count = fields.Integer(compute='_compute_tenancy_agreement_count', string='Tenancy Agreement Count')
     current_user_id = fields.Many2one('res.partner','Current User')
     reservation_history_ids = fields.Many2many('res.partner',string="Reservation history")
+    currency_id = fields.Many2one('res.currency', string='Moneda', readonly=False, domain="[('active', '=', True)]", store=True)
 
     def action_view_tenancy_agreement(self):
         self.ensure_one()

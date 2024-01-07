@@ -121,6 +121,11 @@ class srTenancyAgreement(models.Model):
         ('expired', 'Expired'),
         ('invoiced', 'Invoiced'),
         ], string='Status', readonly=True, copy=False, index=True, track_visibility="onchange", tracking=5, default='new')
+    reserve_amount = fields.Float('Reserve Amount', currency_field='currency_id', store=True)
+    initial_amount = fields.Float('Initial Amount', currency_field='currency_id', store=True)
+    currency_id = fields.Many2one('res.currency', string='Moneda', readonly=True, store=True, related='property_id.currency_id')
+    amount_to_finance = fields.Float('Amount To Finance', currency_field='currency_id', store=True)
+    first_installment_date = fields.Date(string='Pago de primera cuota', copy=False, store=True)
 
     # @api.onchange('agreement_date')
     # def _onchange_agreement_date(self):
@@ -141,6 +146,7 @@ class srTenancyAgreement(models.Model):
                             'move_type':'out_invoice',
                             'tenancy_agreement':self.id,
                             'journal_id':journal_id.id,
+                            'currency_id':self.currency_id.id,
                             'invoice_line_ids':
                                     [(0, 0, {
                             'product_id':self.property_id.id,
@@ -170,6 +176,7 @@ class srTenancyAgreement(models.Model):
                                 'move_type':'out_invoice',
                                 'tenancy_agreement':self.id,
                                 'journal_id':journal_id.id,
+                                'currency_id':self.currency_id.id,
                                 'invoice_line_ids':
                                         [(0, 0, {
                                 'product_id':self.property_id.id,
@@ -197,6 +204,7 @@ class srTenancyAgreement(models.Model):
                                 'move_type':'out_invoice',
                                 'tenancy_agreement':self.id,
                                 'journal_id':journal_id.id,
+                                'currency_id':self.currency_id.id,
                                 'invoice_line_ids':
                                         [(0, 0, {
                                 'product_id':self.property_id.id,
@@ -206,6 +214,173 @@ class srTenancyAgreement(models.Model):
                                 'account_id': accounts['income'].id,
                                     })]
                                 })
+        self.env['sr.property.agent.commission.lines'].create({
+                    'name':self.env['ir.sequence'].next_by_code('agent.commission.line.sequence', sequence_date=fields.Datetime.context_timestamp(self, fields.Datetime.to_datetime(datetime.datetime.today().date()))),
+                    'tenancy_agreement_id':self.id,
+                    'date': datetime.datetime.today().date(),
+                    'commission_amount':self.commission_price
+                    })
+        self.state = 'invoiced'
+
+    def action_create_invoice_civiltec(self):
+        if self.property_type != 'sale':
+            raise UserError(_('This method can not called with rent property type'))
+        journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
+        accounts = self.property_id.product_tmpl_id.get_product_accounts()
+        if self.payment_option == 'single':
+            self.env['account.move'].create({
+                            'partner_id':self.tenant_id.id,
+                            'invoice_date':datetime.datetime.today().date(),
+                            'is_property_invoice': True,
+                            'property_id': self.property_id.id,
+                            'move_type':'out_invoice',
+                            'tenancy_agreement':self.id,
+                            'journal_id':journal_id.id,
+                            'currency_id': self.currency_id.id,
+                            'invoice_line_ids':
+                                    [(0, 0, {
+                            'product_id':self.property_id.id,
+                            'name': self.property_id.name + "Property Sold",
+                            'quantity':1,
+                            'price_unit':self.total_price,
+                            'account_id': accounts['income'].id,
+                                }),
+                            (0, 0, {
+                                'product_id':self.property_id.id,
+                                'name': self.property_id.name + "Property Maintenance",
+                                'quantity':1,
+                                'price_unit':self.total_maintenance,
+                                'account_id': accounts['income'].id,
+                            })
+                                    
+                                    ]
+                            })
+        else:
+            self.env['account.move'].create({
+             'partner_id':self.tenant_id.id,
+             'invoice_date':datetime.datetime.today().date(),
+             'is_property_invoice': True,
+             'property_id': self.property_id.id,
+             'move_type':'out_invoice',
+             'tenancy_agreement':self.id,
+             'journal_id':journal_id.id,
+             'currency_id': self.currency_id.id,
+             'invoice_line_ids':
+                     [(0, 0, {
+             'product_id':self.property_id.id,
+             'name': "Reserva :" + self.property_id.name,
+             'quantity':1,
+             'price_unit': self.reserve_amount,
+             'account_id': accounts['income'].id,
+                 })]
+             })
+            self.env['account.move'].create({
+             'partner_id':self.tenant_id.id,
+             'invoice_date':datetime.datetime.today().date(),
+             'is_property_invoice': True,
+             'property_id': self.property_id.id,
+             'move_type':'out_invoice',
+             'tenancy_agreement':self.id,
+             'journal_id':journal_id.id,
+             'currency_id': self.currency_id.id,
+             'invoice_line_ids':
+                     [(0, 0, {
+             'product_id':self.property_id.id,
+             'name': "Pago Inicial :" + self.property_id.name,
+             'quantity':1,
+             'price_unit': self.initial_amount,
+             'account_id': accounts['income'].id,
+                 })]
+             })
+            installment_date = self.first_installment_date
+            if self.partial_payment_id.is_custom:
+                amount = 0
+                for line in self.partial_payment_id.custom_partial_payment_lines:
+                    self.env['account.move'].create({
+                                'partner_id':self.tenant_id.id,
+                                'invoice_date':line.date,
+                                'is_property_invoice': True,
+                                'property_id': self.property_id.id,
+                                'move_type':'out_invoice',
+                                'tenancy_agreement':self.id,
+                                'journal_id':journal_id.id,
+                                'currency_id': self.currency_id.id,
+                                'invoice_line_ids':
+                                        [(0, 0, {
+                                'product_id':self.property_id.id,
+                                'name': "Cuota :" + self.property_id.name,
+                                'quantity':1,
+                                'price_unit':line.amount,
+                                'account_id': accounts['income'].id,
+                                    })]
+                                })
+                    amount += line.amount
+
+                self.env['account.move'].create({
+                    'partner_id':self.tenant_id.id,
+                    'invoice_date':datetime.datetime.today().date(),
+                    'is_property_invoice': True,
+                    'property_id': self.property_id.id,
+                    'move_type':'out_invoice',
+                    'tenancy_agreement':self.id,
+                    'journal_id':journal_id.id,
+                    'currency_id': self.currency_id.id,
+                    'invoice_line_ids':
+                            [(0, 0, {
+                    'product_id':self.property_id.id,
+                    'name': "Cuota Final :" + self.property_id.name,
+                    'quantity':1,
+                    'price_unit': self.total_price - self.reserve_amount - self.initial_amount - amount,
+                    'account_id': accounts['income'].id,
+                        })]
+                    })
+            else:
+                regular_installment_amount = self.amount_to_finance / self.partial_payment_id.number_of_installments
+                allocated_amount = 0
+                for i in range(0, self.partial_payment_id.number_of_installments):
+                    if i == self.partial_payment_id.number_of_installments - 1:
+                        installment_amount = self.amount_to_finance - allocated_amount
+                    else:
+                        installment_amount = regular_installment_amount
+                        allocated_amount += installment_amount
+                    self.env['account.move'].create({
+                                'partner_id':self.tenant_id.id,
+                                'invoice_date': installment_date,
+                                'is_property_invoice': True,
+                                'property_id': self.property_id.id,
+                                'move_type':'out_invoice',
+                                'tenancy_agreement':self.id,
+                                'journal_id':journal_id.id,
+                                'currency_id': self.currency_id.id,
+                                'invoice_line_ids':
+                                        [(0, 0, {
+                                'product_id':self.property_id.id,
+                                'name': "Cuota " + str(i + 1) + ":" + self.property_id.name,
+                                'quantity':1,
+                                'price_unit':installment_amount,
+                                'account_id': accounts['income'].id,
+                                    })]
+                                })
+                    installment_date += relativedelta(months=1)
+
+                self.env['account.move'].create({
+                 'partner_id':self.tenant_id.id,
+                 'invoice_date':installment_date,
+                 'is_property_invoice': True,
+                 'property_id': self.property_id.id,
+                 'move_type':'out_invoice',
+                 'tenancy_agreement':self.id,
+                 'journal_id':journal_id.id,
+                 'currency_id': self.currency_id.id,
+                 'invoice_line_ids':
+                         [(0, 0, {
+                 'product_id':self.property_id.id,
+                 'name': "Cuota Final :" + self.property_id.name,
+                 'quantity':1,
+                 'price_unit': self.total_price - self.amount_to_finance - self.reserve_amount - self.initial_amount,
+                 'account_id': accounts['income'].id,
+                     })]
+                 })
         self.env['sr.property.agent.commission.lines'].create({
                     'name':self.env['ir.sequence'].next_by_code('agent.commission.line.sequence', sequence_date=fields.Datetime.context_timestamp(self, fields.Datetime.to_datetime(datetime.datetime.today().date()))),
                     'tenancy_agreement_id':self.id,
