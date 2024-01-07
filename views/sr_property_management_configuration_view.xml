@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record id="sr_property_landscape_tree_view"
+		model="ir.ui.view">
+		<field name="name">sr.property.landscape.tree.view</field>
+		<field name="model">sr.property.landscape</field>
+		<field name="arch" type="xml">
+			<tree string="Property Landscape" editable="bottom">
+				<field name="name" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="sr_property_landscape_configuration_action"
+		model="ir.actions.act_window">
+		<field name="name">Property Landscape</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sr.property.landscape</field>
+		<field name="view_mode">tree</field>
+	</record>
+
+<!--	<menuitem id="sr_property_landscape_configuration_menu"-->
+<!--		name="Property Landscape" parent="sr_property_configuration_menu"-->
+<!--		action="sr_property_landscape_configuration_action" sequence="9" />-->
+
+
+
+
+	<record id="sr_property_transportation_tree_view"
+		model="ir.ui.view">
+		<field name="name">sr.property.transportation.tree.view</field>
+		<field name="model">sr.property.transportation</field>
+		<field name="arch" type="xml">
+			<tree string="Property Transportation" editable="bottom">
+				<field name="name" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="sr_property_transportation_configuration_action"
+		model="ir.actions.act_window">
+		<field name="name">Property Transportation</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sr.property.transportation</field>
+		<field name="view_mode">tree</field>
+	</record>
+
+<!--	<menuitem id="sr_property_transportation_configuration_menu"-->
+<!--		name="Transportation" parent="sr_property_configuration_menu"-->
+<!--		action="sr_property_transportation_configuration_action" sequence="8" />-->
+
+
+	<record id="sr_property_neighborhood_tree_view"
+		model="ir.ui.view">
+		<field name="name">sr.property.neighborhood.tree.view</field>
+		<field name="model">sr.property.neighborhood</field>
+		<field name="arch" type="xml">
+			<tree string="Property Neighborhood" editable="bottom">
+				<field name="name" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="sr_property_neighborhood_configuration_action"
+		model="ir.actions.act_window">
+		<field name="name">Property Neighborhood</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sr.property.neighborhood</field>
+		<field name="view_mode">tree</field>
+	</record>
+
+<!--	<menuitem id="sr_property_neighborhood_configuration_menu"-->
+<!--		name="Property Neighborhood" parent="sr_property_configuration_menu"-->
+<!--		action="sr_property_neighborhood_configuration_action" sequence="7" />-->
+
+
+	<record id="sr_property_amenities_tree_view"
+		model="ir.ui.view">
+		<field name="name">sr.property.amenities.tree.view</field>
+		<field name="model">sr.property.amenities</field>
+		<field name="arch" type="xml">
+			<tree string="Property Amenities" editable="bottom">
+				<field name="name" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="sr_property_amenities_configuration_action"
+		model="ir.actions.act_window">
+		<field name="name">Property Amenities</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sr.property.amenities</field>
+		<field name="view_mode">tree</field>
+	</record>
+
+<!--	<menuitem id="sr_property_amenities_configuration_menu"-->
+<!--		name="Property amenities" parent="sr_property_configuration_menu"-->
+<!--		action="sr_property_amenities_configuration_action" sequence="6" />-->
+
+
+	<record id="sr_property_facade_tree_view"
+		model="ir.ui.view">
+		<field name="name">sr.property.facade.tree.view</field>
+		<field name="model">sr.property.facade</field>
+		<field name="arch" type="xml">
+			<tree string="Property Facade" editable="bottom">
+				<field name="name" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="sr_property_facade_configuration_action"
+		model="ir.actions.act_window">
+		<field name="name">Property Facade</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sr.property.facade</field>
+		<field name="view_mode">tree</field>
+	</record>
+
+<!--	<menuitem id="sr_property_facade_configuration_menu"-->
+<!--		name="Property Facade" parent="sr_property_configuration_menu"-->
+<!--		action="sr_property_facade_configuration_action" sequence="5" />-->
+
+
+	<record id="sr_property_exterior_tree_view"
+		model="ir.ui.view">
+		<field name="name">sr.property.exterior.tree.view</field>
+		<field name="model">sr.property.exterior</field>
+		<field name="arch" type="xml">
+			<tree string="Property Exterior" editable="bottom">
+				<field name="name" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="sr_property_exterior_configuration_action"
+		model="ir.actions.act_window">
+		<field name="name">Property Exterior</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sr.property.exterior</field>
+		<field name="view_mode">tree</field>
+	</record>
+
+<!--	<menuitem id="sr_property_exterior_configuration_menu"-->
+<!--		name="Property Exterior" parent="sr_property_configuration_menu"-->
+<!--		action="sr_property_exterior_configuration_action" sequence="4" />-->
+
+
+	<record id="sr_property_interior_tree_view"
+		model="ir.ui.view">
+		<field name="name">sr.property.interior.tree.view</field>
+		<field name="model">sr.property.interior</field>
+		<field name="arch" type="xml">
+			<tree string="Property Interior" editable="bottom">
+				<field name="name" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="sr_property_interior_configuration_action"
+		model="ir.actions.act_window">
+		<field name="name">Property Interior</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sr.property.interior</field>
+		<field name="view_mode">tree</field>
+	</record>
+
+<!--	<menuitem id="sr_property_interior_configuration_menu"-->
+<!--		name="Property Interior" parent="sr_property_configuration_menu"-->
+<!--		action="sr_property_interior_configuration_action" sequence="3" />-->
+
+
+	<record id="sr_property_type_tree_view"
+		model="ir.ui.view">
+		<field name="name">sr.property.type.tree.view</field>
+		<field name="model">sr.property.type</field>
+		<field name="arch" type="xml">
+			<tree string="Property Type" editable="bottom">
+				<field name="name" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="sr_property_type_configuration_action"
+		model="ir.actions.act_window">
+		<field name="name">Property Type</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sr.property.type</field>
+		<field name="view_mode">tree</field>
+	</record>
+
+	<menuitem id="sr_property_type_configuration_menu"
+		name="Property Type" parent="sr_property_configuration_menu"
+		action="sr_property_type_configuration_action" sequence="2" />
+
+
+	<record id="sr_property_partial_payment_tree_view"
+		model="ir.ui.view">
+		<field name="name">sr.property.partial.payment.tree.view</field>
+		<field name="model">sr.property.partial.payment</field>
+		<field name="arch" type="xml">
+			<tree string="Partial Payment" editable="bottom">
+				<field name="name" />
+				<field name="number_of_installments" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="sr_property_partial_payment_configuration_action"
+		model="ir.actions.act_window">
+		<field name="name">Partial Payment</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sr.property.partial.payment</field>
+		<field name="view_mode">tree</field>
+	</record>
+
+	<menuitem id="sr_property_partial_payment_configuration_menu"
+		name="Partial Payment" parent="sr_property_configuration_menu"
+		action="sr_property_partial_payment_configuration_action" sequence="1" />
+
+
+</odoo>

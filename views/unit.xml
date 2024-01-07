@@ -1,0 +1,97 @@
+<odoo>
+
+    <record id="unit_inherit_id" model="ir.ui.view">
+        <field name="name">product.template</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Unit">
+                    <field name="unit_id">
+                        <tree editable="bottom">
+                            <control>
+                                <create string="Add a Unit"/>
+                            </control>
+                            <field name="name_unit"/>
+                            <field name="rate"/>
+                            <field name="carpet_area"/>
+                            <field name="maintenance_charge"/>
+                            <field name="address"/>
+
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="property_unit_id" model="ir.ui.view">
+        <field name="name">property unit</field>
+        <field name="model">property.unit</field>
+        <field name="arch" type="xml">
+            <form string="Unite">
+                <sheet>
+                    <group>
+                        <group string="Unit">
+                            <field name="name"/>
+                            <field name="unit_type"/>
+                            <field name="unit_rent_price"/>
+                            <field name="unit_construction_status"/>
+                            <field name="user_id"/>
+                            <field name="address"/>
+
+                        </group>
+                        <group string="General Information">
+                            <field name="unit_carpet_area"/>
+                            <field name="unit_build_up_area"/>
+                            <field name="unit_floor"/>
+                            <field name="unit_badrooms"/>
+                            <field name="unit_balconies"/>
+                            <field name="unit_maintenance_charge"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Safety Information">
+                            <field name="unit_gas_safety_exp_date"/>
+                            <field name="unit_gas_safety_exp_attch"/>
+                            <field name="electricity_safety_certificate"/>
+                            <field name="epc"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="unit_tree_id" model="ir.ui.view">
+        <field name="name">unit</field>
+        <field name="model">property.unit</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="unite_id" model="ir.actions.act_window">
+        <field name="name">property.unit</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">property.unit</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            <!-- Add Text Here -->
+          </p><p>
+            <!-- More details about what a user can do with this object will be OK -->
+          </p>
+        </field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="unit_menu_id" name="Unites" parent="sr_property_management_root" action="unite_id" sequence="2"/>
+
+    <!-- Inherit Form View to Modify it -->
+
+</odoo>

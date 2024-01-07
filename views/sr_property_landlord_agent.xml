@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_partner_form_extends_landloard_agent_boolean"
+            model="ir.ui.view">
+        <field name="name">view.partner.form.extends.landloard.agent.boolean
+        </field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/notebook/page[@name='internal_notes']" position="after">
+                <page string="Agreement">
+                    <field name="agr_id">
+                        <tree >
+                            <field name="name" />
+                            <field name="agreement_date" />
+                            <field name="agreement_duration" />
+                            <field name="agreement_duration_type" />
+
+                        </tree>
+                    </field>
+
+                </page>
+            </xpath>
+            <field name="vat" position="after">
+                <field name="is_landlord" string="Is Landlord" invisible="1"/>
+                <field name="is_agent" string="Is Agent?" invisible="1"/>
+                <field name="is_tenant" string="Is Tenant" invisible="1"/>
+            </field>
+            <div name="button_box" position="inside">
+                <button type="object" class="oe_stat_button" attrs="{'invisible': [('is_agent', '!=', True)]}"
+                        icon="fa-money" name="action_view_settled_commission">
+                    <field string="Commission" name="settled_commission_count"
+                           widget="statinfo"/>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <record id="sr_property_landloard_action"
+            model="ir.actions.act_window">
+        <field name="name">Property LandLord</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">
+            {
+            'default_is_landlord':1,
+            }
+        </field>
+        <field name="domain">[('is_landlord','=',True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Landloard.
+            </p>
+        </field>
+    </record>
+
+    <record id="sr_property_agent_action"
+            model="ir.actions.act_window">
+        <field name="name">Property Agent</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">
+            {
+            'default_is_agent':1,
+            }
+        </field>
+        <field name="domain">[('is_agent','=',True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Agent.
+            </p>
+        </field>
+    </record>
+
+    <record id="sr_property_tenant_action"
+            model="ir.actions.act_window">
+        <field name="name">Tenant</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">
+            {
+            'default_is_tenant':1,
+            }
+        </field>
+        <field name="domain">[('is_tenant','=',True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Tenant.
+            </p>
+        </field>
+    </record>
+
+
+</odoo>

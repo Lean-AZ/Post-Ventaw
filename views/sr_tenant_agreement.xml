@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record id="sr_tenancy_agreement_tree" model="ir.ui.view">
+		<field name="name">sr.tenancy.agreement.tree</field>
+		<field name="model">sr.tenancy.agreement</field>
+		<field name="arch" type="xml">
+			<tree string="Tenancy Agreement" class="o_sale_order"
+				multi_edit="1" sample="1">
+				<field name="name" string="Number" readonly="1"
+					decoration-bf="1" />
+				<field name="agreement_date" string="Agreement Date"
+					widget="date" optional="show" />
+				<field name="agreement_start_date" widget="date"
+					optional="show" />
+				<field name="agreement_expiry_date" widget="date"
+					optional="show" />
+				<field name="property_id" />
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="sr_tenancy_agreement_form" model="ir.ui.view">
+		<field name="name">sr.tenancy.agreement.form</field>
+		<field name="model">sr.tenancy.agreement</field>
+		<field name="arch" type="xml">
+			<form string="Tenancy Agreement">
+				<header invisible="context.get('hide_header')">
+					<button name="action_confirm" string="Confirm Agreement"
+						type="object" class="oe_highlight" states="new" />
+
+					<button name="action_create_invoice" string="Create invoice"
+						type="object" class="oe_highlight"
+						attrs="{'invisible': ['|',('property_type', '!=', 'sale'),('state', '!=', 'confirm')]}" />
+
+					<field name="state" widget="statusbar"
+						statusbar_visible="new,running,expired,confirm" />
+				</header>
+				<sheet>
+					<div class="oe_button_box" name="button_box">
+					</div>
+					<div class="oe_title">
+						<h1>
+							<field name="name" readonly="1" />
+						</h1>
+					</div>
+					<group>
+						<group string="Property And Price Details">
+							<field name="property_id" attrs="{'readonly': [('state', '!=', 'new')]}" options="{'no_create':True, 'no_create_edit':True, 'no_open':True}"/>
+							<field name="property_type" />
+							<field name="property_rent" widget="monetary"
+								options="{'currency_field': 'currency_id', 'field_digits': True}"
+								attrs="{'invisible': [('property_type', '!=', 'rent')]}" />
+							<field name="property_sale_price" widget="monetary"
+								options="{'currency_field': 'currency_id', 'field_digits': True}"
+								attrs="{'invisible': [('property_type', '!=', 'sale')]}" />
+						</group>
+						<group string="Contract Details">
+							<field name="agreement_date" />
+							<field name="tenant_id" domain="[('is_tenant','=', True)]" attrs="{'readonly': [('state', '!=', 'new')]}" options="{'no_create':True, 'no_create_edit':True, 'no_open':True}"/>
+							<field name="payment_option" widget="radio"
+								attrs="{'invisible': [('property_type', '!=', 'sale')], 'required': [('property_type', '=', 'sale')], 'readonly': [('state', '!=', 'new')]}" />
+							<field name="partial_payment_id"
+								attrs="{'invisible': ['|',('property_type', '!=', 'sale'),('payment_option', '!=', 'installment')], 'required': [('property_type', '=', 'sale'),('payment_option', '=', 'installment')], 'readonly': [('state', '!=', 'new')]}" />
+							<field name="agreement_start_date"
+								attrs="{'invisible': [('property_type', '!=', 'rent')], 'required': [('property_type', '=', 'rent')], 'readonly': [('state', '!=', 'new')]}" />
+							<label for="agreement_duration" string="Duration"
+								attrs="{'invisible': [('property_type', '!=', 'rent')], 'required': [('property_type', '=', 'rent')], 'readonly': [('state', '!=', 'new')]}" />
+							<div
+								attrs="{'invisible': [('property_type', '!=', 'rent')], 'required': [('property_type', '=', 'rent')]}">
+								<field name="agreement_duration" class="oe_inline"
+									required="1" attrs="{'readonly': [('state', '!=', 'new')]}"/>
+								<field name="agreement_duration_type" class="oe_inline"
+									required="1" attrs="{'readonly': [('state', '!=', 'new')]}"/>
+							</div>
+
+							<field name="agreement_expiry_date"
+								attrs="{'invisible': [('property_type', '!=', 'rent')], 'required': [('property_type', '=', 'rent')]}" />
+						</group>
+
+					</group>
+					<group>
+						<group string="Agent Commission Details">
+							<field name="agent_id" />
+							<field name="agent_payment" />
+
+							<field name="commission_type" widget="radio"
+								attrs="{'invisible': [('agent_id', '=', False)]}" />
+							<field name="agent_commission" widget="monetary"
+								options="{'currency_field': 'currency_id', 'field_digits': True}"
+								attrs="{'invisible': [('agent_id', '=', False)]}" />
+						</group>
+						<group string="Landloard &amp; Maintenance Information">
+							<field name="landloard_id" />
+							<label for="maintenance_charge" string="Maintenance Charge" />
+							<div>
+								<field name="maintenance_charge" class="oe_inline"
+									required="1" widget="monetary"
+									options="{'currency_field': 'currency_id', 'field_digits': True}" />
+								<field name="maintenance_interval_type" class="oe_inline"
+									required="1" />
+							</div>
+						</group>
+					</group>
+					<group>
+						<group string="Financial Information">
+
+							<field name="currency_id" invisible="1" />
+							<field name="company_id" invisible="1" />
+							<field name="total_price" string="Property price" />
+							<field name="total_maintenance" string="Maintenance" />
+							<field name="commission_price" string="Commission" />
+							<field name="final_price" string="Total" />
+						</group>
+					</group>
+				</sheet>
+				<div class="oe_chatter">
+					<field name="message_follower_ids" />
+					<field name="activity_ids" />
+					<field name="message_ids" />
+				</div>
+				<footer invisible="not context.get('hide_header')">
+					<button name="action_confirm" string="Confirm Agreement"
+						type="object" class="oe_highlight" states="new" />
+				</footer>
+			</form>
+			
+		</field>
+	</record>
+
+
+	<record id="sr_property_tenancy_agreement_action"
+		model="ir.actions.act_window">
+		<field name="name">Tenancy Agreement</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sr.tenancy.agreement</field>
+		<field name="view_mode">tree,form</field>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Create a New Tenancy Agreements.
+			</p>
+		</field>
+	</record>
+
+
+	<record id="action_property_tenancy_agreement"
+		model="ir.actions.act_window">
+		<field name="name">Tenancy Agreement</field>
+		<field name="res_model">sr.tenancy.agreement</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="sr_tenancy_agreement_form" />
+		<field name="target">new</field>
+	</record>
+
+</odoo>

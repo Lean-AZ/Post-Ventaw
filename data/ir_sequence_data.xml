@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Sequences for Tenancy Agreement -->
+        <record id="seq_tenancy_agreement" model="ir.sequence">
+            <field name="name">tenancy.agreement</field>
+            <field name="code">tenancy.agreement.sequence</field>
+            <field name="prefix">TA</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        
+        <!-- Sequences for Agent Commission Line -->
+        <record id="seq_agent_commission_line" model="ir.sequence">
+            <field name="name">agent.commission.line</field>
+            <field name="code">agent.commission.line.sequence</field>
+            <field name="prefix">agt/comm/line/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        
+        <!-- Sequences for Agent Commission Settlement -->
+        <record id="seq_agent_commission_settlement" model="ir.sequence">
+            <field name="name">agent.commission.settlement</field>
+            <field name="code">agent.commission.settlement.sequence</field>
+            <field name="prefix">agt/comm/stlmt/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

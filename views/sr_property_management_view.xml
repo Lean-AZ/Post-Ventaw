@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Top menu item -->
+    <menuitem id="sr_property_management_root"
+              name="Property Management"
+              web_icon="sr_property_rental_management,static/description/web_icon.png"
+              groups="sr_property_rental_management.group_admin,sr_property_rental_management.group_landlord,sr_property_rental_management.group_agent,sr_property_rental_management.group_tenant"/>
+
+    <menuitem id="sr_property_product_menu" name="Property"
+              action="sr_property_product_action"
+              parent="sr_property_management_root" sequence="1"/>
+
+
+    <menuitem id="sr_property_agent_menu" name="Agent"
+              action="sr_property_agent_action" parent="sr_property_management_root"
+              sequence="3" groups="sr_property_rental_management.group_admin"/>
+
+    <menuitem id="sr_property_tenant_menu" name="Tenant"
+              action="sr_property_tenant_action"
+              parent="sr_property_management_root" sequence="4" groups="sr_property_rental_management.group_admin"/>
+
+    <menuitem id="sr_property_tenancy_agreement_menu"
+              name="Tenancy Agreement" action="sr_property_tenancy_agreement_action"
+              parent="sr_property_management_root" sequence="5"/>
+
+    <menuitem id="sr_property_agent_commission_menu" name="Commission"
+              parent="sr_property_management_root" sequence="6"
+              groups="sr_property_rental_management.group_admin,sr_property_rental_management.group_agent"/>
+
+    <menuitem id="sr_property_agent_commission_lines_menu" name="Commission Lines"
+              action="sr_property_agent_commission_lines_action"
+              parent="sr_property_agent_commission_menu" sequence="1"
+              groups="sr_property_rental_management.group_admin,sr_property_rental_management.group_agent"/>
+
+    <menuitem id="sr_property_agent_commission_settlement_menu" name="Commissions Settlement"
+              action="sr_property_agent_commission_settlement_action"
+              parent="sr_property_agent_commission_menu" sequence="2"
+              groups="sr_property_rental_management.group_admin,sr_property_rental_management.group_agent"/>
+
+    <menuitem id="sr_property_configuration_menu"
+              name="Configuration" parent="sr_property_management_root" sequence="7"
+              groups="sr_property_rental_management.group_admin"/>
+
+<!--    <menuitem id="sr_property_landloard_menu" name="Landlord"-->
+<!--              action="sr_property_landloard_action"-->
+<!--              parent="sr_property_configuration_menu" sequence="10"/>-->
+
+
+</odoo>
