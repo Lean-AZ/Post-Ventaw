@@ -63,11 +63,12 @@
 								attrs="{'invisible': [('property_type', '!=', 'sale')], 'readonly': [('state', '==', 'invoiced')]}" />
 							<field name="amount_to_finance" widget="monetary"
 								options="{'currency_field': 'currency_id', 'field_digits': True}"
-								attrs="{'invisible': [('property_type', '!=', 'sale')], 'readonly': [('state', '==', 'invoiced')]}" />
+								attrs="{'invisible': [('property_type', '!=', 'sale')], 'readonly': [('state', '==', 'invoiced')]}" />	
 						</group>
 						<group string="Contract Details">
 							<field name="agreement_date" />
 							<field name="tenant_id" domain="[('is_tenant','=', True)]" attrs="{'readonly': [('state', '!=', 'new')]}" options="{'no_create':True, 'no_create_edit':True, 'no_open':True}"/>
+							<field name="co_tenant_id" domain="[('is_tenant','=', True)]" attrs="{'readonly': [('state', '!=', 'new')]}" options="{'no_create':True, 'no_create_edit':True, 'no_open':True}"/>
 							<field name="payment_option" widget="radio"
 								attrs="{'invisible': [('property_type', '!=', 'sale')], 'required': [('property_type', '=', 'sale')], 'readonly': [('state', '!=', 'new')]}" />
 							<field name="partial_payment_id"
@@ -88,12 +89,13 @@
 
 							<field name="agreement_expiry_date"
 								attrs="{'invisible': [('property_type', '!=', 'rent')], 'required': [('property_type', '=', 'rent')]}" />
+							<field name="delivery_date" readonly="1" />
 						</group>
 
 					</group>
 					<group>
 						<group string="Agent Commission Details">
-							<field name="agent_id" />
+							<field name="agent_id" domain="[('is_agent', '=', True)]" />
 							<field name="agent_payment" />
 
 							<field name="commission_type" widget="radio"

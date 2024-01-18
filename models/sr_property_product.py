@@ -80,7 +80,7 @@ class srPropertytemplate(models.Model):
         'Property Rent Price', default=1.0,
         digits='Product Price',
         help="Price at which the Property is Rented to Tenants.")
-    property_construction_status = fields.Selection([('under_const', 'Under Construction'), ('ready_to_move', 'Ready To Move')], string="Property Status", default="ready_to_move")
+    property_construction_status = fields.Selection([('under_const', 'Under Construction'), ('ready_to_move', 'Ready To Move')], string="Property Status", default="under_const")
     user_id = fields.Many2one('res.users', string="Sales Person", default=lambda self: self.env.user)
     street = fields.Char()
     street2 = fields.Char()
@@ -127,6 +127,7 @@ class srPropertytemplate(models.Model):
     current_user_id = fields.Many2one('res.partner','Current User')
     reservation_history_ids = fields.Many2many('res.partner',string="Reservation history")
     currency_id = fields.Many2one('res.currency', string='Moneda', readonly=False, domain="[('active', '=', True)]", store=True)
+    delivery_date = fields.Date('Fecha de entrega', store=True)
 
     def action_view_tenancy_agreement(self):
         self.ensure_one()

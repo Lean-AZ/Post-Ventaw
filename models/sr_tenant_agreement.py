@@ -125,7 +125,9 @@ class srTenancyAgreement(models.Model):
     initial_amount = fields.Float('Initial Amount', currency_field='currency_id', store=True)
     currency_id = fields.Many2one('res.currency', string='Moneda', readonly=True, store=True, related='property_id.currency_id')
     amount_to_finance = fields.Float('Amount To Finance', currency_field='currency_id', store=True)
-    first_installment_date = fields.Date(string='Pago de primera cuota', copy=False, store=True)
+    first_installment_date = fields.Date(string='Pago de primer cuota', copy=False, store=True)
+    co_tenant_id = fields.Many2one('res.partner', string="Copropietario", required=True)
+    delivery_date = fields.Date('Fecha de entrega', store=True, related='property_id.delivery_date')
 
     # @api.onchange('agreement_date')
     # def _onchange_agreement_date(self):
@@ -335,10 +337,22 @@ class srTenancyAgreement(models.Model):
                         })]
                     })
             else:
-                regular_installment_amount = self.amount_to_finance / self.partial_payment_id.number_of_installments
+                def months_between_dates(initial_date_str, final_date_str):
+                    initial_date = initial_date_str
+                    final_date = final_date_str
+                    # Calculate the difference in months
+                    month_diff = (final_date.year - initial_date.year) * 12 + final_date.month - initial_date.month
+                    # Adjust if the final date's day is less than the initial date's day
+                    if final_date.day < initial_date.day:
+                        month_diff -= 1
+                    return month_diff
+                
+                months_until_last_installment = months_between_dates(self.first_installment_date, self.delivery_date)
+
+                regular_installment_amount = self.amount_to_finance / months_until_last_installment
                 allocated_amount = 0
-                for i in range(0, self.partial_payment_id.number_of_installments):
-                    if i == self.partial_payment_id.number_of_installments - 1:
+                for i in range(0, months_until_last_installment):
+                    if i == months_until_last_installment - 1:
                         installment_amount = self.amount_to_finance - allocated_amount
                     else:
                         installment_amount = regular_installment_amount
@@ -355,7 +369,7 @@ class srTenancyAgreement(models.Model):
                                 'invoice_line_ids':
                                         [(0, 0, {
                                 'product_id':self.property_id.id,
-                                'name': "Cuota " + str(i + 1) + ":" + self.property_id.name,
+                                'name': "Pago #" + str(i + 1) + ":" + self.property_id.name,
                                 'quantity':1,
                                 'price_unit':installment_amount,
                                 'account_id': accounts['income'].id,

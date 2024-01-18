@@ -193,6 +193,8 @@
                             <field name="currency_id" attrs="{'readonly': [('state', '!=', 'draft')]}" options="{'no_create': True}"/>
                             <field name="user_id"
                                    attrs="{'required': [('is_property', '=',True)],'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="delivery_date" attrs="
+                            {'required': [('is_property', '=',True)],'readonly': [('state', '!=', 'draft')]} " />
                         </group>
                         <group string="Location Information">
                             <span class="o_form_label o_td_label"
