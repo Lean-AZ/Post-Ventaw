@@ -93,10 +93,10 @@ class srTenancyAgreement(models.Model):
     agreement_duration_type = fields.Selection([('month', 'Month'), ('year', 'year'), ('one_time', 'One Time')], 'Agreement Duration Type', default="month", index=True, tracking=3)
     agreement_start_date = fields.Date(string='Agreement Start From', copy=False) 
     agreement_expiry_date = fields.Date(string='Agreement Expire On', copy=False, compute='_compute_amount_all', store=True, compute_sudo=True)
-    property_id = fields.Many2one('product.product', 'Property', required=True, domain="[('is_property','=', True),('state','=', 'available')]", index=True, tracking=4)
-    property_type = fields.Selection([('sale', 'Sale'), ('rent', 'Rent')], string="Property For", related="property_id.property_type", store=True)
+    property_id = fields.Many2one('product.product', 'Unidad', required=True, domain="[('is_property','=', True),('state','=', 'available')]", index=True, tracking=4)
+    property_type = fields.Selection([('sale', 'Sale'), ('rent', 'Rent')], string="Tipo", related="property_id.property_type", store=True)
     property_rent = fields.Float('Rent', related="property_id.property_rent_price", store=True)
-    property_sale_price = fields.Float('Sale Price', related="property_id.property_sale_price", store=True)
+    property_sale_price = fields.Float('Precio de venta', related="property_id.property_sale_price", store=True)
     agent_id = fields.Many2one('res.partner')
     agent_payment = fields.Integer(string='Payment')
     commission_type = fields.Selection([('fixed', 'Fixed'), ('percentage', 'Percentage')], string="Commission Type", related="property_id.property_agent_commission_type", store=True)
@@ -121,10 +121,10 @@ class srTenancyAgreement(models.Model):
         ('expired', 'Expired'),
         ('invoiced', 'Invoiced'),
         ], string='Status', readonly=True, copy=False, index=True, track_visibility="onchange", tracking=5, default='new')
-    reserve_amount = fields.Float('Reserve Amount', currency_field='currency_id', store=True)
-    initial_amount = fields.Float('Initial Amount', currency_field='currency_id', store=True)
+    reserve_amount = fields.Float('Separación', currency_field='currency_id', store=True)
+    initial_amount = fields.Float('Reserva', currency_field='currency_id', store=True)
     currency_id = fields.Many2one('res.currency', string='Moneda', readonly=True, store=True, related='property_id.currency_id')
-    amount_to_finance = fields.Float('Amount To Finance', currency_field='currency_id', store=True)
+    amount_to_finance = fields.Float('Inicial', currency_field='currency_id', store=True)
     first_installment_date = fields.Date(string='Pago de primer cuota', copy=False, store=True)
     co_tenant_id = fields.Many2one('res.partner', string="Copropietario", required=True)
     delivery_date = fields.Date('Fecha de entrega', store=True, related='property_id.delivery_date')
@@ -270,24 +270,6 @@ class srTenancyAgreement(models.Model):
              'invoice_line_ids':
                      [(0, 0, {
              'product_id':self.property_id.id,
-             'name': "Reserva :" + self.property_id.name,
-             'quantity':1,
-             'price_unit': self.reserve_amount,
-             'account_id': accounts['income'].id,
-                 })]
-             })
-            self.env['account.move'].create({
-             'partner_id':self.tenant_id.id,
-             'invoice_date':datetime.datetime.today().date(),
-             'is_property_invoice': True,
-             'property_id': self.property_id.id,
-             'move_type':'out_invoice',
-             'tenancy_agreement':self.id,
-             'journal_id':journal_id.id,
-             'currency_id': self.currency_id.id,
-             'invoice_line_ids':
-                     [(0, 0, {
-             'product_id':self.property_id.id,
              'name': "Pago Inicial :" + self.property_id.name,
              'quantity':1,
              'price_unit': self.initial_amount,
@@ -401,7 +383,14 @@ class srTenancyAgreement(models.Model):
                     'date': datetime.datetime.today().date(),
                     'commission_amount':self.commission_price
                     })
+        self.property_id.state = 'sold'
         self.state = 'invoiced'
+
+    def cancel_booked_property(self):
+        if self.property_type != 'sale':
+            raise UserError(_('This method can not called with rent property type'))
+        self.property_id.state = 'available'
+        self.state = 'expired'
 
     def action_confirm(self):
         if self.property_id.state in ['rented', 'sold']:
@@ -413,6 +402,8 @@ class srTenancyAgreement(models.Model):
             'name': self.env['ir.sequence'].next_by_code('tenancy.agreement.sequence', sequence_date=fields.Datetime.context_timestamp(self, fields.Datetime.to_datetime(self.agreement_date)))
             })
         if self.property_type == 'sale':
+            raise UserError(_('Primero hay que separar la propiedad'))
+        if self.property_type == 'booked':
             self.property_id.state = 'sold'
         else:
             self.property_id.state = 'rented'
@@ -420,6 +411,39 @@ class srTenancyAgreement(models.Model):
             'current_user_id':self.tenant_id.id,
             'reservation_history_ids':[(4,self.tenant_id.id)]
             })
+        return
+    
+    def action_booked(self):
+        if self.property_id.state in ['rented', 'sold']:
+            raise UserError(_('Sorry! You are late. Someone has already occupy this property.'))
+        if self.property_id.state == 'draft':
+            raise UserError(_('This property is not confirmed yet by administrator.'))
+        self.write({
+            'state':'confirm',
+            'name': self.env['ir.sequence'].next_by_code('tenancy.agreement.sequence', sequence_date=fields.Datetime.context_timestamp(self, fields.Datetime.to_datetime(self.agreement_date)))
+            })
+        if self.property_type == 'sale':
+            self.property_id.state = 'booked'
+            journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
+            accounts = self.property_id.product_tmpl_id.get_product_accounts()
+            self.env['account.move'].create({
+             'partner_id':self.tenant_id.id,
+             'invoice_date':datetime.datetime.today().date(),
+             'is_property_invoice': True,
+             'property_id': self.property_id.id,
+             'move_type':'out_invoice',
+             'tenancy_agreement':self.id,
+             'journal_id':journal_id.id,
+             'currency_id': self.currency_id.id,
+             'invoice_line_ids':
+                     [(0, 0, {
+             'product_id':self.property_id.id,
+             'name': "Separación :" + self.property_id.name,
+             'quantity':1,
+             'price_unit': self.reserve_amount,
+             'account_id': accounts['income'].id,
+                 })]
+             })
         return
 
     def check_tenancy_agreement_validity(self):

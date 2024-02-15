@@ -119,6 +119,7 @@ class srPropertytemplate(models.Model):
     state = fields.Selection([
         ('draft', 'Draft'),
         ('available', 'Available'),
+        ('booked', 'Separado'),
         ('rented', 'Rented'),
         ('sold', 'Sold'),
         ], string='Status', readonly=True, copy=False, index=True, track_visibility="onchange")
