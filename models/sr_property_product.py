@@ -92,6 +92,8 @@ class srPropertytemplate(models.Model):
     property_build_up_area = fields.Float('Build-up Area', default=1)
     property_floor = fields.Integer('Floor', default=1)
     property_badrooms = fields.Integer('Badrooms', default=1)
+    property_bathrooms = fields.Integer('Baños', default=1)
+    property_parking_lots = fields.Integer('Parqueos', default=0)
     property_balconies = fields.Float('Balconies', default=1)
     property_maintenance_charge = fields.Float('Maintenance Charge', default=0)
     property_maintenance_interval_type = fields.Selection([('month', 'Monthly'), ('year', 'Yearly'), ('one_time', 'One Time')], string="Maintenance Interval ", default="month")

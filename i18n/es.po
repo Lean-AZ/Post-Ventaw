@@ -314,7 +314,7 @@ msgstr "País"
 #. module: sr_property_rental_management
 #: model_terms:ir.actions.act_window,help:sr_property_rental_management.sr_property_tenancy_agreement_action
 msgid "Create a New Tenancy Agreements."
-msgstr "Crear un Nuevo Contrato de Arrendamiento."
+msgstr "Crear un Nuevo Contrato."
 
 #. module: sr_property_rental_management
 #: model_terms:ir.actions.act_window,help:sr_property_rental_management.sr_property_agent_action
@@ -386,7 +386,7 @@ msgstr "Creado en"
 #. module: sr_property_rental_management
 #: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__agreement_date
 msgid "Creation date of tenant agreement."
-msgstr "Fecha de creación del contrato de arrendamiento."
+msgstr "Fecha de creación del Contrato."
 
 #. module: sr_property_rental_management
 #: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_partial_payment_form_view
@@ -1410,7 +1410,7 @@ msgstr "Calle2"
 #: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
 #: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_tree
 msgid "Tenancy Agreement"
-msgstr "Contrato de Arrendamiento"
+msgstr "Contrato"
 
 #. module: sr_property_rental_management
 #: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__tenancy_agreement_count
@@ -1425,7 +1425,7 @@ msgstr "Cantidad de Contratos de Arrendamiento"
 #: model:ir.cron,cron_name:sr_property_rental_management.ir_cron_tenancy_agreement_state_check
 #: model:ir.cron,name:sr_property_rental_management.ir_cron_tenancy_agreement_state_check
 msgid "Tenancy Agreement: Check Agreement Start and Expiry Date"
-msgstr "Contrato de Arrendamiento: Verificar Fecha de Inicio y Vencimiento del Contrato"
+msgstr "Contrato: Verificar Fecha de Inicio y Vencimiento del Contrato"
 
 #. module: sr_property_rental_management
 #: model:ir.actions.act_window,name:sr_property_rental_management.sr_property_tenant_action

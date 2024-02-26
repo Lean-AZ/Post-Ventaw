@@ -236,6 +236,10 @@
                                    attrs="{'required': [('is_property', '=',True)],'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="property_badrooms"
                                    attrs="{'required': [('is_property', '=',True)],'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="property_bathrooms"
+                                   attrs="{'required': [('is_property', '=',True)],'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="property_parking_lots"
+                                   attrs="{'required': [('is_property', '=',True)],'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="property_balconies"
                                    attrs="{'required': [('is_property', '=',True)],'readonly': [('state', '!=', 'draft')]}"/>
                         </group>
