@@ -1,50 +1,123 @@
-<!-- sr_property_rental_management/reports/reporte_separacion_template.xml -->
+<!-- FILEPATH: /Users/christianvillarhode/Desktop/odoo-docker-ready/your_project/extra-addons/sr_property_rental_management/reports/reporte_separacion_template.xml -->
 <odoo>
     <template id="reporte_separacion_template">
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
-                    <h1>Reporte de Separación</h1>
+                    <h6 style="text-align: center;background-color: gray;color: white;">RECIBO RESERVA PROVISIONAL</h6>
                     <t t-foreach="docs" t-as="doc">
                         <div style="page-break-after:always;">
-                            <p>Fecha: <t t-esc="doc.invoice_date"/></p>
-                            <p>Pago: <t t-esc="doc.payment_id"/></p>
-                            <p>Cliente: PENESTATE</p>
-                                    <t t-if="doc.payment_state != 'invoicing_legacy'">
-                                        <t t-set="payments_vals" t-value="doc.sudo()._get_reconciled_info_JSON_values()"/>
-                                        <t t-foreach="payments_vals" t-as="payment_vals">
-                                            <tr class="border-black o_total">
-                                                <td>
-                                                    <i class="row">
-                                                        <div class="col-7 oe_form_field oe_payment_label">
-                                                            Paid on/دفعت في:
-                                                        </div>
-                                                        <div class="col-5 pl-0 oe_form_field oe_payment_label">
-                                                            <t t-out="payment_vals['date']"/>
-                                                        </div>
-                                                    </i>
-                                                </td>
-                                                <td class="text-right">
-                                                    <span t-out="payment_vals['amount']"
-                                                          t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
-                                                </td>
-                                            </tr>
-                                        </t>
-                                        <t t-if="len(payments_vals) > 0">
-                                            <tr class="border-black">
-                                                <td>
-                                                    <strong>
-                                                        Amount Due
-                                                        /
-                                                        المبلغ المستحق
-                                                    </strong>
-                                                </td>
-                                                <td class="text-right">
-                                                    <span t-field="doc.amount_residual"/>
-                                                </td>
-                                            </tr>
-                                        </t>
+                            <div>
+                                <strong class="m-0">Fecha:</strong>
+                                <t t-esc="doc.invoice_date"  t-options='{"widget": "date"}'/>
+                            </div>
+                            <div>
+                                <div class='container'>
+                                <div class="row my-3">
+                                    <div style="width:33%" class=" flex-column">
+                                        <strong class="m-0">Proyecto:</strong>
+                                        <t t-esc="doc.company_id.name"/>
+                                    </div>
+                                    <div style="width:33%" class=" flex-column">
+                                        <strong class="m-0">Cliente:</strong>
+                                        <t t-esc="doc.partner_id.name"/>
+                                    </div>
+                                    <t t-if="doc.tenancy_agreement.co_tenant_id">
+                                        <div style="width:33%" class=" flex-column">
+                                            <strong class="m-0">Copropietario:</strong>
+                                            <t t-esc="doc.tenancy_agreement.co_tenant_id.name"/>
+                                        </div>
                                     </t>
+                                </div>
+                                <div class="row my-3">
+                                    <div style="width:33%" class=" flex-column">
+                                        <strong class="m-0">Habitaciones:</strong>
+                                        <t t-esc="doc.property_id.property_badrooms"/>
+                                    </div>
+                                    <div style="width:33%" class=" flex-column">
+                                        <strong class="m-0">Baños:</strong>
+                                        <t t-esc="doc.property_id.property_bathrooms"/>
+                                    </div>
+                                    <div style="width:33%" class=" flex-column">
+                                        <strong class="m-0">Parqueos:</strong>
+                                        <t t-esc="doc.property_id.property_parking_lots"/>
+                                    </div>
+                                </div>
+                                <div class="row my-3">
+                                    <div style="width:33%" class=" flex-column">
+                                        <strong class="m-0">Apartamento:</strong>
+                                        <t t-esc="doc.property_id.name"/>
+                                    </div>
+                                    <div style="width:33%" class=" flex-column">
+                                        <strong class="m-0">Area Construcción:</strong>
+                                        <t t-esc="doc.property_id.property_carpet_area"/>
+                                    </div>
+                                    <div style="width:33%" class=" flex-column">
+                                        <strong class="m-0">Precio:</strong>
+                                        <t t-out="doc.property_id.property_sale_price" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+
+                                    </div>
+                                </div>
+                                 <div>
+                                 </div>
+                                <t t-if="doc.payment_state != 'invoicing_legacy'">
+                                    <t t-set="payments_vals" t-value="doc.sudo()._get_reconciled_info_JSON_values()"/>
+                                    <t t-foreach="payments_vals" t-as="payment_vals">
+                                  
+                                        <div class=" flex-column justify-content-between">
+                                            <div class=" my-3">
+                                                    <div style="width:33%" class=" flex-column">
+                                                        <strong class="m-0">Pagado en:</strong>
+                                                        <t t-out="payment_vals['date']"  t-options='{"widget": "date"}'/>
+                                                    </div>
+                                                     <div style="width:33%" class=" flex-column">
+                                                        <strong class="m-0">Cuenta:</strong>
+                                                        <t t-out="payment_vals['journal_name']"/>
+                                                    </div>
+                                                     <div style="width:33%" class=" flex-column">
+                                                        <strong class="m-0">Memo:</strong>
+                                                        <t t-out="payment_vals['ref']"/>
+                                                    </div>
+                                            </div>
+                                            <div class=" my-3">
+                                                  <div style="width:33%" class=" flex-column">
+                                                        <strong class="m-0">Monto:</strong>
+                                                        <span t-out="payment_vals['amount']"
+                                                      t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                                    </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <div>
+                                        <strong>
+                                                Nota:
+                                            </strong>
+                                    <ul>
+                                        <li>
+                                        
+                                            <span>El monto de reservación de inmueble no es reembolsable en caso de desistimiento.</span>
+                                        </li>
+                                        <li>
+                                            <span>El cliente queda obligado a suministrar a la empresa las documentaciones  concernientes con el objetivo de cumplir a cabalidad con los requerimientos de la  Ley 155-17, contra El Lavado de Activos y Financiamiento del Terrorismo. Queda entendido que el incumplimiento en sus obligaciones de colaboración  constituye una violación a la presenta negociación que implica la cancelación de esta reserva. En este caso, La empresa se compromete a devolver los fondos entregados descontando los gastos financieros.</span>
+                                        </li>
+                                    </ul>
+                                    </div>
+                                    <!-- <t t-if="len(payments_vals) > 0">
+                                        <div class="border-black">
+                                            <div>
+                                                <strong>
+                                                    Amount Due
+                                                </strong>
+                                            </div>
+                                            <div class="text-right">
+                                                <span t-field="doc.amount_residual"/>
+                                            </div>
+                                        </div>
+                                    </t> -->
+                                </t>
+                                </div>
+                            </div>
                         </div>
                     </t>
                 </div>

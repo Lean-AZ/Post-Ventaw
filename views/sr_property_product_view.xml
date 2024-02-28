@@ -240,6 +240,10 @@
                                    attrs="{'required': [('is_property', '=',True)],'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="property_parking_lots"
                                    attrs="{'required': [('is_property', '=',True)],'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="property_bloque"
+                                   attrs="{'required': [('is_property', '=',True)],'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="property_building_number"
+                                   attrs="{'required': [('is_property', '=',True)],'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="property_balconies"
                                    attrs="{'required': [('is_property', '=',True)],'readonly': [('state', '!=', 'draft')]}"/>
                         </group>

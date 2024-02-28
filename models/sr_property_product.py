@@ -10,7 +10,8 @@
 
 from odoo import models, fields, api,  _
 from odoo.exceptions import UserError
-
+from odoo.tools import safe_eval
+import json
 
 class srProductProduct(models.Model):
     _inherit = 'product.product'
@@ -94,6 +95,8 @@ class srPropertytemplate(models.Model):
     property_badrooms = fields.Integer('Badrooms', default=1)
     property_bathrooms = fields.Integer('Baños', default=1)
     property_parking_lots = fields.Integer('Parqueos', default=0)
+    property_bloque = fields.Char('Bloque')
+    property_building_number = fields.Char('Edificio')
     property_balconies = fields.Float('Balconies', default=1)
     property_maintenance_charge = fields.Float('Maintenance Charge', default=0)
     property_maintenance_interval_type = fields.Selection([('month', 'Monthly'), ('year', 'Yearly'), ('one_time', 'One Time')], string="Maintenance Interval ", default="month")
