@@ -12,7 +12,7 @@
                                 <t t-esc="doc.invoice_date"  t-options='{"widget": "date"}'/>
                             </div>
                             <div>
-                                <div class='container'>
+                                <div class='container text-justify'>
                                 <div class="row my-3">
                                     <div style="width:33%" class=" flex-column">
                                         <strong class="m-0">Proyecto:</strong>
@@ -105,6 +105,17 @@
                                             <span>El cliente queda obligado a suministrar a la empresa las documentaciones  concernientes con el objetivo de cumplir a cabalidad con los requerimientos de la  Ley 155-17, contra El Lavado de Activos y Financiamiento del Terrorismo. Queda entendido que el incumplimiento en sus obligaciones de colaboración  constituye una violación a la presenta negociación que implica la cancelación de esta reserva. En este caso, La empresa se compromete a devolver los fondos entregados descontando los gastos financieros.</span>
                                         </li>
                                     </ul>
+                                    </div>
+                                    <div class="text-center">
+                                        <strong>
+                                                Realizado por:
+                                        </strong>
+                                        <div class="pt-5">
+                                        __________________________________________________________
+                                        </div>
+                                        <p>
+                                        ESTE RECIBO NO ES VALIDO SI NO ESTA DEBIDAMENTE FIRMADO Y SELLADO POR LA CAJERA GENERAL
+                                        </p>
                                     </div>
                                     <t t-foreach="docs" t-as="doc">
     <!-- <div>
