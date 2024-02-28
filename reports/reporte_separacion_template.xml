@@ -85,7 +85,10 @@
                                                         <span t-out="payment_vals['amount']"
                                                       t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                                     </div>
-                                                
+                                                   <div style="width:33%" class=" flex-column">
+                                                        <strong class="m-0">Tasa:</strong>
+                                                             <span t-esc="doc.get_report_data()['conversion_rate']" t-options='{"widget": "float", "precision": 2}'/>
+                                                    </div>
                                             </div>
                                         </div>
                                     </t>
@@ -104,14 +107,13 @@
                                     </ul>
                                     </div>
                                     <t t-foreach="docs" t-as="doc">
-    <div>
-        <p>Conversion Rate: <t t-esc="doc.get_report_data()['conversion_rate']"/></p>
+    <!-- <div>
+        <p>Conversion Rate: <t t-esc="doc.get_report_data()['conversion_rate']" t-options='{"widget": "float", "precision": 2}'/></p>
         <p>From: <t t-esc="doc.get_report_data()['from_currency']"/></p>
         <p>To currency: <t t-esc="doc.get_report_data()['to_currency']"/></p>
         <p>Conversion Rate: <t t-esc="doc.get_report_data()['company_name']"/></p>
         <p>Conversion Rate: <t t-esc="doc.get_report_data()['date']"/></p>
-        <!-- Other report content -->
-    </div>
+    </div> -->
 </t>
                                     <!-- <t t-if="len(payments_vals) > 0">
                                         <div class="border-black">
