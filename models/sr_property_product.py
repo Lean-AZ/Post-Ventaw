@@ -188,14 +188,22 @@ class AccountMove(models.Model):
         company = self.company_id
         date = self.invoice_date or fields.Date.today()
 
+        Currency = self.env['res.currency']
+        dop_currency = Currency.search([('name', '=', 'DOP')], limit=1)
+        if not dop_currency:
+            raise UserError(_("Currency DOP not found."))
         # Calculate conversion rate
         conversion_rate = self.env['res.currency']._get_conversion_rate(from_currency, to_currency, company, date)
+
+        payments = self.env['account.payment'].search([('reconciled_invoice_ids', 'in', self.ids)])
+        payment_date = payments[0].date if payments else None
+    
 
         return {
             'conversion_rate': conversion_rate,
             'from_currency': from_currency.name,
             'to_currency': to_currency.name,
             'company_name': company.name,
-            'date': date.strftime('%Y-%m-%d'),
+            'date': payment_date,
             # Include other data as needed for the report
         }
