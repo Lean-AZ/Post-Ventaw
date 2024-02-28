@@ -1,0 +1,54 @@
+<!-- sr_property_rental_management/reports/reporte_separacion_template.xml -->
+<odoo>
+    <template id="reporte_separacion_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h1>Reporte de Separación</h1>
+                    <t t-foreach="docs" t-as="doc">
+                        <div style="page-break-after:always;">
+                            <p>Fecha: <t t-esc="doc.invoice_date"/></p>
+                            <p>Pago: <t t-esc="doc.payment_id"/></p>
+                            <p>Cliente: PENESTATE</p>
+                                    <t t-if="doc.payment_state != 'invoicing_legacy'">
+                                        <t t-set="payments_vals" t-value="doc.sudo()._get_reconciled_info_JSON_values()"/>
+                                        <t t-foreach="payments_vals" t-as="payment_vals">
+                                            <tr class="border-black o_total">
+                                                <td>
+                                                    <i class="row">
+                                                        <div class="col-7 oe_form_field oe_payment_label">
+                                                            Paid on/دفعت في:
+                                                        </div>
+                                                        <div class="col-5 pl-0 oe_form_field oe_payment_label">
+                                                            <t t-out="payment_vals['date']"/>
+                                                        </div>
+                                                    </i>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-out="payment_vals['amount']"
+                                                          t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="len(payments_vals) > 0">
+                                            <tr class="border-black">
+                                                <td>
+                                                    <strong>
+                                                        Amount Due
+                                                        /
+                                                        المبلغ المستحق
+                                                    </strong>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="doc.amount_residual"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

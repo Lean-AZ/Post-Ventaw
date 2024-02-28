@@ -1,0 +1,11 @@
+<odoo>
+    <record id="reporte_separacion_action" model="ir.actions.report">
+        <field name="name">Reporte de Separación</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sr_property_rental_management.reporte_separacion_template</field>
+        <field name="report_file">sr_property_rental_management.reporte_separacion_template</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

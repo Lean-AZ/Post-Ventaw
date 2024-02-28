@@ -81,12 +81,12 @@
         'views/sr_property_management_view.xml',
         'views/sr_property_management_configuration_view.xml',
         'views/unit.xml',
-
+        'reports/reporte_separacion_action.xml',
+        'reports/reporte_separacion_template.xml',
     ],
     # 'installable': True,
     # 'auto_install': False,
     # 'application': True,
-    'live_test_url':'https://youtu.be/MTWHjYuEJng',
     "images":['static/description/banner.png'],
 }
 
