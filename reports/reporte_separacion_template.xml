@@ -103,6 +103,16 @@
                                         </li>
                                     </ul>
                                     </div>
+                                    <t t-foreach="docs" t-as="doc">
+    <div>
+        <p>Conversion Rate: <t t-esc="doc.get_report_data()['conversion_rate']"/></p>
+        <p>From: <t t-esc="doc.get_report_data()['from_currency']"/></p>
+        <p>To Rate: <t t-esc="doc.get_report_data()['to_currency']"/></p>
+        <p>Conversion Rate: <t t-esc="doc.get_report_data()['company_name']"/></p>
+        <p>Conversion Rate: <t t-esc="doc.get_report_data()['date']"/></p>
+        <!-- Other report content -->
+    </div>
+</t>
                                     <!-- <t t-if="len(payments_vals) > 0">
                                         <div class="border-black">
                                             <div>

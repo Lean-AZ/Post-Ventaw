@@ -176,3 +176,26 @@ class srPropertytemplate(models.Model):
     def action_reset_draft(self):
         self.state = 'draft'
     
+
+class AccountMove(models.Model):
+    _inherit = 'account.move'
+
+    def get_report_data(self):
+        # Assuming 'self' is a single record of account.move
+        # Prepare required data
+        from_currency = self.currency_id
+        to_currency = self.env.user.company_id.currency_id
+        company = self.company_id
+        date = self.invoice_date or fields.Date.today()
+
+        # Calculate conversion rate
+        conversion_rate = self.env['res.currency']._get_conversion_rate(from_currency, to_currency, company, date)
+
+        return {
+            'conversion_rate': conversion_rate,
+            'from_currency': from_currency.name,
+            'to_currency': to_currency.name,
+            'company_name': company.name,
+            'date': date.strftime('%Y-%m-%d'),
+            # Include other data as needed for the report
+        }
