@@ -228,6 +228,7 @@
 
                     <group>
                         <group string="Property Information">
+                            <field name="company_id"/>
                             <field name="property_carpet_area"
                                    attrs="{'required': [('is_property', '=',True)],'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="property_build_up_area"

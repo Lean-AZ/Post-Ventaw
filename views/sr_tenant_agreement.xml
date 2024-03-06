@@ -40,6 +40,7 @@
 					</div>
 					<group>
 						<group string="Property And Price Details">
+							<field name="company_id"></field>
 							<field name="property_id" attrs="{'readonly': [('state', '!=', 'new')]}" options="{'no_create':True, 'no_create_edit':True, 'no_open':True}"/>
 							<field name="property_type" />
 							<field name="property_rent" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'invisible': [('property_type', '!=', 'rent')]}" />
