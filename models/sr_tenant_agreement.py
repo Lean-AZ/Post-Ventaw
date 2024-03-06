@@ -126,7 +126,7 @@ class srTenancyAgreement(models.Model):
     currency_id = fields.Many2one('res.currency', string='Moneda', readonly=True, store=True, related='property_id.currency_id')
     amount_to_finance = fields.Float('Inicial', currency_field='currency_id', store=True)
     first_installment_date = fields.Date(string='Pago de primer cuota', copy=False, store=True)
-    co_tenant_id = fields.Many2one('res.partner', string="Copropietario", required=True)
+    co_tenant_id = fields.Many2one('res.partner', string="Copropietario")
     delivery_date = fields.Date('Fecha de entrega', store=True, related='property_id.delivery_date')
 
     # @api.onchange('agreement_date')
