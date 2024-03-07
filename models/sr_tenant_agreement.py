@@ -129,6 +129,7 @@ class srTenancyAgreement(models.Model):
     first_installment_date = fields.Date(string='Pago de primer cuota', copy=False, store=True)
     co_tenant_id = fields.Many2one('res.partner', string="Copropietario")
     delivery_date = fields.Date('Fecha de entrega', store=True, related='property_id.delivery_date')
+    agent_type = fields.Selection([('interno', 'Interno'), ('externo', 'Externo')], string="Tipo de Agente", default='interno')
 
     # @api.onchange('agreement_date')
     # def _onchange_agreement_date(self):

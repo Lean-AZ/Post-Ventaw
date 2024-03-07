@@ -71,6 +71,7 @@
 					<group>
 						<group string="Agent Commission Details">
 							<field name="agent_id" domain="[('is_agent', '=', True)]" />
+							<field name="agent_type"/>
 							<field name="agent_payment" />
 
 							<field name="commission_type" widget="radio" attrs="{'invisible': [('agent_id', '=', False)]}" />
