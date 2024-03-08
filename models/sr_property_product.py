@@ -10,8 +10,6 @@
 
 from odoo import models, fields, api,  _
 from odoo.exceptions import UserError
-from odoo.tools import safe_eval
-import json
 
 class srProductProduct(models.Model):
     _inherit = 'product.product'
@@ -40,6 +38,12 @@ class srProductProduct(models.Model):
 
     def action_reset_draft(self):
         self.state = 'draft'
+
+    def set_to_draft_if_no_invoices(self):
+        if self.property_invoice_count == 0:
+            self.state = 'draft'
+        else:
+            raise UserError(_('Cannot set to draft because there are associated invoices.'))
 
     def action_view_property_invoices(self):
         self.ensure_one()
@@ -176,6 +180,12 @@ class srPropertytemplate(models.Model):
     def action_reset_draft(self):
         self.state = 'draft'
     
+    def set_to_draft_if_no_invoices(self):
+        self._compute_property_invoice_count()
+        if self.property_invoice_count == 0:
+            self.state = 'draft'
+        else:
+            raise UserError(_('Cannot set to draft because there are associated invoices.')) 
 
 class AccountMove(models.Model):
     _inherit = 'account.move'

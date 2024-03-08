@@ -56,7 +56,7 @@
 							<field name="payment_option" widget="radio" attrs="{'invisible': [('property_type', '!=', 'sale')], 'required': [('property_type', '=', 'sale')], 'readonly': [('state', '!=', 'new')]}" />
 							<field name="partial_payment_id" attrs="{'invisible': ['|',('property_type', '!=', 'sale'),('payment_option', '!=', 'installment')], 'required': [('property_type', '=', 'sale'),('payment_option', '=', 'installment')], 'readonly': [('state', '!=', 'new')]}" />
 							<field name="agreement_start_date" attrs="{'invisible': [('property_type', '!=', 'rent')], 'required': [('property_type', '=', 'rent')], 'readonly': [('state', '!=', 'new')]}" />
-							<field name="first_installment_date" attrs="{'invisible': ['|',('property_type', '!=', 'sale'),('payment_option', '!=', 'installment')], 'required': [('property_type', '=', 'sale'),('payment_option', '=', 'installment')], 'readonly': [('state', '!=', 'new')]}" />
+							<field name="first_installment_date" attrs="{'invisible': ['|',('property_type', '!=', 'sale'),('payment_option', '!=', 'installment')], 'required': [('property_type', '=', 'sale'),('payment_option', '=', 'installment')], 'readonly': [('state', '==', 'running')]}" />
 							<label for="agreement_duration" string="Duration" attrs="{'invisible': [('property_type', '!=', 'rent')], 'required': [('property_type', '=', 'rent')], 'readonly': [('state', '!=', 'new')]}" />
 							<div attrs="{'invisible': [('property_type', '!=', 'rent')], 'required': [('property_type', '=', 'rent')]}">
 								<field name="agreement_duration" class="oe_inline" required="1" attrs="{'readonly': [('state', '!=', 'new')]}"/>
@@ -64,7 +64,7 @@
 							</div>
 
 							<field name="agreement_expiry_date" attrs="{'invisible': [('property_type', '!=', 'rent')], 'required': [('property_type', '=', 'rent')]}" />
-							<field name="delivery_date" readonly="1" />
+							<field name="delivery_date" attrs="{'readonly': [('state', '==', 'running')]}" />
 						</group>
 
 					</group>
