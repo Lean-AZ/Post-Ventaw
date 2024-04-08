@@ -71,8 +71,7 @@
 			<field name="name">Tenent: agreement rules</field>
 			<field name="model_id"
 				ref="sr_property_rental_management.model_sr_tenancy_agreement" />
-			<field name="domain_force">[('tenant_id','=',user.partner_id.id)]
-			</field>
+			<field name="domain_force"></field>
 			<field name="groups"
 				eval="[(4,ref('sr_property_rental_management.group_tenant'))]" />
 		</record>
@@ -81,8 +80,7 @@
 			<field name="name">Agent: agreement rules</field>
 			<field name="model_id"
 				ref="sr_property_rental_management.model_sr_tenancy_agreement" />
-			<field name="domain_force">[('agent_id','=',user.partner_id.id)]
-			</field>
+			<field name="domain_force"></field>
 			<field name="groups"
 				eval="[(4,ref('sr_property_rental_management.group_agent'))]" />
 		</record>
@@ -91,8 +89,7 @@
 			<field name="name">Landlord: agreement rules</field>
 			<field name="model_id"
 				ref="sr_property_rental_management.model_sr_tenancy_agreement" />
-			<field name="domain_force">[('landloard_id','=',user.partner_id.id)]
-			</field>
+			<field name="domain_force"></field>
 			<field name="groups"
 				eval="[(4,ref('sr_property_rental_management.group_landlord'))]" />
 		</record>
@@ -101,8 +98,7 @@
 			<field name="name">Agent: See own commission line</field>
 			<field name="model_id"
 				ref="sr_property_rental_management.model_sr_property_agent_commission_lines" />
-			<field name="domain_force">[('agent_id','=',user.partner_id.id)]
-			</field>
+			<field name="domain_force"></field>
 			<field name="groups"
 				eval="[(4,ref('sr_property_rental_management.group_agent'))]" />
 		</record>
@@ -111,8 +107,7 @@
 			<field name="name">Agent: See own commission settlement</field>
 			<field name="model_id"
 				ref="sr_property_rental_management.model_sr_property_agent_commission_settlement" />
-			<field name="domain_force">[('agent_id','=',user.partner_id.id)]
-			</field>
+			<field name="domain_force"></field>
 			<field name="groups"
 				eval="[(4,ref('sr_property_rental_management.group_agent'))]" />
 		</record>
