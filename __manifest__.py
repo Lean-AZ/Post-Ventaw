@@ -83,6 +83,8 @@
         'views/unit.xml',
         'reports/reporte_separacion_action.xml',
         'reports/reporte_separacion_template.xml',
+        'reports/recibo_pago_template.xml',
+        'reports/recibo_pago_unidad_action.xml',
     ],
     # 'installable': True,
     # 'auto_install': False,
