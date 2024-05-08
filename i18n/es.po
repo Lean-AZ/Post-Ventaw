@@ -129,7 +129,7 @@ msgstr "Monto"
 #. module: sr_property_rental_management
 #: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__amount_to_finance
 msgid "Amount To Finance"
-msgstr "Monto a financiar"
+msgstr "Monto Inicial"
 
 #. module: sr_property_rental_management
 #: model:ir.model.fields,field_description:sr_property_rental_management.field_unit_unit__carpet_area
@@ -622,7 +622,7 @@ msgstr "Imagen"
 #. module: sr_property_rental_management
 #: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__initial_amount
 msgid "Initial Amount"
-msgstr "Monto Inicial"
+msgstr "Monto De Separación"
 
 #. module: sr_property_rental_management
 #: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__partial_payment_id
