@@ -121,6 +121,12 @@ class srTenancyAgreement(models.Model):
     co_tenant_id = fields.Many2one('res.partner', string="Copropietario")
     delivery_date = fields.Date('Fecha de entrega', store=True, related='property_id.delivery_date')
     agent_type = fields.Selection([('interno', 'Interno'), ('externo', 'Externo')], string="Tipo de Agente", default='interno')
+    co_owner_relationship = fields.Selection([
+        ('casado', 'Casado'),
+        ('hermanos', 'Hermanos'),
+        ('amigos', 'Amigos'),
+        ('persona_juridica', 'Persona Jurídica')
+    ], string="Relación con el Co-propietario", help="Select the relationship type between the tenant and the co-owner.")
 
     # @api.onchange('agreement_date')
     # def _onchange_agreement_date(self):

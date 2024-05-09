@@ -53,6 +53,7 @@
 							<field name="agreement_date" />
 							<field name="tenant_id" domain="[('is_tenant','=', True)]" attrs="{'readonly': [('state', '!=', 'new')]}" options="{'no_create':True, 'no_create_edit':True, 'no_open':True}"/>
 							<field name="co_tenant_id" domain="[('is_tenant','=', True)]" attrs="{'readonly': [('state', '!=', 'new')]}" options="{'no_create':True, 'no_create_edit':True, 'no_open':True}"/>
+							<field name="co_owner_relationship"/>
 							<field name="payment_option" widget="radio" attrs="{'invisible': [('property_type', '!=', 'sale')], 'required': [('property_type', '=', 'sale')], 'readonly': [('state', '!=', 'new')]}" />
 							<field name="partial_payment_id" attrs="{'invisible': ['|',('property_type', '!=', 'sale'),('payment_option', '!=', 'installment')], 'required': [('property_type', '=', 'sale'),('payment_option', '=', 'installment')], 'readonly': [('state', '!=', 'new')]}" />
 							<field name="agreement_start_date" attrs="{'invisible': [('property_type', '!=', 'rent')], 'required': [('property_type', '=', 'rent')], 'readonly': [('state', '!=', 'new')]}" />

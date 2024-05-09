@@ -13,120 +13,119 @@
                             </div>
                             <div>
                                 <div class='container text-justify'>
-                                <div class="row my-3">
-                                    <div style="width:33%" class=" flex-column">
-                                        <strong class="m-0">Proyecto:</strong>
-                                        <t t-esc="doc.company_id.name"/>
-                                    </div>
-                                    <div style="width:33%" class=" flex-column">
-                                        <strong class="m-0">Cliente:</strong>
-                                        <t t-esc="doc.partner_id.name"/>
-                                    </div>
-                                    <t t-if="doc.tenancy_agreement.co_tenant_id">
+                                    <div class="row my-3">
                                         <div style="width:33%" class=" flex-column">
-                                            <strong class="m-0">Copropietario:</strong>
-                                            <t t-esc="doc.tenancy_agreement.co_tenant_id.name"/>
+                                            <strong class="m-0">Proyecto:</strong>
+                                            <t t-esc="doc.company_id.name"/>
                                         </div>
-                                    </t>
-                                </div>
-                                <div class="row my-3">
-                                    <div style="width:33%" class=" flex-column">
-                                        <strong class="m-0">Habitaciones:</strong>
-                                        <t t-esc="doc.property_id.property_badrooms"/>
+                                        <div style="width:33%" class=" flex-column">
+                                            <strong class="m-0">Cliente:</strong>
+                                            <t t-esc="doc.partner_id.name"/>
+                                        </div>
+                                        <t t-if="doc.tenancy_agreement.co_tenant_id">
+                                            <div style="width:33%" class=" flex-column">
+                                                <strong class="m-0">Copropietario:</strong>
+                                                <t t-esc="doc.tenancy_agreement.co_tenant_id.name"/>
+                                            </div>
+                                        </t>
                                     </div>
-                                    <div style="width:33%" class=" flex-column">
-                                        <strong class="m-0">Baños:</strong>
-                                        <t t-esc="doc.property_id.property_bathrooms"/>
+                                    <div class="row my-3">
+                                        <div style="width:33%" class=" flex-column">
+                                            <strong class="m-0">Habitaciones:</strong>
+                                            <t t-esc="doc.property_id.property_badrooms"/>
+                                        </div>
+                                        <div style="width:33%" class=" flex-column">
+                                            <strong class="m-0">Baños:</strong>
+                                            <t t-esc="doc.property_id.property_bathrooms"/>
+                                        </div>
+                                        <div style="width:33%" class=" flex-column">
+                                            <strong class="m-0">Parqueos:</strong>
+                                            <t t-esc="doc.property_id.property_parking_lots"/>
+                                        </div>
                                     </div>
-                                    <div style="width:33%" class=" flex-column">
-                                        <strong class="m-0">Parqueos:</strong>
-                                        <t t-esc="doc.property_id.property_parking_lots"/>
+                                    <div class="row my-3">
+                                        <div style="width:33%" class=" flex-column">
+                                            <strong class="m-0">Apartamento:</strong>
+                                            <t t-esc="doc.property_id.name"/>
+                                        </div>
+                                        <div style="width:33%" class=" flex-column">
+                                            <strong class="m-0">Area Construcción:</strong>
+                                            <t t-esc="doc.property_id.property_carpet_area"/>
+                                        </div>
+                                        <div style="width:33%" class=" flex-column">
+                                            <strong class="m-0">Precio:</strong>
+                                            <t t-out="doc.property_id.property_sale_price" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row my-3">
-                                    <div style="width:33%" class=" flex-column">
-                                        <strong class="m-0">Apartamento:</strong>
-                                        <t t-esc="doc.property_id.name"/>
-                                    </div>
-                                    <div style="width:33%" class=" flex-column">
-                                        <strong class="m-0">Area Construcción:</strong>
-                                        <t t-esc="doc.property_id.property_carpet_area"/>
-                                    </div>
-                                    <div style="width:33%" class=" flex-column">
-                                        <strong class="m-0">Precio:</strong>
-                                        <t t-out="doc.property_id.property_sale_price" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
-
-                                    </div>
-                                </div>
-                                 <div>
+                                    <div>
                                  </div>
-                                <t t-if="doc.payment_state != 'invoicing_legacy'">
-                                    <t t-set="payments_vals" t-value="doc.sudo()._get_reconciled_info_JSON_values()"/>
-                                    <t t-foreach="payments_vals" t-as="payment_vals">
-                                  
-                                        <div class=" flex-column justify-content-between">
-                                            <div class=" my-3">
+                                    <t t-if="doc.payment_state != 'invoicing_legacy'">
+                                        <t t-set="payments_vals" t-value="doc.sudo()._get_reconciled_info_JSON_values()"/>
+                                        <t t-foreach="payments_vals" t-as="payment_vals">
+                                            <div class=" flex-column justify-content-between">
+                                                <div class=" my-3">
                                                     <div style="width:33%" class=" flex-column">
                                                         <strong class="m-0">Pagado en:</strong>
                                                         <t t-out="payment_vals['date']"  t-options='{"widget": "date"}'/>
                                                     </div>
-                                                     <div style="width:33%" class=" flex-column">
+                                                    <div style="width:33%" class=" flex-column">
                                                         <strong class="m-0">Cuenta:</strong>
                                                         <t t-out="payment_vals['journal_name']"/>
                                                     </div>
-                                                     <div style="width:33%" class=" flex-column">
+                                                    <div style="width:33%" class=" flex-column">
                                                         <strong class="m-0">Memo:</strong>
                                                         <t t-out="payment_vals['ref']"/>
                                                     </div>
-                                            </div>
-                                            <div class=" my-3">
-                                                  <div style="width:33%" class=" flex-column">
+                                                </div>
+                                                <div class=" my-3">
+                                                    <div style="width:33%" class=" flex-column">
                                                         <strong class="m-0">Monto:</strong>
                                                         <span t-out="payment_vals['amount']"
                                                       t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                                     </div>
-                                                   <div style="width:33%" class=" flex-column">
+                                                    <div style="width:33%" class=" flex-column">
                                                         <strong class="m-0">Tasa:</strong>
-                                                             <span t-esc="doc.get_report_data()['conversion_rate']" t-options='{"widget": "float", "precision": 2}'/>
+                                                        <!-- <span t-esc="doc.get_report_data()['conversion_rate']" t-options='{"widget": "float", "precision": 2}'/> -->
+                                                        <t t-set="rate" t-value="doc.amount_total_signed / doc.amount_total if doc.amount_total else 0"/>
+                                                        <span t-esc="rate" t-options='{"widget": "float", "precision": 4}'/>
                                                     </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </t>
-                                    <div>
-                                        <strong>
+                                        </t>
+                                        <div>
+                                            <strong>
                                                 Nota:
                                             </strong>
-                                    <ul>
-                                        <li>
-                                        
-                                            <span>El monto de reservación de inmueble no es reembolsable en caso de desistimiento.</span>
-                                        </li>
-                                        <li>
-                                            <span>El cliente queda obligado a suministrar a la empresa las documentaciones  concernientes con el objetivo de cumplir a cabalidad con los requerimientos de la  Ley 155-17, contra El Lavado de Activos y Financiamiento del Terrorismo. Queda entendido que el incumplimiento en sus obligaciones de colaboración  constituye una violación a la presenta negociación que implica la cancelación de esta reserva. En este caso, La empresa se compromete a devolver los fondos entregados descontando los gastos financieros.</span>
-                                        </li>
-                                    </ul>
-                                    </div>
-                                    <div class="text-center">
-                                        <strong>
+                                            <ul>
+                                                <li>
+                                                    <span>El monto de reservación de inmueble no es reembolsable en caso de desistimiento.</span>
+                                                </li>
+                                                <li>
+                                                    <span>El cliente queda obligado a suministrar a la empresa las documentaciones  concernientes con el objetivo de cumplir a cabalidad con los requerimientos de la  Ley 155-17, contra El Lavado de Activos y Financiamiento del Terrorismo. Queda entendido que el incumplimiento en sus obligaciones de colaboración  constituye una violación a la presenta negociación que implica la cancelación de esta reserva. En este caso, La empresa se compromete a devolver los fondos entregados descontando los gastos financieros.</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="text-center">
+                                            <strong>
                                                 Realizado por:
                                         </strong>
-                                        <div class="pt-5">
+                                            <div class="pt-5">
                                         __________________________________________________________
                                         </div>
-                                        <p>
+                                            <p>
                                         ESTE RECIBO NO ES VALIDO SI NO ESTA DEBIDAMENTE FIRMADO Y SELLADO POR LA CAJERA GENERAL
                                         </p>
-                                    </div>
-                                    <t t-foreach="docs" t-as="doc">
-    <!-- <div>
+                                        </div>
+                                        <t t-foreach="docs" t-as="doc">
+                                            <!-- <div>
         <p>Conversion Rate: <t t-esc="doc.get_report_data()['conversion_rate']" t-options='{"widget": "float", "precision": 2}'/></p>
         <p>From: <t t-esc="doc.get_report_data()['from_currency']"/></p>
         <p>To currency: <t t-esc="doc.get_report_data()['to_currency']"/></p>
         <p>Conversion Rate: <t t-esc="doc.get_report_data()['company_name']"/></p>
         <p>Conversion Rate: <t t-esc="doc.get_report_data()['date']"/></p>
     </div> -->
-</t>
-                                    <!-- <t t-if="len(payments_vals) > 0">
+                                        </t>
+                                        <!-- <t t-if="len(payments_vals) > 0">
                                         <div class="border-black">
                                             <div>
                                                 <strong>
@@ -138,7 +137,7 @@
                                             </div>
                                         </div>
                                     </t> -->
-                                </t>
+                                    </t>
                                 </div>
                             </div>
                         </div>
