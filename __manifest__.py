@@ -10,10 +10,10 @@
 
 {
     'name': 'Property Sale, and Rental Management',
-    'version': '15.0.0.0',
+    'version': '15',
     'category': 'Extra Addons',
     "license": "OPL-1",
-    'summary': 'Odoo Real Estate Management, Property Sale Management, Property Rent Management, Property Lease Management, Agent Management, Tenant Management, Landlord Management, Tenancy Agreement Management, Commission Management, property contract management',
+    'summary': 'venta de propiedades',
     'description': """
         odoo Real Estate Management
         odoo property Management
@@ -65,7 +65,7 @@
 """,
     "price": 50,
     "currency": 'EUR',
-    'author': 'Sitaram',
+    'author': 'Selenoide',
     'website':"https://www.sitaramsolutions.in",
     'depends': ['base', 'account', 'utm','product'],
     'data': [
