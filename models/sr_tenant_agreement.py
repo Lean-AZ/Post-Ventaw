@@ -12,6 +12,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
 import datetime
 from dateutil.relativedelta import relativedelta
+import calendar
 
 
 class srTenancyAgreement(models.Model):
@@ -113,7 +114,7 @@ class srTenancyAgreement(models.Model):
     maintenance_charge = fields.Float('Maintenance Charge', related="property_id.property_maintenance_charge", currency_field='currency_id', store=True)
     maintenance_interval_type = fields.Selection([('month', 'Monthly'), ('year', 'Yearly'), ('one_time', 'One Time')], string="Maintenance Interval ", related="property_id.property_maintenance_interval_type", store=True)
     tenant_id = fields.Many2one('res.partner', string="Tenant", required=True)
-    payment_option = fields.Selection([('single', 'Single Payment'), ('installment', 'Installments')], string="Payments Option", default='single')
+    payment_option = fields.Selection([('single', 'Single Payment'), ('installment', 'Installments')], string="Payments Option", default='installment')
     partial_payment_id = fields.Many2one('sr.property.partial.payment', 'Installments')
     state = fields.Selection([
         ('new', 'New'),
@@ -235,6 +236,7 @@ class srTenancyAgreement(models.Model):
             self.env['account.move'].create({
                             'partner_id':self.tenant_id.id,
                             'invoice_date':datetime.datetime.today().date(),
+                            'invoice_date_due':datetime.datetime.today().date() + relativedelta(days=30),
                             'is_property_invoice': True,
                             'property_id': self.property_id.id,
                             'move_type':'out_invoice',
@@ -244,25 +246,17 @@ class srTenancyAgreement(models.Model):
                             'invoice_line_ids':
                                     [(0, 0, {
                             'product_id':self.property_id.id,
-                            'name': self.property_id.name + "Property Sold",
+                            'name': self.property_id.name + " Saldo",
                             'quantity':1,
                             'price_unit':self.total_price,
                             'account_id': accounts['income'].id,
-                                }),
-                            (0, 0, {
-                                'product_id':self.property_id.id,
-                                'name': self.property_id.name + "Property Maintenance",
-                                'quantity':1,
-                                'price_unit':self.total_maintenance,
-                                'account_id': accounts['income'].id,
-                            })
-                                    
-                                    ]
+                                })]
                             })
         else:
             self.env['account.move'].create({
              'partner_id':self.tenant_id.id,
              'invoice_date':datetime.datetime.today().date(),
+             'invoice_date_due':datetime.datetime.today().date() + relativedelta(days=30),
              'is_property_invoice': True,
              'property_id': self.property_id.id,
              'move_type':'out_invoice',
@@ -344,6 +338,7 @@ class srTenancyAgreement(models.Model):
                     self.env['account.move'].create({
                                 'partner_id':self.tenant_id.id,
                                 'invoice_date': installment_date,
+                                'invoice_date_due': installment_date + relativedelta(days=30),
                                 'is_property_invoice': True,
                                 'property_id': self.property_id.id,
                                 'move_type':'out_invoice',
@@ -359,11 +354,15 @@ class srTenancyAgreement(models.Model):
                                 'account_id': accounts['income'].id,
                                     })]
                                 })
-                    installment_date += relativedelta(months=1)
+                    next_month = installment_date + relativedelta(months=1)
+                    last_day_of_next_month = next_month.replace(day=calendar.monthrange(next_month.year, next_month.month)[1])
+                    installment_date = last_day_of_next_month
+                    invoice_date_due = installment_date + relativedelta(days=30)
 
                 self.env['account.move'].create({
                  'partner_id':self.tenant_id.id,
                  'invoice_date':installment_date,
+                 'invoice_date_due':invoice_date_due,
                  'is_property_invoice': True,
                  'property_id': self.property_id.id,
                  'move_type':'out_invoice',
@@ -431,6 +430,7 @@ class srTenancyAgreement(models.Model):
             self.env['account.move'].create({
              'partner_id':self.tenant_id.id,
              'invoice_date':datetime.datetime.today().date(),
+             'invoice_date_due':datetime.datetime.today().date() + relativedelta(days=30),
              'is_property_invoice': True,
              'property_id': self.property_id.id,
              'move_type':'out_invoice',

@@ -81,23 +81,20 @@
                                 <thead>
                                     <tr>
                                         <th name="th_description" class="text-left">
-                                            <span>Description</span>
+                                            <span>Concepto</span>
                                         </th>
                                         <th name="th_quantity" class="text-right">
-                                            <span>Quantity</span>
+                                            <span>Cantidad</span>
                                         </th>
                                         <th name="th_priceunit" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                                            <span>Unit Price</span>
+                                            <span>Precio Unitario</span>
                                         </th>
                                         <th name="th_price_unit" t-if="display_discount" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                                            <span>Disc.%</span>
-                                        </th>
-                                        <th name="th_taxes" t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                                            <span>Taxes</span>
+                                            <span>Desc.%</span>
                                         </th>
                                         <th name="th_subtotal" class="text-right">
-                                            <span groups="account.group_show_line_subtotals_tax_excluded">Amount</span>
-                                            <span groups="account.group_show_line_subtotals_tax_included">Total Price</span>
+                                            <span groups="account.group_show_line_subtotals_tax_excluded">Monto</span>
+                                            <span groups="account.group_show_line_subtotals_tax_included">Total</span>
                                         </th>
                                     </tr>
                                 </thead>
@@ -121,9 +118,6 @@
                                                 </td>
                                                 <td t-if="display_discount" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                                     <span class="text-nowrap" t-field="line.discount"/>
-                                                </td>
-                                                <td t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
-                                                    <span t-esc="', '.join(map(lambda x: (x.description or x.name), line.tax_ids))" id="line_tax_ids"/>
                                                 </td>
                                                 <td class="text-right o_price_total">
                                                     <span class="text-nowrap" t-field="line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
