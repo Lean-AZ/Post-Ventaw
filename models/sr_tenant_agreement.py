@@ -122,10 +122,10 @@ class srTenancyAgreement(models.Model):
         ('expired', 'Expired'),
         ('invoiced', 'Invoiced'),
         ], string='Status', readonly=True, copy=False, index=True, track_visibility="onchange", tracking=5, default='new')
-    reserve_amount = fields.Float('Separación', currency_field='currency_id', store=True)
-    initial_amount = fields.Float('Reserva', currency_field='currency_id', store=True)
+    reserve_amount = fields.Float('Monto De Reserva', currency_field='currency_id', store=True)
+    initial_amount = fields.Float('Monto de Separación', currency_field='currency_id', store=True)
     currency_id = fields.Many2one('res.currency', string='Moneda', readonly=True, store=True, related='property_id.currency_id')
-    amount_to_finance = fields.Float('Inicial', currency_field='currency_id', store=True)
+    amount_to_finance = fields.Float('Monto Inicial', currency_field='currency_id', store=True)
     first_installment_date = fields.Date(string='Pago de primer cuota', copy=False, store=True)
     co_tenant_id = fields.Many2one('res.partner', string="Copropietario")
     delivery_date = fields.Date('Fecha de entrega', store=True, related='property_id.delivery_date')
