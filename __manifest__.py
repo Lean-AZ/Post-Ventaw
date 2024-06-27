@@ -85,6 +85,8 @@
         'reports/reporte_separacion_template.xml',
         'reports/recibo_pago_template.xml',
         'reports/recibo_pago_unidad_action.xml',
+        'reports/contrato_action.xml',
+        'reports/contrato_template.xml',
     ],
     # 'installable': True,
     # 'auto_install': False,
