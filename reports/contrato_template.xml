@@ -18,7 +18,7 @@
                             CONSTRUCTORA CIVILTEC, S.R.L., sociedad constituida y organizada de conformidad con las leyes de la República Dominicana, provista del Registro Nacional de Contribuyentes (RNC) bajo el número 1-30-57482-2, con domicilio social establecido en la Calle XII Juegos, número 54, sector El Millón, en esta ciudad de Santo Domingo de Guzmán, Distrito Nacional, República Dominicana, debidamente representada a los fines del presente contrato por su Gerente, el señor PEDRO RENÉ ANTONIO COLUMNA NÚÑEZ, de nacionalidad dominicana, mayor de edad, casado, titular de la Cédula de Identidad y Electoral Núm. 001-1784662-6, con domicilio en esta ciudad de Santo Domingo de Guzmán, Distrito Nacional, República Dominicana; quien en lo adelante será denominada como “LA CONSTRUCTORA”, “EL FIDEICOMITENTE DESARROLLADOR” o por su denominación social completa indistintamente; y,
                             </p>
                             <p>
-                            De una última parte, <span t-field="doc.tenant_id.name"/>, de nacionalidad __________________________, mayor de edad, de estado civil soltero(a), titular de la Cédula de Identidad y Electoral Núm.  <span t-field="doc.tenant_id.vat"/> y/o del Pasaporte Núm. __________________________, quien, para fines del presente contrato, se encuentra domiciliado(a) en <span t-field="doc.tenant_id.street"/>, <span t-field="doc.tenant_id.city"/>, <span t-field="doc.tenant_id.country_id"/>, quien en lo adelante se denominará “EL INTERESADO EN COMPRAR”.
+                            De una última parte, <span t-field="doc.tenant_id.name"/>, de nacionalidad <span t-field="doc.tenant_id.nacionalidad"/>, mayor de edad, de estado civil soltero(a), titular de la Cédula de Identidad y Electoral Núm.  <span t-field="doc.tenant_id.vat"/> y/o del Pasaporte Núm. <span t-field="doc.tenant_id.passport_number"/>, quien, para fines del presente contrato, se encuentra domiciliado(a) en <span t-field="doc.tenant_id.street"/>, <span t-field="doc.tenant_id.city"/>, <span t-field="doc.tenant_id.country_id"/>, quien en lo adelante se denominará “EL INTERESADO EN COMPRAR”.
                             </p>
                             <p>
                             En lo adelante, cuando se haga referencia a EL VENDEDOR o EL FIDEICOMISO, LA CONSTRUCTORA o FIDEICOMITENTE DESARROLLADOR y EL INTERESADO EN COMPRAR de manera conjunta dentro del presente acto, se designarán como “LAS PARTES”.
@@ -59,7 +59,7 @@
                     </div>
                     <div class="content">
                         <p>HAN CONVENIDO Y PACTADO LO SIGUIENTE:</p>
-                        <p>ARTÍCULO PRIMERO: OBJETO. - EL VENDEDOR, bajo los términos y condiciones establecidos en este contrato, otorga una opción de compra en favor de EL INTERESADO EN COMPRAR, respecto a la unidad inmobiliaria Signada como ____________.</p>
+                        <p>ARTÍCULO PRIMERO: OBJETO. - EL VENDEDOR, bajo los términos y condiciones establecidos en este contrato, otorga una opción de compra en favor de EL INTERESADO EN COMPRAR, respecto a la unidad inmobiliaria Signada como <span t-field="doc.property_id.name"/>.</p>
                         <p>PÁRRAFO I: EL INTERESADO EN COMPRAR declara y reconoce que tanto el metraje de la unidad como su número de identificación pudieran variar como resultado de la Constitución de Condominio. En caso de que resulte dicha variación, EL INTERESADO EN COMPRAR reconoce frente a EL FIDEICOMISO y LA CONSTRUCTORA que dicho cambio no se debe a una variación del objeto del presente contrato, por lo que, no será considerado como un incumplimiento por parte de EL FIDEICOMISO y/o LA CONSTRUCTORA ni una causa de determinación sin responsabilidad por parte de EL INTERESADO EN COMPRAR.</p>
                         <p>PÁRRAFO II: EL INTERESADO EN COMPRAR, declara y reconoce que tanto personal como económicamente reúne todos y cada uno de los requisitos para optar por la presente opción a compra, cumplir con todas las condiciones establecidas en este contrato para adquirir el inmueble objeto de esta opción a compra y que los recursos para su compra provienen de actividades de carácter lícitas y producto de su legítimo trabajo, comercio, o industria. Asimismo, declara y reconoce que está en capacidad de pagar el total del precio de venta de la unidad funcional y que, de ser necesario, está en condiciones de cumplir con los requisitos exigibles para optar por un préstamo o financiamiento para de esta forma pagar el total del precio de venta de la unidad funcional, cuando este pago sea exigible, de conformidad con lo indicado en este contrato.</p>
                         <p>PÁRRAFO III: LAS PARTES acuerdan que la Memoria Descriptiva del inmueble, marcada como Anexo 1, denominada “MEMORIA DESCRIPTIVA PROYECTO ZENTRO”, forma parte integral del presente contrato.</p>
@@ -69,27 +69,27 @@
                         <p>Para los fines de este contrato, EL INTERESADO EN COMPRAR declara los siguientes datos:</p>
                         <ul>
                             <li>
-                                <strong>Nombre Completo:</strong> ____________________</li>
+                                <strong>Nombre Completo:</strong> <span t-field="doc.tenant_id.name"/></li>
                             <li>
-                                <strong>Cédula/Documento Identidad:</strong> ____________________</li>
+                                <strong>Cédula/Documento Identidad:</strong> <span t-field="doc.tenant_id.vat"/></li>
                             <li>
-                                <strong>Estado Civil:</strong> ____________________</li>
+                                <strong>Estado Civil:</strong> <span t-field="doc.tenant_id.civil_status"/></li>
                             <li>
-                                <strong>Domicilio de Elección en Rep. Dom.:</strong> ____________________</li>
+                                <strong>Domicilio de Elección en Rep. Dom.:</strong> <span t-field="doc.tenant_id.street"/>, <span t-field="doc.tenant_id.city"/>, <span t-field="doc.tenant_id.country_id"/></li>
                             <li>
-                                <strong>Teléfono:</strong> ____________________</li>
+                                <strong>Teléfono:</strong> <span t-field="doc.tenant_id.phone"/></li>
                             <li>
-                                <strong>Correo Electrónico:</strong> ____________________</li>
+                                <strong>Correo Electrónico:</strong> <span t-field="doc.tenant_id.email"/></li>
                             <li>
-                                <strong>Oficio/Profesión:</strong> ____________________</li>
+                                <strong>Oficio/Profesión:</strong> <span t-field="doc.tenant_id.title"/></li>
                             <li>
-                                <strong>Cuenta Bancaria:</strong> ____________________</li>
+                                <strong>Cuenta Bancaria:</strong> <span t-field="doc.tenant_id.bank_account_number"/></li>
                             <li>
-                                <strong>Entidad Bancaria:</strong> ____________________</li>
+                                <strong>Entidad Bancaria:</strong> <span t-field="doc.tenant_id.bank_name"/></li>
                             <li>
-                                <strong>Tipo de Cuenta:</strong> ____________________</li>
+                                <strong>Tipo de Cuenta:</strong> <span t-field="doc.tenant_id.account_type"/></li>
                             <li>
-                                <strong>Moneda:</strong> ____________________</li>
+                                <strong>Moneda:</strong> <span t-field="doc.tenant_id.currency"/></li>
                         </ul>
                     </div>
                     <div class="content">
@@ -112,17 +112,17 @@
 
                         <h2>ARTÍCULO SEGUNDO: PRECIO Y FORMA DE PAGO (ANEXO B)</h2>
                         <p>
-                            De común acuerdo, las partes han establecido que el precio de compra del inmueble asciende a la suma de _____________ DÓLARES DE LOS ESTADOS UNIDOS DE AMERICA CON 00/100 (USD$ _____________), en lo adelante el precio de compra que EL INTERESADO EN COMPRAR se obliga a pagar de la siguiente forma:
+                            De común acuerdo, las partes han establecido que el precio de compra del inmueble asciende a la suma de    <span t-esc="doc.price_to_words(doc.property_sale_price)"/> DÓLARES DE LOS ESTADOS UNIDOS DE AMERICA CON 00/100 (USD$ <span t-esc="'{0:,.2f}'.format(doc.property_sale_price)"/>), en lo adelante el precio de compra que EL INTERESADO EN COMPRAR se obliga a pagar de la siguiente forma:
                         </p>
-                        <!-- Include the detailed payment terms here if necessary -->
                     </div>
                     <div class="content">
                         <p>
-                            <strong>Pago Inicial:</strong> La suma de _____________ DÓLARES DE LOS ESTADOS UNIDOS DE AMERICA CON 00/100 (USD$ _____________) al momento de la firma del presente contrato (en lo adelante el “pago de separación”).
+                            <strong>Pago Inicial:</strong> La suma de <span t-esc="doc.price_to_words(doc.initial_amount)"/> DÓLARES DE LOS ESTADOS UNIDOS DE AMERICA CON 00/100 (USD$ <span t-esc="'{0:,.2f}'.format(doc.initial_amount)"/>) al momento de la firma del presente contrato (en lo adelante el “pago de separación”).
                         </p>
                         <p>
-                            <strong>Pagos Adicionales:</strong> La suma de _____________ DÓLARES DE LOS ESTADOS UNIDOS DE AMERICA CON 00/100 (USD$ _____________), la cual será pagada por EL INTERESADO EN COMPRAR en ________ (____) cuotas, mediante depósito en la cuenta de ___________ Núm. ____________, abierta en ____________________________ a nombre del FIDEICOMISO INMOBILIARIO Y DE GARANTÍA ZENTRO BY CIVILTEC, en los montos y fechas indicados a continuación:
+                            <strong>Pagos Adicionales:</strong> La suma de _____________ DÓLARES DE LOS ESTADOS UNIDOS DE AMERICA CON 00/100 (USD$ _____________), la cual será pagada por EL INTERESADO EN COMPRAR en <span t-esc="doc.price_to_words(doc.property_id.property_invoice_count)"/> (<span t-field="doc.property_id.property_invoice_count"/>) cuotas, mediante depósito en la cuenta de ___________ Núm. ____________, abierta en ____________________________ a nombre del FIDEICOMISO INMOBILIARIO Y DE GARANTÍA ZENTRO BY CIVILTEC, en los montos y fechas indicados a continuación:
                         </p>
+                        <t t-set="invoices" t-value="doc.get_invoices_by_property(doc.property_id.id)"/>
                         <table style="width:100%;">
                             <thead>
                                 <tr>
@@ -132,31 +132,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <t t-foreach="invoices" t-as="invoice">
                                 <tr>
-                                    <td>Cuota X</td>
-                                    <td>________________</td>
-                                    <td>$________________</td>
+                                    <td>Cuota <t t-esc="invoice_index + 1"/></td>
+                                    <td><span t-field="invoice.invoice_date"/></td>
+                                    <td><span t-field="invoice.amount_total"/></td>
                                 </tr>
-                                <tr>
-                                    <td>Cuota X</td>
-                                    <td>________________</td>
-                                    <td>$________________</td>
-                                </tr>
-                                <tr>
-                                    <td>Cuota X</td>
-                                    <td>________________</td>
-                                    <td>$________________</td>
-                                </tr>
-                                <tr>
-                                    <td>Cuota X</td>
-                                    <td>________________</td>
-                                    <td>$________________</td>
-                                </tr>
-                                <tr>
-                                    <td>Cuota X</td>
-                                    <td>________________</td>
-                                    <td>$________________</td>
-                                </tr>
+                            </t>
                             </tbody>
                         </table>
                         <p>

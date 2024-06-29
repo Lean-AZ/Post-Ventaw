@@ -518,4 +518,68 @@ class srTenancyAgreement(models.Model):
                     'date': datetime.datetime.today().date(),
                     'commission_amount':record.commission_price
                     })
+    
+    def number_to_spanish_words(self, number):
+        units = ["", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"]
+        tens = ["", "diez", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"]
+        hundreds = ["", "ciento", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"]
+        thousands = ["", "mil", "millón", "mil millones", "billón"]
+
+        def spanish_number(n):
+            o = n % 10
+            t = (n % 100) // 10
+            h = (n % 1000) // 100
+
+            result = ""
+
+            if n == 100:
+                result = "cien"
+            else:
+                if t == 1 and o > 0:
+                    if o == 1:
+                        result = "once"
+                    elif o == 2:
+                        result = "doce"
+                    elif o == 3:
+                        result = "trece"
+                    elif o == 4:
+                        result = "catorce"
+                    elif o == 5:
+                        result = "quince"
+                    else:
+                        result = tens[t] + " y " + units[o]
+                else:
+                    result = tens[t] + ("" if t == 0 else " y ") + units[o]
+
+                result = hundreds[h] + " " + result
+
+            return result.strip()
+
+        if number < 1000:
+            return spanish_number(number)
+        else:
+            parts = []
+            current = number
+
+            for i in range(len(thousands)):
+                current, rem = divmod(current, 1000)
+                if rem > 0:
+                    parts.append(spanish_number(rem) + " " + thousands[i])
+
+            return ' '.join(reversed(parts)).strip()
+
+    def price_to_words(self, amount):
+        if self.property_sale_price:
+            price_in_words = self.number_to_spanish_words(int(amount))
+            return price_in_words.upper()
+        else:
+            return "El precio de venta del inmueble no está definido."
+
+    def get_invoices_by_property(self, property_id):
+        """Retrieve all invoices related to a specific property ID."""
+        invoices = self.env['account.move'].search([
+            ('property_id', '=', property_id),
+            ('move_type', 'in', ['out_invoice', 'in_invoice'])
+        ])
+        return invoices
                 
