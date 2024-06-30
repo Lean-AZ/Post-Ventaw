@@ -3,6 +3,7 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t t-call="web.external_layout">
+                 <link rel="stylesheet" type="text/css" href="/sr_property_rental_management/static/css/report_styles.css"/>
                     <div class="page">
                         <div class="oe_structure"/>
                         <div class="header">
@@ -162,7 +163,6 @@
                         <p><strong>PÁRRAFO X:</strong> El precio de venta podría ser aumentado si se produjeran aumentos en los materiales de la construcción, en la mano de obra o en cualquier otro rubro que incida en el costo de la construcción o del desarrollo del proyecto.</p>
                         <h2>ARTÍCULO TERCERO: CONDICIONES DE PERFECCIONAMIENTO</h2>
                         <p>Sin perjuicio de la suscripción del presente contrato, el perfeccionamiento de la venta, una vez esté lista la unidad adquirida, únicamente se efectuará si se encuentran cumplidas las condiciones siguientes:</p>
-                        <!-- Specify conditions here or continue with further details as needed -->
                     </div>
                     <div class="content">
                         <p>

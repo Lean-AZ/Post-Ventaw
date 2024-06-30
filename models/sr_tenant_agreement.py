@@ -25,7 +25,7 @@ class srTenancyAgreement(models.Model):
                 difference = relativedelta(order.agreement_expiry_date, order.agreement_start_date)
             else:
                 order.agreement_expiry_date = False
-                
+
             if order.property_id.property_type == 'rent':
                 commission = 0
                 if order.commission_type == 'percentage':
@@ -39,7 +39,7 @@ class srTenancyAgreement(models.Model):
                         maintenance_charge = order.property_id.property_maintenance_charge * difference.years
                     else:
                         maintenance_charge = order.property_id.property_maintenance_charge * 1
-                    
+
                 order.update({
                     'total_price': num_months * order.property_id.property_rent_price,
                     'total_maintenance':maintenance_charge,
@@ -64,13 +64,13 @@ class srTenancyAgreement(models.Model):
                     'commission_price':0,
                     'final_price' : 0
                 })
-    
+
     @api.onchange('agreement_start_date', 'agreement_duration', 'agreement_duration_type')
     def calculate_agreement_expiry_date(self):
         if self.agreement_start_date:
 
             if self.agreement_start_date < datetime.datetime.today().date():
-                    raise UserError(_('Please set proper agreement start date'))
+                raise UserError(_('Please set proper agreement start date'))
 
     @api.depends('company_id')
     def _compute_currency_id(self):
@@ -320,7 +320,7 @@ class srTenancyAgreement(models.Model):
                     if final_date.day < initial_date.day:
                         month_diff -= 1
                     return month_diff
-                
+
                 months_until_last_installment = months_between_dates(self.first_installment_date, self.delivery_date)
 
                 regular_installment_amount = self.amount_to_finance / months_until_last_installment
@@ -409,7 +409,7 @@ class srTenancyAgreement(models.Model):
             'reservation_history_ids':[(4,self.tenant_id.id)]
             })
         return
-    
+
     def action_booked(self):
         if self.property_id.state in ['rented', 'sold']:
             raise UserError(_('Sorry! You are late. Someone has already occupy this property.'))
@@ -518,7 +518,7 @@ class srTenancyAgreement(models.Model):
                     'date': datetime.datetime.today().date(),
                     'commission_amount':record.commission_price
                     })
-    
+
     def number_to_spanish_words(self, number):
         units = ["", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"]
         tens = ["", "diez", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"]
@@ -576,10 +576,13 @@ class srTenancyAgreement(models.Model):
             return "El precio de venta del inmueble no está definido."
 
     def get_invoices_by_property(self, property_id):
-        """Retrieve all invoices related to a specific property ID."""
-        invoices = self.env['account.move'].search([
-            ('property_id', '=', property_id),
-            ('move_type', 'in', ['out_invoice', 'in_invoice'])
-        ])
+        """Retrieve all unpaid invoices related to a specific property ID sorted by date."""
+        invoices = self.env["account.move"].search(
+            [
+                ("property_id", "=", property_id),
+                ("move_type", "in", ["out_invoice", "in_invoice"]),
+                ("payment_state", "!=", "paid"),  # Filters out fully paid invoices
+            ],
+            order="invoice_date asc",
+        )  # Sorts the result by invoice date in ascending order
         return invoices
-                

@@ -88,6 +88,11 @@
         'reports/contrato_action.xml',
         'reports/contrato_template.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'sr_property_rental_management/static/css/report_styles.css',
+        ],
+    },
     # 'installable': True,
     # 'auto_install': False,
     # 'application': True,
