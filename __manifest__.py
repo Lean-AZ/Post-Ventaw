@@ -67,7 +67,7 @@
     "currency": 'EUR',
     'author': 'Selenoide',
     'website':"https://www.sitaramsolutions.in",
-    'depends': ['base', 'account', 'utm','product'],
+    'depends': ['base', 'account', 'utm','product','civiltec_contact_fields'],
     'data': [
         'security/property_security.xml',
         'security/ir.model.access.csv',
