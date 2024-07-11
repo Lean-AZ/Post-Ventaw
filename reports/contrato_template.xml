@@ -12,6 +12,7 @@
                         </div>
                         <div class="content">
                             <h3>ENTRE:</h3>
+                            <div class="space"></div>
                             <p>
                             FIDEICOMISO INMOBILIARIO Y DE GARANTÍA ZENTRO BY CIVILTEC, inscrito en el Registro Nacional de Contribuyentes (RNC) con el Núm. 1-33-10606-1, patrimonio autónomo que tiene como administradora y vocera a la sociedad FIDUCIARIA LA NACIONAL, S.A., sociedad comercial constituida y organizada de conformidad con las leyes de la República Dominicana, provista del Registro Nacional de Contribuyente (RNC) número 1-31-19659-4, con domicilio social establecido en la Calle El Vergel, número 8, Edificio Corporativo II ALNAP, 5to. nivel, del sector El Vergel, en esta ciudad de Santo Domingo, Distrito Nacional, capital de la República Dominicana, debidamente representada a los fines del presente contrato por su Gerente General, el señor CÉSAR AUGUSTO PÁEZ MENDOZA, de nacionalidad colombiana, mayor de edad, casado, titular de la Cédula de Identidad Núm. 402-3876007-4, domiciliado en esta ciudad de de Santo Domingo de Guzmán, Distrito Nacional, Capital de la República Dominicana; quien en lo adelante y para los fines del presente acto se denominará “EL FIDEICOMISO”, “EL VENDEDOR” o por su denominación social completa indistintamente;
                             </p>
@@ -29,7 +30,8 @@
                     <div class="page">
                         <div class="oe_structure"/>
                         <div class="header">
-                            <h1>PREÁMBULO DEL CONTRATO DE OPCIÓN A COMPRA</h1>
+                            <h3>PREÁMBULO:</h3>
+                            <div class="space"></div>
                         </div>
                         <div class="content">
                             <p>
@@ -46,9 +48,6 @@
                     </div>
                     <div class="page">
                         <div class="oe_structure"/>
-                        <div class="header">
-                            <h1>CONTINUACIÓN DEL PREÁMBULO DEL CONTRATO DE OPCIÓN A COMPRA</h1>
-                        </div>
                         <div class="content">
                             <p>
                                 <strong>POR CUANTO (5°):</strong> La restitución de los recursos depositados por EL INTERESADO EN COMPRAR en la cuenta bancaria del PATRIMONIO FIDEICOMITIDO, en caso de resolución de la OPCION por mora del INTERESADO EN COMPRAR en el pago del precio, es decir, el retardo en el pago de los abonos del precio de las UNIDADES INMOBILIARIAS, o retracto del INTERESADO EN COMPRAR. En estos eventos, se descontarán adicionalmente las penalidades y/o la indemnización pactada, si a ello hubiere lugar.</p>
@@ -59,7 +58,9 @@
                         </div>
                     </div>
                     <div class="content">
-                        <p>HAN CONVENIDO Y PACTADO LO SIGUIENTE:</p>
+                        <div class="header">
+                            <h1>HAN CONVENIDO Y PACTADO LO SIGUIENTE:</h1>
+                        </div>
                         <p>ARTÍCULO PRIMERO: OBJETO. - EL VENDEDOR, bajo los términos y condiciones establecidos en este contrato, otorga una opción de compra en favor de EL INTERESADO EN COMPRAR, respecto a la unidad inmobiliaria Signada como <span t-field="doc.property_id.name"/>.</p>
                         <p>PÁRRAFO I: EL INTERESADO EN COMPRAR declara y reconoce que tanto el metraje de la unidad como su número de identificación pudieran variar como resultado de la Constitución de Condominio. En caso de que resulte dicha variación, EL INTERESADO EN COMPRAR reconoce frente a EL FIDEICOMISO y LA CONSTRUCTORA que dicho cambio no se debe a una variación del objeto del presente contrato, por lo que, no será considerado como un incumplimiento por parte de EL FIDEICOMISO y/o LA CONSTRUCTORA ni una causa de determinación sin responsabilidad por parte de EL INTERESADO EN COMPRAR.</p>
                         <p>PÁRRAFO II: EL INTERESADO EN COMPRAR, declara y reconoce que tanto personal como económicamente reúne todos y cada uno de los requisitos para optar por la presente opción a compra, cumplir con todas las condiciones establecidas en este contrato para adquirir el inmueble objeto de esta opción a compra y que los recursos para su compra provienen de actividades de carácter lícitas y producto de su legítimo trabajo, comercio, o industria. Asimismo, declara y reconoce que está en capacidad de pagar el total del precio de venta de la unidad funcional y que, de ser necesario, está en condiciones de cumplir con los requisitos exigibles para optar por un préstamo o financiamiento para de esta forma pagar el total del precio de venta de la unidad funcional, cuando este pago sea exigible, de conformidad con lo indicado en este contrato.</p>
@@ -94,8 +95,8 @@
                         </ul>
                     </div>
                     <div class="content">
-                        <h2>PÁRRAFO VI: DESCRIPCIÓN DEL PROYECTO</h2>
                         <p>
+                            <strong>PÁRRAFO VI: DESCRIPCIÓN DEL PROYECTO</strong>
                             El Condominio ZENTRO BY CIVILTEC estará localizado en la Avenida Enrique Jiménez Moya, esquina Avenida Simón Bolívar, Sector La Julia, en la ciudad de Santo Domingo de Guzmán, Distrito Nacional, capital de la República Dominicana, integrado por UNIDADES FUNCIONALES para uso como VIVIENDAS FAMILIARES, sujetas a un plan centralizado de renta hotelera y constará con las siguientes características y facilidades comunes:
                         </p>
                         <ul>
@@ -124,7 +125,7 @@
                             <strong>Pagos Adicionales:</strong> La suma de _____________ DÓLARES DE LOS ESTADOS UNIDOS DE AMERICA CON 00/100 (USD$ _____________), la cual será pagada por EL INTERESADO EN COMPRAR en <span t-esc="doc.price_to_words(doc.property_id.property_invoice_count)"/> (<span t-field="doc.property_id.property_invoice_count"/>) cuotas, mediante depósito en la cuenta de ___________ Núm. ____________, abierta en ____________________________ a nombre del FIDEICOMISO INMOBILIARIO Y DE GARANTÍA ZENTRO BY CIVILTEC, en los montos y fechas indicados a continuación:
                         </p>
                         <t t-set="invoices" t-value="doc.get_invoices_by_property(doc.property_id.id)"/>
-                        <table style="width:100%;">
+                        <table class="table-contract">
                             <thead>
                                 <tr>
                                     <th>CUOTA</th>
@@ -150,7 +151,6 @@
                         </p>
                     </div>
                     <div class="content">
-                        <h2>Condiciones de Pago y Penalizaciones</h2>
                         <p><strong>PÁRRAFO I:</strong> La tasa de cambio que se utilizará para calcular cada pago aplicado, incluyendo el saldo del precio en caso de optar por financiamiento de una entidad de intermediación financiera, será definida por LA CONSTRUCTORA al momento en que los valores sean efectivamente entregados al FIDEICOMISO, depositados en la cuenta dispuesta a esos fines y tendrá como base de cálculo la tasa que aplique la entidad de intermediación financiera que tenga el mayor aporte en el financiamiento del Proyecto.</p>
                         <p><strong>PÁRRAFO II:</strong> EL INTERESADO EN COMPRAR se compromete a pagar el Precio de Compra a EL FIDEICOMISO en los plazos y forma previstos en el Artículo Segundo este contrato, sin deducción ni retardo alguno.</p>
                         <p><strong>PÁRRAFO III:</strong> Todo pago de cuota realizada fuera de la fecha en la cual debió haber sido pagado, estará sujeto al pago de una penalidad por mora por cada mes o fracción equivalente al CINCO POR CIENTO (5%) del monto adeudado.</p>
@@ -310,26 +310,34 @@
                         <p><strong>ARTÍCULO DÉCIMO NOVENO: DERECHO COMÚN.</strong> LAS PARTES reconocen que el presente Contrato es la ley entre LAS PARTES y se regirá por las leyes vigentes en la República Dominicana. Para todo aquello no contemplado en el presente documento, LAS PARTES acuerdan referirse al derecho común, teniendo como orden de prelación la Ley 189-11, el Acuerdo de Constitución del Fideicomiso, los contratos formalizados, el régimen de condominio que habrá de constituirse y el Código Civil Dominicano.</p>
                     </div>
                     <div class="content">
-                        <p><strong>HECHO, LEÍDO Y FIRMADO, en tres (3) originales, uno para cada una de las partes, en la ciudad de Santo Domingo, Distrito Nacional, capital de la República Dominicana, a los __________ (___) días mes de ________ del año dos mil ________ (20____).</strong></p>
-                        
+                        <p><strong>HECHO, LEÍDO Y FIRMADO, en tres (3) originales, uno para cada una de las partes, en la ciudad de Santo Domingo, Distrito Nacional, capital de la República Dominicana, <span t-esc="doc.date_to_spanish_format(doc.agreement_date)"/>.</strong></p>
+                        <div class="sign-content">
                         <p><strong>POR EL VENDEDOR:</strong></p>
-                        <p>_______________________________
-                        CÉSAR AUGUSTO PÁEZ MENDOZA
+                        <div>_______________________________</div>
+                        <p>CÉSAR AUGUSTO PÁEZ MENDOZA</p>
+                        <p>
                         En calidad de Gerente General de FIDUCIARIA LA NACIONAL, S.A., quien a su vez actúa en calidad de administradora y vocera del FIDEICOMISO INMOBILIARIO Y DE GARANTÍA ZENTRO BY CIVILTEC</p>
-                        
+                        </div>
+                        <div class="sign-content">
                         <p><strong>POR LA CONSTRUCTORA:</strong></p>
-                        <p>_______________________________
-                        PEDRO RENÉ ANTONIO COLUMNA NÚÑEZ
+                        <p><strong>_______________________________</strong></p>
+                        <p>PEDRO RENÉ ANTONIO COLUMNA NÚÑEZ</p>
+                        <p>
                         Gerente de CONSTRUCTORA CIVILTEC, S.R.L.</p>
-                        
+                    </div>
+                    <div class="sign-content">
+
                         <p><strong>POR EL INTERESADO EN COMPRAR:</strong></p>
-                        <p>_______________________________
-                        [Insertar nombre completo]</p>
+                        <p><strong>_______________________________</strong></p>
+                        <p><span t-field="doc.tenant_id.name"/></p>
+                    </div>
                         
                         <p>Yo, ____________________________________, Notario Público de los del número del Distrito Nacional, Matrícula Núm. __________, CERTIFICO Y DOY FE: Que por ante mi han comparecido personalmente los señores: CÉSAR AUGUSTO PÁEZ MENDOZA, PEDRO RENÉ ANTONIO COLUMNA NÚÑEZ y __________________________, personas cuyas generales y calidades constan, a quienes doy fe conocer y bajo la fe del juramento me han declarado que las firmas que han estampado en mi presencia en el documento que antecede son las mismas que ellos acostumbran a usar en todos sus actos, motivo por el cual se le confiere carácter de autenticidad. En la ciudad de Santo Domingo, Distrito Nacional, capital de la República Dominicana, a los __________ (___) días mes de ________ del año dos mil ________ (20____).</p>
                         
-                        <p>______________________________
-                        NOTARIO PÚBLICO</p>
+                        <div class="sign-content">
+                        <p><strong>_______________________________</strong></p>
+                        <p>NOTARIO PÚBLICO</p>
+                        </div>
                     </div>
                     
                 </t>

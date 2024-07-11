@@ -586,3 +586,44 @@ class srTenancyAgreement(models.Model):
             order="invoice_date asc",
         )  # Sorts the result by invoice date in ascending order
         return invoices
+
+    def date_to_spanish_format(self, date_obj):
+        """Converts a date object to a Spanish formatted string."""
+        if not date_obj:
+            return ""
+
+        # Dictionary of Spanish months
+        months = {
+            1: 'enero', 2: 'febrero', 3: 'marzo',
+            4: 'abril', 5: 'mayo', 6: 'junio',
+            7: 'julio', 8: 'agosto', 9: 'septiembre',
+            10: 'octubre', 11: 'noviembre', 12: 'diciembre'
+        }
+        
+        # Extract day, month and year from the date object
+        day = date_obj.day
+        month = date_obj.month
+        year = date_obj.year
+        year_str = str(year)
+        
+        # Convert day and year to their respective ordinal representations
+        day_str = self._number_to_ordinal_spanish(day)
+        year_suffix = year_str[2:]  # Get the last two digits of the year
+        year_str = self._number_to_ordinal_spanish(int(year_suffix))
+        
+        # Format the string with the Spanish month and ordinal numbers
+        formatted_date = f"a los {day_str} ({day}) días del mes de {months[month]} del año dos mil {year_str} (20{year_suffix})"
+        return formatted_date
+
+    def _number_to_ordinal_spanish(self, number):
+        """Converts a number to its Spanish ordinal representation (text)."""
+        ordinals = {
+            1: 'uno', 2: 'dos', 3: 'tres', 4: 'cuatro',
+            5: 'cinco', 6: 'seis', 7: 'siete', 8: 'ocho',
+            9: 'nueve', 10: 'diez', 11: 'once', 12: 'doce',
+            13: 'trece', 14: 'catorce', 15: 'quince', 16: 'dieciséis',
+            17: 'diecisiete', 18: 'dieciocho', 19: 'diecinueve', 20: 'veinte', 21: 'veintiuno',
+            22: 'veintidós', 23: 'veintitrés', 24: 'veinticuatro', 25: 'veinticinco', 26: 'veintiséis',
+            27: 'veintisiete', 28: 'veintiocho', 29: 'veintinueve', 30: 'treinta', 31: 'treinta y uno',
+        }
+        return ordinals.get(number, str(number)) 
