@@ -262,7 +262,7 @@ class srTenancyAgreement(models.Model):
              'invoice_line_ids':
                      [(0, 0, {
              'product_id':self.property_id.id,
-             'name': "Pago Inicial :" + self.property_id.name,
+             'name': "Monto de Reserva:" + self.property_id.name,
              'quantity':1,
              'price_unit': self.initial_amount,
              'account_id': accounts['income'].id,
@@ -271,7 +271,7 @@ class srTenancyAgreement(models.Model):
             installment_date = self.first_installment_date
             if self.partial_payment_id.is_custom:
                 amount = 0
-                for line in self.partial_payment_id.custom_partial_payment_lines:
+                for index, line in enumerate(self.partial_payment_id.custom_partial_payment_lines, start=1):
                     self.env['account.move'].create({
                                 'partner_id':self.tenant_id.id,
                                 'invoice_date':line.date,
@@ -284,7 +284,7 @@ class srTenancyAgreement(models.Model):
                                 'invoice_line_ids':
                                         [(0, 0, {
                                 'product_id':self.property_id.id,
-                                'name': "Cuota :" + self.property_id.name,
+                                'name': f"Inicial Cuota {index}: {self.property_id.name}",
                                 'quantity':1,
                                 'price_unit':line.amount,
                                 'account_id': accounts['income'].id,

@@ -87,6 +87,8 @@
         'reports/recibo_pago_unidad_action.xml',
         'reports/contrato_action.xml',
         'reports/contrato_template.xml',
+        'reports/estado_cuenta_action.xml',
+        'reports/estado_cuenta_template.xml',
     ],
     'assets': {
         'web.assets_backend': [

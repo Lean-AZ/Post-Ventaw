@@ -14,19 +14,19 @@ from odoo.exceptions import UserError
 class srProductProduct(models.Model):
     _inherit = 'product.product'
 
-
-
-
+    def print_invoice_report(self):
+        # Directly pass the current recordset to the report
+        return self.env.ref('sr_property_rental_management.product_invoice_report_action').report_action(self)
 
     def action_confirm(self):
         if self.property_type == 'sale':
             if self.property_sale_price <= 0:
-                raise UserError(_('Please enter reasonable property sale price'))
+                raise UserError(_('Please enter a reasonable property sale price'))
         if self.property_type == 'rent':
             if self.property_rent_price <= 0:
-                raise UserError(_('Please enter reasonable property rent price'))
+                raise UserError(_('Please enter a reasonable property rent price'))
         self.sudo().write({
-            'state' : 'available'
+            'state': 'available'
         })
         return 
 
@@ -50,9 +50,9 @@ class srProductProduct(models.Model):
         action = self.env["ir.actions.actions"]._for_xml_id("account.action_move_out_invoice_type")
         action['domain'] = [
             ('move_type', 'in', ('out_invoice', 'out_refund')),
-            ('property_id', '=', self.id),
+            ('invoice_line_ids.product_id', '=', self.id),
         ]
-        action['context'] = {'default_move_type':'out_invoice', 'move_type':'out_invoice', 'journal_type': 'sale'}
+        action['context'] = {'default_move_type': 'out_invoice', 'move_type': 'out_invoice', 'journal_type': 'sale'}
         return action
     
     def action_view_tenancy_agreement(self):
@@ -62,7 +62,6 @@ class srProductProduct(models.Model):
             ('property_id', '=', self.id)
         ]
         return action
-    
 
 class srPropertytemplate(models.Model):
     _inherit = 'product.template'
@@ -138,6 +137,20 @@ class srPropertytemplate(models.Model):
     reservation_history_ids = fields.Many2many('res.partner',string="Reservation history")
     currency_id = fields.Many2one('res.currency', string='Moneda', readonly=False, domain="[('active', '=', True)]", store=True)
     delivery_date = fields.Date('Fecha de entrega', store=True)
+    invoices_ids = fields.Many2many(
+        'account.move',
+        string='Invoices',
+        compute='_compute_invoices_ids',
+        store=False,
+    )
+
+    def _compute_invoices_ids(self):
+        for record in self:
+            invoices = self.env['account.move'].search([
+                ('move_type', 'in', ['out_invoice', 'out_refund']),
+                ('property_id.product_tmpl_id', '=', record.id),
+            ])
+            record.invoices_ids = invoices
 
     def action_view_tenancy_agreement(self):
         self.ensure_one()
