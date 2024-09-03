@@ -10,6 +10,7 @@
 
 from odoo import models, fields, api,  _
 from odoo.exceptions import UserError
+from collections import namedtuple
 
 class srProductProduct(models.Model):
     _inherit = 'product.product'
@@ -143,6 +144,80 @@ class srPropertytemplate(models.Model):
         compute='_compute_invoices_ids',
         store=False,
     )
+    grouped_invoices = fields.One2many(
+        'account.move',
+        string='Grouped Invoices',
+        compute='_compute_grouped_invoices',
+        store=False,
+    )
+
+    monto_reserva_invoices = fields.One2many(
+        'account.move',
+        string='Monto Reserva Invoices',
+        compute='_compute_monto_reserva_invoices',
+        store=False,
+    )
+
+    def _compute_grouped_invoices(self):
+        InvoiceGroup = namedtuple('InvoiceGroup', ['invoice_date', 'amount_total', 'amount_residual', 'payment_state'])
+        for record in self:
+            # Initialize sum variables
+            total_amount = 0
+            residual_amount = 0
+
+            # Find all relevant invoices
+            invoices = self.env['account.move'].search([
+                ('move_type', 'in', ['out_invoice', 'out_refund']),
+                ('property_id.product_tmpl_id', '=', record.id),
+            ])
+
+            # Filter and sum the invoices based on the description
+            for invoice in invoices:
+                for line in invoice.invoice_line_ids:
+                    if "Inicial Cuota" in line.name:
+                        total_amount += invoice.amount_total
+                        residual_amount += invoice.amount_residual
+
+
+            grouped_invoice = InvoiceGroup(
+                invoice_date=fields.Date.context_today(self),
+                amount_total=total_amount,
+                amount_residual=residual_amount,
+                payment_state='N/A'
+            )
+
+            record.grouped_invoices = [grouped_invoice]
+
+    def _compute_monto_reserva_invoices(self):
+        InvoiceGroup = namedtuple('InvoiceGroup', ['invoice_date', 'amount_total', 'amount_residual', 'payment_state'])
+        for record in self:
+            # Initialize sum variables
+            total_amount = 0
+            residual_amount = 0
+
+            # Find all relevant invoices
+            invoices = self.env['account.move'].search([
+                ('move_type', 'in', ['out_invoice', 'out_refund']),
+                ('property_id.product_tmpl_id', '=', record.id),
+            ])
+
+            # Filter and sum the invoices based on the description
+            for invoice in invoices:
+                for line in invoice.invoice_line_ids:
+                    if "Monto de reserva" in line.name:
+                        total_amount += invoice.amount_total
+                        residual_amount += invoice.amount_residual
+
+            # Create a single "dummy" invoice-like object to hold the aggregated values
+            grouped_invoice = InvoiceGroup(
+                invoice_date=fields.Date.context_today(self),
+                amount_total=total_amount,
+                amount_residual=residual_amount,
+                payment_state='N/A'  # Custom payment state, or summarize the state if needed
+            )
+
+            record.monto_reserva_invoices = [grouped_invoice]
+
 
     def _compute_invoices_ids(self):
         for record in self:
