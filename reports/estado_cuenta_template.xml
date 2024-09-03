@@ -7,7 +7,7 @@
                     <t t-foreach="docs" t-as="doc">
                         <div>
                             <strong class="m-0">Fecha:</strong> 
-                            <span><t t-esc="doc.create_date"/></span>
+                            <span><t t-esc="doc.create_date or 'N/A'"/></span>
                         </div>
                         <div>
                             <strong class="m-0">Product Name:</strong> 
@@ -15,11 +15,31 @@
                         </div>
                         <div>
                             <strong class="m-0">Invoices:</strong>
-                            <ul>
-                                <t t-foreach="doc.invoices_ids" t-as="invoice">
-                                    <li><t t-esc="invoice.invoice_date"/> - <t t-esc="invoice.amount_total"/></li>
-                                </t>
-                            </ul>
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Invoice Date</th>
+                                        <th>Total Amount</th>
+                                        <th>Residual Amount</th>
+                                        <th>Payment State</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.invoices_ids.sorted('invoice_date')" t-as="invoice">
+                                        <tr>
+                                            <td><t t-esc="invoice.invoice_date.strftime('%Y-%m-%d')"/></td>
+                                            <td><t t-esc="invoice.amount_total"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}' /></td>
+                                            <td><t t-esc="invoice.amount_residual"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/></td>
+                                            <td><t t-esc="invoice.payment_state"/></td>
+                                        </tr>
+                                    </t>
+                                    <t t-if="not doc.invoices_ids">
+                                        <tr>
+                                            <td colspan="4" class="text-center">No invoices found.</td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
                         </div>
                     </t>
                 </div>

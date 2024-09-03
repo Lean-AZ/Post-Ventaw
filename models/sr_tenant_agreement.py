@@ -284,7 +284,7 @@ class srTenancyAgreement(models.Model):
                                 'invoice_line_ids':
                                         [(0, 0, {
                                 'product_id':self.property_id.id,
-                                'name': f"Inicial Cuota {index}: {self.property_id.name}",
+                                'name': f"Cuota {index}: {self.property_id.name}",
                                 'quantity':1,
                                 'price_unit':line.amount,
                                 'account_id': accounts['income'].id,
@@ -344,7 +344,7 @@ class srTenancyAgreement(models.Model):
                                 'invoice_line_ids':
                                         [(0, 0, {
                                 'product_id':self.property_id.id,
-                                'name': "Pago #" + str(i + 1) + ":" + self.property_id.name,
+                                'name': "Inicial Cuota #" + str(i + 1) + ":" + self.property_id.name,
                                 'quantity':1,
                                 'price_unit':installment_amount,
                                 'account_id': accounts['income'].id,
