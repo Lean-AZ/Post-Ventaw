@@ -91,7 +91,7 @@
                                         <th>Monto</th>
                                         <th>Debe</th>
                                         <th>Mora</th>
-                                        <th>Subtotal (First Line)</th>
+                                        <th>Subtotal (Inicial Cuota)</th>
                                         <th>Payment State</th>
                                     </tr>
                                 </thead>
@@ -102,19 +102,16 @@
                                             <t t-set="total_amount_cuota" t-value="0"/>
                                             <t t-set="total_residual_cuota" t-value="0"/>
                                             <t t-set="mora_subtotal_cuota" t-value="0"/>
-                                            <t t-set="first_line_subtotal_cuota" t-value="0"/>
+                                            <t t-set="subtotal_cuota" t-value="0"/>
                                             <t t-foreach="doc.invoices_ids" t-as="invoice">
                                                 <t t-set="has_cuota" t-value="False"/>
-                                                <!-- Iterate through each line to sum totals for "Inicial Cuota" -->
+                                                <!-- Iterate through each line to sum totals for "Inicial Cuota" and skip "Mora" -->
                                                 <t t-foreach="invoice.invoice_line_ids" t-as="line">
-                                                    <t t-if="'Inicial Cuota' in line.name">
+                                                    <t t-if="'Inicial Cuota' in line.name and 'Mora' not in line.name">
+                                                        <t t-set="subtotal_cuota" t-value="subtotal_cuota + line.price_subtotal"/>
                                                         <t t-set="total_amount_cuota" t-value="total_amount_cuota + invoice.amount_total"/>
                                                         <t t-set="total_residual_cuota" t-value="total_residual_cuota + invoice.amount_residual"/>
                                                         <t t-set="has_cuota" t-value="True"/>
-                                                        <!-- Capture the subtotal of the first relevant line -->
-                                                        <t t-if="first_line_subtotal_cuota == 0">
-                                                            <t t-set="first_line_subtotal_cuota" t-value="line.price_subtotal"/>
-                                                        </t>
                                                     </t>
                                                 </t>
                                                 <!-- Sum "Mora" for the current group if "Inicial Cuota" exists -->
@@ -135,7 +132,7 @@
                                             <t t-esc="'%.2f' % mora_subtotal_cuota"/>
                                         </td>
                                         <td>
-                                            <t t-esc="'%.2f' % first_line_subtotal_cuota"/>
+                                            <t t-esc="'%.2f' % subtotal_cuota"/>
                                         </td>
                                         <td>N/A</td>
                                     </tr>
@@ -147,6 +144,8 @@
                                 </tbody>
                             </table>
                         </div>
+                        
+                        
 
                         <!-- Grouped Invoices for Monto de Reserva -->
                         <div>
