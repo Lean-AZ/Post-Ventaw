@@ -278,6 +278,16 @@ class srPropertytemplate(models.Model):
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
+    is_overdue = fields.Boolean(compute='_compute_is_overdue')
+
+    @api.depends('invoice_date_due')
+    def _compute_is_overdue(self):
+        for invoice in self:
+            if invoice.invoice_date_due:
+                invoice.is_overdue = invoice.invoice_date_due < fields.Date.today()
+            else:
+                invoice.is_overdue = False
+
     def get_report_data(self):
         # Assuming 'self' is a single record of account.move
         # Prepare required data
