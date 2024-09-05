@@ -3,6 +3,11 @@
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
+                    <style>
+                        .table {
+                            margin-bottom: 0px;
+                        }
+                    </style>
                     <!-- Directly access the properties of the product model -->
                     <t t-foreach="docs" t-as="doc">
                         <div>
@@ -13,24 +18,73 @@
                             <strong class="m-0">Product Name:</strong>
                             <span><t t-esc="doc.name"/></span>
                         </div>
-
                         <!-- Grouped Invoices for Cuota Final -->
                         <div>
-                            <strong class="m-0">Grouped Invoices (Cuota Final):</strong>
                             <table class="table table-sm table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Invoice Date</th>
-                                        <th>Monto</th>
-                                        <th>Debe</th>
+                                        <th>Concepto</th>
+                                        <th>Capital + Mora</th>
+                                        <th>Pendiente</th>
                                         <th>Mora</th>
-                                        <th>Subtotal (First Line)</th>
-                                        <th>Payment State</th>
+                                        <th>Capital</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Summary of Cuota Final</td>
+                                        <td>Inicial</td>
+                                        <td>
+                                            <t t-set="total_amount_cuota" t-value="0"/>
+                                            <t t-set="total_residual_cuota" t-value="0"/>
+                                            <t t-set="mora_subtotal_cuota" t-value="0"/>
+                                            <t t-set="subtotal_cuota" t-value="0"/>
+                                            <t t-foreach="doc.invoices_ids" t-as="invoice">
+                                                <t t-set="has_cuota" t-value="False"/>
+                                                <!-- Iterate through each line to sum totals for "Inicial Cuota" and skip "Mora" -->
+                                                <t t-foreach="invoice.invoice_line_ids" t-as="line">
+                                                    <t t-if="'Inicial Cuota' in line.name and 'Mora' not in line.name">
+                                                        <t t-set="subtotal_cuota" t-value="subtotal_cuota + line.price_subtotal"/>
+                                                        <t t-set="total_amount_cuota" t-value="total_amount_cuota + invoice.amount_total"/>
+                                                        <t t-set="total_residual_cuota" t-value="total_residual_cuota + invoice.amount_residual"/>
+                                                        <t t-set="has_cuota" t-value="True"/>
+                                                    </t>
+                                                </t>
+                                                <!-- Sum "Mora" for the current group if "Inicial Cuota" exists -->
+                                                <t t-if="has_cuota">
+                                                    <t t-foreach="invoice.invoice_line_ids" t-as="line">
+                                                        <t t-if="'Mora' in line.name">
+                                                            <t t-set="mora_subtotal_cuota" t-value="mora_subtotal_cuota + line.price_subtotal"/>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                            <t t-esc="total_amount_cuota"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="total_residual_cuota"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="mora_subtotal_cuota"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="subtotal_cuota"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                        </td>
+                                        
+                                    </tr>
+                                    <t t-if="total_amount_cuota == 0">
+                                        <tr>
+                                            <td colspan="6" class="text-center">No grouped invoices found.</td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Grouped Invoices for Inicial Cuota -->
+                        <div>
+                            <table class="table table-sm table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Financiamiento</td>
                                         <td>
                                             <t t-set="total_amount_cuota_final" t-value="0"/>
                                             <t t-set="total_residual_cuota_final" t-value="0"/>
@@ -59,18 +113,18 @@
                                                     </t>
                                                 </t>
                                             </t>
-                                            <t t-esc="'%.2f' % total_amount_cuota_final"/>
+                                            <t t-esc="total_amount_cuota_final"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
-                                            <t t-esc="'%.2f' % total_residual_cuota_final"/>
+                                            <t t-esc="total_residual_cuota_final"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
-                                            <t t-esc="'%.2f' % mora_subtotal_cuota_final"/>
+                                            <t t-esc="mora_subtotal_cuota_final"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
-                                            <t t-esc="'%.2f' % first_line_subtotal"/>
+                                            <t t-esc="first_line_subtotal"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
-                                        <td>N/A</td>
+                                        
                                     </tr>
                                     <t t-if="total_amount_cuota_final == 0">
                                         <tr>
@@ -80,90 +134,12 @@
                                 </tbody>
                             </table>
                         </div>
-
-                        <!-- Grouped Invoices for Inicial Cuota -->
-                        <div>
-                            <strong class="m-0">Grouped Invoices (Inicial Cuota):</strong>
-                            <table class="table table-sm table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Invoice Date</th>
-                                        <th>Monto</th>
-                                        <th>Debe</th>
-                                        <th>Mora</th>
-                                        <th>Subtotal (Inicial Cuota)</th>
-                                        <th>Payment State</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Summary of Inicial Cuota</td>
-                                        <td>
-                                            <t t-set="total_amount_cuota" t-value="0"/>
-                                            <t t-set="total_residual_cuota" t-value="0"/>
-                                            <t t-set="mora_subtotal_cuota" t-value="0"/>
-                                            <t t-set="subtotal_cuota" t-value="0"/>
-                                            <t t-foreach="doc.invoices_ids" t-as="invoice">
-                                                <t t-set="has_cuota" t-value="False"/>
-                                                <!-- Iterate through each line to sum totals for "Inicial Cuota" and skip "Mora" -->
-                                                <t t-foreach="invoice.invoice_line_ids" t-as="line">
-                                                    <t t-if="'Inicial Cuota' in line.name and 'Mora' not in line.name">
-                                                        <t t-set="subtotal_cuota" t-value="subtotal_cuota + line.price_subtotal"/>
-                                                        <t t-set="total_amount_cuota" t-value="total_amount_cuota + invoice.amount_total"/>
-                                                        <t t-set="total_residual_cuota" t-value="total_residual_cuota + invoice.amount_residual"/>
-                                                        <t t-set="has_cuota" t-value="True"/>
-                                                    </t>
-                                                </t>
-                                                <!-- Sum "Mora" for the current group if "Inicial Cuota" exists -->
-                                                <t t-if="has_cuota">
-                                                    <t t-foreach="invoice.invoice_line_ids" t-as="line">
-                                                        <t t-if="'Mora' in line.name">
-                                                            <t t-set="mora_subtotal_cuota" t-value="mora_subtotal_cuota + line.price_subtotal"/>
-                                                        </t>
-                                                    </t>
-                                                </t>
-                                            </t>
-                                            <t t-esc="'%.2f' % total_amount_cuota"/>
-                                        </td>
-                                        <td>
-                                            <t t-esc="'%.2f' % total_residual_cuota"/>
-                                        </td>
-                                        <td>
-                                            <t t-esc="'%.2f' % mora_subtotal_cuota"/>
-                                        </td>
-                                        <td>
-                                            <t t-esc="'%.2f' % subtotal_cuota"/>
-                                        </td>
-                                        <td>N/A</td>
-                                    </tr>
-                                    <t t-if="total_amount_cuota == 0">
-                                        <tr>
-                                            <td colspan="6" class="text-center">No grouped invoices found.</td>
-                                        </tr>
-                                    </t>
-                                </tbody>
-                            </table>
-                        </div>
-                        
-                        
-
                         <!-- Grouped Invoices for Monto de Reserva -->
                         <div>
-                            <strong class="m-0">Grouped Invoices (Monto de Reserva):</strong>
                             <table class="table table-sm table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Invoice Date</th>
-                                        <th>Monto</th>
-                                        <th>Debe</th>
-                                        <th>Mora</th>
-                                        <th>Subtotal (First Line)</th>
-                                        <th>Payment State</th>
-                                    </tr>
-                                </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Summary of Monto de Reserva</td>
+                                        <td>Reserva</td>
                                         <td>
                                             <t t-set="total_amount_reserva" t-value="0"/>
                                             <t t-set="total_residual_reserva" t-value="0"/>
@@ -192,18 +168,18 @@
                                                     </t>
                                                 </t>
                                             </t>
-                                            <t t-esc="'%.2f' % total_amount_reserva"/>
+                                            <t t-esc="total_amount_reserva"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
-                                            <t t-esc="'%.2f' % total_residual_reserva"/>
+                                            <t t-esc="total_residual_reserva"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
-                                            <t t-esc="'%.2f' % mora_subtotal_reserva"/>
+                                            <t t-esc="mora_subtotal_reserva"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
-                                            <t t-esc="'%.2f' % first_line_subtotal_reserva"/>
+                                            <t t-esc="first_line_subtotal_reserva"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
-                                        <td>N/A</td>
+                                        
                                     </tr>
                                     <t t-if="total_amount_reserva == 0">
                                         <tr>
@@ -213,24 +189,12 @@
                                 </tbody>
                             </table>
                         </div>
-
                         <!-- Grouped Invoices for Separación -->
                         <div>
-                            <strong class="m-0">Grouped Invoices (Separación):</strong>
                             <table class="table table-sm table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Invoice Date</th>
-                                        <th>Monto</th>
-                                        <th>Debe</th>
-                                        <th>Mora</th>
-                                        <th>Subtotal (First Line)</th>
-                                        <th>Payment State</th>
-                                    </tr>
-                                </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Summary of Separación</td>
+                                        <td>Separación</td>
                                         <td>
                                             <t t-set="total_amount_separacion" t-value="0"/>
                                             <t t-set="total_residual_separacion" t-value="0"/>
@@ -259,18 +223,18 @@
                                                     </t>
                                                 </t>
                                             </t>
-                                            <t t-esc="'%.2f' % total_amount_separacion"/>
+                                            <t t-esc="total_amount_separacion"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
-                                            <t t-esc="'%.2f' % total_residual_separacion"/>
+                                            <t t-esc="total_residual_separacion"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
-                                            <t t-esc="'%.2f' % mora_subtotal_separacion"/>
+                                            <t t-esc="mora_subtotal_separacion"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
-                                            <t t-esc="'%.2f' % first_line_subtotal_separacion"/>
+                                            <t t-esc="first_line_subtotal_separacion"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
-                                        <td>N/A</td>
+                                        
                                     </tr>
                                     <t t-if="total_amount_separacion == 0">
                                         <tr>
@@ -280,7 +244,6 @@
                                 </tbody>
                             </table>
                         </div>
-
                     </t>
                 </div>
             </t>
