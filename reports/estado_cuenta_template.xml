@@ -66,6 +66,12 @@
                         thead {
                             background-color: #f5f5f5;
                         }
+                        .start-header {
+                            text-align: left;
+                        }
+                        th {
+                            text-align: right;
+                        }
 
                     </style>
                     <!-- Directly access the properties of the product model -->
@@ -188,13 +194,13 @@
                             <table class="table table-sm table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Concepto</th>
+                                        <th class='start-header'>Concepto</th>
                                         <th>Capital + Mora</th>
                                         <th>Pendiente</th>
                                         <th>Mora</th>
                                         <th>Capital</th>
                                         <th>Pagado</th>
-                                        <th>Cuotas Vencidas</th>
+                                        <th>C V</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -467,8 +473,8 @@
                             <table class="table table-sm table-bordered custom-inv-table">
                                 <thead>
                                     <tr>
-                                        <th>Invoice Date</th>
-                                        <th>Concepto</th>
+                                        <th class='start-header'>Fecha Venc</th>
+                                        <th class='start-header'>Concepto</th>
                                         <th>Monto</th>
                                         <th>Pendiente</th>
                                         <th>Estado de pago</th>
@@ -482,7 +488,7 @@
                                             <tr>
                                                 <!-- Render the invoice date -->
                                                 <td class='date-inv'>
-                                                    <t t-esc="invoice.invoice_date or 'N/A'" t-options='{"widget": "date"}'/>
+                                                    <t t-esc="invoice.invoice_date_due or 'N/A'" t-options='{"widget": "date"}'/>
                                                 </td>
 
                                                 <!-- Render the description from the invoice line -->
