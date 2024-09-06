@@ -32,8 +32,9 @@
                             margin-top: 1rem;
                         }
                         .unit-data-container {
-                            display: grid;
-                            grid-template-columns: repeat(2, 1fr);
+                            display: flex;
+                            flex-direction: row;
+                            flex-wrap: nowrap;
                             gap: 0.5rem;
                             width: 100%;
                             justify-content: center;
@@ -53,6 +54,7 @@
                         }
                         td {
                             text-align: right;
+                            width: auto;
                         }
                         .date-inv {
                             text-align: left;
@@ -79,11 +81,13 @@
                                 <strong>Estado de Cuenta</strong>
                             </span>
                         </div>
-                          <!-- Datos de la unidad -->
-                          <div class='personal-data-container'>
+                        <!-- Datos de la unidad -->
+                        <div class='personal-data-container'>
                             <div class='personal-data-item'>
                                 <strong class="m-0">Proyecto</strong>
-                                <span><t t-esc="doc.company_id.name"/></span>
+                                <span>
+                                    <t t-esc="doc.company_id.name"/>
+                                </span>
                             </div>
                             <div class='personal-data-item'>
                                 <strong class="m-0">Cliente</strong>
@@ -105,11 +109,15 @@
                         <div class='unit-data-container'>
                             <div class='unit-data-item'>
                                 <strong class="m-0">Apartamento</strong>
-                                <span><t t-esc="doc.name"/></span>
+                                <span>
+                                    <t t-esc="doc.name"/>
+                                </span>
                             </div>
                             <div class='unit-data-item'>
                                 <strong class="m-0">Area Constru.</strong>
-                                <span><t t-esc="doc.property_carpet_area"/></span>
+                                <span>
+                                    <t t-esc="doc.property_carpet_area"/>
+                                </span>
                             </div>
                             <div class='unit-data-item'>
                                 <strong class="m-0">Tipo De Inventario</strong>
@@ -118,12 +126,14 @@
                             <div class='unit-data-item'>
                                 <strong class="m-0">Precio Inicial</strong>
                                 <div>
-                                <t t-esc="doc.first_tenancy_agreement_id.amount_to_finance" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
-                            </div>
+                                    <t t-esc="doc.first_tenancy_agreement_id.amount_to_finance" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                </div>
                             </div>
                             <div class='unit-data-item'>
                                 <strong class="m-0">Moneda</strong>
-                                <span><t t-esc="doc.currency_id.name"/></span>
+                                <span>
+                                    <t t-esc="doc.currency_id.name"/>
+                                </span>
                             </div>
                             <div class='unit-data-item'>
                                 <strong class="m-0">Financiamiento</strong>
@@ -133,11 +143,11 @@
                                     <t t-set="mora_subtotal_cuota_final" t-value="0"/>
                                     <t t-set="first_line_subtotal" t-value="0"/>
                                     <t t-set="overdue_count" t-value="0"/>
-                    
+
                                     <!-- Iterate through invoices -->
                                     <t t-foreach="doc.invoices_ids" t-as="invoice">
                                         <t t-set="has_cuota_final" t-value="False"/>
-                    
+
                                         <!-- Iterate through each line to sum totals for "Cuota Final" -->
                                         <t t-foreach="invoice.invoice_line_ids" t-as="line">
                                             <t t-if="'Cuota Final' in line.name">
@@ -150,7 +160,7 @@
                                                 </t>
                                             </t>
                                         </t>
-                    
+
                                         <!-- Sum "Mora" for the current group if "Cuota Final" exists -->
                                         <t t-if="has_cuota_final">
                                             <t t-foreach="invoice.invoice_line_ids" t-as="line">
@@ -159,13 +169,13 @@
                                                 </t>
                                             </t>
                                         </t>
-                    
+
                                         <!-- Count overdue invoices using the is_overdue field -->
                                         <t t-if="invoice.is_overdue">
                                             <t t-set="overdue_count" t-value="overdue_count + 1"/>
                                         </t>
                                     </t>
-                                    
+
                                     <!-- <t t-esc="total_amount_cuota_final" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/> -->
                                     <div>
                                         <t t-esc="first_line_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
@@ -183,6 +193,7 @@
                                         <th>Pendiente</th>
                                         <th>Mora</th>
                                         <th>Capital</th>
+                                        <th>Pagado</th>
                                         <th>Cuotas Vencidas</th>
                                     </tr>
                                 </thead>
@@ -196,11 +207,11 @@
                                             <t t-set="mora_subtotal_cuota" t-value="0"/>
                                             <t t-set="subtotal_cuota" t-value="0"/>
                                             <t t-set="overdue_count" t-value="0"/>
-                                
+
                                             <!-- Iterate through invoices to sum up "Inicial Cuota" -->
                                             <t t-foreach="doc.invoices_ids" t-as="invoice">
                                                 <t t-set="has_cuota" t-value="False"/>
-                                
+
                                                 <!-- Iterate through each line in the invoice to calculate values -->
                                                 <t t-foreach="invoice.invoice_line_ids" t-as="line">
                                                     <!-- Check if the line contains 'Inicial Cuota' and is not 'Mora' -->
@@ -213,7 +224,7 @@
                                                         <t t-set="has_cuota" t-value="True"/>
                                                     </t>
                                                 </t>
-                                
+
                                                 <!-- Sum "Mora" for the current group if "Inicial Cuota" exists -->
                                                 <t t-if="has_cuota">
                                                     <t t-foreach="invoice.invoice_line_ids" t-as="line">
@@ -223,38 +234,45 @@
                                                         </t>
                                                     </t>
                                                 </t>
-                                
+
                                                 <!-- Count overdue invoices using the is_overdue field -->
                                                 <t t-if="invoice.is_overdue">
                                                     <t t-set="overdue_count" t-value="overdue_count + 1"/>
                                                 </t>
                                             </t>
-                                
+
                                             <!-- Display the total amount for "Inicial Cuota" -->
                                             <t t-esc="total_amount_cuota" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
-                                
+
                                         <!-- Display the residual amount -->
                                         <td>
                                             <t t-esc="total_residual_cuota" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
-                                
+
                                         <!-- Display the sum of "Mora" -->
                                         <td>
                                             <t t-esc="mora_subtotal_cuota" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
-                                
+
                                         <!-- Display the subtotal for "Inicial Cuota" -->
                                         <td>
                                             <t t-esc="subtotal_cuota" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
-                                
+                                        <!-- Set the difference between the total_amount_cuota_final and total_residual_cuota_final -->
+                                    <td>
+                                        <t t-set="cuota_final_difference" t-value="total_amount_cuota - total_residual_cuota"/>
+
+                                        <!-- Display the result of the subtraction -->
+                                        <t t-esc="cuota_final_difference" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    </td>
+
                                         <!-- Display the overdue invoice count -->
                                         <td>
-                                            <t t-esc="overdue_count"/> 
+                                            <t t-esc="overdue_count"/>
                                         </td>
                                     </tr>
-                                
+
                                     <!-- Check if no "Inicial Cuota" invoices were found and display a message -->
                                     <t t-if="total_amount_cuota == 0">
                                         <tr>
@@ -269,11 +287,11 @@
                                             <t t-set="mora_subtotal_cuota_final" t-value="0"/>
                                             <t t-set="first_line_subtotal" t-value="0"/>
                                             <t t-set="overdue_count" t-value="0"/>
-                            
+
                                             <!-- Iterate through invoices -->
                                             <t t-foreach="doc.invoices_ids" t-as="invoice">
                                                 <t t-set="has_cuota_final" t-value="False"/>
-                            
+
                                                 <!-- Iterate through each line to sum totals for "Cuota Final" -->
                                                 <t t-foreach="invoice.invoice_line_ids" t-as="line">
                                                     <t t-if="'Cuota Final' in line.name">
@@ -286,7 +304,7 @@
                                                         </t>
                                                     </t>
                                                 </t>
-                            
+
                                                 <!-- Sum "Mora" for the current group if "Cuota Final" exists -->
                                                 <t t-if="has_cuota_final">
                                                     <t t-foreach="invoice.invoice_line_ids" t-as="line">
@@ -295,13 +313,13 @@
                                                         </t>
                                                     </t>
                                                 </t>
-                            
+
                                                 <!-- Count overdue invoices using the is_overdue field -->
                                                 <t t-if="invoice.is_overdue">
                                                     <t t-set="overdue_count" t-value="overdue_count + 1"/>
                                                 </t>
                                             </t>
-                                            
+
                                             <t t-esc="total_amount_cuota_final" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
@@ -314,10 +332,18 @@
                                             <t t-esc="first_line_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
+                                            <!-- Set the difference between the total_amount_cuota_final and total_residual_cuota_final -->
+                                            <t t-set="cuota_final_difference" t-value="total_amount_cuota_final - total_residual_cuota_final"/>
+
+                                            <!-- Display the result of the subtraction -->
+                                            <t t-esc="cuota_final_difference" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+
+                                        </td>
+                                        <td>
                                             0
                                         </td>
                                     </tr>
-                            
+
                                     <t t-if="total_amount_cuota_final == 0">
                                         <tr>
                                             <td colspan="6" class="text-center">No grouped invoices found.</td>
@@ -353,21 +379,21 @@
                                                     </t>
                                                 </t>
                                             </t>
-                                            <t t-esc="total_amount_reserva"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            <t t-esc="total_amount_reserva" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
-                                            <t t-esc="total_residual_reserva"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            <t t-esc="total_residual_reserva" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
-                                            <t t-esc="mora_subtotal_reserva"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            <t t-esc="mora_subtotal_reserva" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
-                                            <t t-esc="first_line_subtotal_reserva"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            <t t-esc="first_line_subtotal_reserva" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
                                             0
                                         </td>
-                                        
+
                                     </tr>
                                     <t t-if="total_amount_reserva == 0">
                                         <tr>
@@ -404,16 +430,16 @@
                                                     </t>
                                                 </t>
                                             </t>
-                                            <t t-esc="total_amount_separacion"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            <t t-esc="total_amount_separacion" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
-                                            <t t-esc="total_residual_separacion"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            <t t-esc="total_residual_separacion" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
-                                            <t t-esc="mora_subtotal_separacion"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            <t t-esc="mora_subtotal_separacion" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
-                                            <t t-esc="first_line_subtotal_separacion"  t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            <t t-esc="first_line_subtotal_separacion" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
                                             0
@@ -435,65 +461,65 @@
                         </div>
 
                         <!-- Render a detailed table for each invoice line after the grouped invoices, sorted by invoice_date -->
-<div>
-    <table class="table table-sm table-bordered custom-inv-table">
-        <thead>
-            <tr>
-                <th>Invoice Date</th>
-                <th>Concepto</th>
-                <th>Monto</th>
-                <th>Pendiente</th>
-                <th>Estado de pago</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Iterate over the invoices, sorted by invoice_date -->
-            <t t-foreach="doc.invoices_ids.sorted('invoice_date')" t-as="invoice">
-                <!-- Iterate over each invoice line to display details -->
-                <t t-foreach="invoice.invoice_line_ids" t-as="line">
-                    <tr>
-                        <!-- Render the invoice date -->
-                        <td class='date-inv'>
-                            <t t-esc="invoice.invoice_date or 'N/A'" t-options='{"widget": "date"}'/>
-                        </td>
+                        <div>
+                            <table class="table table-sm table-bordered custom-inv-table">
+                                <thead>
+                                    <tr>
+                                        <th>Invoice Date</th>
+                                        <th>Concepto</th>
+                                        <th>Monto</th>
+                                        <th>Pendiente</th>
+                                        <th>Estado de pago</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Iterate over the invoices, sorted by invoice_date -->
+                                    <t t-foreach="doc.invoices_ids.sorted('invoice_date')" t-as="invoice">
+                                        <!-- Iterate over each invoice line to display details -->
+                                        <t t-foreach="invoice.invoice_line_ids" t-as="line">
+                                            <tr>
+                                                <!-- Render the invoice date -->
+                                                <td class='date-inv'>
+                                                    <t t-esc="invoice.invoice_date or 'N/A'" t-options='{"widget": "date"}'/>
+                                                </td>
 
-                        <!-- Render the description from the invoice line -->
-                        <td class='date-inv'>
-                            <t t-esc="line.name or 'No description'"/>
-                        </td>
+                                                <!-- Render the description from the invoice line -->
+                                                <td class='date-inv'>
+                                                    <t t-esc="line.name or 'No description'"/>
+                                                </td>
 
-                        <!-- Render the amount of the invoice line -->
-                        <td>
-                            <t t-esc="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
-                        </td>
+                                                <!-- Render the amount of the invoice line -->
+                                                <td>
+                                                    <t t-esc="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                                </td>
 
-                        <!-- Render the residual (due) amount of the invoice -->
-                        <td>
-                            <t t-esc="invoice.amount_residual" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
-                        </td>
+                                                <!-- Render the residual (due) amount of the invoice -->
+                                                <td>
+                                                    <t t-esc="invoice.amount_residual" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                                </td>
 
-                        <!-- Render the payment status of the invoice -->
-                        <td>
-                            <t t-if="invoice.payment_state == 'paid'">
+                                                <!-- Render the payment status of the invoice -->
+                                                <td>
+                                                    <t t-if="invoice.payment_state == 'paid'">
                                 Pagado
-                            </t>
-                            <t t-elif="invoice.payment_state == 'not_paid'">
+                                                    </t>
+                                                    <t t-elif="invoice.payment_state == 'not_paid'">
                                 Pendiente
-                            </t>
-                            <t t-elif="invoice.payment_state == 'partial'">
+                                                    </t>
+                                                    <t t-elif="invoice.payment_state == 'partial'">
                                 Parcial
-                            </t>
-                            <t t-else="">
-                                <t t-esc="invoice.payment_state"/>
-                            </t>
-                        </td>
-                        
-                    </tr>
-                </t>
-            </t>
-        </tbody>
-    </table>
-</div>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <t t-esc="invoice.payment_state"/>
+                                                    </t>
+                                                </td>
+
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
 
                     </t>
                 </div>
