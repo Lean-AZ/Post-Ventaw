@@ -158,6 +158,13 @@ class srPropertytemplate(models.Model):
         store=False,
     )
 
+    first_tenancy_agreement_id = fields.Many2one(
+        'sr.tenancy.agreement',
+        string="First Tenancy Agreement",
+        compute='_compute_tenancy_agreement_count',
+        store=False
+    )
+
     def _compute_grouped_invoices(self):
         InvoiceGroup = namedtuple('InvoiceGroup', ['invoice_date', 'amount_total', 'amount_residual', 'payment_state'])
         for record in self:
@@ -246,8 +253,12 @@ class srPropertytemplate(models.Model):
         return action
 
     def _compute_tenancy_agreement_count(self):
-        agreement_ids = self.env['sr.tenancy.agreement'].search([('property_id.product_tmpl_id','=',self.id)])
-        self.tenancy_agreement_count = len(agreement_ids)
+        for record in self:
+            agreement_ids = self.env['sr.tenancy.agreement'].search(
+                [('property_id.product_tmpl_id', '=', record.id)]
+            )
+            record.tenancy_agreement_count = len(agreement_ids)
+            record.first_tenancy_agreement_id = agreement_ids[:1] if agreement_ids else False
     
     def _compute_property_invoice_count(self):
         invoice_ids = self.env['account.move'].search([('property_id.product_tmpl_id','=',self.id)])

@@ -7,55 +7,151 @@
                         .table {
                             margin-bottom: 0px;
                         }
+                        .personal-data-container {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 0.5rem;
+                                width: 100%;
+                                justify-content: center;
+                                border: 2px solid #000;
+                                border-radius: 5px;
+                                padding: 0.5rem;
+                                margin-bottom: 1rem;
+                        }
+                        .date-axel {
+                            width: 100%;
+                            display: flex;
+                            justify-content: flex-end;
+                            margin-bottom: 1rem;
+                        }
+                        .title-acel {
+                            width: 100%;
+                            display: flex;
+                            justify-content: center;
+                            margin-bottom: 1rem;
+                        }
+                        .unit-data-container {
+                            display: grid;
+                            grid-template-columns: repeat(2, 1fr);
+                            gap: 0.5rem;
+                            width: 100%;
+                            justify-content: center;
+                            padding: 0.5rem;
+                            margin-bottom: 1rem;
+                        }
+                        .unit-data-item {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 0.5rem;
+                            width: 100%;
+                            justify-content: center;
+                        }
                     </style>
                     <!-- Directly access the properties of the product model -->
                     <t t-foreach="docs" t-as="doc">
-                        <div>
+                        <div class='date-axel'>
                             <span>
                                 <t t-set="current_datetime" t-value="datetime.datetime.now()"/>
                                 <t t-esc="current_datetime.strftime('%Y-%m-%d %H:%M:%S')"/>
                             </span>
                         </div>
+                        <div class='title-acel'>
+                            <span>
+                                <strong>Estado de Cuenta</strong>
+                            </span>
+                        </div>
                           <!-- Datos de la unidad -->
                           <div class='personal-data-container'>
-                            <div class='unit-data-item'>
-                                <strong class="m-0">Proyecto:</strong>
-                                <span><t t-esc="doc.company_id"/></span>
+                            <div class='personal-data-item'>
+                                <strong class="m-0">Proyecto</strong>
+                                <span><t t-esc="doc.company_id.name"/></span>
                             </div>
-                            <div class='unit-data-item'>
-                                <strong class="m-0">Cliente:</strong>
-                                <span><t t-esc="doc.name"/></span>
+                            <div class='personal-data-item'>
+                                <strong class="m-0">Cliente</strong>
+                                <t t-esc="doc.first_tenancy_agreement_id.tenant_id.name"/>
                             </div>
-                            <div class='unit-data-item'>
-                                <strong class="m-0">Copropietario:</strong>
-                                <span>Apartamento</span>
+                            <div class='personal-data-item'>
+                                <strong class="m-0">Copropietario</strong>
+                                <t t-esc="doc.first_tenancy_agreement_id.co_tenant_id.name"/>
+                                <span t-if="not doc.first_tenancy_agreement_id.co_tenant_id.name">
+                                    NINGUNO
+                                </span>
+                            </div>
+                            <div class='personal-data-item'>
+                                <strong class="m-0">Dirección</strong>
+                                <t t-esc="doc.first_tenancy_agreement_id.tenant_id.street"/>
                             </div>
                         </div>
                         <!-- Datos de la unidad -->
                         <div class='unit-data-container'>
                             <div class='unit-data-item'>
-                                <strong class="m-0">Apartamento:</strong>
+                                <strong class="m-0">Apartamento</strong>
                                 <span><t t-esc="doc.name"/></span>
                             </div>
                             <div class='unit-data-item'>
                                 <strong class="m-0">Area Constru.</strong>
-                                <span><t t-esc="doc.name"/></span>
+                                <span><t t-esc="doc.property_carpet_area"/></span>
                             </div>
                             <div class='unit-data-item'>
-                                <strong class="m-0">Tipo De Inventario:</strong>
+                                <strong class="m-0">Tipo De Inventario</strong>
                                 <span>Apartamento</span>
                             </div>
                             <div class='unit-data-item'>
-                                <strong class="m-0">Precio Inicial:</strong>
-                                <span><t t-esc="doc.name"/></span>
+                                <strong class="m-0">Precio Inicial</strong>
+                                <div>
+                                <t t-esc="doc.first_tenancy_agreement_id.amount_to_finance" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                            </div>
                             </div>
                             <div class='unit-data-item'>
-                                <strong class="m-0">Moneda:</strong>
-                                <span><t t-esc="doc.name"/></span>
+                                <strong class="m-0">Moneda</strong>
+                                <span><t t-esc="doc.currency_id.name"/></span>
                             </div>
                             <div class='unit-data-item'>
-                                <strong class="m-0">Financiamento:</strong>
-                                <span><t t-esc="doc.name"/></span>
+                                <strong class="m-0">Financiamiento</strong>
+                                <div>
+                                    <t t-set="total_amount_cuota_final" t-value="0"/>
+                                    <t t-set="total_residual_cuota_final" t-value="0"/>
+                                    <t t-set="mora_subtotal_cuota_final" t-value="0"/>
+                                    <t t-set="first_line_subtotal" t-value="0"/>
+                                    <t t-set="overdue_count" t-value="0"/>
+                    
+                                    <!-- Iterate through invoices -->
+                                    <t t-foreach="doc.invoices_ids" t-as="invoice">
+                                        <t t-set="has_cuota_final" t-value="False"/>
+                    
+                                        <!-- Iterate through each line to sum totals for "Cuota Final" -->
+                                        <t t-foreach="invoice.invoice_line_ids" t-as="line">
+                                            <t t-if="'Cuota Final' in line.name">
+                                                <t t-set="total_amount_cuota_final" t-value="total_amount_cuota_final + invoice.amount_total"/>
+                                                <t t-set="total_residual_cuota_final" t-value="total_residual_cuota_final + invoice.amount_residual"/>
+                                                <t t-set="has_cuota_final" t-value="True"/>
+                                                <!-- Capture the subtotal of the first relevant line -->
+                                                <t t-if="first_line_subtotal == 0">
+                                                    <t t-set="first_line_subtotal" t-value="line.price_subtotal"/>
+                                                </t>
+                                            </t>
+                                        </t>
+                    
+                                        <!-- Sum "Mora" for the current group if "Cuota Final" exists -->
+                                        <t t-if="has_cuota_final">
+                                            <t t-foreach="invoice.invoice_line_ids" t-as="line">
+                                                <t t-if="'Mora' in line.name">
+                                                    <t t-set="mora_subtotal_cuota_final" t-value="mora_subtotal_cuota_final + line.price_subtotal"/>
+                                                </t>
+                                            </t>
+                                        </t>
+                    
+                                        <!-- Count overdue invoices using the is_overdue field -->
+                                        <t t-if="invoice.is_overdue">
+                                            <t t-set="overdue_count" t-value="overdue_count + 1"/>
+                                        </t>
+                                    </t>
+                                    
+                                    <!-- <t t-esc="total_amount_cuota_final" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/> -->
+                                    <div>
+                                        <t t-esc="first_line_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- Grouped Invoices for Cuota Final -->
