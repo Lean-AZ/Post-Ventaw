@@ -11,12 +11,52 @@
                     <!-- Directly access the properties of the product model -->
                     <t t-foreach="docs" t-as="doc">
                         <div>
-                            <strong class="m-0">Fecha:</strong>
-                            <span><t t-esc="doc.create_date or 'N/A'"/></span>
+                            <span>
+                                <t t-set="current_datetime" t-value="datetime.datetime.now()"/>
+                                <t t-esc="current_datetime.strftime('%Y-%m-%d %H:%M:%S')"/>
+                            </span>
                         </div>
-                        <div>
-                            <strong class="m-0">Product Name:</strong>
-                            <span><t t-esc="doc.name"/></span>
+                          <!-- Datos de la unidad -->
+                          <div class='personal-data-container'>
+                            <div class='unit-data-item'>
+                                <strong class="m-0">Proyecto:</strong>
+                                <span><t t-esc="doc.company_id"/></span>
+                            </div>
+                            <div class='unit-data-item'>
+                                <strong class="m-0">Cliente:</strong>
+                                <span><t t-esc="doc.name"/></span>
+                            </div>
+                            <div class='unit-data-item'>
+                                <strong class="m-0">Copropietario:</strong>
+                                <span>Apartamento</span>
+                            </div>
+                        </div>
+                        <!-- Datos de la unidad -->
+                        <div class='unit-data-container'>
+                            <div class='unit-data-item'>
+                                <strong class="m-0">Apartamento:</strong>
+                                <span><t t-esc="doc.name"/></span>
+                            </div>
+                            <div class='unit-data-item'>
+                                <strong class="m-0">Area Constru.</strong>
+                                <span><t t-esc="doc.name"/></span>
+                            </div>
+                            <div class='unit-data-item'>
+                                <strong class="m-0">Tipo De Inventario:</strong>
+                                <span>Apartamento</span>
+                            </div>
+                            <div class='unit-data-item'>
+                                <strong class="m-0">Precio Inicial:</strong>
+                                <span><t t-esc="doc.name"/></span>
+                            </div>
+                            <div class='unit-data-item'>
+                                <strong class="m-0">Moneda:</strong>
+                                <span><t t-esc="doc.name"/></span>
+                            </div>
+                            <div class='unit-data-item'>
+                                <strong class="m-0">Financiamento:</strong>
+                                <span><t t-esc="doc.name"/></span>
+                            </div>
                         </div>
                         <!-- Grouped Invoices for Cuota Final -->
                         <div>
