@@ -46,6 +46,14 @@
                             width: 100%;
                             justify-content: center;
                         }
+                        td.title-table {
+                            font-weight: bold;
+                            text-align: left;
+                        }
+                        td {
+                            text-align: right;
+                        }
+
                     </style>
                     <!-- Directly access the properties of the product model -->
                     <t t-foreach="docs" t-as="doc">
@@ -169,7 +177,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Inicial</td>
+                                        <td class='title-table'>Inicial</td>
                                         <td>
                                             <!-- Initialize all the totals -->
                                             <t t-set="total_amount_cuota" t-value="0"/>
@@ -250,7 +258,7 @@
                             <table class="table table-sm table-bordered">
                                 <tbody>
                                     <tr>
-                                        <td>Financiamiento</td>
+                                        <td class='title-table'>Financiamiento</td>
                                         <td>
                                             <t t-set="total_amount_cuota_final" t-value="0"/>
                                             <t t-set="total_residual_cuota_final" t-value="0"/>
@@ -323,7 +331,7 @@
                             <table class="table table-sm table-bordered">
                                 <tbody>
                                     <tr>
-                                        <td>Reserva</td>
+                                        <td class='title-table'>Reserva</td>
                                         <td>
                                             <t t-set="total_amount_reserva" t-value="0"/>
                                             <t t-set="total_residual_reserva" t-value="0"/>
@@ -381,7 +389,7 @@
                             <table class="table table-sm table-bordered">
                                 <tbody>
                                     <tr>
-                                        <td>Separación</td>
+                                        <td class='title-table'>Separación</td>
                                         <td>
                                             <t t-set="total_amount_separacion" t-value="0"/>
                                             <t t-set="total_residual_separacion" t-value="0"/>
