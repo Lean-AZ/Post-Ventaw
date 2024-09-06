@@ -262,8 +262,6 @@
                                         <!-- Set the difference between the total_amount_cuota_final and total_residual_cuota_final -->
                                     <td>
                                         <t t-set="cuota_final_difference" t-value="total_amount_cuota - total_residual_cuota"/>
-
-                                        <!-- Display the result of the subtraction -->
                                         <t t-esc="cuota_final_difference" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                     </td>
 
@@ -332,12 +330,8 @@
                                             <t t-esc="first_line_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
-                                            <!-- Set the difference between the total_amount_cuota_final and total_residual_cuota_final -->
                                             <t t-set="cuota_final_difference" t-value="total_amount_cuota_final - total_residual_cuota_final"/>
-
-                                            <!-- Display the result of the subtraction -->
                                             <t t-esc="cuota_final_difference" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
-
                                         </td>
                                         <td>
                                             0
@@ -391,6 +385,10 @@
                                             <t t-esc="first_line_subtotal_reserva" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
+                                            <t t-set="cuota_final_difference" t-value="total_amount_reserva - total_residual_reserva"/>
+                                            <t t-esc="cuota_final_difference" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                        </td>
+                                        <td>
                                             0
                                         </td>
 
@@ -440,6 +438,10 @@
                                         </td>
                                         <td>
                                             <t t-esc="first_line_subtotal_separacion" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                        </td>
+                                        <td>
+                                            <t t-set="cuota_final_difference" t-value="total_amount_separacion - total_residual_separacion"/>
+                                            <t t-esc="cuota_final_difference" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                         <td>
                                             0
