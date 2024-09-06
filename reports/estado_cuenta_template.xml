@@ -29,6 +29,7 @@
                             display: flex;
                             justify-content: center;
                             margin-bottom: 1rem;
+                            margin-top: 1rem;
                         }
                         .unit-data-container {
                             display: grid;
@@ -52,6 +53,17 @@
                         }
                         td {
                             text-align: right;
+                            width: 20%;
+                        }
+                        .date-inv {
+                            text-align: left;
+                        }
+                        .custom-inv-table {
+                            width: 100%;
+                            margin-top: 2rem;
+                        }
+                        thead {
+                            background-color: #f5f5f5;
                         }
 
                     </style>
@@ -60,7 +72,7 @@
                         <div class='date-axel'>
                             <span>
                                 <t t-set="current_datetime" t-value="datetime.datetime.now()"/>
-                                <t t-esc="current_datetime.strftime('%Y-%m-%d %H:%M:%S')"/>
+                                <t t-esc="current_datetime.strftime('%Y-%m-%d %I:%M:%S %p')"/>
                             </span>
                         </div>
                         <div class='title-acel'>
@@ -320,11 +332,7 @@
                                         </tr>
                                     </t>
                                 </tbody>
-                            </table>
-                            
-                            
-                            
-                            
+                            </table>   
                         </div>
                         <!-- Grouped Invoices for Monto de Reserva -->
                         <div>
@@ -441,6 +449,74 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        <div class='title-acel'>
+                            <strong>
+                                Estado de facturación
+                            </strong>
+                        </div>
+
+                        <!-- Render a detailed table for each invoice line after the grouped invoices, sorted by invoice_date -->
+<div>
+    <table class="table table-sm table-bordered custom-inv-table">
+        <thead>
+            <tr>
+                <th>Invoice Date</th>
+                <th>Concepto</th>
+                <th>Monto</th>
+                <th>Pendiente</th>
+                <th>Estado de pago</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Iterate over the invoices, sorted by invoice_date -->
+            <t t-foreach="doc.invoices_ids.sorted('invoice_date')" t-as="invoice">
+                <!-- Iterate over each invoice line to display details -->
+                <t t-foreach="invoice.invoice_line_ids" t-as="line">
+                    <tr>
+                        <!-- Render the invoice date -->
+                        <td class='date-inv'>
+                            <t t-esc="invoice.invoice_date or 'N/A'" t-options='{"widget": "date"}'/>
+                        </td>
+
+                        <!-- Render the description from the invoice line -->
+                        <td class='date-inv'>
+                            <t t-esc="line.name or 'No description'"/>
+                        </td>
+
+                        <!-- Render the amount of the invoice line -->
+                        <td>
+                            <t t-esc="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                        </td>
+
+                        <!-- Render the residual (due) amount of the invoice -->
+                        <td>
+                            <t t-esc="invoice.amount_residual" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                        </td>
+
+                        <!-- Render the payment status of the invoice -->
+                        <td>
+                            <t t-if="invoice.payment_state == 'paid'">
+                                Pagado
+                            </t>
+                            <t t-elif="invoice.payment_state == 'not_paid'">
+                                Pendiente
+                            </t>
+                            <t t-elif="invoice.payment_state == 'partial'">
+                                Parcial
+                            </t>
+                            <t t-else="">
+                                <t t-esc="invoice.payment_state"/>
+                            </t>
+                        </td>
+                        
+                    </tr>
+                </t>
+            </t>
+        </tbody>
+    </table>
+</div>
+
                     </t>
                 </div>
             </t>

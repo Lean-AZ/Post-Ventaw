@@ -1,6 +1,6 @@
 <odoo>
     <record id="product_invoice_report_action" model="ir.actions.report">
-        <field name="name">Product Invoice Report</field>
+        <field name="name">Estado de cuenta</field>
         <field name="model">product.product</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">sr_property_rental_management.report_invoice_table</field>
