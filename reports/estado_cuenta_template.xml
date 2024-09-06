@@ -221,7 +221,7 @@
                                                 <!-- Iterate through each line in the invoice to calculate values -->
                                                 <t t-foreach="invoice.invoice_line_ids" t-as="line">
                                                     <!-- Check if the line contains 'Inicial Cuota' and is not 'Mora' -->
-                                                    <t t-if="'Inicial Cuota' in line.name and 'Mora' not in line.name">
+                                                    <t t-if="'Cuota' in line.name and 'Mora' not in line.name and 'Final' not in line.name">
                                                         <!-- Sum subtotals -->
                                                         <t t-set="subtotal_cuota" t-value="subtotal_cuota + line.price_subtotal"/>
                                                         <!-- Sum total amounts and residuals -->
@@ -276,13 +276,6 @@
                                             <t t-esc="overdue_count"/>
                                         </td>
                                     </tr>
-
-                                    <!-- Check if no "Inicial Cuota" invoices were found and display a message -->
-                                    <t t-if="total_amount_cuota == 0">
-                                        <tr>
-                                            <td colspan="6" class="text-center">No grouped invoices found.</td>
-                                        </tr>
-                                    </t>
                                     <tr>
                                         <td class='title-table'>Financiamiento</td>
                                         <td>
@@ -343,12 +336,6 @@
                                             0
                                         </td>
                                     </tr>
-
-                                    <t t-if="total_amount_cuota_final == 0">
-                                        <tr>
-                                            <td colspan="6" class="text-center">No grouped invoices found.</td>
-                                        </tr>
-                                    </t>
                                     <tr>
                                         <td class='title-table'>Reserva</td>
                                         <td>
@@ -399,11 +386,6 @@
                                         </td>
 
                                     </tr>
-                                    <t t-if="total_amount_reserva == 0">
-                                        <tr>
-                                            <td colspan="6" class="text-center">No grouped invoices found.</td>
-                                        </tr>
-                                    </t>
                                     <tr>
                                         <td class='title-table'>Separación</td>
                                         <td>
@@ -453,11 +435,6 @@
                                             0
                                         </td>
                                     </tr>
-                                    <t t-if="total_amount_separacion == 0">
-                                        <tr>
-                                            <td colspan="6" class="text-center">No grouped invoices found.</td>
-                                        </tr>
-                                    </t>
                                 </tbody>
                             </table>
                         </div>
