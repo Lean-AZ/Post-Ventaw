@@ -7,11 +7,9 @@
                         href="/sr_property_rental_management/static/css/report_styles.css" />
                     <div class="page">
                         <div class="oe_structure" />
-                        <div class="header">
+                        <div class="content">
                             <h1>CONTRATO DE OPCIÓN A COMPRA</h1>
                             <h2>“PROYECTO ZENTRO BY CIVILTEC”</h2>
-                        </div>
-                        <div class="content">
                             <h3>ENTRE:</h3>
                             <div class="space"></div>
                             <p>
