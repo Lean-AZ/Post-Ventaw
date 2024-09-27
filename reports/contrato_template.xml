@@ -415,10 +415,10 @@
                             pagada por EL INTERESADO EN COMPRAR en <span
                                 t-esc="doc.price_to_words(doc.property_id.property_invoice_count)" />
                             (<span t-field="doc.property_id.property_invoice_count" /> ) cuotas,
-                            mediante depósito en la cuenta de ___________ Núm. ____________, abierta
-                            en ____________________________ a nombre del FIDEICOMISO INMOBILIARIO Y
-                            DE GARANTÍA ZENTRO BY CIVILTEC, en los montos y fechas indicados a
-                            continuación: </p>
+                            mediante depósito en las cuentas No. 4060021681, Cuenta Corriente en
+                            Pesos Dominicanos y cuenta No. 4010206955, Cuenta de Ahorro en Dólares
+                            abiertas en el Banco BDI, S.A a nombre del Fideicomiso Inmobiliario y De
+                            Garantia Zentro By Civiltec</p>
                         <t t-set="invoices"
                             t-value="doc.get_invoices_by_property(doc.property_id.id)" />
                         <table class="table-contract">
