@@ -58,16 +58,90 @@
                                 denominación social completa
                                 indistintamente; y,
                             </p>
-                            <p> De una última parte, <span t-field="doc.tenant_id.name" /> , de
-                                nacionalidad <span t-field="doc.tenant_id.nacionalidad" /> , mayor
-                                de edad, de estado civil soltero(a), titular de la Cédula de
-                                Identidad y Electoral Núm. <span t-field="doc.tenant_id.vat" /> y/o
-                                del Pasaporte Núm. <span t-field="doc.tenant_id.passport_number" />
-                                , quien, para fines del presente contrato, se encuentra
-                                domiciliado(a) en <span t-field="doc.tenant_id.street" /> , <span
+                            <t t-if="doc.co_owner_relationship == False">
+                                <p> De una última parte, <span t-field="doc.tenant_id.name" />, de
+                                    nacionalidad <span t-field="doc.tenant_id.nacionalidad" />, mayor
+                                    de edad, de estado civil soltero(a), 
+                                    <t t-if="doc.tenant_id.vat or doc.tenant_id.passport_number">
+                                        <p>
+                                            titular de la Cédula de Identidad y Electoral Núm.
+                                            <t t-if="doc.tenant_id.vat">
+                                                <span t-field="doc.tenant_id.vat"/>
+                                            </t>
+                                            <t t-if="doc.tenant_id.vat and doc.tenant_id.passport_number">
+                                                y/o
+                                            </t>
+                                            del Pasaporte Núm.
+                                            <t t-if="doc.tenant_id.passport_number">
+                                                <span t-field="doc.tenant_id.passport_number"/>
+                                            </t>
+                                        </p>
+                                    </t>, quien, para fines del presente contrato, se encuentra
+                                    domiciliado(a) en <span t-field="doc.tenant_id.street" />, <span
+                                        t-field="doc.tenant_id.city" /> , <span
+                                        t-field="doc.tenant_id.country_id" />, quien en lo adelante se
+                                    denominará “<strong>EL INTERESADO EN COMPRAR</strong>”. </p>
+                            </t>
+                            <t t-if="doc.co_owner_relationship == 'persona_juridica'">
+                                <p>
+                                    De una última parte, <span t-field="doc.tenant_id.name" />, sociedad organizada y existente de acuerdo con las leyes de <span t-field="doc.tenant_id.nacionalidad" />, inscrita en el Registro Nacional de Contribuyentes (RNC) bajo el Núm. <span t-field="doc.tenant_id.vat" />, con su asiento social y domicilio principal ubicado en <span t-field="doc.tenant_id.street" />, <span
                                     t-field="doc.tenant_id.city" /> , <span
-                                    t-field="doc.tenant_id.country_id" /> , quien en lo adelante se
-                                denominará “<strong>EL INTERESADO EN COMPRAR</strong>”. </p>
+                                    t-field="doc.tenant_id.country_id" />, debidamente representada por su <span t-field="doc.co_tenant_id.title" />, señor(a) <span t-field="doc.co_tenant_id.name" />, de nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, <t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
+                                        <p>
+                                            titular de la Cédula de Identidad y Electoral Núm.
+                                            <t t-if="doc.co_tenant_id.vat">
+                                                <span t-field="doc.co_tenant_id.vat"/>
+                                            </t>
+                                            <t t-if="doc.co_tenant_id.vat and doc.co_tenant_id.passport_number">
+                                                y/o
+                                            </t>
+                                            del Pasaporte Núm.
+                                            <t t-if="doc.co_tenant_id.passport_number">
+                                                <span t-field="doc.co_tenant_id.passport_number"/>
+                                            </t>
+                                        </p>
+                                    </t>, quien, para fines del presente contrato, se encuentra domiciliado(a) en  <span t-field="doc.co_tenant_id.street" />, <span
+                                    t-field="doc.co_tenant_id.city" /> , <span
+                                    t-field="doc.co_tenant_id.country_id" />; entidad la cual en lo adelante se denominará “EL INTERESADO EN COMPRAR”.
+                                </p>
+                            </t>
+                            <t t-if="doc.co_owner_relationship == 'casado'">
+                                <p>
+                                    De una última parte, <span t-field="doc.tenant_id.name" />, de nacionalidad <span t-field="doc.tenant_id.nacionalidad" />, mayor de edad, de estado civil casado(a), <t t-if="doc.tenant_id.vat or doc.tenant_id.passport_number">
+                                        <p>
+                                            titular de la Cédula de Identidad y Electoral Núm.
+                                            <t t-if="doc.tenant_id.vat">
+                                                <span t-field="doc.tenant_id.vat"/>
+                                            </t>
+                                            <t t-if="doc.tenant_id.vat and doc.tenant_id.passport_number">
+                                                y/o
+                                            </t>
+                                            del Pasaporte Núm.
+                                            <t t-if="doc.tenant_id.passport_number">
+                                                <span t-field="doc.tenant_id.passport_number"/>
+                                            </t>
+                                        </p>
+                                    </t>, quien, para fines del presente contrato, se encuentra domiciliado(a) en <span t-field="doc.tenant_id.street" />, <span
+                                    t-field="doc.tenant_id.city" /> , <span
+                                    t-field="doc.tenant_id.country_id" />, cuyo cónyuge es el(la) señor(a) <span t-field="doc.co_tenant_id.name" />, de nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, mayor de edad, casado(a), <t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
+                                        <p>
+                                            titular de la Cédula de Identidad y Electoral Núm.
+                                            <t t-if="doc.co_tenant_id.vat">
+                                                <span t-field="doc.co_tenant_id.vat"/>
+                                            </t>
+                                            <t t-if="doc.co_tenant_id.vat and doc.co_tenant_id.passport_number">
+                                                y/o
+                                            </t>
+                                            del Pasaporte Núm.
+                                            <t t-if="doc.co_tenant_id.passport_number">
+                                                <span t-field="doc.co_tenant_id.passport_number"/>
+                                            </t>
+                                        </p>
+                                    </t>, domiciliado(a) y residente en <span t-field="doc.co_tenant_id.street" />, <span
+                                    t-field="doc.co_tenant_id.city" /> , <span
+                                    t-field="doc.co_tenant_id.country_id" />, quien en lo adelante se denominará “EL INTERESADO EN COMPRAR”.
+                                </p>
+                            </t>
                             <p>
                                 En lo adelante, cuando se haga referencia a <strong>EL VENDEDOR</strong> o EL
                                 FIDEICOMISO, <strong>LA CONSTRUCTORA</strong> o
@@ -87,7 +161,7 @@
                             <p>
                                 POR CUANTO (1°): Por acto bajo firma privada de fecha trece (13) de
                                 diciembre del año dos mil veintitrés (2023), <strong>LA CONSTRUCTORA</strong> (en calidad de FIDEICOMITENTE) formuló el acto
-                                constitutivo d<strong>EL FIDEICOMISO</strong> INMOBILIARIO Y
+                                constitutivo <strong>DEL FIDEICOMISO</strong> INMOBILIARIO Y
                                 DE GARANTÍA ZENTRO BY CIVILTEC (en lo adelante <strong>EL FIDEICOMISO</strong>),
                                 designando como fiduciario a la FIDUCIARIA
                                 LA NACIONAL, sociedad que aceptó tal designación, para la recepción
@@ -123,7 +197,7 @@
                                 evicción, defectos ocultos, y obligarse a entregar la unidad
                                 habitacional objeto de este contrato.</p>
                             <p>
-                                POR CUANTO (4°): Que, conforme al acto constitutivo d<strong>EL FIDEICOMISO</strong>,
+                                POR CUANTO (4°): Que, conforme al acto constitutivo <strong>DEL FIDEICOMISO</strong>,
                                 no se dispondrá de los recursos monetarios
                                 recibidos de los compradores de unidades inmobiliarias del PROYECTO,
                                 hasta tanto <strong>LA CONSTRUCTORA</strong> en calidad
@@ -255,7 +329,7 @@
                             contrato.</p>
                         <p>PÁRRAFO IV: CARGAS Y GRAVÁMENES. <strong>EL INTERESADO EN COMPRAR</strong> reconoce y
                             acepta saber, que EL PROYECTO
-                            se desarrollará bajo la figura d<strong>EL FIDEICOMISO</strong> cuyo patrimonio
+                            se desarrollará bajo la figura <strong>DEL FIDEICOMISO</strong> cuyo patrimonio
                             constituye la garantía para una facilidad crediticia a
                             ser tomada con una institución financiera, para el desarrollo del mismo,
                             entendiéndose que dicha garantía
@@ -270,7 +344,7 @@
                             PROYECTO.</p>
                     </div>
                     <div class="content">
-                        <p>PÁRRAFO V: DATOS D<strong>EL INTERESADO EN COMPRAR</strong>. Para los fines de este
+                        <p>PÁRRAFO V: DATOS <strong>DEL INTERESADO EN COMPRAR</strong>. Para los fines de este
                             contrato, <strong>EL INTERESADO EN COMPRAR</strong>
                             declara los siguientes datos:</p>
                         <ul>
@@ -395,11 +469,11 @@
                         <p> ARTÍCULO SEGUNDO: PRECIO Y FORMA DE PAGO (ANEXO B). - De común acuerdo,
                             <strong>LAS PARTES</strong> han establecido que el precio de compra del inmueble,
                             asciende a la suma de <span
-                                t-esc="doc.price_to_words(doc.property_sale_price)" /> DÓLARES DE
+                                t-esc="doc.price_to_words(doc.property_sale_price - doc.initial_amount)" /> DÓLARES DE
                             LOS ESTADOS UNIDOS DE AMERICA CON 00/100 (USD$ <span
-                                t-esc="'{0:,.2f}'.format(doc.property_sale_price)" /> ), en lo
+                                t-esc="'{0:,.2f}'.format(doc.property_sale_price - doc.initial_amount)" /> ), en lo
                             adelante el precio de compra que <strong>EL INTERESADO EN COMPRAR</strong> se obliga a
-                            pagar de la siguiente forma:</p>
+                            pagar de la siguiente forma:</p>                        
                     </div>
                     <div class="content">
                         <p> La suma de <span
@@ -416,7 +490,7 @@
                             (<span t-field="doc.property_id.property_invoice_count" /> ) cuotas,
                             mediante depósito en las cuentas No. 4060021681, Cuenta Corriente en
                             Pesos Dominicanos y cuenta No. 4010206955, Cuenta de Ahorro en Dólares
-                            abiertas en el Banco BDI, S.A a nombre d<strong>EL FIDEICOMISO</strong> Inmobiliario y De
+                            abiertas en el Banco BDI, S.A a nombre <strong>DEL FIDEICOMISO</strong> Inmobiliario y De
                             Garantia Zentro By Civiltec</p>
                         <t t-set="invoices"
                             t-value="doc.get_invoices_by_property(doc.property_id.id)" />
@@ -625,12 +699,12 @@
                             INTERESADO EN COMPRAR en su calidad de adquiriente.</p>
                         <p>
                             PÁRRAFO III: LA FIDUCIARIA se reserva el derecho de aceptar la
-                            vinculación d<strong>EL INTERESADO EN COMPRAR</strong>, por lo
+                            vinculación <strong>DEL INTERESADO EN COMPRAR</strong>, por lo
                             que este contrato se considerará caduco en el evento en que LA
                             FIDUCIARIA no acepte la vinculación del
                             INTERESADO EN COMPRAR al FIDEICOMISO. FIDUCIARIA LA NACIONAL S.A.,
                             notificará a <strong>LA CONSTRUCTORA</strong> la no
-                            aceptación d<strong>EL INTERESADO EN COMPRAR</strong> y se procederá a restituir al
+                            aceptación <strong>DEL INTERESADO EN COMPRAR</strong> y se procederá a restituir al
                             INTERESADO EN COMPRA, los valores
                             efectivamente avanzados, valiendo como descargo la evidencia del
                             depósito de esos valores en la cuenta bancaria
@@ -1035,7 +1109,7 @@
                         </ol>
 
                         <p>
-                            ARTÍCULO OCTAVO: DECLARACIONES D<strong>EL INTERESADO EN COMPRAR</strong>.
+                            ARTÍCULO OCTAVO: DECLARACIONES <strong>DEL INTERESADO EN COMPRAR</strong>.
                             - <strong>EL INTERESADO EN COMPRAR</strong> declara, bajo
                             fe del juramento, lo siguiente:</p>
                         <ol>
@@ -1349,7 +1423,7 @@
                             de los recursos. Adicionalmente, será
                             descontado a favor de LA FIDUCIARIA la suma de CINCO MIL PESOS
                             DOMINICANOS 00/100 (RD$5,000.00) como
-                            cargo por servicio prestado. Vale descargo a favor d<strong>EL FIDEICOMISO</strong>, LA
+                            cargo por servicio prestado. Vale descargo a favor <strong>DEL FIDEICOMISO</strong>, LA
                             FIDUCIARIA y EL FIDEICOMITENTE
                             DESARROLLADOR el depósito a cuenta de los eventuales valores remanentes
                             en la cuenta identificada por EL
@@ -1394,7 +1468,7 @@
                             dinero efectivamente recibidas menos una cantidad equivalente al VEINTE
                             POR CIENTO (20%) del precio de venta
                             de la unidad objeto de este contrato por concepto de indemnización de
-                            daños y perjuicios a favor d<strong>EL FIDEICOMISO</strong>,
+                            daños y perjuicios a favor <strong>DEL FIDEICOMISO</strong>,
                             más los impuestos a las transferencias bancarias, expedición, canje o
                             depósito de cheques, o cualquier otro que grave la transferencia de los
                             recursos. Adicionalmente, será descontado a favor de la FIDUCIARIA la
@@ -1419,7 +1493,7 @@
                         <p>
                             PÁRRAFO V: En cualquiera de los casos indicados precedentemente y por
                             incumplimiento de EL INTERESADO EN
-                            COMPRAR, <strong>EL VENDEDOR</strong> a requerimiento d<strong>EL FIDEICOMITENTE DESARROLLADOR</strong>
+                            COMPRAR, <strong>EL VENDEDOR</strong> a requerimiento <strong>DEL FIDEICOMITENTE DESARROLLADOR</strong>
                             podrá suscribir con terceros
                             contratos de opción de compra venta, promesas de compraventa, venta
                             definitiva del inmueble objeto de este
@@ -1516,7 +1590,7 @@
                             Dominicana. Para todo aquello no contemplado en el
                             presente documento, <strong>LAS PARTES</strong> acuerdan referirse al derecho común,
                             teniendo como orden de prelación la Ley
-                            189-11, el Acuerdo de Constitución d<strong>EL FIDEICOMISO</strong>, los contratos
+                            189-11, el Acuerdo de Constitución <strong>DEL FIDEICOMISO</strong>, los contratos
                             formalizados, el régimen de condominio que habrá
                             de constituirse y el Código Civil Dominicano.</p>
                     </div>
@@ -1535,7 +1609,7 @@
                             <p><strong>CÉSAR AUGUSTO PÁEZ MENDOZA</strong></p>
                             <p>
                                 En calidad de Gerente General de <strong>FIDUCIARIA LA NACIONAL, S.A.</strong>, quien
-                                a su vez actúa en calidad de administradora y vocera d<strong>EL FIDEICOMISO</strong>
+                                a su vez actúa en calidad de administradora y vocera <strong>DEL FIDEICOMISO</strong>
                                 INMOBILIARIO Y DE GARANTÍA ZENTRO BY CIVILTEC</p>
                         </div>
                         <div class="sign-content">
