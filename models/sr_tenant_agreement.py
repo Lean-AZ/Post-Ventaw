@@ -127,6 +127,53 @@ class srTenancyAgreement(models.Model):
         ('amigos', 'Amigos'),
         ('persona_juridica', 'Persona Jurídica')
     ], string="Relación con el Co-propietario", help="Select the relationship type between the tenant and the co-owner.")
+    financing_amount = fields.Float(
+        compute='_compute_financing_details',
+        string='Financing Amount',
+        store=True
+    )
+
+    financed_percentage = fields.Float(
+        compute='_compute_financing_details',
+        string='Porcentaje Financiado',
+        store=True
+    )
+
+    formatted_financed_percentage = fields.Char(
+        'Porcentaje Financiado',
+        compute='_compute_formatted_financed_percentage'
+    )
+    
+
+    @api.depends('property_sale_price', 'initial_amount', 'reserve_amount', 'amount_to_finance')
+    def _compute_financing_details(self):
+        for record in self:
+            record.financing_amount = (
+                record.property_sale_price
+                - record.initial_amount
+                - record.reserve_amount
+                - record.amount_to_finance
+            )
+
+            if record.property_sale_price and record.property_sale_price != 0:
+                record.financed_percentage = (
+                    float(record.amount_to_finance) / float(record.property_sale_price) * 100.0
+                )
+            else:
+                record.financed_percentage = 0.0
+
+    @api.depends('financed_percentage')
+    def _compute_formatted_financed_percentage(self):
+        for record in self:
+            if record.financed_percentage:
+                # Converting to string and formatting to insert a comma
+                percentage_str = "{:.2f}".format(record.financed_percentage)
+                if len(percentage_str) > 2:
+                    # Insert a comma after the first two digits
+                    record.formatted_financed_percentage = percentage_str[:2] + '' + percentage_str[2:]
+                else:
+                    record.formatted_financed_percentage = percentage_str
+
 
     # @api.onchange('agreement_date')
     # def _onchange_agreement_date(self):

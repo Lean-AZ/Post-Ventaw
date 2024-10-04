@@ -48,7 +48,11 @@
 							<field name="reserve_amount" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'invisible': [('property_type', '!=', 'sale')], 'readonly': [('state', '==', 'invoiced')]}" />
 							<field name="initial_amount" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'invisible': [('property_type', '!=', 'sale')], 'readonly': [('state', '==', 'invoiced')]}" />
 							<field name="amount_to_finance" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'invisible': [('property_type', '!=', 'sale')], 'readonly': [('state', '==', 'invoiced')]}" />
+							<!-- Add the new fields below -->
+							<field name="financing_amount" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'invisible': [('property_type', '!=', 'sale')]}" />
+							<field name="formatted_financed_percentage" attrs="{'invisible': [('property_type', '!=', 'sale')]}" />
 						</group>
+						
 						<group string="Contract Details">
 							<field name="agreement_date" />
 							<field name="tenant_id" attrs="{'readonly': [('state', '!=', 'new')]}" options="{'no_create':True, 'no_create_edit':True, 'no_open':True}"/>
