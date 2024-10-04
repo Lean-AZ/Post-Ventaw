@@ -78,14 +78,20 @@
                                         </p>
                                     </t>, quien, para fines del presente contrato, se encuentra
                                     domiciliado(a) en <span t-field="doc.tenant_id.street" />, <span
-                                        t-field="doc.tenant_id.city" /> , <span
+                                        t-field="doc.tenant_id.city" />, <span t-field="doc.tenant_id.state_id"/>
+                                        <t t-if="doc.tenant_id.state_id.name != 'Distrito Nacional (DO)'">
+                                            <span> y accidentalmente en el Distrito Nacional</span>
+                                        </t>, <span
                                         t-field="doc.tenant_id.country_id" />, quien en lo adelante se
                                     denominará “<strong>EL INTERESADO EN COMPRAR</strong>”. </p>
                             </t>
                             <t t-if="doc.co_owner_relationship == 'persona_juridica'">
                                 <p>
                                     De una última parte, <span t-field="doc.tenant_id.name" />, sociedad organizada y existente de acuerdo con las leyes de <span t-field="doc.tenant_id.nacionalidad" />, inscrita en el Registro Nacional de Contribuyentes (RNC) bajo el Núm. <span t-field="doc.tenant_id.vat" />, con su asiento social y domicilio principal ubicado en <span t-field="doc.tenant_id.street" />, <span
-                                    t-field="doc.tenant_id.city" /> , <span
+                                    t-field="doc.tenant_id.city" />, <span t-field="doc.tenant_id.state_id"/>
+                                    <t t-if="doc.tenant_id.state_id.name != 'Distrito Nacional (DO)'">
+                                        <span> y accidentalmente en el Distrito Nacional</span>
+                                    </t>, <span
                                     t-field="doc.tenant_id.country_id" />, debidamente representada por su <span t-field="doc.co_tenant_id.title" />, señor(a) <span t-field="doc.co_tenant_id.name" />, de nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, <t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
                                         <p>
                                             titular de la Cédula de Identidad y Electoral Núm.
@@ -122,7 +128,10 @@
                                             </t>
                                         </p>
                                     </t>, quien, para fines del presente contrato, se encuentra domiciliado(a) en <span t-field="doc.tenant_id.street" />, <span
-                                    t-field="doc.tenant_id.city" /> , <span
+                                    t-field="doc.tenant_id.city" />, <span t-field="doc.tenant_id.state_id"/>
+                                    <t t-if="doc.tenant_id.state_id.name != 'Distrito Nacional (DO)'">
+                                        <span> y accidentalmente en el Distrito Nacional</span>
+                                    </t>, <span
                                     t-field="doc.tenant_id.country_id" />, cuyo cónyuge es el(la) señor(a) <span t-field="doc.co_tenant_id.name" />, de nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, mayor de edad, casado(a), <t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
                                         <p>
                                             titular de la Cédula de Identidad y Electoral Núm.
@@ -286,7 +295,8 @@
                         <p>ARTÍCULO PRIMERO: OBJETO. - <strong>EL VENDEDOR</strong>, bajo los términos y condiciones
                             establecidos en este contrato, otorga una opción de compra en favor de
                             <strong>EL INTERESADO EN COMPRAR</strong>, respecto a la unidad inmobiliaria Signada como <span
-                                t-field="doc.property_id.name" /> .</p>
+                                t-field="doc.property_id.name" /> <span
+                                t-field="doc.property_id.description" />.</p>
                         <p>PÁRRAFO I: <strong>EL INTERESADO EN COMPRAR</strong> declara y reconoce que tanto el
                             metraje de la unidad como su número
                             de identificación pudieran variar como resultado de la Constitución de
@@ -364,8 +374,9 @@
                                 <strong>Domicilio de Elección en Rep. Dom.:</strong>
             <span
                                     t-field="doc.tenant_id.street" /> , <span
-                                    t-field="doc.tenant_id.city" /> , <span
-                                    t-field="doc.tenant_id.country_id" />
+                                    t-field="doc.tenant_id.city" />,
+                                    <span t-field="doc.tenant_id.state_id"/>,
+                                    <span t-field="doc.tenant_id.country_id" />
                             </li>
                             <li>
                                 <strong>Teléfono:</strong>
@@ -469,54 +480,49 @@
                         <p> ARTÍCULO SEGUNDO: PRECIO Y FORMA DE PAGO (ANEXO B). - De común acuerdo,
                             <strong>LAS PARTES</strong> han establecido que el precio de compra del inmueble,
                             asciende a la suma de <span
-                                t-esc="doc.price_to_words(doc.property_sale_price - doc.initial_amount)" /> DÓLARES DE
+                                t-esc="doc.price_to_words(doc.property_sale_price)" /> DÓLARES DE
                             LOS ESTADOS UNIDOS DE AMERICA CON 00/100 (USD$ <span
-                                t-esc="'{0:,.2f}'.format(doc.property_sale_price - doc.initial_amount)" /> ), en lo
+                                t-esc="'{0:,.2f}'.format(doc.property_sale_price)" /> ), en lo
                             adelante el precio de compra que <strong>EL INTERESADO EN COMPRAR</strong> se obliga a
                             pagar de la siguiente forma:</p>                        
                     </div>
                     <div class="content">
-                        <p> La suma de <span
-                                t-esc="doc.price_to_words(doc.initial_amount)" /> DÓLARES DE LOS
-                            ESTADOS UNIDOS DE AMERICA CON 00/100 (USD$ <span
-                                t-esc="'{0:,.2f}'.format(doc.initial_amount)" /> ) al momento de la
+                        <t t-set="invoice_count_minus_one" t-value="doc.property_id.property_invoice_count - 1"/>
+                        <p> La suma de <span t-esc="doc.price_to_words(doc.initial_amount)" /> DÓLARES DE LOS
+                            ESTADOS UNIDOS DE AMERICA CON 00/100 (USD$ <span t-esc="'{0:,.2f}'.format(doc.initial_amount)" /> ) al momento de la
                             firma del presente contrato (en lo adelante el “pago de separación”). </p>
-                        <p> La suma de <span
-                                t-esc="doc.price_to_words(doc.amount_to_finance)" /> DÓLARES DE LOS
-                            ESTADOS UNIDOS DE AMERICA CON 00/100 (USD$ <span
-                                t-esc="'{0:,.2f}'.format(doc.amount_to_finance)" /> ), la cual será
-                            pagada por <strong>EL INTERESADO EN COMPRAR</strong> en <span
-                                t-esc="doc.price_to_words(doc.property_id.property_invoice_count)" />
-                            (<span t-field="doc.property_id.property_invoice_count" /> ) cuotas,
+                        <p> La suma de <span t-esc="doc.price_to_words(doc.property_sale_price - doc.initial_amount)" /> DÓLARES DE LOS
+                            ESTADOS UNIDOS DE AMERICA CON 00/100 (USD$ <span t-esc="'{0:,.2f}'.format(doc.property_sale_price - doc.initial_amount)" /> ), la cual será
+                            pagada por <strong>EL INTERESADO EN COMPRAR</strong> en <span t-esc="doc.price_to_words(invoice_count_minus_one)" />
+                            (<span t-esc="invoice_count_minus_one" />) cuotas,
                             mediante depósito en las cuentas No. 4060021681, Cuenta Corriente en
                             Pesos Dominicanos y cuenta No. 4010206955, Cuenta de Ahorro en Dólares
                             abiertas en el Banco BDI, S.A a nombre <strong>DEL FIDEICOMISO</strong> Inmobiliario y De
-                            Garantia Zentro By Civiltec</p>
+                            Garantia Zentro By Civiltec.</p>                       
                         <t t-set="invoices"
                             t-value="doc.get_invoices_by_property(doc.property_id.id)" />
-                        <table class="table-contract">
-                            <thead>
-                                <tr>
-                                    <th>CUOTA</th>
-                                    <th>FECHA DE PAGO</th>
-                                    <th>MONTO</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <t t-foreach="invoices" t-as="invoice">
+                            <table class="table-contract">
+                                <thead>
                                     <tr>
-                                        <td>Cuota <t t-esc="invoice_index + 1" />
-                                        </td>
-                                        <td>
-                                            <span t-field="invoice.invoice_date" />
-                                        </td>
-                                        <td>
-                                            <span t-field="invoice.amount_total" />
-                                        </td>
+                                        <th>CUOTA</th>
+                                        <th>FECHA DE PAGO</th>
+                                        <th>MONTO</th>
                                     </tr>
-                                </t>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <t t-set="invoice_index" t-value="0"/>
+                                    <t t-foreach="invoices" t-as="invoice">
+                                        <t t-if="invoice_index != 0">
+                                            <tr>
+                                                <td>Cuota <t t-esc="invoice_index"/></td>
+                                                <td><span t-field="invoice.invoice_date"/></td>
+                                                <td><span t-field="invoice.amount_total"/></td>
+                                            </tr>
+                                        </t>
+                                        <t t-set="invoice_index" t-value="invoice_index + 1"/>
+                                    </t>
+                                </tbody>
+                            </table>                            
                         <p>
                             Las sumas pagadas por <strong>EL INTERESADO EN COMPRAR</strong> serán aplicadas al Precio
                             de Compra en el momento en que se
