@@ -162,17 +162,23 @@ class srTenancyAgreement(models.Model):
             else:
                 record.financed_percentage = 0.0
 
-    @api.depends('financed_percentage')
+    @api.depends('amount_to_finance', 'property_sale_price')
     def _compute_formatted_financed_percentage(self):
         for record in self:
-            if record.financed_percentage:
-                # Converting to string and formatting to insert a comma
-                percentage_str = "{:.2f}".format(record.financed_percentage)
+            if record.property_sale_price and record.property_sale_price != 0:
+                financed_percentage = (
+                    float(record.amount_to_finance) / float(record.property_sale_price) * 100.0
+                )
+                # Format the percentage to two decimal places as a string
+                percentage_str = "{:.2f}".format(financed_percentage)
+                # Insert a comma after the first two digits if the string is long enough
                 if len(percentage_str) > 2:
-                    # Insert a comma after the first two digits
                     record.formatted_financed_percentage = percentage_str[:2] + '' + percentage_str[2:]
                 else:
                     record.formatted_financed_percentage = percentage_str
+            else:
+                # Provide a default value for cases where computation cannot be performed
+                record.formatted_financed_percentage = "0.00"
 
 
     # @api.onchange('agreement_date')
