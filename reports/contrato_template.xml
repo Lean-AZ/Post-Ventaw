@@ -61,21 +61,19 @@
                             <t t-if="doc.co_owner_relationship == False">
                                 <p> De una última parte, <span t-field="doc.tenant_id.name" />, de
                                     nacionalidad <span t-field="doc.tenant_id.nacionalidad" />, mayor
-                                    de edad, de estado civil soltero(a), 
-                                    <t t-if="doc.tenant_id.vat or doc.tenant_id.passport_number">
-                                        <p>
-                                            titular de la Cédula de Identidad y Electoral Núm.
+                                    de edad, de estado civil soltero(a) 
+                                    <t t-if="doc.tenant_id.vat or doc.tenant_id.passport_number">              
                                             <t t-if="doc.tenant_id.vat">
+                                            titular de la Cédula de Identidad y Electoral Núm.
                                                 <span t-field="doc.tenant_id.vat"/>
                                             </t>
                                             <t t-if="doc.tenant_id.vat and doc.tenant_id.passport_number">
-                                                y/o
+                                                y
                                             </t>
-                                            del Pasaporte Núm.
                                             <t t-if="doc.tenant_id.passport_number">
+                                            del Pasaporte Núm.
                                                 <span t-field="doc.tenant_id.passport_number"/>
                                             </t>
-                                        </p>
                                     </t>, quien, para fines del presente contrato, se encuentra
                                     domiciliado(a) en <span t-field="doc.tenant_id.street" />, <span
                                         t-field="doc.tenant_id.city" />, <span t-field="doc.tenant_id.state_id"/>
@@ -151,6 +149,7 @@
                                     t-field="doc.co_tenant_id.country_id" />, quien en lo adelante se denominará “EL INTERESADO EN COMPRAR”.
                                 </p>
                             </t>
+                            <br></br>
                             <p>
                                 En lo adelante, cuando se haga referencia a <strong>EL VENDEDOR</strong> o EL
                                 FIDEICOMISO, <strong>LA CONSTRUCTORA</strong> o
@@ -163,10 +162,11 @@
                     <div class="page">
                         <div class="oe_structure" />
                         <div class="header">
-                            <h3>PREÁMBULO:</h3>
-                            <div class="space"></div>
                         </div>
                         <div class="content">
+                            <br></br>
+                            <p style="text-align: center"><strong>PREÁMBULO</strong></p>
+                            <br></br>
                             <p>
                                 POR CUANTO (1°): Por acto bajo firma privada de fecha trece (13) de
                                 diciembre del año dos mil veintitrés (2023), <strong>LA CONSTRUCTORA</strong> (en calidad de FIDEICOMITENTE) formuló el acto
@@ -290,8 +290,10 @@
                     </div>
                     <div class="content">
                         <div class="header">
-                            <h1>HAN CONVENIDO Y PACTADO LO SIGUIENTE:</h1>
                         </div>
+                        <br></br>
+                        <p style="text-align: center"><strong>HAN CONVENIDO Y PACTADO LO SIGUIENTE:</strong></p>
+                        <br></br>
                         <p>ARTÍCULO PRIMERO: OBJETO. - <strong>EL VENDEDOR</strong>, bajo los términos y condiciones
                             establecidos en este contrato, otorga una opción de compra en favor de
                             <strong>EL INTERESADO EN COMPRAR</strong>, respecto a la unidad inmobiliaria Signada como <span
