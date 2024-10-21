@@ -121,6 +121,7 @@ class srTenancyAgreement(models.Model):
     co_tenant_id = fields.Many2one('res.partner', string="Copropietario")
     delivery_date = fields.Date('Fecha de entrega', store=True, related='property_id.delivery_date')
     agent_type = fields.Selection([('interno', 'Interno'), ('externo', 'Externo')], string="Tipo de Agente", default='interno')
+    coletilla_notarial = fields.Text('Coletilla Notarial')
     co_owner_relationship = fields.Selection([
         ('casado', 'Casado'),
         ('hermanos', 'Hermanos'),
@@ -129,7 +130,7 @@ class srTenancyAgreement(models.Model):
     ], string="Relación con el Co-propietario", help="Select the relationship type between the tenant and the co-owner.")
     financing_amount = fields.Float(
         compute='_compute_financing_details',
-        string='Financing Amount',
+        string='Financiamiento',
         store=True
     )
 
@@ -143,31 +144,44 @@ class srTenancyAgreement(models.Model):
         'Porcentaje Financiado',
         compute='_compute_formatted_financed_percentage'
     )
-    
+
+    @api.onchange('partial_payment_id')
+    def _onchange_partial_payment_id(self):
+        # Ensure that the partial payment ID is set and custom payments are enabled
+        if self.partial_payment_id and self.partial_payment_id.is_custom:
+            # Access the first custom partial payment line if it exists
+            if self.partial_payment_id.custom_partial_payment_lines:
+                # Set the initial amount to the first line's amount
+                self.initial_amount = self.partial_payment_id.custom_partial_payment_lines[0].amount
+            else:
+                # If there are no lines, set the initial amount to zero
+                self.initial_amount = 0.0   
 
     @api.depends('property_sale_price', 'initial_amount', 'reserve_amount', 'amount_to_finance')
     def _compute_financing_details(self):
         for record in self:
+            # Calculate the financing amount
             record.financing_amount = (
-                record.property_sale_price
-                - record.initial_amount
-                - record.reserve_amount
-                - record.amount_to_finance
+                record.property_sale_price - (record.initial_amount + record.amount_to_finance)
             )
 
+            # Calculate the financed percentage based on financing amount
             if record.property_sale_price and record.property_sale_price != 0:
                 record.financed_percentage = (
-                    float(record.amount_to_finance) / float(record.property_sale_price) * 100.0
+                    float(record.financing_amount) / float(record.property_sale_price) * 100.0
                 )
             else:
                 record.financed_percentage = 0.0
+
+
 
     @api.depends('amount_to_finance', 'property_sale_price')
     def _compute_formatted_financed_percentage(self):
         for record in self:
             if record.property_sale_price and record.property_sale_price != 0:
+                computed_paid_amount = record.initial_amount + record.amount_to_finance
                 financed_percentage = (
-                    float(record.amount_to_finance) / float(record.property_sale_price) * 100.0
+                    float(record.property_sale_price - computed_paid_amount) / float(record.property_sale_price) * 100.0
                 )
                 # Format the percentage to two decimal places as a string
                 percentage_str = "{:.2f}".format(financed_percentage)
@@ -302,25 +316,26 @@ class srTenancyAgreement(models.Model):
                                 })]
                             })
         else:
-            self.env['account.move'].create({
-             'partner_id':self.tenant_id.id,
-             'invoice_date':datetime.datetime.today().date(),
-             'invoice_date_due':datetime.datetime.today().date() + relativedelta(days=30),
-             'is_property_invoice': True,
-             'property_id': self.property_id.id,
-             'move_type':'out_invoice',
-             'tenancy_agreement':self.id,
-             'journal_id':journal_id.id,
-             'currency_id': self.currency_id.id,
-             'invoice_line_ids':
-                     [(0, 0, {
-             'product_id':self.property_id.id,
-             'name': "Monto de Reserva:" + self.property_id.name,
-             'quantity':1,
-             'price_unit': self.initial_amount,
-             'account_id': accounts['income'].id,
-                 })]
-             })
+            if not self.partial_payment_id.is_custom:
+                self.env['account.move'].create({
+                 'partner_id':self.tenant_id.id,
+                 'invoice_date':datetime.datetime.today().date(),
+                 'invoice_date_due':datetime.datetime.today().date() + relativedelta(days=30),
+                 'is_property_invoice': True,
+                 'property_id': self.property_id.id,
+                 'move_type':'out_invoice',
+                 'tenancy_agreement':self.id,
+                 'journal_id':journal_id.id,
+                 'currency_id': self.currency_id.id,
+                 'invoice_line_ids':
+                         [(0, 0, {
+                 'product_id':self.property_id.id,
+                 'name': "Monto de Reserva:" + self.property_id.name,
+                 'quantity':1,
+                 'price_unit': self.initial_amount,
+                 'account_id': accounts['income'].id,
+                     })]
+                 })
             installment_date = self.first_installment_date
             if self.partial_payment_id.is_custom:
                 amount = 0
@@ -345,24 +360,25 @@ class srTenancyAgreement(models.Model):
                                 })
                     amount += line.amount
 
-                self.env['account.move'].create({
-                    'partner_id':self.tenant_id.id,
-                    'invoice_date':datetime.datetime.today().date(),
-                    'is_property_invoice': True,
-                    'property_id': self.property_id.id,
-                    'move_type':'out_invoice',
-                    'tenancy_agreement':self.id,
-                    'journal_id':journal_id.id,
-                    'currency_id': self.currency_id.id,
-                    'invoice_line_ids':
-                            [(0, 0, {
-                    'product_id':self.property_id.id,
-                    'name': "Cuota Final :" + self.property_id.name,
-                    'quantity':1,
-                    'price_unit': self.total_price - self.reserve_amount - self.initial_amount - amount,
-                    'account_id': accounts['income'].id,
-                        })]
-                    })
+                if (self.total_price - self.reserve_amount - self.initial_amount - amount) > 0:
+                    self.env['account.move'].create({
+                        'partner_id':self.tenant_id.id,
+                        'invoice_date': self.property_id.delivery_date,
+                        'is_property_invoice': True,
+                        'property_id': self.property_id.id,
+                        'move_type':'out_invoice',
+                        'tenancy_agreement':self.id,
+                        'journal_id':journal_id.id,
+                        'currency_id': self.currency_id.id,
+                        'invoice_line_ids':
+                                [(0, 0, {
+                        'product_id':self.property_id.id,
+                        'name': "Cuota Final :" + self.property_id.name,
+                        'quantity':1,
+                        'price_unit': self.total_price - self.reserve_amount - self.initial_amount - amount,
+                        'account_id': accounts['income'].id,
+                            })]
+                        })
             else:
                 def months_between_dates(initial_date_str, final_date_str):
                     initial_date = initial_date_str
@@ -476,25 +492,26 @@ class srTenancyAgreement(models.Model):
             self.property_id.state = 'booked'
             journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
             accounts = self.property_id.product_tmpl_id.get_product_accounts()
-            self.env['account.move'].create({
-             'partner_id':self.tenant_id.id,
-             'invoice_date':datetime.datetime.today().date(),
-             'invoice_date_due':datetime.datetime.today().date() + relativedelta(days=30),
-             'is_property_invoice': True,
-             'property_id': self.property_id.id,
-             'move_type':'out_invoice',
-             'tenancy_agreement':self.id,
-             'journal_id':journal_id.id,
-             'currency_id': self.currency_id.id,
-             'invoice_line_ids':
-                     [(0, 0, {
-             'product_id':self.property_id.id,
-             'name': "Separación :" + self.property_id.name,
-             'quantity':1,
-             'price_unit': self.reserve_amount,
-             'account_id': accounts['income'].id,
-                 })]
-             })
+            if not self.partial_payment_id.is_custom:
+                self.env['account.move'].create({
+                 'partner_id':self.tenant_id.id,
+                 'invoice_date':datetime.datetime.today().date(),
+                 'invoice_date_due':datetime.datetime.today().date() + relativedelta(days=30),
+                 'is_property_invoice': True,
+                 'property_id': self.property_id.id,
+                 'move_type':'out_invoice',
+                 'tenancy_agreement':self.id,
+                 'journal_id':journal_id.id,
+                 'currency_id': self.currency_id.id,
+                 'invoice_line_ids':
+                         [(0, 0, {
+                 'product_id':self.property_id.id,
+                 'name': "Separación :" + self.property_id.name,
+                 'quantity':1,
+                 'price_unit': self.reserve_amount,
+                 'account_id': accounts['income'].id,
+                     })]
+                 })
         return
 
     def check_tenancy_agreement_validity(self):

@@ -59,7 +59,7 @@
                                 indistintamente; y,
                             </p>
                             <t t-if="doc.co_owner_relationship == False">
-                                <p> De una última parte, <span t-field="doc.tenant_id.name" />, de
+                                <p> De una última parte, <strong><span t-field="doc.tenant_id.name" /></strong>, de
                                     nacionalidad <span t-field="doc.tenant_id.nacionalidad" />, mayor
                                     de edad, de estado civil soltero(a) 
                                     <t t-if="doc.tenant_id.vat or doc.tenant_id.passport_number">              
@@ -85,12 +85,12 @@
                             </t>
                             <t t-if="doc.co_owner_relationship == 'persona_juridica'">
                                 <p>
-                                    De una última parte, <span t-field="doc.tenant_id.name" />, sociedad organizada y existente de acuerdo con las leyes de <span t-field="doc.tenant_id.nacionalidad" />, inscrita en el Registro Nacional de Contribuyentes (RNC) bajo el Núm. <span t-field="doc.tenant_id.vat" />, con su asiento social y domicilio principal ubicado en <span t-field="doc.tenant_id.street" />, <span
+                                    De una última parte, <strong><span t-field="doc.tenant_id.name" /></strong>, sociedad organizada y existente de acuerdo con las leyes de <span t-field="doc.tenant_id.nacionalidad" />, inscrita en el Registro Nacional de Contribuyentes (RNC) bajo el Núm. <span t-field="doc.tenant_id.vat" />, con su asiento social y domicilio principal ubicado en <span t-field="doc.tenant_id.street" />, <span
                                     t-field="doc.tenant_id.city" />, <span t-field="doc.tenant_id.state_id"/>
                                     <t t-if="doc.tenant_id.state_id.name != 'Distrito Nacional (DO)'">
                                         <span> y accidentalmente en el Distrito Nacional</span>
                                     </t>, <span
-                                    t-field="doc.tenant_id.country_id" />, debidamente representada por su <span t-field="doc.co_tenant_id.title" />, señor(a) <span t-field="doc.co_tenant_id.name" />, de nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, <t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
+                                    t-field="doc.tenant_id.country_id" />, debidamente representada por su <span t-field="doc.co_tenant_id.title" />, señor(a) <strong><span t-field="doc.co_tenant_id.name" /></strong>, de nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, <t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
                                         <p>
                                             titular de la Cédula de Identidad y Electoral Núm.
                                             <t t-if="doc.co_tenant_id.vat">
@@ -111,7 +111,7 @@
                             </t>
                             <t t-if="doc.co_owner_relationship == 'casado'">
                                 <p>
-                                    De una última parte, <span t-field="doc.tenant_id.name" />, de nacionalidad <span t-field="doc.tenant_id.nacionalidad" />, mayor de edad, de estado civil casado(a), <t t-if="doc.tenant_id.vat or doc.tenant_id.passport_number">
+                                    De una última parte, <strong><span t-esc="doc.tenant_id.name.upper()" /></strong>, de nacionalidad <span t-field="doc.tenant_id.nacionalidad" />, mayor de edad, de estado civil casado(a), <t t-if="doc.tenant_id.vat or doc.tenant_id.passport_number">
                                         <p>
                                             titular de la Cédula de Identidad y Electoral Núm.
                                             <t t-if="doc.tenant_id.vat">
@@ -1640,7 +1640,7 @@
                                 <strong>_______________________________</strong>
                             </p>
                             <p>
-                                <span t-field="doc.tenant_id.name" />
+                                <strong><span t-esc="doc.tenant_id.name.upper()" /></strong>
                             </p>
                         </div>
 
@@ -1648,7 +1648,7 @@
                             número del Distrito Nacional, Matrícula Núm. __________, CERTIFICO Y DOY
                             FE: Que por ante mi han comparecido personalmente los señores: CÉSAR
                             AUGUSTO PÁEZ MENDOZA, <strong>PEDRO RENÉ ANTONIO COLUMNA NÚÑEZ</strong> y
-                            __________________________, personas cuyas generales y calidades
+                            <strong><span t-esc="doc.tenant_id.name.upper()"/></strong>, personas cuyas generales y calidades
                             constan, a quienes doy fe conocer y bajo la fe del juramento me han
                             declarado que las firmas que han estampado en mi presencia en el
                             documento que antecede son las mismas que ellos acostumbran a usar en
