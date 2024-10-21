@@ -173,6 +173,13 @@ class srTenancyAgreement(models.Model):
             else:
                 record.financed_percentage = 0.0
 
+    @api.constrains('financed_percentage')
+    def _check_financed_percentage(self):
+        for record in self:
+            if record.financed_percentage > 50.0:
+                raise ValidationError(
+                     "El porcentaje financiado no puede exceder el 50%. Por favor revise los detalles de financiamiento"
+                )
 
 
     @api.depends('amount_to_finance', 'property_sale_price')
