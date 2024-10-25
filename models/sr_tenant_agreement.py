@@ -176,9 +176,9 @@ class srTenancyAgreement(models.Model):
     @api.constrains('financed_percentage')
     def _check_financed_percentage(self):
         for record in self:
-            if record.financed_percentage > 50.0:
+            if record.financed_percentage > 65.0:
                 raise ValidationError(
-                     "El porcentaje financiado no puede exceder el 50%. Por favor revise los detalles de financiamiento"
+                     "El porcentaje financiado no puede exceder el 65%. Por favor revise los detalles de financiamiento"
                 )
 
 

@@ -77,19 +77,23 @@
                                                         <t t-out="payment_vals['ref']"/>
                                                     </div>
                                                 </div>
-                                                <div class=" my-3">
-                                                    <div style="width:33%" class=" flex-column">
+                                                <div class="my-3">
+                                                    <div style="width:33%" class="flex-column">
                                                         <strong class="m-0">Monto:</strong>
                                                         <span t-out="payment_vals['amount']"
-                                                      t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                                              t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                                     </div>
-                                                    <div style="width:33%" class=" flex-column">
+                                                    <div style="width:33%" class="flex-column">
                                                         <strong class="m-0">Tasa:</strong>
-                                                        <!-- <span t-esc="doc.get_report_data()['conversion_rate']" t-options='{"widget": "float", "precision": 2}'/> -->
-                                                        <t t-set="rate" t-value="doc.amount_total_signed / doc.amount_total if doc.amount_total else 0"/>
-                                                        <span t-esc="rate" t-options='{"widget": "float", "precision": 4}'/>
+                                                        <t t-if="doc.apply_manual_currency_exchange">
+                                                            <span t-esc="doc.manual_currency_exchange_rate" t-options='{"widget": "float", "precision": 4}'/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-set="rate" t-value="doc.amount_total_signed / doc.amount_total if doc.amount_total else 0"/>
+                                                            <span t-esc="rate" t-options='{"widget": "float", "precision": 4}'/>
+                                                        </t>
                                                     </div>
-                                                </div>
+                                                </div>                                                
                                             </div>
                                         </t>
                                         <div>
