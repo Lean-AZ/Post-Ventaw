@@ -212,6 +212,9 @@ class srTenancyAgreement(models.Model):
             raise UserError(_('This method can not called with rent property type'))
         journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
         accounts = self.property_id.product_tmpl_id.get_product_accounts()
+        advance_account = self.env['account.account'].search([('name', '=', 'Avance recibido de clientes')], limit=1)
+        # Fall back to the default income account if not found
+        income_account_id = advance_account.id if advance_account else accounts['income'].id
         if self.payment_option == 'single':
             self.env['account.move'].create({
                             'partner_id':self.tenant_id.id,
@@ -228,14 +231,14 @@ class srTenancyAgreement(models.Model):
                             'name': self.property_id.name + "Property Sold",
                             'quantity':1,
                             'price_unit':self.total_price,
-                            'account_id': accounts['income'].id,
+                            'account_id': income_account_id,
                                 }),
                             (0, 0, {
                                 'product_id':self.property_id.id,
                                 'name': self.property_id.name + "Property Maintenance",
                                 'quantity':1,
                                 'price_unit':self.total_maintenance,
-                                'account_id': accounts['income'].id,
+                                'account_id': income_account_id,
                             })
                                     
                                     ]
@@ -258,14 +261,14 @@ class srTenancyAgreement(models.Model):
                                 'name': "Installment " + str(i + 1) + ":" + self.property_id.name + "Property Sold",
                                 'quantity':1,
                                 'price_unit':self.total_price / self.partial_payment_id.number_of_installments,
-                                'account_id': accounts['income'].id,
+                                'account_id': income_account_id,
                                     }),
                                 (0, 0, {
                                     'product_id':self.property_id.id,
                                     'name': self.property_id.name + "Property Maintenance",
                                     'quantity':1,
                                     'price_unit':self.total_maintenance,
-                                    'account_id': accounts['income'].id,
+                                    'account_id': income_account_id,
                                 })
                                         
                                         ]
@@ -286,7 +289,7 @@ class srTenancyAgreement(models.Model):
                                 'name': "Installment " + str(i + 1) + ":" + self.property_id.name + "Property Sold",
                                 'quantity':1,
                                 'price_unit':self.total_price / self.partial_payment_id.number_of_installments,
-                                'account_id': accounts['income'].id,
+                                'account_id': income_account_id,
                                     })]
                                 })
         self.env['sr.property.agent.commission.lines'].create({
@@ -302,6 +305,12 @@ class srTenancyAgreement(models.Model):
             raise UserError(_('This method can not called with rent property type'))
         journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
         accounts = self.property_id.product_tmpl_id.get_product_accounts()
+
+        advance_account = self.env['account.account'].search([('name', '=', 'Avance recibido de clientes')], limit=1)
+
+        # Fall back to the default income account if not found
+        income_account_id = advance_account.id if advance_account else accounts['income'].id
+
         if self.payment_option == 'single':
             self.env['account.move'].create({
                             'partner_id':self.tenant_id.id,
@@ -319,7 +328,7 @@ class srTenancyAgreement(models.Model):
                             'name': self.property_id.name + " Saldo",
                             'quantity':1,
                             'price_unit':self.total_price,
-                            'account_id': accounts['income'].id,
+                            'account_id': income_account_id,
                                 })]
                             })
         else:
@@ -340,7 +349,7 @@ class srTenancyAgreement(models.Model):
                  'name': "Monto de Reserva:" + self.property_id.name,
                  'quantity':1,
                  'price_unit': self.initial_amount,
-                 'account_id': accounts['income'].id,
+                 'account_id': income_account_id,
                      })]
                  })
             installment_date = self.first_installment_date
@@ -362,7 +371,7 @@ class srTenancyAgreement(models.Model):
                                 'name': f"Cuota {index}: {self.property_id.name}",
                                 'quantity':1,
                                 'price_unit':line.amount,
-                                'account_id': accounts['income'].id,
+                                'account_id': income_account_id,
                                     })]
                                 })
                     amount += line.amount
@@ -383,7 +392,7 @@ class srTenancyAgreement(models.Model):
                         'name': "Cuota Final :" + self.property_id.name,
                         'quantity':1,
                         'price_unit': self.total_price - self.reserve_amount - self.initial_amount - amount,
-                        'account_id': accounts['income'].id,
+                        'account_id': income_account_id,
                             })]
                         })
             else:
@@ -423,7 +432,7 @@ class srTenancyAgreement(models.Model):
                                 'name': "Inicial Cuota #" + str(i + 1) + ":" + self.property_id.name,
                                 'quantity':1,
                                 'price_unit':installment_amount,
-                                'account_id': accounts['income'].id,
+                                'account_id': income_account_id,
                                     })]
                                 })
                     next_month = installment_date + relativedelta(months=1)
@@ -447,7 +456,7 @@ class srTenancyAgreement(models.Model):
                  'name': "Cuota Final :" + self.property_id.name,
                  'quantity':1,
                  'price_unit': self.total_price - self.amount_to_finance - self.reserve_amount - self.initial_amount,
-                 'account_id': accounts['income'].id,
+                 'account_id': income_account_id,
                      })]
                  })
         self.env['sr.property.agent.commission.lines'].create({
@@ -499,6 +508,11 @@ class srTenancyAgreement(models.Model):
             self.property_id.state = 'booked'
             journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
             accounts = self.property_id.product_tmpl_id.get_product_accounts()
+
+            advance_account = self.env['account.account'].search([('name', '=', 'Avance recibido de clientes')], limit=1)
+            # Fall back to the default income account if not found
+            income_account_id = advance_account.id if advance_account else accounts['income'].id
+
             if not self.partial_payment_id.is_custom:
                 self.env['account.move'].create({
                  'partner_id':self.tenant_id.id,
@@ -516,7 +530,7 @@ class srTenancyAgreement(models.Model):
                  'name': "Separación :" + self.property_id.name,
                  'quantity':1,
                  'price_unit': self.reserve_amount,
-                 'account_id': accounts['income'].id,
+                 'account_id': income_account_id,
                      })]
                  })
         return
@@ -554,6 +568,10 @@ class srTenancyAgreement(models.Model):
                             })
                         fiscal_position = inv_id.fiscal_position_id
                         accounts = record.property_id.product_tmpl_id.get_product_accounts(fiscal_pos=fiscal_position)
+                        advance_account = self.env['account.account'].search([('name', '=', 'Avance recibido de clientes')], limit=1)
+                        # Fall back to the default income account if not found
+                        income_account_id = advance_account.id if advance_account else accounts['income'].id
+
                         inv_id.write({
                             'invoice_line_ids':
                         [(0, 0, {
@@ -562,7 +580,7 @@ class srTenancyAgreement(models.Model):
                             'quantity':1,
                             'price_unit':record.property_rent,
                             'move_id':inv_id.id,
-                            'account_id': accounts['income'].id,
+                            'account_id': income_account_id,
                             })]
                             })
                         if record.maintenance_interval_type == 'year' and i % 12 == 0:
@@ -574,7 +592,7 @@ class srTenancyAgreement(models.Model):
                                 'quantity':1,
                                 'price_unit':record.maintenance_charge,
                                 'move_id':inv_id.id,
-                                'account_id': accounts['income'].id,
+                                'account_id': income_account_id,
                                 })]
                                 })
                         if record.maintenance_interval_type == 'month':
@@ -586,7 +604,7 @@ class srTenancyAgreement(models.Model):
                                 'quantity':1,
                                 'price_unit':record.maintenance_charge,
                                 'move_id':inv_id.id,
-                                'account_id': accounts['income'].id,
+                                'account_id': income_account_id,
                                 })]
                                 })
                 self.env['sr.property.agent.commission.lines'].create({
