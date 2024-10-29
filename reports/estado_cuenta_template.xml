@@ -441,7 +441,7 @@
                         <!-- Grouped Invoices for Separación -->
                         <div class='title-acel'>
                             <strong>
-                                Estado de facturación
+                                Estado de Pagos
                             </strong>
                         </div>
 
@@ -454,6 +454,7 @@
                                         <th class='start-header'>Concepto</th>
                                         <th>Monto</th>
                                         <th>Pendiente</th>
+                                        <th>Pagado</th>
                                         <th>Estado de pago</th>
                                     </tr>
                                 </thead>
@@ -483,16 +484,21 @@
                                                     <t t-esc="invoice.amount_residual" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                                 </td>
 
+                                                <!-- Render the paid amount of the invoice -->
+                                                <td>
+                                                    <t t-esc="invoice.amount_total - invoice.amount_residual" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                                </td>
+
                                                 <!-- Render the payment status of the invoice -->
                                                 <td>
                                                     <t t-if="invoice.payment_state == 'paid'">
-                                Pagado
+                                Saldo
                                                     </t>
                                                     <t t-elif="invoice.payment_state == 'not_paid'">
                                 Pendiente
                                                     </t>
                                                     <t t-elif="invoice.payment_state == 'partial'">
-                                Parcial
+                                Abono parcial
                                                     </t>
                                                     <t t-else="">
                                                         <t t-esc="invoice.payment_state"/>
