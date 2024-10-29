@@ -59,7 +59,8 @@
                                 indistintamente; y,
                             </p>
                             <t t-if="doc.co_owner_relationship == False">
-                                <p> De una última parte, <strong><span t-field="doc.tenant_id.name" /></strong>, de
+                                <p> 
+                                    De una última parte, <strong><span t-field="doc.tenant_id.name" /></strong>, de
                                     nacionalidad <span t-field="doc.tenant_id.nacionalidad" />, mayor
                                     de edad, de estado civil soltero(a) 
                                     <t t-if="doc.tenant_id.vat or doc.tenant_id.passport_number">              
@@ -70,7 +71,7 @@
                                             <t t-if="doc.tenant_id.vat and doc.tenant_id.passport_number">
                                                 y
                                             </t>
-                                            <t t-if="doc.tenant_id.passport_number">
+                                            <t t-if="doc.tenant_id.passport_number and len(doc.tenant_id.passport_number) &gt; 3">
                                             del Pasaporte Núm.
                                                 <span t-field="doc.tenant_id.passport_number"/>
                                             </t>
@@ -78,10 +79,11 @@
                                     domiciliado(a) en <span t-field="doc.tenant_id.street" />, <span
                                         t-field="doc.tenant_id.city" />, <span t-field="doc.tenant_id.state_id"/>
                                         <t t-if="doc.tenant_id.state_id.name != 'Distrito Nacional (DO)'">
-                                            <span> y accidentalmente en el Distrito Nacional</span>
-                                        </t>, <span
+                                            <span> y accidentalmente en el Distrito Nacional,</span>
+                                        </t> <span
                                         t-field="doc.tenant_id.country_id" />, quien en lo adelante se
-                                    denominará “<strong>EL INTERESADO EN COMPRAR</strong>”. </p>
+                                    denominará “<strong>EL INTERESADO EN COMPRAR</strong>”. 
+                                </p>
                             </t>
                             <t t-if="doc.co_owner_relationship == 'persona_juridica'">
                                 <p>
@@ -91,19 +93,17 @@
                                         <span> y accidentalmente en el Distrito Nacional</span>
                                     </t>, <span
                                     t-field="doc.tenant_id.country_id" />, debidamente representada por su <span t-field="doc.co_tenant_id.title" />, señor(a) <strong><span t-field="doc.co_tenant_id.name" /></strong>, de nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, <t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
-                                        <p>
                                             titular de la Cédula de Identidad y Electoral Núm.
                                             <t t-if="doc.co_tenant_id.vat">
                                                 <span t-field="doc.co_tenant_id.vat"/>
                                             </t>
-                                            <t t-if="doc.co_tenant_id.vat and doc.co_tenant_id.passport_number">
+                                            <t t-if="doc.co_tenant_id.vat and doc.co_tenant_id.passport_number and len(doc.tenant_id.passport_number) &gt; 3">
                                                 y/o
                                             </t>
-                                            del Pasaporte Núm.
-                                            <t t-if="doc.co_tenant_id.passport_number">
+                                            <t t-if="doc.tenant_id.passport_number and len(doc.tenant_id.passport_number) &gt; 3">
+                                                del Pasaporte Núm.
                                                 <span t-field="doc.co_tenant_id.passport_number"/>
                                             </t>
-                                        </p>
                                     </t>, quien, para fines del presente contrato, se encuentra domiciliado(a) en  <span t-field="doc.co_tenant_id.street" />, <span
                                     t-field="doc.co_tenant_id.city" /> , <span
                                     t-field="doc.co_tenant_id.country_id" />; entidad la cual en lo adelante se denominará “EL INTERESADO EN COMPRAR”.
@@ -111,8 +111,7 @@
                             </t>
                             <t t-if="doc.co_owner_relationship == 'casado'">
                                 <p>
-                                    De una última parte, <strong><span t-esc="doc.tenant_id.name.upper()" /></strong>, de nacionalidad <span t-field="doc.tenant_id.nacionalidad" />, mayor de edad, de estado civil casado(a), <t t-if="doc.tenant_id.vat or doc.tenant_id.passport_number">
-                                        <p>
+                                    De una última parte, <strong><span t-esc="doc.tenant_id.name.upper()" /></strong>, de nacionalidad <span t-field="doc.tenant_id.nacionalidad" />, mayor de edad, de estado civil casado(a)<t t-if="doc.tenant_id.vat or doc.tenant_id.passport_number">
                                             titular de la Cédula de Identidad y Electoral Núm.
                                             <t t-if="doc.tenant_id.vat">
                                                 <span t-field="doc.tenant_id.vat"/>
@@ -120,18 +119,16 @@
                                             <t t-if="doc.tenant_id.vat and doc.tenant_id.passport_number">
                                                 y/o
                                             </t>
+                                            <t t-if="doc.tenant_id.passport_number and len(doc.tenant_id.passport_number) &gt; 3">
                                             del Pasaporte Núm.
-                                            <t t-if="doc.tenant_id.passport_number">
                                                 <span t-field="doc.tenant_id.passport_number"/>
                                             </t>
-                                        </p>
                                     </t>, quien, para fines del presente contrato, se encuentra domiciliado(a) en <span t-field="doc.tenant_id.street" />, <span
                                     t-field="doc.tenant_id.city" />, <span t-field="doc.tenant_id.state_id"/>
                                     <t t-if="doc.tenant_id.state_id.name != 'Distrito Nacional (DO)'">
-                                        <span> y accidentalmente en el Distrito Nacional</span>
-                                    </t>, <span
-                                    t-field="doc.tenant_id.country_id" />, cuyo cónyuge es el(la) señor(a) <span t-field="doc.co_tenant_id.name" />, de nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, mayor de edad, casado(a), <t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
-                                        <p>
+                                        <span> y accidentalmente en el Distrito Nacional,</span>
+                                    </t> <span
+                                    t-field="doc.tenant_id.country_id" />, cuyo cónyuge es el(la) señor(a) <strong><span t-field="doc.co_tenant_id.name" /></strong>, de nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, mayor de edad, casado(a)<t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
                                             titular de la Cédula de Identidad y Electoral Núm.
                                             <t t-if="doc.co_tenant_id.vat">
                                                 <span t-field="doc.co_tenant_id.vat"/>
@@ -139,11 +136,10 @@
                                             <t t-if="doc.co_tenant_id.vat and doc.co_tenant_id.passport_number">
                                                 y/o
                                             </t>
+                                            <t t-if="doc.tenant_id.passport_number and len(doc.tenant_id.passport_number) &gt; 3">
                                             del Pasaporte Núm.
-                                            <t t-if="doc.co_tenant_id.passport_number">
                                                 <span t-field="doc.co_tenant_id.passport_number"/>
                                             </t>
-                                        </p>
                                     </t>, domiciliado(a) y residente en <span t-field="doc.co_tenant_id.street" />, <span
                                     t-field="doc.co_tenant_id.city" /> , <span
                                     t-field="doc.co_tenant_id.country_id" />, quien en lo adelante se denominará “EL INTERESADO EN COMPRAR”.
