@@ -128,7 +128,7 @@
                                     <t t-if="doc.tenant_id.state_id.name != 'Distrito Nacional (DO)'">
                                         <span> y accidentalmente en el Distrito Nacional,</span>
                                     </t> <span
-                                    t-field="doc.tenant_id.country_id" />, cuyo cónyuge es el(la) señor(a) <strong> <span t-field="doc.co_tenant_id.name" /></strong>, de nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, mayor de edad, casado(a)<t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
+                                    t-field="doc.tenant_id.country_id" />, cuyo cónyuge es el(la) señor(a) &#160; <strong> <span t-field="doc.co_tenant_id.name" /></strong>, de nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, mayor de edad, casado(a)<t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
                                             titular de la Cédula de Identidad y Electoral Núm.
                                             <t t-if="doc.co_tenant_id.vat">
                                                 <span t-field="doc.co_tenant_id.vat"/>
@@ -147,9 +147,9 @@
                             </t>
                             <br></br>
                             <p>
-                                En lo adelante, cuando se haga referencia a <strong>EL VENDEDOR</strong> o EL
-                                FIDEICOMISO, <strong>LA CONSTRUCTORA</strong> o
-                                FIDEICOMITENTE DESARROLLADOR y <strong>EL INTERESADO EN COMPRAR</strong> de manera
+                                En lo adelante, cuando se haga referencia a&#160;<strong> EL VENDEDOR</strong> o EL
+                                FIDEICOMISO,&#160;<strong>LA CONSTRUCTORA</strong> o
+                                FIDEICOMITENTE DESARROLLADOR y&#160;<strong>EL INTERESADO EN COMPRAR</strong> de manera
                                 conjunta dentro del presente acto,
                                 se designarán como “<strong>LAS PARTES</strong>”.
                             </p>
@@ -299,7 +299,7 @@
                             metraje de la unidad como su número
                             de identificación pudieran variar como resultado de la Constitución de
                             Condominio. En caso de que resulte dicha
-                            variación, <strong>EL INTERESADO EN COMPRAR</strong> reconoce frente a <strong>EL FIDEICOMISO</strong> y
+                            variación, <strong>EL INTERESADO EN COMPRAR</strong> reconoce frente a &#160; <strong>EL FIDEICOMISO</strong> y
                             <strong>LA CONSTRUCTORA</strong> que dicho cambio
                             no se debe a una variación del objeto del presente contrato, por lo que,
                             no será considerado como un
@@ -313,7 +313,7 @@
                             su vez, <strong>LAS PARTES</strong> acuerdan que en caso de
                             que exista alguna diferencia igual o mayor al cinco por ciento (5%)
                             entre el metraje vendido y el metraje resultante,
-                            <strong>EL INTERESADO EN COMPRAR</strong> deberá pagar a <strong>LA CONSTRUCTORA</strong> el valor de los
+                            <strong>EL INTERESADO EN COMPRAR</strong> deberá pagar a &#160; <strong>LA CONSTRUCTORA</strong> el valor de los
                             metrajes adicionales al precio que
                             estipule <strong>LA CONSTRUCTORA</strong> previo a la entrega del inmueble.</p>
                         <p>PÁRRAFO II: <strong>EL INTERESADO EN COMPRAR</strong>, declara y reconoce que tanto
@@ -337,7 +337,7 @@
                             contrato.</p>
                         <p>PÁRRAFO IV: CARGAS Y GRAVÁMENES. <strong>EL INTERESADO EN COMPRAR</strong> reconoce y
                             acepta saber, que EL PROYECTO
-                            se desarrollará bajo la figura <strong>DEL FIDEICOMISO</strong> cuyo patrimonio
+                            se desarrollará bajo la figura &#160; <strong>DEL FIDEICOMISO</strong> cuyo patrimonio
                             constituye la garantía para una facilidad crediticia a
                             ser tomada con una institución financiera, para el desarrollo del mismo,
                             entendiéndose que dicha garantía
@@ -547,7 +547,7 @@
                             financiera que tenga el mayor aporte en el financiamiento del Proyecto.</p>
                         <p>
                             PÁRRAFO II: <strong>EL INTERESADO EN COMPRAR</strong> se compromete a pagar el Precio de
-                            Compra a <strong>EL FIDEICOMISO</strong> en los
+                            Compra a &#160; <strong>EL FIDEICOMISO</strong> en los
                             plazos y forma previstos en el Artículo Segundo este contrato, sin
                             deducción ni retardo alguno. EL INTERESADO EN
                             COMPRAR reconoce y acepta que el cumplimiento de sus obligaciones en el
@@ -614,7 +614,7 @@
                             otro gasto que al respecto deba efectuarse para la adquisición del
                             inmueble.</p>
                         <p>
-                            PÁRRAFO IX: <strong>EL INTERESADO EN COMPRAR</strong> autoriza a <strong>LA CONSTRUCTORA</strong> a
+                            PÁRRAFO IX: <strong>EL INTERESADO EN COMPRAR</strong> autoriza a &#160; <strong>LA CONSTRUCTORA</strong> a
                             descontar de los pagos realizados las
                             cantidades generadas por efecto de variaciones, penalizaciones, gastos o
                             indexaciones, descuentos que se realizarán
@@ -707,7 +707,7 @@
                             que este contrato se considerará caduco en el evento en que LA
                             FIDUCIARIA no acepte la vinculación del
                             INTERESADO EN COMPRAR al FIDEICOMISO. FIDUCIARIA LA NACIONAL S.A.,
-                            notificará a <strong>LA CONSTRUCTORA</strong> la no
+                            notificará a &#160; <strong>LA CONSTRUCTORA</strong> la no
                             aceptación <strong>DEL INTERESADO EN COMPRAR</strong> y se procederá a restituir al
                             INTERESADO EN COMPRA, los valores
                             efectivamente avanzados, valiendo como descargo la evidencia del
@@ -716,7 +716,7 @@
                         <p>
                             PÁRRAFO IV: El incumplimiento de los requerimientos fijados por LA
                             FIDUCIARIA, es causa justificativa para
-                            revocación de la separación, sin responsabilidad para <strong>EL FIDEICOMISO</strong>, LA
+                            revocación de la separación, sin responsabilidad para &#160; <strong>EL FIDEICOMISO</strong>, LA
                             FIDUCIARIA y <strong>LA CONSTRUCTORA</strong> y
                             mediante simple aviso por cualquier medio fehaciente.</p>
                         <p>
@@ -798,7 +798,7 @@
                             una demora en la entrega del inmueble por parte de <strong>LA CONSTRUCTORA</strong> en la
                             fecha estimada en el artículo anterior
                             señalado, <strong>EL INTERESADO EN COMPRAR</strong>, mediante el presente documento le
-                            concede a <strong>LA CONSTRUCTORA</strong> un
+                            concede a &#160; <strong>LA CONSTRUCTORA</strong> un
                             período adicional de noventa (90) días calendario para la entrega del
                             inmueble, si transcurrido el plazo de noventa
                             (90) días calendario y aún <strong>LA CONSTRUCTORA</strong> no cumpliere con su
@@ -811,7 +811,7 @@
                             CONSTRUCTORA incumpliere su obligación de
                             entregar el inmueble deberá, a título de compensación a EL INTERESADO EN
                             COMPRAR y sin necesidad de
-                            intervención judicial, reembolsar a <strong>EL INTERESADO EN COMPRAR</strong> la
+                            intervención judicial, reembolsar a &#160; <strong>EL INTERESADO EN COMPRAR</strong> la
                             totalidad de las sumas que este hubiere
                             entregado a LA FIDUCIARIA, más un importe equivalente al TRES POR CIENTO
                             (3%) de las sumas pagadas por EL
@@ -964,7 +964,7 @@
                             terminada en la fecha prevista o antes
                             de lo establecido en el presente contrato, <strong>LA CONSTRUCTORA</strong> tiene un
                             plazo de treinta (30) días calendario para
-                            notificar a <strong>EL INTERESADO EN COMPRAR</strong> de la terminación de las obras y EL
+                            notificar a &#160; <strong>EL INTERESADO EN COMPRAR</strong> de la terminación de las obras y EL
                             INTERESADO EN COMPRAR acepta que
                             tendrá un plazo máximo de treinta (30) días calendario, contados a
                             partir de la referida notificación, para honrar la
@@ -1067,7 +1067,7 @@
                             de unidades para el desarrollo y ejecución del
                             Proyecto. A continuación, en forma segregada se detallan los compromisos
                             asumidos y sus responsables a los fines de
-                            hacerlos oponibles a <strong>EL INTERESADO EN COMPRAR</strong>, lo que este último,
+                            hacerlos oponibles a &#160; <strong>EL INTERESADO EN COMPRAR</strong>, lo que este último,
                             declara, expresa, y reconoce saber y aceptar:</p>
                     </div>
                     <div class="content">
@@ -1167,10 +1167,10 @@
                     </div>
                     <div class="content">
                         <p>
-                            PÁRRAFO I: De igual forma <strong>EL INTERESADO EN COMPRAR</strong> acepta, declara y
+                            PÁRRAFO I: De igual forma &#160; <strong>EL INTERESADO EN COMPRAR</strong> acepta, declara y
                             reconoce saber:</p>
                         <ol>
-                            <li>Que LA FIDUCIARIA, no financia a <strong>LA CONSTRUCTORA</strong> o la construcción
+                            <li>Que LA FIDUCIARIA, no financia a &#160; <strong>LA CONSTRUCTORA</strong> o la construcción
                                 del Proyecto;</li>
                             <li>Que LA FIDUCIARIA y <strong>LA CONSTRUCTORA</strong> podrán solicitarle y será una
                                 obligación de EL INTERESADO EN
@@ -1307,7 +1307,7 @@
                                 jurídica que conforme su criterio reúna las
                                 condiciones para prestar dichos servicios. En virtud de lo anterior,
                                 <strong>EL INTERESADO EN COMPRAR</strong> autoriza
-                                expresamente a <strong>EL VENDEDOR</strong> a contratar una administración de
+                                expresamente a &#160; <strong>EL VENDEDOR</strong> a contratar una administración de
                                 condominios provisional y se compromete y
                                 obliga a realizar los pagos que le corresponda como parte alícuota
                                 por el pago de dichos servicios de
@@ -1344,7 +1344,7 @@
                                         EN COMPRAR, y si este no firma en
                                         un plazo de diez (10) días calendario, contados a partir de
                                         dicha notificación, <strong>EL VENDEDOR</strong> penalizará
-                                        a <strong>EL INTERESADO EN COMPRAR</strong> con una suma equivalente al cero
+                                        a &#160; <strong>EL INTERESADO EN COMPRAR</strong> con una suma equivalente al cero
                                         punto diez por ciento (0.10%) del
                                         monto adeudado por cada día de retraso, suma que deducirá EL
                                         VENDEDOR de los valores que haya
@@ -1378,7 +1378,7 @@
                                 de intermediación financiera o <strong>EL VENDEDOR</strong> a EL INTERESADO EN
                                 COMPRAR, y si este no firma en un plazo de diez (10) días
                                 calendario, contados a partir de dicha notificación, <strong>EL VENDEDOR</strong>
-                                penalizará a <strong>EL INTERESADO EN COMPRAR</strong> con una suma equivalente al
+                                penalizará a &#160; <strong>EL INTERESADO EN COMPRAR</strong> con una suma equivalente al
                                 cero punto diez por ciento (0.10%) del monto adeudado por cada día
                                 de retraso, suma que deducirá <strong>EL VENDEDOR</strong> de los valores que haya
                                 pagado <strong>EL INTERESADO EN COMPRAR</strong>, hasta un máximo de quince (15) días
@@ -1415,7 +1415,7 @@
                         <p>
                             PÁRRAFO I: En estos casos, <strong>LA CONSTRUCTORA</strong> y <strong>EL VENDEDOR</strong>, conforme
                             instrucciones de EL FIDEICOMITENTE
-                            DESARROLLADOR, se comprometen a devolver a <strong>EL INTERESADO EN COMPRAR</strong> o a
+                            DESARROLLADOR, se comprometen a devolver a &#160; <strong>EL INTERESADO EN COMPRAR</strong> o a
                             sus herederos o causahabientes,
                             según el caso, las cantidades de dinero efectivamente recibidas. De las
                             sumas de dinero recibidas será descontado
@@ -1465,7 +1465,7 @@
                             la totalidad del precio de la vivienda y vencido
                             el plazo para el cierre del negocio o firma definitiva del documento de
                             compraventa, EL FIDEICOMITENTE
-                            DESARROLLADOR queda en libertad de solicitar a <strong>EL VENDEDOR</strong> la venta del
+                            DESARROLLADOR queda en libertad de solicitar a &#160; <strong>EL VENDEDOR</strong> la venta del
                             inmueble del presente contrato a un
                             tercero e instruir a LA FIDUCIARIA para que proceda a devolver a EL
                             INTERESADO EN COMPRAR las cantidades en
@@ -1613,7 +1613,7 @@
                             <p><strong>CÉSAR AUGUSTO PÁEZ MENDOZA</strong></p>
                             <p>
                                 En calidad de Gerente General de <strong>FIDUCIARIA LA NACIONAL, S.A.</strong>, quien
-                                a su vez actúa en calidad de administradora y vocera <strong>DEL FIDEICOMISO</strong>
+                                a su vez actúa en calidad de administradora y vocera &#160; <strong>DEL FIDEICOMISO</strong>
                                 INMOBILIARIO Y DE GARANTÍA ZENTRO BY CIVILTEC</p>
                         </div>
                         <div class="sign-content">
