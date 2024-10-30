@@ -128,7 +128,7 @@
                                     <t t-if="doc.tenant_id.state_id.name != 'Distrito Nacional (DO)'">
                                         <span> y accidentalmente en el Distrito Nacional,</span>
                                     </t> <span
-                                    t-field="doc.tenant_id.country_id" />, cuyo cónyuge es el(la) señor(a) <strong><span t-field="doc.co_tenant_id.name" /></strong>, de nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, mayor de edad, casado(a)<t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
+                                    t-field="doc.tenant_id.country_id" />, cuyo cónyuge es el(la) señor(a) <strong> <span t-field="doc.co_tenant_id.name" /></strong>, de nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, mayor de edad, casado(a)<t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
                                             titular de la Cédula de Identidad y Electoral Núm.
                                             <t t-if="doc.co_tenant_id.vat">
                                                 <span t-field="doc.co_tenant_id.vat"/>
