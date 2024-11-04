@@ -194,33 +194,40 @@
 		name="Property Type" parent="sr_property_configuration_menu"
 		action="sr_property_type_configuration_action" sequence="2" />
 
-	<record id="sr_property_partial_payment_form_view"
-		model="ir.ui.view">
-		<field name="name">sr.property.partial.payment.form.view</field>
-		<field name="model">sr.property.partial.payment</field>
-		<field name="arch" type="xml">
-			<form string="Partial Payment">
-				<sheet>
-					<group>
-						<field name="name" />
-						<field name="number_of_installments" />
-						<field name="is_custom" />
-					</group>
-					<notebook>
-                        <page string="Cuotas">
-                            <field name="custom_partial_payment_lines" attrs="{'invisible': [('is_custom', '=', 'True')]}">
-                                <tree string="Cuotas Tree" editable="bottom">
-                                    <field name="partial_payment_id" invisible="1"/>
-                                    <field name="date"/>
-                                    <field name="amount"/>
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
-				</sheet>
-			</form>
-		</field>
-	</record>
+		<record id="sr_property_partial_payment_form_view" model="ir.ui.view">
+			<field name="name">sr.property.partial.payment.form.view</field>
+			<field name="model">sr.property.partial.payment</field>
+			<field name="arch" type="xml">
+				<form string="Partial Payment">
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+								<field name="number_of_installments" />
+								<field name="is_custom" help="Marca este campo para especificar cuotas personalizadas. Si no está marcado, se generará una cuota mensual hasta la fecha de entrega basada en los valores del contrato."/>
+							</group>
+							<group attrs="{'invisible': [('is_custom', '=', False)]}">
+								<field name="property_id" options="{'no_create': True}" context="{'create': False}" />
+								<field name="property_price" attrs="{'invisible': [('property_id', '=', False)]}"/>
+								<field name="total_custom_payments" attrs="{'invisible': [('property_id', '=', False)]}"/>
+								<field name="remaining_balance" attrs="{'invisible': [('property_id', '=', False)]}" help="Este monto genera automáticamente una factura con el concepto de 'financiamiento'." />
+							</group>
+						</group>
+						<notebook attrs="{'invisible': [('is_custom', '=', False)]}">
+							<page string="Cuotas">
+								<field name="custom_partial_payment_lines">
+									<tree string="Cuotas Tree" editable="bottom">
+										<field name="partial_payment_id" invisible="1"/>
+										<field name="date"/>
+										<field name="amount"/>
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>			
 
 	<record id="sr_property_partial_payment_tree_view"
 		model="ir.ui.view">

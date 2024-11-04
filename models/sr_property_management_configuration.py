@@ -8,7 +8,7 @@
 #
 ##############################################################################
 
-from odoo import models, fields, _
+from odoo import models, fields, api, _
 
 
 class srPropertyCustomPartialPaymentLines(models.Model):
@@ -16,6 +16,7 @@ class srPropertyCustomPartialPaymentLines(models.Model):
     partial_payment_id = fields.Many2one('sr.property.partial.payment', string="Partial Payment")
     date = fields.Date("Date")
     amount = fields.Float("Amount", digits=(16, 3), required=True)
+
 class srPropertyPartialPayment(models.Model):
     _name = 'sr.property.partial.payment'
 
@@ -23,6 +24,29 @@ class srPropertyPartialPayment(models.Model):
     number_of_installments = fields.Integer("No of Installments", required=True)
     is_custom = fields.Boolean("Personalizado", default=False, store=True)
     custom_partial_payment_lines = fields.One2many('sr.property.custom.partial.payment.lines', 'partial_payment_id', string="Custom Partial Payment Lines")
+    property_id = fields.Many2one('product.product', 'Unidad', required=True, domain="[('is_property','=', True),('state','=', 'available')]", index=True, tracking=4)
+    property_price = fields.Float(related='property_id.property_sale_price', string='Precio de la unidad', store=True, readonly=True)
+    total_custom_payments = fields.Float(compute='_compute_total_custom_payments', string='Separación + Financiamiento', store=True)
+    remaining_balance = fields.Float(compute='_compute_remaining_balance', string='Financiamiento', store=True)
+
+    @api.depends('custom_partial_payment_lines.amount')
+    def _compute_total_custom_payments(self):
+        for record in self:
+            record.total_custom_payments = sum(line.amount for line in record.custom_partial_payment_lines)
+
+    @api.depends('property_price', 'total_custom_payments')
+    def _compute_remaining_balance(self):
+        for record in self:
+            if record.property_price:
+                record.remaining_balance = record.property_price - record.total_custom_payments
+            else:
+                record.remaining_balance = 0.0
+
+    @api.onchange('property_id')
+    def _onchange_property_id(self):
+        if self.property_id:
+            self.name = f"Plan de Pagos - {self.property_id.name}"
+
 
 class srPropertyType(models.Model):
     _name = 'sr.property.type'
