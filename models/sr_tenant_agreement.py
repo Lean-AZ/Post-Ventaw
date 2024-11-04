@@ -118,6 +118,7 @@ class srTenancyAgreement(models.Model):
     currency_id = fields.Many2one('res.currency', string='Moneda', readonly=True, store=True, related='property_id.currency_id')
     amount_to_finance = fields.Float('Monto Inicial', currency_field='currency_id', store=True)
     gastos_legales = fields.Float('Gastos Legales', currency_field='currency_id', store=True, default=0.0)
+    gastos_legales_invoiced = fields.Boolean('Gastos Legales Invoiced', default=False)
     first_installment_date = fields.Date(string='Pago de primer cuota', copy=False, store=True)
     co_tenant_id = fields.Many2one('res.partner', string="Copropietario")
     delivery_date = fields.Date('Fecha de entrega', store=True, related='property_id.delivery_date')
@@ -531,6 +532,45 @@ class srTenancyAgreement(models.Model):
                  'name': "Separación :" + self.property_id.name,
                  'quantity':1,
                  'price_unit': self.reserve_amount,
+                 'account_id': income_account_id,
+                     })]
+                 })
+        return
+    
+    def action_create_gatos_legales_invoices(self):
+        if self.property_id.state == 'draft':
+            raise UserError(_('This property is not confirmed yet by administrator.'))
+        if self.gastos_legales_invoiced:
+            raise UserError(_('Gastos Legales ya se han facturado.'))
+        if self.gastos_legales <= 0:
+            raise UserError(_('Gastos Legales no pueden ser cero.'))
+
+        self.write({
+            'gastos_legales_invoiced':True
+            })
+        if self.property_type == 'sale':
+            journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
+            accounts = self.property_id.product_tmpl_id.get_product_accounts()
+            advance_account = self.env['account.account'].search([('name', '=', 'Avance recibido de clientes')], limit=1)
+            # Fall back to the default income account if not found
+            income_account_id = advance_account.id if advance_account else accounts['income'].id
+            if not self.partial_payment_id.is_custom:
+                self.env['account.move'].create({
+                 'partner_id':self.tenant_id.id,
+                 'invoice_date':self.property_id.delivery_date,
+                 'invoice_date_due': self.property_id.delivery_date + relativedelta(days=30),
+                 'is_property_invoice': True,
+                 'property_id': self.property_id.id,
+                 'move_type':'out_invoice',
+                 'tenancy_agreement':self.id,
+                 'journal_id':journal_id.id,
+                 'currency_id': self.currency_id.id,
+                 'invoice_line_ids':
+                         [(0, 0, {
+                 'product_id':self.property_id.id,
+                 'name': "Gastos Legales :" + self.property_id.name,
+                 'quantity':1,
+                 'price_unit': self.gastos_legales,
                  'account_id': income_account_id,
                      })]
                  })
