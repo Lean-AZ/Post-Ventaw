@@ -564,7 +564,7 @@ msgstr "Información General"
 #. module: sr_property_rental_management
 #: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
 msgid "Generar Cuotas"
-msgstr "Generate Cuotas"
+msgstr "Generar Cuotas"
 
 #. module: sr_property_rental_management
 #: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__has_message

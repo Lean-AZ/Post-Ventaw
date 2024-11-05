@@ -24,7 +24,7 @@
 				<header invisible="context.get('hide_header')">
 					<button name="action_confirm" string="Vender Unidad" type="object" class="oe_highlight" states="new" />
 					<button name="action_booked" string="Separar Unidad" type="object" class="oe_highlight" states="new" />
-					<button name="action_create_gatos_legales_invoices" string="Generar Gastos Legales" type="object" class="oe_highlight" attrs="{'invisible': [('gastos_legales_invoiced', '==', 'True')]}" />
+					<button name="action_create_gatos_legales_invoices" string="Generar Gastos Legales" type="object" class="oe_highlight" attrs="{'invisible': [('gastos_legales_invoiced', '!=', False)]}" />
 
 					<button name="action_create_invoice_civiltec" string="Generar Cuotas" type="object" class="oe_highlight" attrs="{'invisible': ['|',('property_type', '!=', 'sale'),('state', '!=', 'confirm')]}" />
 					<button name="cancel_booked_property" string="Cancelar Reserva" type="object" attrs="{'invisible': ['|',('property_type', '!=', 'sale'),('state', '!=', 'confirm')]}" />

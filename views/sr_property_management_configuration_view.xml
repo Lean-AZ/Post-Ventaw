@@ -203,14 +203,14 @@
 						<group>
 							<group>
 								<field name="name" />
-								<field name="number_of_installments" />
+								<field name="number_of_installments" invisible="1" />
 								<field name="is_custom" help="Marca este campo para especificar cuotas personalizadas. Si no está marcado, se generará una cuota mensual hasta la fecha de entrega basada en los valores del contrato."/>
 							</group>
 							<group attrs="{'invisible': [('is_custom', '=', False)]}">
 								<field name="property_id" options="{'no_create': True}" context="{'create': False}" />
 								<field name="property_price" attrs="{'invisible': [('property_id', '=', False)]}"/>
 								<field name="total_custom_payments" attrs="{'invisible': [('property_id', '=', False)]}"/>
-								<field name="remaining_balance" attrs="{'invisible': [('property_id', '=', False)]}" help="Este monto genera automáticamente una factura con el concepto de 'financiamiento'." />
+								<field name="remaining_balance" attrs="{'invisible': [('property_id', '=', False)]}" help="Este monto genera automáticamente una factura con el concepto de 'Cuota Final'." />
 							</group>
 						</group>
 						<notebook attrs="{'invisible': [('is_custom', '=', False)]}">

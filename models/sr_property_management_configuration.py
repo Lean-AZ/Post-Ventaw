@@ -26,7 +26,7 @@ class srPropertyPartialPayment(models.Model):
     custom_partial_payment_lines = fields.One2many('sr.property.custom.partial.payment.lines', 'partial_payment_id', string="Custom Partial Payment Lines")
     property_id = fields.Many2one('product.product', 'Unidad', required=True, domain="[('is_property','=', True),('state','=', 'available')]", index=True, tracking=4)
     property_price = fields.Float(related='property_id.property_sale_price', string='Precio de la unidad', store=True, readonly=True)
-    total_custom_payments = fields.Float(compute='_compute_total_custom_payments', string='Separación + Financiamiento', store=True)
+    total_custom_payments = fields.Float(compute='_compute_total_custom_payments', string='Financiamiento + Separación', store=True)
     remaining_balance = fields.Float(compute='_compute_remaining_balance', string='Financiamiento', store=True)
 
     @api.depends('custom_partial_payment_lines.amount')

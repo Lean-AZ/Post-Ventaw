@@ -412,7 +412,7 @@ class srTenancyAgreement(models.Model):
                     'product_id':self.property_id.id,
                     'name': "Cuota Final :" + self.property_id.name,
                     'quantity':1,
-                    'price_unit': self.partial_payment_id.total_custom_payments - amount,
+                    'price_unit': self.property_id.property_sale_price - amount,
                     'account_id': income_account_id,
                         })]
                     })
@@ -567,32 +567,30 @@ class srTenancyAgreement(models.Model):
         self.write({
             'gastos_legales_invoiced':True
             })
-        if self.property_type == 'sale':
-            journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
-            accounts = self.property_id.product_tmpl_id.get_product_accounts()
-            advance_account = self.env['account.account'].search([('name', '=', 'Avance recibido de clientes')], limit=1)
-            # Fall back to the default income account if not found
-            income_account_id = advance_account.id if advance_account else accounts['income'].id
-            if not self.partial_payment_id.is_custom:
-                self.env['account.move'].create({
-                 'partner_id':self.tenant_id.id,
-                 'invoice_date':self.property_id.delivery_date,
-                 'invoice_date_due': self.property_id.delivery_date + relativedelta(days=30),
-                 'is_property_invoice': True,
-                 'property_id': self.property_id.id,
-                 'move_type':'out_invoice',
-                 'tenancy_agreement':self.id,
-                 'journal_id':journal_id.id,
-                 'currency_id': self.currency_id.id,
-                 'invoice_line_ids':
-                         [(0, 0, {
-                 'product_id':self.property_id.id,
-                 'name': "Gastos Legales :" + self.property_id.name,
-                 'quantity':1,
-                 'price_unit': self.gastos_legales,
-                 'account_id': income_account_id,
-                     })]
-                 })
+        journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
+        accounts = self.property_id.product_tmpl_id.get_product_accounts()
+        advance_account = self.env['account.account'].search([('name', '=', 'Avance recibido de clientes')], limit=1)
+        # Fall back to the default income account if not found
+        income_account_id = advance_account.id if advance_account else accounts['income'].id
+        self.env['account.move'].create({
+         'partner_id':self.tenant_id.id,
+         'invoice_date':self.property_id.delivery_date,
+         'invoice_date_due': self.property_id.delivery_date + relativedelta(days=30),
+         'is_property_invoice': True,
+         'property_id': self.property_id.id,
+         'move_type':'out_invoice',
+         'tenancy_agreement':self.id,
+         'journal_id':journal_id.id,
+         'currency_id': self.currency_id.id,
+         'invoice_line_ids':
+                 [(0, 0, {
+         'product_id':self.property_id.id,
+         'name': "Gastos Legales :" + self.property_id.name,
+         'quantity':1,
+         'price_unit': self.gastos_legales,
+         'account_id': income_account_id,
+             })]
+         })
         return
 
     def check_tenancy_agreement_validity(self):
