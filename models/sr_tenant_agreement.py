@@ -105,7 +105,7 @@ class srTenancyAgreement(models.Model):
     maintenance_interval_type = fields.Selection([('month', 'Monthly'), ('year', 'Yearly'), ('one_time', 'One Time')], string="Maintenance Interval ", related="property_id.property_maintenance_interval_type", store=True)
     tenant_id = fields.Many2one('res.partner', string="Tenant", required=True)
     payment_option = fields.Selection([('single', 'Single Payment'), ('installment', 'Installments')], string="Payments Option", default='installment')
-    partial_payment_id = fields.Many2one('sr.property.partial.payment', 'Installments')
+    partial_payment_id = fields.Many2one('sr.property.partial.payment', 'Installments',  domain="[('property_id', '=', property_id)]")
     state = fields.Selection([
         ('new', 'New'),
         ('confirm', 'Confirmed'),
@@ -155,6 +155,7 @@ class srTenancyAgreement(models.Model):
             if self.partial_payment_id.custom_partial_payment_lines:
                 # Set the initial amount to the first line's amount
                 self.initial_amount = self.partial_payment_id.custom_partial_payment_lines[0].amount
+                self.amount_to_finance = self.partial_payment_id.total_custom_payments - self.partial_payment_id.custom_partial_payment_lines[0].amount
             else:
                 # If there are no lines, set the initial amount to zero
                 self.initial_amount = 0.0   
@@ -378,25 +379,43 @@ class srTenancyAgreement(models.Model):
                                 })
                     amount += line.amount
 
-                if (self.total_price - self.reserve_amount - self.initial_amount - amount) > 0:
-                    self.env['account.move'].create({
-                        'partner_id':self.tenant_id.id,
-                        'invoice_date': self.property_id.delivery_date,
-                        'is_property_invoice': True,
-                        'property_id': self.property_id.id,
-                        'move_type':'out_invoice',
-                        'tenancy_agreement':self.id,
-                        'journal_id':journal_id.id,
-                        'currency_id': self.currency_id.id,
-                        'invoice_line_ids':
-                                [(0, 0, {
-                        'product_id':self.property_id.id,
-                        'name': "Cuota Final :" + self.property_id.name,
-                        'quantity':1,
-                        'price_unit': self.total_price - self.reserve_amount - self.initial_amount - amount,
-                        'account_id': income_account_id,
-                            })]
-                        })
+                # if (self.total_price - self.reserve_amount - self.initial_amount - amount) > 0:
+                #     self.env['account.move'].create({
+                #         'partner_id':self.tenant_id.id,
+                #         'invoice_date': self.property_id.delivery_date,
+                #         'is_property_invoice': True,
+                #         'property_id': self.property_id.id,
+                #         'move_type':'out_invoice',
+                #         'tenancy_agreement':self.id,
+                #         'journal_id':journal_id.id,
+                #         'currency_id': self.currency_id.id,
+                #         'invoice_line_ids':
+                #                 [(0, 0, {
+                #         'product_id':self.property_id.id,
+                #         'name': "Cuota Final :" + self.property_id.name,
+                #         'quantity':1,
+                #         'price_unit': self.total_price - self.reserve_amount - self.initial_amount - amount,
+                #         'account_id': income_account_id,
+                #             })]
+                #         })
+                self.env['account.move'].create({
+                    'partner_id':self.tenant_id.id,
+                    'invoice_date': self.property_id.delivery_date,
+                    'is_property_invoice': True,
+                    'property_id': self.property_id.id,
+                    'move_type':'out_invoice',
+                    'tenancy_agreement':self.id,
+                    'journal_id':journal_id.id,
+                    'currency_id': self.currency_id.id,
+                    'invoice_line_ids':
+                            [(0, 0, {
+                    'product_id':self.property_id.id,
+                    'name': "Cuota Final :" + self.property_id.name,
+                    'quantity':1,
+                    'price_unit': self.partial_payment_id.total_custom_payments - amount,
+                    'account_id': income_account_id,
+                        })]
+                    })
             else:
                 def months_between_dates(initial_date_str, final_date_str):
                     initial_date = initial_date_str

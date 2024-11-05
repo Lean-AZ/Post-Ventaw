@@ -62,7 +62,7 @@
 							<field name="co_tenant_id" attrs="{'readonly': [('state', '!=', 'new')]}" options="{'no_create':True, 'no_create_edit':True, 'no_open':True}"/>
 							<field name="co_owner_relationship"/>
 							<field name="payment_option" widget="radio" attrs="{'invisible': [('property_type', '!=', 'sale')], 'required': [('property_type', '=', 'sale')], 'readonly': [('state', '!=', 'new')]}" />
-							<field name="partial_payment_id" attrs="{'invisible': ['|',('property_type', '!=', 'sale'),('payment_option', '!=', 'installment')], 'required': [('property_type', '=', 'sale'),('payment_option', '=', 'installment')], 'readonly': [('state', '!=', 'new')]}" />
+							<field name="partial_payment_id" attrs="{'invisible': ['|',('property_type', '!=', 'sale'),('payment_option', '!=', 'installment')], 'required': [('property_type', '=', 'sale'),('payment_option', '=', 'installment')], 'readonly': [('state', '!=', 'new')]}" options="{'no_create': True}" />
 							<field name="agreement_start_date" attrs="{'invisible': [('property_type', '!=', 'rent')], 'required': [('property_type', '=', 'rent')], 'readonly': [('state', '!=', 'new')]}" />
 							<field name="first_installment_date" attrs="{'invisible': ['|',('property_type', '!=', 'sale'),('payment_option', '!=', 'installment')], 'required': [('property_type', '=', 'sale'),('payment_option', '=', 'installment')], 'readonly': [('state', '==', 'running')]}" />
 							<label for="agreement_duration" string="Duration" attrs="{'invisible': [('property_type', '!=', 'rent')], 'required': [('property_type', '=', 'rent')], 'readonly': [('state', '!=', 'new')]}" />
