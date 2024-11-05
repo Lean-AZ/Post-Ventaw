@@ -198,7 +198,7 @@
 			<field name="name">sr.property.partial.payment.form.view</field>
 			<field name="model">sr.property.partial.payment</field>
 			<field name="arch" type="xml">
-				<form string="Partial Payment">
+				<form string="Planes de Pago">
 					<sheet>
 						<group>
 							<group>
@@ -234,23 +234,24 @@
 		<field name="name">sr.property.partial.payment.tree.view</field>
 		<field name="model">sr.property.partial.payment</field>
 		<field name="arch" type="xml">
-			<tree string="Partial Payment">
+			<tree string="Planes de Pago">
 				<field name="name" />
-				<field name="number_of_installments" />
+				<field name="property_id" />
+				<field name="number_of_installments" invisible="1"/>
 			</tree>
 		</field>
 	</record>
 
 	<record id="sr_property_partial_payment_configuration_action"
 		model="ir.actions.act_window">
-		<field name="name">Partial Payment</field>
+		<field name="name">Planes De Pago</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">sr.property.partial.payment</field>
 		<field name="view_mode">tree,form</field>
 	</record>
 
 	<menuitem id="sr_property_partial_payment_configuration_menu"
-		name="Partial Payment" parent="sr_property_configuration_menu"
+		name="Plan De Pago" parent="sr_property_configuration_menu"
 		action="sr_property_partial_payment_configuration_action" sequence="1" />
 
 
