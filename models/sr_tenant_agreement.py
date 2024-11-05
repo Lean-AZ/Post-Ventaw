@@ -117,7 +117,7 @@ class srTenancyAgreement(models.Model):
     initial_amount = fields.Float('Monto de Separación', currency_field='currency_id', store=True)
     currency_id = fields.Many2one('res.currency', string='Moneda', readonly=True, store=True, related='property_id.currency_id')
     amount_to_finance = fields.Float('Monto Inicial', currency_field='currency_id', store=True)
-    gastos_legales = fields.Float('Gastos Legales', currency_field='currency_id', store=True, default=0.0)
+    gastos_legales = fields.Float('Gastos Legales', currency_field='currency_id', store=True, default=500.0)
     gastos_legales_invoiced = fields.Boolean('Gastos Legales Invoiced', default=False)
     first_installment_date = fields.Date(string='Pago de primer cuota', copy=False, store=True)
     co_tenant_id = fields.Many2one('res.partner', string="Copropietario")
