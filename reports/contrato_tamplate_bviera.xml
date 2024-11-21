@@ -1,5 +1,5 @@
 <odoo>
-    <template id="contrato_venta_tamplate">
+    <template id="contrato_ladano_tamplate">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t t-call="web.external_layout">
@@ -1650,8 +1650,8 @@
                             documento que antecede son las mismas que ellos acostumbran a usar en
                             todos sus actos, motivo por el cual se le confiere carácter de
                             autenticidad. En la ciudad de Santo Domingo, Distrito Nacional, capital
-                            de la República Dominicana, <span
-                            t-esc="doc.date_to_spanish_format(doc.agreement_date)" /> </p>
+                            de la República Dominicana, a los __________ (___) días mes de ________
+                            del año dos mil ________ (20____).</p>
 
                         <div class="sign-content">
                             <p>

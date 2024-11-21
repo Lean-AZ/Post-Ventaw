@@ -1,10 +1,10 @@
 <odoo>
     <record id="contrato_action" model="ir.actions.report">
-        <field name="name">Contrato De Venta Zentro</field>
+        <field name="name">Contrato De Venta Ladano</field>
         <field name="model">sr.tenancy.agreement</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">sr_property_rental_management.contrato_venta_tamplate</field>
-        <field name="report_file">sr_property_rental_management.contrato_venta_tamplate</field>
+        <field name="report_name">sr_property_rental_management.contrato_ladano_tamplate</field>
+        <field name="report_file">sr_property_rental_management.contrato_ladano_tamplate</field>
         <field name="binding_model_id" ref="model_sr_tenancy_agreement"/>
         <field name="binding_type">report</field>
         <!-- <field name="report_type">py3o</field>
