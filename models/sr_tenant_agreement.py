@@ -251,6 +251,7 @@ class srTenancyAgreement(models.Model):
                 if i == 0:
                     self.env['account.move'].create({
                                 'partner_id':self.tenant_id.id,
+                                'auto_post': True,  
                                 'invoice_date':datetime.datetime.today().date(),
                                 'is_property_invoice': True,
                                 'property_id': self.property_id.id,
@@ -279,6 +280,7 @@ class srTenancyAgreement(models.Model):
                 else:
                     self.env['account.move'].create({
                                 'partner_id':self.tenant_id.id,
+                                'auto_post': True,
                                 'invoice_date':datetime.datetime.today().date(),
                                 'is_property_invoice': True,
                                 'property_id': self.property_id.id,
@@ -317,6 +319,7 @@ class srTenancyAgreement(models.Model):
         if self.payment_option == 'single':
             self.env['account.move'].create({
                             'partner_id':self.tenant_id.id,
+                            'auto_post': True,
                             'invoice_date':datetime.datetime.today().date(),
                             'invoice_date_due':datetime.datetime.today().date() + relativedelta(days=30),
                             'is_property_invoice': True,
@@ -338,6 +341,7 @@ class srTenancyAgreement(models.Model):
             if not self.partial_payment_id.is_custom:
                 self.env['account.move'].create({
                  'partner_id':self.tenant_id.id,
+                 'auto_post': True,
                  'invoice_date':datetime.datetime.today().date(),
                  'invoice_date_due':datetime.datetime.today().date() + relativedelta(days=30),
                  'is_property_invoice': True,
@@ -361,6 +365,7 @@ class srTenancyAgreement(models.Model):
                 for index, line in enumerate(self.partial_payment_id.custom_partial_payment_lines, start=1):
                     self.env['account.move'].create({
                                 'partner_id':self.tenant_id.id,
+                                'auto_post': True,
                                 'invoice_date':line.date,
                                 'is_property_invoice': True,
                                 'property_id': self.property_id.id,
@@ -400,6 +405,7 @@ class srTenancyAgreement(models.Model):
                 #         })
                 self.env['account.move'].create({
                     'partner_id':self.tenant_id.id,
+                    'auto_post': True,
                     'invoice_date': self.property_id.delivery_date,
                     'is_property_invoice': True,
                     'property_id': self.property_id.id,
@@ -439,6 +445,7 @@ class srTenancyAgreement(models.Model):
                         allocated_amount += installment_amount
                     self.env['account.move'].create({
                                 'partner_id':self.tenant_id.id,
+                                'auto_post': True,
                                 'invoice_date': installment_date,
                                 'invoice_date_due': installment_date + relativedelta(days=30),
                                 'is_property_invoice': True,
@@ -463,6 +470,7 @@ class srTenancyAgreement(models.Model):
 
                 self.env['account.move'].create({
                  'partner_id':self.tenant_id.id,
+                 'auto_post': True,
                  'invoice_date':installment_date,
                  'invoice_date_due':invoice_date_due,
                  'is_property_invoice': True,
@@ -537,6 +545,7 @@ class srTenancyAgreement(models.Model):
             if not self.partial_payment_id.is_custom:
                 self.env['account.move'].create({
                  'partner_id':self.tenant_id.id,
+                 'auto_post': True,
                  'invoice_date':datetime.datetime.today().date(),
                  'invoice_date_due':datetime.datetime.today().date() + relativedelta(days=30),
                  'is_property_invoice': True,
@@ -574,6 +583,7 @@ class srTenancyAgreement(models.Model):
         income_account_id = advance_account.id if advance_account else accounts['income'].id
         self.env['account.move'].create({
          'partner_id':self.tenant_id.id,
+         'auto_post': True,
          'invoice_date':self.property_id.delivery_date,
          'invoice_date_due': self.property_id.delivery_date + relativedelta(days=30),
          'is_property_invoice': True,
@@ -617,6 +627,7 @@ class srTenancyAgreement(models.Model):
                         journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
                         inv_id = self.env['account.move'].create({
                             'partner_id':record.tenant_id.id,
+                            'auto_post': True,
                             'invoice_date':record.agreement_start_date + relativedelta(months=record.agreement_duration),
                             'is_property_invoice': True,
                             'property_id': record.property_id.id,
