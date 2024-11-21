@@ -89,7 +89,7 @@
         'reports/contrato_template.xml',
         'reports/estado_cuenta_action.xml',
         'reports/estado_cuenta_template.xml',
-        'reports/contrato_ladano_tamplate.xml',
+        'reports/contrato_tamplate_bviera.xml',
         'reports/contrato_action_bviera.xml',
     ],
     'assets': {
