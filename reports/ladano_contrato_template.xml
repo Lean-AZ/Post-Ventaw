@@ -679,9 +679,9 @@ las partes contratantes, en la ciudad de Santo Domingo, Distrito Nacional, Repú
                                     <strong>Por LA SEGUNDA PARTE</strong>
                                 </p>
                                 <p>
-                                    <p><strong><span t-esc="doc.tenant_id.name.upper()" /></strong></p>
+                                    <p><strong><span t-esc="doc.tenant_id.name" /></strong></p>
                                 </p>
-                                <p><strong><span t-esc="doc.co_tenant_id.name.upper()" /></strong></p>
+                                <p><strong><span t-esc="doc.co_tenant_id.name" /></strong></p>
                             </div>
 
                             <p>
