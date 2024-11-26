@@ -89,6 +89,8 @@
         'reports/contrato_template.xml',
         'reports/estado_cuenta_action.xml',
         'reports/estado_cuenta_template.xml',
+        'reports/ladano_contrato_action.xml',
+        'reports/ladano_contrato_template.xml',
     ],
     'assets': {
         'web.assets_backend': [
