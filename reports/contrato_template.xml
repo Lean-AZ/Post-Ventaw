@@ -82,8 +82,34 @@
                                             <span> y accidentalmente en el Distrito Nacional,</span>
                                         </t> <span
                                         t-field="doc.tenant_id.country_id" />, quien en lo adelante se
-                                    denominará “<strong>EL INTERESADO EN COMPRAR</strong>”. 
+                                    denominará “<strong>EL INTERESADO EN COMPRAR</strong>”.  
                                 </p>
+                                <t t-if="doc.co_owner_relationship == False and doc.co_tenant_id">
+                                    <p> 
+                                        Y, <strong><span t-field="doc.co_tenant_id.name" /></strong>, de
+                                        nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, mayor
+                                        de edad, de estado civil soltero(a) 
+                                        <t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">              
+                                            <t t-if="doc.co_tenant_id.vat">
+                                                titular de la Cédula de Identidad y Electoral Núm.
+                                                <span t-field="doc.co_tenant_id.vat"/>
+                                            </t>
+                                            <t t-if="doc.co_tenant_id.vat and doc.co_tenant_id.passport_number">
+                                                y
+                                            </t>
+                                            <t t-if="doc.co_tenant_id.passport_number and len(doc.co_tenant_id.passport_number) &gt; 3">
+                                                del Pasaporte Núm.
+                                                <span t-field="doc.co_tenant_id.passport_number"/>
+                                            </t>
+                                        </t>, quien, para fines del presente contrato, se encuentra
+                                        domiciliado(a) en <span t-field="doc.co_tenant_id.street" />, <span
+                                            t-field="doc.co_tenant_id.city" />, <span t-field="doc.co_tenant_id.state_id"/>
+                                            <t t-if="doc.co_tenant_id.state_id.name != 'Distrito Nacional (DO)'">
+                                                <span> y accidentalmente en el Distrito Nacional,</span>
+                                            </t> <span
+                                            t-field="doc.co_tenant_id.country_id" />.
+                                    </p>
+                                </t>
                             </t>
                             <t t-if="doc.co_owner_relationship == 'persona_juridica'">
                                 <p>
@@ -405,6 +431,57 @@
                                 <span t-field="doc.tenant_id.currency" />
                             </li>
                         </ul>
+                        <t t-if="doc.co_owner_relationship == False and doc.co_tenant_id">
+                            <ul>
+                                <li>
+                                    <strong>Nombre Completo:</strong>
+                                    <span t-field="doc.co_tenant_id.name" />
+                                </li>
+                                <li>
+                                    <strong>Cédula/Documento Identidad:</strong>
+                                    <span t-field="doc.co_tenant_id.vat" />
+                                </li>
+                                <li>
+                                    <strong>Estado Civil:</strong>
+                                    <span t-field="doc.co_tenant_id.civil_status" />
+                                </li>
+                                <li>
+                                    <strong>Domicilio de Elección en Rep. Dom.:</strong>
+                                    <span t-field="doc.co_tenant_id.street" /> , <span
+                                        t-field="doc.co_tenant_id.city" />,
+                                        <span t-field="doc.co_tenant_id.state_id" />,
+                                        <span t-field="doc.co_tenant_id.country_id" />
+                                </li>
+                                <li>
+                                    <strong>Teléfono:</strong>
+                                    <span t-field="doc.co_tenant_id.phone" />
+                                </li>
+                                <li>
+                                    <strong>Correo Electrónico:</strong>
+                                    <span t-field="doc.co_tenant_id.email" />
+                                </li>
+                                <li>
+                                    <strong>Oficio/Profesión:</strong>
+                                    <span t-field="doc.co_tenant_id.title" />
+                                </li>
+                                <li>
+                                    <strong>Cuenta Bancaria:</strong>
+                                    <span t-field="doc.co_tenant_id.bank_account_number" />
+                                </li>
+                                <li>
+                                    <strong>Entidad Bancaria:</strong>
+                                    <span t-field="doc.co_tenant_id.bank_name" />
+                                </li>
+                                <li>
+                                    <strong>Tipo de Cuenta:</strong>
+                                    <span t-field="doc.co_tenant_id.account_type" />
+                                </li>
+                                <li>
+                                    <strong>Moneda:</strong>
+                                    <span t-field="doc.co_tenant_id.currency" />
+                                </li>
+                            </ul>
+                        </t>                        
                     </div>
                     <div class="content">
                         <p>
@@ -1639,6 +1716,21 @@
                                 <strong><span t-esc="doc.tenant_id.name.upper()" /></strong>
                             </p>
                         </div>
+
+                        <t t-if="doc.co_owner_relationship == False and doc.co_tenant_id">
+                            <div class="sign-content">
+                                <p>
+                                    <strong>POR <strong>EL INTERESADO EN COMPRAR</strong>:</strong>
+                                </p>
+                                <p>
+                                    <strong>_______________________________</strong>
+                                </p>
+                                <p>
+                                    <strong><span t-esc="doc.co_tenant_id.name.upper()" /></strong>
+                                </p>
+                            </div>
+                        </t>
+                        
 
                         <p>Yo, ____________________________________, Notario Público de los del
                             número del Distrito Nacional, Matrícula Núm. __________, CERTIFICO Y DOY
