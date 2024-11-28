@@ -1732,7 +1732,7 @@
                         </t>
                         
 
-                        <p>Yo, ____________________________________, Notario Público de los del
+                        <!-- <p>Yo, ____________________________________, Notario Público de los del
                             número del Distrito Nacional, Matrícula Núm. __________, CERTIFICO Y DOY
                             FE: Que por ante mi han comparecido personalmente los señores: CÉSAR
                             AUGUSTO PÁEZ MENDOZA, <strong>PEDRO RENÉ ANTONIO COLUMNA NÚÑEZ</strong> y
@@ -1743,7 +1743,28 @@
                             todos sus actos, motivo por el cual se le confiere carácter de
                             autenticidad. En la ciudad de Santo Domingo, Distrito Nacional, capital
                             de la República Dominicana, <span
-                            t-esc="doc.date_to_spanish_format(doc.agreement_date)" /> </p>
+                            t-esc="doc.date_to_spanish_format(doc.agreement_date)" /> </p> -->
+
+                            
+                                <p>Yo, ____________________________________, Notario Público de los del
+                                    número del Distrito Nacional, Matrícula Núm. __________, CERTIFICO Y DOY
+                                    FE: Que por ante mi han comparecido personalmente los señores: CÉSAR
+                                    AUGUSTO PÁEZ MENDOZA, <strong>PEDRO RENÉ ANTONIO COLUMNA NÚÑEZ</strong> 
+
+                                    
+                                    <t t-if="doc.co_owner_relationship == False and doc.co_tenant_id">,</t>
+                                    <t t-else="">y</t>
+                                    <strong><span t-esc="doc.tenant_id.name.upper()"/></strong> 
+                                    <t t-if="doc.co_owner_relationship == False and doc.co_tenant_id">
+                                        y <strong><span t-esc="doc.co_tenant_id.name.upper()"/></strong>
+                                    </t>, personas cuyas generales y calidades
+                                    constan, a quienes doy fe conocer y bajo la fe del juramento me han
+                                    declarado que las firmas que han estampado en mi presencia en el
+                                    documento que antecede son las mismas que ellos acostumbran a usar en
+                                    todos sus actos, motivo por el cual se le confiere carácter de
+                                    autenticidad. En la ciudad de Santo Domingo, Distrito Nacional, capital
+                                    de la República Dominicana, <span
+                                    t-esc="doc.date_to_spanish_format(doc.agreement_date)" /> </p>
 
                         <div class="sign-content">
                             <p>
