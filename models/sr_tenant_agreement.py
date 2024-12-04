@@ -176,13 +176,13 @@ class srTenancyAgreement(models.Model):
             else:
                 record.financed_percentage = 0.0
 
-    @api.constrains('financed_percentage')
-    def _check_financed_percentage(self):
-        for record in self:
-            if record.financed_percentage > 65.0:
-                raise ValidationError(
-                     "El porcentaje financiado no puede exceder el 65%. Por favor revise los detalles de financiamiento"
-                )
+    # @api.constrains('financed_percentage')
+    # def _check_financed_percentage(self):
+    #     for record in self:
+    #         if record.financed_percentage > 65.0:
+    #             raise ValidationError(
+    #                  "El porcentaje financiado no puede exceder el 65%. Por favor revise los detalles de financiamiento"
+    #             )
 
 
     @api.depends('amount_to_finance', 'property_sale_price')
@@ -225,6 +225,7 @@ class srTenancyAgreement(models.Model):
             self.env['account.move'].create({
                             'partner_id':self.tenant_id.id,
                             'invoice_date':datetime.datetime.today().date(),
+                            'invoice_date_due':datetime.datetime.today().date() + relativedelta(days=30),
                             'is_property_invoice': True,
                             'property_id': self.property_id.id,
                             'move_type':'out_invoice',
@@ -256,6 +257,7 @@ class srTenancyAgreement(models.Model):
                                 'partner_id':self.tenant_id.id,
                                 'auto_post': True,  
                                 'invoice_date':datetime.datetime.today().date(),
+                                'invoice_date_due':datetime.datetime.today().date() + relativedelta(days=30),
                                 'is_property_invoice': True,
                                 'property_id': self.property_id.id,
                                 'move_type':'out_invoice',
@@ -285,6 +287,7 @@ class srTenancyAgreement(models.Model):
                                 'partner_id':self.tenant_id.id,
                                 'auto_post': True,
                                 'invoice_date':datetime.datetime.today().date(),
+                                'invoice_date_due':datetime.datetime.today().date() + relativedelta(days=30),
                                 'is_property_invoice': True,
                                 'property_id': self.property_id.id,
                                 'move_type':'out_invoice',
@@ -374,6 +377,7 @@ class srTenancyAgreement(models.Model):
                                 'partner_id':self.tenant_id.id,
                                 'auto_post': True,
                                 'invoice_date':line.date,
+                                'invoice_date_due':line.date + relativedelta(days=30),
                                 'is_property_invoice': True,
                                 'property_id': self.property_id.id,
                                 'move_type':'out_invoice',
@@ -414,6 +418,7 @@ class srTenancyAgreement(models.Model):
                     'partner_id':self.tenant_id.id,
                     'auto_post': True,
                     'invoice_date': self.property_id.delivery_date,
+                    'invoice_date_due': self.property_id.delivery_date + relativedelta(days=30),
                     'is_property_invoice': True,
                     'property_id': self.property_id.id,
                     'move_type':'out_invoice',
@@ -479,7 +484,7 @@ class srTenancyAgreement(models.Model):
                  'partner_id':self.tenant_id.id,
                  'auto_post': True,
                  'invoice_date':installment_date,
-                 'invoice_date_due':invoice_date_due,
+                 'invoice_date_due':invoice_date_due + relativedelta(days=30),
                  'is_property_invoice': True,
                  'property_id': self.property_id.id,
                  'move_type':'out_invoice',
