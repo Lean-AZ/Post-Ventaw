@@ -213,7 +213,10 @@ class srTenancyAgreement(models.Model):
     def action_create_invoice(self):
         if self.property_type != 'sale':
             raise UserError(_('This method can not called with rent property type'))
-        journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
+        journal_id = self.env['account.journal'].search([('name', 'ilike', 'no fiscal')], limit=1)
+        
+        if not journal_id:
+            journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
         accounts = self.property_id.product_tmpl_id.get_product_accounts()
         advance_account = self.env['account.account'].search([('name', '=', 'Avance recibido de clientes')], limit=1)
         # Fall back to the default income account if not found
@@ -308,7 +311,11 @@ class srTenancyAgreement(models.Model):
     def action_create_invoice_civiltec(self):
         if self.property_type != 'sale':
             raise UserError(_('This method can not called with rent property type'))
-        journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
+        journal_id = self.env['account.journal'].search([('name', 'ilike', 'no fiscal')], limit=1)
+
+        if not journal_id:
+            journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
+
         accounts = self.property_id.product_tmpl_id.get_product_accounts()
 
         advance_account = self.env['account.account'].search([('name', '=', 'Avance recibido de clientes')], limit=1)
@@ -535,7 +542,11 @@ class srTenancyAgreement(models.Model):
             })
         if self.property_type == 'sale':
             self.property_id.state = 'booked'
-            journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
+            journal_id = self.env['account.journal'].search([('name', 'ilike', 'no fiscal')], limit=1)
+        
+            if not journal_id:
+                journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
+
             accounts = self.property_id.product_tmpl_id.get_product_accounts()
 
             advance_account = self.env['account.account'].search([('name', '=', 'Avance recibido de clientes')], limit=1)
@@ -576,7 +587,12 @@ class srTenancyAgreement(models.Model):
         self.write({
             'gastos_legales_invoiced':True
             })
-        journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
+
+        journal_id = self.env['account.journal'].search([('name', 'ilike', 'no fiscal')], limit=1)
+        
+        if not journal_id:
+            journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
+        
         accounts = self.property_id.product_tmpl_id.get_product_accounts()
         advance_account = self.env['account.account'].search([('name', '=', 'Avance recibido de clientes')], limit=1)
         # Fall back to the default income account if not found
