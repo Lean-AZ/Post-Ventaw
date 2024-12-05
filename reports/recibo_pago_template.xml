@@ -8,7 +8,7 @@
                     <t t-foreach="docs" t-as="doc">
                         <div>
                             <strong class="m-0">Referencia:</strong>
-                            <t t-esc="doc.name"/>
+                            <t t-esc="doc.payment_reference"/>
                         </div>
                         <div style="page-break-after:always;">
                             <div>
