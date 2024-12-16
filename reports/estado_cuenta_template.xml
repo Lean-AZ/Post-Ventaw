@@ -146,7 +146,7 @@
                                 <span>Apartamento</span>
                             </div> -->
                             <div class='unit-data-item'>
-                                <strong class="m-0">Precio Inicial</strong>
+                                <strong class="m-0">Precio</strong>
                                 <div>
                                     <t t-esc="doc.property_sale_price" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                 </div>
