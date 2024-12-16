@@ -148,7 +148,7 @@
                             <div class='unit-data-item'>
                                 <strong class="m-0">Precio Inicial</strong>
                                 <div>
-                                    <t t-esc="doc.first_tenancy_agreement_id.amount_to_finance" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    <t t-esc="doc.property_sale_price" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                 </div>
                             </div>
                             <div class='unit-data-item'>
@@ -172,7 +172,7 @@
                                         <th class='start-header'>Concepto</th>
                                         <th>Capital + Mora</th>
                                         <th>Pendiente</th>
-                                        <th>Mora</th>
+                                        <th>Mora Generada</th>
                                         <th>Capital</th>
                                         <th>Pagado</th>
                                         <!-- <th>C V</th> -->
