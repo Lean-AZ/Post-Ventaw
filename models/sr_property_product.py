@@ -196,7 +196,7 @@ class srPropertytemplate(models.Model):
         for record in self:
             # Fetch all lines related to this product template
             all_lines = self.env['account.move.line'].search([
-                ('product_id.product_tmpl_id', '=', record.id)
+            ('move_id.property_id.product_tmpl_id', '=', record.id)
             ])
 
             # Group lines dynamically based on the description
@@ -204,7 +204,7 @@ class srPropertytemplate(models.Model):
                 lambda l: l.name and any(word in l.name.lower() for word in ['cuota', 'reserva', 'separación'])
             )
             mora_lines = all_lines.filtered(
-                lambda l: l.name and 'Mora' in l.name.lower()
+                lambda l: l.name and 'mora' in l.name.lower()
             )
             ajustes_lines = all_lines.filtered(
                 lambda l: l.name and 'ajuste' in l.name.lower()
