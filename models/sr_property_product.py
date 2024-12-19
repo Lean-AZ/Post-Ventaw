@@ -211,7 +211,7 @@ class srPropertytemplate(models.Model):
             )
 
             # Filter only lines from PAID invoices
-            paid_invoice_lines = all_lines.filtered(
+            paid_invoice_lines = cuotas_lines.filtered(
                 lambda l: l.move_id.payment_state == 'paid'
             )
             # Filter mora lines from paid invoices
