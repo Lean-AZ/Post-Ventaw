@@ -204,7 +204,7 @@ class srPropertytemplate(models.Model):
                 lambda l: l.name and any(word in l.name.lower() for word in ['cuota', 'reserva', 'separación'])
             )
             mora_lines = all_lines.filtered(
-                lambda l: l.name and 'mora' in l.name.lower()
+                lambda l: l.name and 'Mora' in l.name.lower()
             )
             ajustes_lines = all_lines.filtered(
                 lambda l: l.name and 'ajuste' in l.name.lower()
