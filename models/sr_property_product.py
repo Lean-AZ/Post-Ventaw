@@ -190,6 +190,10 @@ class srPropertytemplate(models.Model):
     string="Total Paid Mora", compute="_compute_all_invoice_lines", store=False
     )
 
+    toal_paid_ajustes = fields.Float(
+    string="Total Paid Ajustes", compute="_compute_all_invoice_lines", store=False
+    )
+
 
 
     def _compute_all_invoice_lines(self):
@@ -219,6 +223,10 @@ class srPropertytemplate(models.Model):
                 lambda l: l.move_id.payment_state == 'paid'
             )
 
+            paid_ajustes_lines = ajustes_lines.filtered(
+                lambda l: l.move_id.payment_state == 'paid'
+            )
+
             # Assign the filtered groups to respective fields
             record.all_invoice_lines = all_lines
             record.all_cuotas = cuotas_lines
@@ -233,6 +241,9 @@ class srPropertytemplate(models.Model):
 
             # New field: Sum of all mora lines where the invoice is paid
             record.total_paid_mora = sum(paid_mora_lines.mapped('price_subtotal'))
+
+            # New field: Sum of all ajustes lines where the invoice is paid
+            record.toal_paid_ajustes = sum(paid_ajustes_lines.mapped('price_subtotal'))
 
 
 

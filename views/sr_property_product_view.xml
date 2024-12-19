@@ -306,8 +306,9 @@
                 </tree>
             </field>
             <field name="total_ajustes" string="Total Ajustes" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-            <field name="total_paid_subtotal" readonly="1"/>
-            <field name="total_paid_mora" readonly="1"/>
+            <field name="total_paid_subtotal" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+            <field name="toal_paid_ajustes" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+            <field name="total_paid_mora" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
         </group>
     </page>
 </notebook>
