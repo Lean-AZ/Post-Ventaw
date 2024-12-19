@@ -1,0 +1,294 @@
+<odoo>
+    <template id="report_invoice_lines_grouped">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+            <style>
+                        .table {
+                            margin-bottom: 0px;
+                        }
+                        .personal-data-container {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 0.5rem;
+                                width: 100%;
+                                justify-content: center;
+                                border: 2px solid #000;
+                                border-radius: 5px;
+                                padding: 0.5rem;
+                                margin-bottom: 1rem;
+                        }
+                        .date-axel {
+                            width: 100%;
+                            text-align: right;
+                            margin-bottom: 1rem;
+                        }
+                        .title-acel {
+                            width: 100%;
+                            text-align: center;
+                            margin-bottom: 1rem;
+                            margin-top: 1rem;
+                        }
+                        .unit-data-container {
+                            display: flex;
+                            flex-direction: row;
+                            flex-wrap: nowrap;
+                            gap: 0.5rem;
+                            width: 100%;
+                            justify-content: center;
+                            padding: 0.5rem;
+                            margin-bottom: 1rem;
+                        }
+                        .unit-data-item {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 0.5rem;
+                            width: 100%;
+                            justify-content: center;
+                        }
+                        td.title-table {
+                            font-weight: bold;
+                            text-align: left;
+                        }
+                        td {
+                            text-align: right;
+                            width: auto;
+                        }
+                        .date-inv {
+                            text-align: left;
+                        }
+                        .custom-inv-table {
+                            width: 100%;
+                            margin-top: 2rem;
+                        }
+                        thead {
+                            background-color: #f5f5f5;
+                        }
+                        .start-header {
+                            text-align: left;
+                        }
+                        th {
+                            text-align: right;
+                        }
+
+                        /* Table styles */
+                        table.custom-inv-table {
+                            border-collapse: separate !important;
+                            border-spacing: 0 10px;
+                        }
+                        table.custom-inv-table td, table.custom-inv-table th {
+                            border: none !important;
+                            padding: 8px;
+                        }
+                        /* Narration row styles */
+                        .narration-row td {
+                            border-top: none !important;
+                            border-bottom: 1px solid #dee2e6 !important;
+                            font-style: italic;
+                            padding-top: 0;
+                            padding-bottom: 0;
+                        }
+
+                    </style>
+                <div class="page">
+                    <h3 style="text-align: center;">Invoice Lines Report</h3>
+                    <t t-foreach="docs" t-as="doc">
+                    <div class='date-axel'>
+                            <span>
+                                <t t-set="current_datetime" t-value="datetime.datetime.now()"/>
+                                <t t-esc="current_datetime.strftime('%Y-%m-%d %I:%M:%S %p')"/>
+                            </span>
+                        </div>
+                        <div class='title-acel'>
+                            <span>
+                                <strong>Estado de Cuenta</strong>
+                            </span>
+                        </div>
+                        <!-- Datos de la unidad -->
+                        <div class='personal-data-container'>
+                            <div class='personal-data-item'>
+                                <strong class="m-0">Proyecto</strong>
+                                <span>
+                                    <t t-esc="doc.company_id.name"/>
+                                </span>
+                            </div>
+                            <div class='personal-data-item'>
+                                <strong class="m-0">Cliente</strong>
+                                <t t-esc="doc.first_tenancy_agreement_id.tenant_id.name"/>
+                            </div>
+                            <div class='personal-data-item'>
+                                <strong class="m-0">Copropietario</strong>
+                                <t t-esc="doc.first_tenancy_agreement_id.co_tenant_id.name"/>
+                                <span t-if="not doc.first_tenancy_agreement_id.co_tenant_id.name">
+                                    NINGUNO
+                                </span>
+                            </div>
+                            <div class='personal-data-item'>
+                                <strong class="m-0">Dirección</strong>
+                                <t t-esc="doc.first_tenancy_agreement_id.tenant_id.street"/>
+                            </div>
+                        </div>
+                        <!-- Datos de la unidad -->
+                        <div class='unit-data-container'>
+                            <div class='unit-data-item'>
+                                <strong class="m-0">Apartamento</strong>
+                                <span>
+                                    <t t-esc="doc.name"/>
+                                </span>
+                            </div>
+                            <!-- <div class='unit-data-item'>
+                                <strong class="m-0">Area Constru.</strong>
+                                <span>
+                                    <t t-esc="doc.property_carpet_area"/>
+                                </span>
+                            </div> -->
+                            <!-- <div class='unit-data-item'>
+                                <strong class="m-0">Tipo De Inventario</strong>
+                                <span>Apartamento</span>
+                            </div> -->
+                            <div class='unit-data-item'>
+                                <strong class="m-0">Precio</strong>
+                                <div>
+                                    <t t-esc="doc.property_sale_price" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                </div>
+                            </div>
+                            <div class='unit-data-item'>
+                                <strong class="m-0">Gastos Legales</strong>
+                                <div>
+                                    <t t-esc="doc.first_tenancy_agreement_id.gastos_legales" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                </div>
+                            </div>
+                            <div class='unit-data-item'>
+                                <strong class="m-0">Moneda</strong>
+                                <span>
+                                    <t t-esc="doc.currency_id.name"/>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- All Cuotas Section -->
+                        <h4>Cuotas</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Invoice</th>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.all_cuotas" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="line.move_id.name" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.name" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.quantity" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.price_subtotal" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" style="text-align: right;">
+                                        <strong>Total Cuotas:</strong>
+                                    </td>
+                                    <td>
+                                        <t t-esc="doc.total_cuotas" />
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <!-- All Mora Lines Section -->
+                        <h4>Mora</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Invoice</th>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.all_mora_lines" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="line.move_id.name" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.name" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.quantity" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.price_subtotal" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" style="text-align: right;">
+                                        <strong>Total Mora:</strong>
+                                    </td>
+                                    <td>
+                                        <t t-esc="doc.total_mora" />
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <!-- All Ajustes Section -->
+                        <h4>Ajustes</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Concepto</th>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.all_ajustes" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="line.move_id.name" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.name" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.quantity" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.price_subtotal" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" style="text-align: right;">
+                                        <strong>Total Ajustes:</strong>
+                                    </td>
+                                    <td>
+                                        <t t-esc="doc.total_ajustes" />
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

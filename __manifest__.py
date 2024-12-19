@@ -91,6 +91,8 @@
         'reports/estado_cuenta_template.xml',
         'reports/ladano_contrato_action.xml',
         'reports/ladano_contrato_template.xml',
+        'reports/report_invoice_lines_grouped_action.xml',
+        'reports/report_invoice_lines_grouped.xml',
     ],
     'assets': {
         'web.assets_backend': [

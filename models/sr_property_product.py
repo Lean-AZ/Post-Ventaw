@@ -195,7 +195,6 @@ class srPropertytemplate(models.Model):
     )
 
 
-
     def _compute_all_invoice_lines(self):
         for record in self:
             # Fetch all lines related to this product template
@@ -205,8 +204,10 @@ class srPropertytemplate(models.Model):
 
             # Group lines dynamically based on the description
             cuotas_lines = all_lines.filtered(
-                lambda l: l.name and any(word in l.name.lower() for word in ['cuota', 'reserva', 'separación'])
-            )
+                lambda l: l.name and 
+            any(word in l.name.lower() for word in ['cuota', 'reserva', 'separación']) and 
+            'final' not in l.name.lower())
+
             mora_lines = all_lines.filtered(
                 lambda l: l.name and 'mora' in l.name.lower()
             )
