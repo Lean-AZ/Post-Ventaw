@@ -164,6 +164,20 @@ class srPropertytemplate(models.Model):
         compute='_compute_all_invoice_lines',
         store=False,
     )
+
+    all_cuota_final_lines = fields.One2many(
+        'account.move.line',
+        string='All Cuota Final Lines',
+        compute='_compute_all_invoice_lines',
+        store=False,
+    )
+
+    total_cuota_final = fields.Float(
+        string='Total Cuota Final',
+        compute='_compute_all_invoice_lines',
+        store=False,
+    )
+
     total_mora = fields.Float(
         string='Total Mora',
         compute='_compute_all_invoice_lines',
@@ -183,7 +197,7 @@ class srPropertytemplate(models.Model):
     )
 
     total_paid_subtotal = fields.Float(
-    string="Total Paid Subtotal", compute="_compute_all_invoice_lines", store=False
+    string="Total Cuotas Pagadas", compute="_compute_all_invoice_lines", store=False
     )
 
     total_paid_mora = fields.Float(
@@ -207,6 +221,10 @@ class srPropertytemplate(models.Model):
                 lambda l: l.name and 
             any(word in l.name.lower() for word in ['cuota', 'reserva', 'separación']) and 
             'final' not in l.name.lower())
+
+            cuota_final_lines = all_lines.filtered(
+                lambda l: l.name and 'final' in l.name.lower()
+            )
 
             mora_lines = all_lines.filtered(
                 lambda l: l.name and 'mora' in l.name.lower()
@@ -236,6 +254,8 @@ class srPropertytemplate(models.Model):
             record.total_mora = sum(mora_lines.mapped('price_subtotal'))
             record.all_ajustes = ajustes_lines
             record.total_ajustes = sum(ajustes_lines.mapped('price_subtotal'))
+            record.all_cuota_final_lines = cuota_final_lines
+            record.total_cuota_final = sum(cuota_final_lines.mapped('price_subtotal'))
 
             # New field: Sum of all subtotals for paid invoices
             record.total_paid_subtotal = sum(paid_invoice_lines.mapped('price_subtotal'))
