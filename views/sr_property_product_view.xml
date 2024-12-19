@@ -101,6 +101,9 @@
                 <button name="set_to_draft_if_no_invoices" type="object"
                         class="btn-primary" string="Reset To Draft" states="booked"
                         groups="sr_property_rental_management.group_landlord,sr_property_rental_management.group_admin"/>
+                <button name="set_to_draft_if_no_invoices" type="object"
+                        class="btn-primary" string="Reset To Draft" states="sold"
+                        groups="sr_property_rental_management.group_landlord,sr_property_rental_management.group_admin"/>
 
                 <button name="%(action_property_tenancy_agreement)d"
                         type="action" class="btn-primary" string="Reserve for Rent"
@@ -269,6 +272,47 @@
                                attrs="{'readonly': [('state', '!=', 'draft')]}"
                                placeholder="Provide extra information about your property"/>
                     </group>
+<notebook groups="base.group_system">
+    <page string="Invoice Lines Grouped">
+        <group>
+            <field name="all_cuotas" string="All Cuotas">
+                <tree>
+                    <field name="move_id" string="Invoice"/>
+                    <field name="name" string="Description"/>
+                    <field name="quantity" string="Quantity"/>
+                    <field name="price_subtotal" string="Subtotal"/>
+                </tree>
+            </field>
+            <field name="total_cuotas" string="Total Cuotas" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+        </group>
+        <group>
+            <field name="all_mora_lines" string="All Mora Lines">
+                <tree>
+                    <field name="move_id" string="Invoice"/>
+                    <field name="name" string="Description"/>
+                    <field name="quantity" string="Quantity"/>
+                    <field name="price_subtotal" string="Subtotal"/>
+                </tree>
+            </field>
+            <field name="total_mora" string="Total Mora" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+        </group>
+        <group>
+            <field name="all_ajustes" string="All Ajustes">
+                <tree>
+                    <field name="move_id" string="Invoice"/>
+                    <field name="name" string="Description"/>
+                    <field name="quantity" string="Quantity"/>
+                    <field name="price_subtotal" string="Subtotal"/>
+                </tree>
+            </field>
+            <field name="total_ajustes" string="Total Ajustes" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+            <field name="total_paid_subtotal" readonly="1"/>
+            <field name="total_paid_mora" readonly="1"/>
+        </group>
+    </page>
+</notebook>
+
+
                 </page>
 
                 <page string="Property Feature"

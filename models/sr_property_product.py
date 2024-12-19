@@ -138,6 +138,105 @@ class srPropertytemplate(models.Model):
     reservation_history_ids = fields.Many2many('res.partner',string="Reservation history")
     currency_id = fields.Many2one('res.currency', string='Moneda', readonly=False, domain="[('active', '=', True)]", store=True)
     delivery_date = fields.Date('Fecha de entrega', store=True)
+
+    all_invoice_lines = fields.One2many(
+        'account.move.line',
+        string='All Invoice Lines',
+        compute='_compute_all_invoice_lines',
+        store=False,
+    )
+
+    all_cuotas = fields.One2many(
+        'account.move.line',
+        string='All Cuotas',
+        compute='_compute_all_invoice_lines',
+        store=False,
+    )
+    total_cuotas = fields.Float(
+        string='Total Cuotas',
+        compute='_compute_all_invoice_lines',
+        store=False,
+    )
+
+    all_mora_lines = fields.One2many(
+        'account.move.line',
+        string='All Mora Lines',
+        compute='_compute_all_invoice_lines',
+        store=False,
+    )
+    total_mora = fields.Float(
+        string='Total Mora',
+        compute='_compute_all_invoice_lines',
+        store=False,
+    )
+
+    all_ajustes = fields.One2many(
+        'account.move.line',
+        string='All Ajustes',
+        compute='_compute_all_invoice_lines',
+        store=False,
+    )
+    total_ajustes = fields.Float(
+        string='Total Ajustes',
+        compute='_compute_all_invoice_lines',
+        store=False,
+    )
+
+    total_paid_subtotal = fields.Float(
+    string="Total Paid Subtotal", compute="_compute_all_invoice_lines", store=False
+    )
+
+    total_paid_mora = fields.Float(
+    string="Total Paid Mora", compute="_compute_all_invoice_lines", store=False
+    )
+
+
+
+    def _compute_all_invoice_lines(self):
+        for record in self:
+            # Fetch all lines related to this product template
+            all_lines = self.env['account.move.line'].search([
+                ('product_id.product_tmpl_id', '=', record.id)
+            ])
+
+            # Group lines dynamically based on the description
+            cuotas_lines = all_lines.filtered(
+                lambda l: l.name and any(word in l.name.lower() for word in ['cuota', 'reserva', 'separación'])
+            )
+            mora_lines = all_lines.filtered(
+                lambda l: l.name and 'mora' in l.name.lower()
+            )
+            ajustes_lines = all_lines.filtered(
+                lambda l: l.name and 'ajuste' in l.name.lower()
+            )
+
+            # Filter only lines from PAID invoices
+            paid_invoice_lines = all_lines.filtered(
+                lambda l: l.move_id.payment_state == 'paid'
+            )
+            # Filter mora lines from paid invoices
+            paid_mora_lines = mora_lines.filtered(
+                lambda l: l.move_id.payment_state == 'paid'
+            )
+
+            # Assign the filtered groups to respective fields
+            record.all_invoice_lines = all_lines
+            record.all_cuotas = cuotas_lines
+            record.total_cuotas = sum(cuotas_lines.mapped('price_subtotal'))
+            record.all_mora_lines = mora_lines
+            record.total_mora = sum(mora_lines.mapped('price_subtotal'))
+            record.all_ajustes = ajustes_lines
+            record.total_ajustes = sum(ajustes_lines.mapped('price_subtotal'))
+
+            # New field: Sum of all subtotals for paid invoices
+            record.total_paid_subtotal = sum(paid_invoice_lines.mapped('price_subtotal'))
+
+            # New field: Sum of all mora lines where the invoice is paid
+            record.total_paid_mora = sum(paid_mora_lines.mapped('price_subtotal'))
+
+
+
+
     invoices_ids = fields.Many2many(
         'account.move',
         string='Invoices',
