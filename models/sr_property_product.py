@@ -215,6 +215,10 @@ class srPropertytemplate(models.Model):
             all_lines = self.env['account.move.line'].search([
             ('move_id.property_id.product_tmpl_id', '=', record.id)
             ])
+        
+            # Sort all_lines by move_id.invoice_date (ascending)
+            all_lines = all_lines.sorted(key=lambda l: l.move_id.invoice_date, reverse=False)
+
 
             # Group lines dynamically based on the description
             cuotas_lines = all_lines.filtered(
@@ -421,6 +425,22 @@ class AccountMove(models.Model):
     _inherit = 'account.move'
 
     is_overdue = fields.Boolean(compute='_compute_is_overdue')
+
+    computed_mora = fields.Float(
+        string="Total Mora",
+        compute='_compute_computed_mora',
+        store=True
+    )
+
+    @api.depends('invoice_line_ids.name', 'invoice_line_ids.price_subtotal')
+    def _compute_computed_mora(self):
+        for move in self:
+            # Filter lines that contain 'mora' in their name (case-insensitive)
+            mora_lines = move.invoice_line_ids.filtered(
+                lambda line: line.name and 'mora' in line.name.lower()
+            )
+            # Sum the price_subtotal of those lines
+            move.computed_mora = sum(mora_lines.mapped('price_subtotal'))
 
     @api.depends('invoice_date_due')
     def _compute_is_overdue(self):
