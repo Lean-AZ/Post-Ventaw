@@ -139,6 +139,11 @@ class srPropertytemplate(models.Model):
     currency_id = fields.Many2one('res.currency', string='Moneda', readonly=False, domain="[('active', '=', True)]", store=True)
     delivery_date = fields.Date('Fecha de entrega', store=True)
 
+    percentage_paid = fields.Float(
+        string="Percentage Paid", 
+        compute="_compute_percentage_paid",
+    )
+
     all_invoice_lines = fields.One2many(
         'account.move.line',
         string='All Invoice Lines',
@@ -204,8 +209,12 @@ class srPropertytemplate(models.Model):
     string="Total Paid Mora", compute="_compute_all_invoice_lines", store=False
     )
 
-    toal_paid_ajustes = fields.Float(
+    total_paid_ajustes = fields.Float(
     string="Total Paid Ajustes", compute="_compute_all_invoice_lines", store=False
+    )
+
+    total_paid_cuota_final = fields.Float(
+    string="Total Paid Cuota Final", compute="_compute_all_invoice_lines", store=False
     )
 
 
@@ -250,6 +259,10 @@ class srPropertytemplate(models.Model):
                 lambda l: l.move_id.payment_state == 'paid'
             )
 
+            paid_cuota_final_lines = cuota_final_lines.filtered(
+                lambda l: l.move_id.payment_state == 'paid'
+            )
+
             # Assign the filtered groups to respective fields
             record.all_invoice_lines = all_lines
             record.all_cuotas = cuotas_lines
@@ -268,9 +281,29 @@ class srPropertytemplate(models.Model):
             record.total_paid_mora = sum(paid_mora_lines.mapped('price_subtotal'))
 
             # New field: Sum of all ajustes lines where the invoice is paid
-            record.toal_paid_ajustes = sum(paid_ajustes_lines.mapped('price_subtotal'))
+            record.total_paid_ajustes = sum(paid_ajustes_lines.mapped('price_subtotal'))
+
+            # New field: Sum of all cuota final lines where the invoice is paid
+            record.total_paid_cuota_final = sum(paid_cuota_final_lines.mapped('price_subtotal'))
 
 
+    @api.depends('total_paid_subtotal', 'total_paid_ajustes', 'total_cuota_final', 'property_sale_price', 'total_ajustes')
+    def _compute_percentage_paid(self):
+        for record in self:
+            # Total paid amounts
+            total_paid = (record.total_paid_subtotal or 0.0) + \
+                         (record.total_paid_ajustes or 0.0) + \
+                        (record.total_paid_cuota_final or 0.0)
+
+            # Total expected amounts
+            total_sale_amount = (record.property_sale_price or 0.0) + \
+                                (record.total_ajustes or 0.0)
+
+            # Calculate percentage paid
+            if total_sale_amount > 0:
+                record.percentage_paid = (total_paid / total_sale_amount) * 100
+            else:
+                record.percentage_paid = 0.0
 
 
     invoices_ids = fields.Many2many(

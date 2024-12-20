@@ -2,100 +2,99 @@
     <template id="report_invoice_lines_grouped">
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
-            <style>
-                        .table {
-                            margin-bottom: 0px;
-                        }
-                        .personal-data-container {
-                                display: flex;
-                                flex-direction: column;
-                                gap: 0.5rem;
-                                width: 100%;
-                                justify-content: center;
-                                border: 2px solid #000;
-                                border-radius: 5px;
-                                padding: 0.5rem;
-                                margin-bottom: 1rem;
-                        }
-                        .date-axel {
-                            width: 100%;
-                            text-align: right;
-                            margin-bottom: 1rem;
-                        }
-                        .title-acel {
-                            width: 100%;
-                            text-align: center;
-                            margin-bottom: 1rem;
-                            margin-top: 1rem;
-                        }
-                        .unit-data-container {
-                            display: flex;
-                            flex-direction: row;
-                            flex-wrap: nowrap;
-                            gap: 0.5rem;
-                            width: 100%;
-                            justify-content: center;
-                            padding: 0.5rem;
-                            margin-bottom: 1rem;
-                        }
-                        .unit-data-item {
-                            display: flex;
-                            flex-direction: column;
-                            gap: 0.5rem;
-                            width: 100%;
-                            justify-content: center;
-                        }
-                        td.title-table {
-                            font-weight: bold;
-                            text-align: left;
-                        }
-                        td {
-                            text-align: right;
-                            width: auto;
-                        }
-                        .date-inv {
-                            text-align: left;
-                        }
-                        .custom-inv-table {
-                            width: 100%;
-                            margin-top: 2rem;
-                        }
-                        thead {
-                            background-color: #f5f5f5;
-                        }
-                        .start-header {
-                            text-align: left;
-                        }
-                        th {
-                            text-align: right;
-                        }
+                <style>
+                    .table {
+                    margin-bottom: 0px;
+                    }
+                    .personal-data-container {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                    width: 100%;
+                    justify-content: center;
+                    border: 2px solid #000;
+                    border-radius: 5px;
+                    padding: 0.5rem;
+                    margin-bottom: 1rem;
+                    }
+                    .date-axel {
+                    width: 100%;
+                    text-align: right;
+                    margin-bottom: 1rem;
+                    }
+                    .title-acel {
+                    width: 100%;
+                    text-align: center;
+                    margin-bottom: 1rem;
+                    margin-top: 1rem;
+                    }
+                    .unit-data-container {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: nowrap;
+                    gap: 0.5rem;
+                    width: 100%;
+                    justify-content: center;
+                    padding: 0.5rem;
+                    margin-bottom: 1rem;
+                    }
+                    .unit-data-item {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                    width: 100%;
+                    justify-content: center;
+                    }
+                    td.title-table {
+                    font-weight: bold;
+                    text-align: left;
+                    }
+                    td {
+                    text-align: right;
+                    width: auto;
+                    }
+                    .date-inv {
+                    text-align: left;
+                    }
+                    .custom-inv-table {
+                    width: 100%;
+                    margin-top: 2rem;
+                    }
+                    thead {
+                    background-color: #f5f5f5;
+                    }
+                    .start-header {
+                    text-align: left;
+                    }
+                    th {
+                    text-align: right;
+                    }
 
-                        /* Table styles */
-                        table.custom-inv-table {
-                            border-collapse: separate !important;
-                            border-spacing: 0 10px;
-                        }
-                        table.custom-inv-table td, table.custom-inv-table th {
-                            border: none !important;
-                            padding: 8px;
-                        }
-                        /* Narration row styles */
-                        .narration-row td {
-                            border-top: none !important;
-                            border-bottom: 1px solid #dee2e6 !important;
-                            font-style: italic;
-                            padding-top: 0;
-                            padding-bottom: 0;
-                        }
-
-                    </style>
+                    /* Table styles */
+                    table.custom-inv-table {
+                    border-collapse: separate !important;
+                    border-spacing: 0 10px;
+                    }
+                    table.custom-inv-table td, table.custom-inv-table th {
+                    border: none !important;
+                    padding: 8px;
+                    }
+                    /* Narration row styles */
+                    .narration-row td {
+                    border-top: none !important;
+                    border-bottom: 1px solid #dee2e6 !important;
+                    font-style: italic;
+                    padding-top: 0;
+                    padding-bottom: 0;
+                    }
+                </style>
                 <div class="page">
                     <!-- <h3 style="text-align: center;">Estado de Cuenta</h3> -->
                     <t t-foreach="docs" t-as="doc">
-                    <div class='date-axel'>
+                        <div class='date-axel'>
                             <span>
-                                <t t-set="current_datetime" t-value="datetime.datetime.now()"/>
-                                <t t-esc="current_datetime.strftime('%Y-%m-%d %I:%M:%S %p')"/>
+                                <t t-set="current_datetime" t-value="datetime.datetime.now()" />
+                                <t t-esc="current_datetime.strftime('%Y-%m-%d %I:%M:%S %p')" />
                             </span>
                         </div>
                         <div class='title-acel'>
@@ -108,23 +107,23 @@
                             <div class='personal-data-item'>
                                 <strong class="m-0">Proyecto</strong>
                                 <span>
-                                    <t t-esc="doc.company_id.name"/>
+                                    <t t-esc="doc.company_id.name" />
                                 </span>
                             </div>
                             <div class='personal-data-item'>
                                 <strong class="m-0">Cliente</strong>
-                                <t t-esc="doc.first_tenancy_agreement_id.tenant_id.name"/>
+                                <t t-esc="doc.first_tenancy_agreement_id.tenant_id.name" />
                             </div>
                             <div class='personal-data-item'>
                                 <strong class="m-0">Copropietario</strong>
-                                <t t-esc="doc.first_tenancy_agreement_id.co_tenant_id.name"/>
+                                <t t-esc="doc.first_tenancy_agreement_id.co_tenant_id.name" />
                                 <span t-if="not doc.first_tenancy_agreement_id.co_tenant_id.name">
                                     NINGUNO
                                 </span>
                             </div>
                             <div class='personal-data-item'>
                                 <strong class="m-0">Dirección</strong>
-                                <t t-esc="doc.first_tenancy_agreement_id.tenant_id.street"/>
+                                <t t-esc="doc.first_tenancy_agreement_id.tenant_id.street" />
                             </div>
                         </div>
                         <!-- Datos de la unidad -->
@@ -132,7 +131,7 @@
                             <div class='unit-data-item'>
                                 <strong class="m-0">Apartamento</strong>
                                 <span>
-                                    <t t-esc="doc.name"/>
+                                    <t t-esc="doc.name" />
                                 </span>
                             </div>
                             <!-- <div class='unit-data-item'>
@@ -148,19 +147,21 @@
                             <div class='unit-data-item'>
                                 <strong class="m-0">Precio de la unidad</strong>
                                 <div>
-                                    <t t-esc="doc.property_sale_price" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    <t t-esc="doc.property_sale_price"
+                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                 </div>
                             </div>
                             <div class='unit-data-item'>
                                 <strong class="m-0">Gastos Legales</strong>
                                 <div>
-                                    <t t-esc="doc.first_tenancy_agreement_id.gastos_legales" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    <t t-esc="doc.first_tenancy_agreement_id.gastos_legales"
+                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                 </div>
                             </div>
                             <div class='unit-data-item'>
                                 <strong class="m-0">Moneda</strong>
                                 <span>
-                                    <t t-esc="doc.currency_id.name"/>
+                                    <t t-esc="doc.currency_id.name" />
                                 </span>
                             </div>
                         </div>
@@ -169,24 +170,32 @@
                             <div class='unit-data-item'>
                                 <strong class="m-0">Capital</strong>
                                 <span>
-                                    <t t-esc="doc.total_cuotas" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    <t t-esc="doc.total_cuotas"
+                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                 </span>
                             </div>
                             <div class='unit-data-item'>
                                 <strong class="m-0">Capital Pagado</strong>
                                 <div>
-                                    <t t-esc="doc.total_paid_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    <t t-esc="doc.total_paid_subtotal"
+                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                 </div>
                             </div>
                             <div class='unit-data-item'>
                                 <strong class="m-0">Capital Pendiente</strong>
                                 <div>
-                                    <t t-set="capital_pendiente" t-value="doc.total_cuotas - doc.total_paid_subtotal"/>
-                                    <t t-esc="capital_pendiente" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    <t t-set="capital_pendiente"
+                                        t-value="doc.total_cuotas - doc.total_paid_subtotal" />
+                                    <t t-esc="capital_pendiente"
+                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                 </div>
                             </div>
                             <div class='unit-data-item'>
-
+                                <div class='unit-data-item'>
+                                    <strong class="m-0">Porcentaje Pagado</strong>
+                                    <span>
+                                        <t t-esc="round(doc.percentage_paid, 2)" />% </span>
+                                </div>
                             </div>
                         </div>
                         <!-- Inicial section final -->
@@ -195,20 +204,24 @@
                             <div class='unit-data-item'>
                                 <strong class="m-0">Mora Generada</strong>
                                 <span>
-                                    <t t-esc="doc.total_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    <t t-esc="doc.total_mora"
+                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                 </span>
                             </div>
                             <div class='unit-data-item'>
                                 <strong class="m-0">Mora Pagada</strong>
                                 <div>
-                                    <t t-esc="doc.total_paid_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    <t t-esc="doc.total_paid_mora"
+                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                 </div>
                             </div>
                             <div class='unit-data-item'>
                                 <strong class="m-0">Mora Pendiente</strong>
                                 <div>
-                                    <t t-set="mora_pendiente" t-value="doc.total_mora - doc.total_paid_mora"/>
-                                    <t t-esc="mora_pendiente" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    <t t-set="mora_pendiente"
+                                        t-value="doc.total_mora - doc.total_paid_mora" />
+                                    <t t-esc="mora_pendiente"
+                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                 </div>
                             </div>
                             <div class='unit-data-item'>
@@ -236,27 +249,31 @@
                                             <t t-esc="line.name" />
                                         </td>
                                         <td>
-                                            <t t-esc="line.move_id.invoice_date" />
-                                        </td>
-                                       <td>
-                                            <t t-esc="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            <t t-esc="line.move_id.invoice_date"
+                                                t-options='{"widget": "date"}' />
                                         </td>
                                         <td>
-                                            <t t-esc="line.move_id.computed_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            <t t-esc="line.price_subtotal"
+                                                t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                         </td>
                                         <td>
-                                           <t t-esc="line.move_id.amount_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            <t t-esc="line.move_id.computed_mora"
+                                                t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                         </td>
-                                      <td>
-                                               <t t-if="line.move_id.payment_state == 'paid'">
-                                                    Pagado
-                                                </t>
-                                                <t t-elif="line.move_id.payment_state == 'partial'">
-                                                    Abono parcial
-                                                </t>
-                                                <t t-else="">
-                                                    Pendiente
-                                                </t>
+                                        <td>
+                                            <t t-esc="line.move_id.amount_total"
+                                                t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                        </td>
+                                        <td>
+                                            <t t-if="line.move_id.payment_state == 'paid'">
+                                                Pagado
+                                            </t>
+                                            <t t-elif="line.move_id.payment_state == 'partial'">
+                                                Abono parcial
+                                            </t>
+                                            <t t-else="">
+                                                Pendiente
+                                            </t>
                                         </td>
                                     </tr>
                                 </t>
@@ -267,7 +284,8 @@
                                         <strong>Total Capital:</strong>
                                     </td>
                                     <td>
-                                        <t t-esc="doc.total_cuotas" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                        <t t-esc="doc.total_cuotas" t-options='{"widget": "monetary", "display_currency":
+                            doc.currency_id}'/>
                                     </td>
                                 </tr>
                             </tfoot> -->
