@@ -140,7 +140,7 @@ class srPropertytemplate(models.Model):
     delivery_date = fields.Date('Fecha de entrega', store=True)
 
     percentage_paid = fields.Float(
-        string="Percentage Paid", 
+        string="Porcentaje Pagado", 
         compute="_compute_percentage_paid",
     )
 

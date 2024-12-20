@@ -209,7 +209,7 @@
                                             <div class='unit-data-item'>
                                                 <div class='unit-data-item'>
                                                     <strong class="m-0">Porcentaje Pagado</strong>
-                                                    <div style="font-size: 1.5rem; color: #4caf50; font-weight: bold;">
+                                                    <div style="color: #4caf50; font-weight: bold;">
                                                         <t t-esc="round(doc.percentage_paid, 2)" />% 
                                                     </div>
                                                 </div>
