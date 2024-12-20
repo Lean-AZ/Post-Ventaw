@@ -12,7 +12,6 @@
                     gap: 0.5rem;
                     width: 100%;
                     justify-content: center;
-                    border: 2px solid #000;
                     border-radius: 5px;
                     padding: 0.5rem;
                     margin-bottom: 1rem;
@@ -30,7 +29,7 @@
                     }
                     .unit-data-container {
                     display: flex;
-                    flex-direction: row;
+                    flex-direction: column;
                     flex-wrap: nowrap;
                     gap: 0.5rem;
                     width: 100%;
@@ -44,6 +43,8 @@
                     gap: 0.5rem;
                     width: 100%;
                     justify-content: center;
+                    align-items: baseline;
+                    text-align: left;
                     }
                     td.title-table {
                     font-weight: bold;
@@ -127,108 +128,131 @@
                             </div>
                         </div>
                         <!-- Datos de la unidad -->
-                        <div class='unit-data-container'>
-                            <div class='unit-data-item'>
-                                <strong class="m-0">Apartamento</strong>
-                                <span>
-                                    <t t-esc="doc.name" />
-                                </span>
-                            </div>
-                            <!-- <div class='unit-data-item'>
+
+                        <table class="table">
+                            <thead style="display: none">
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class='unit-data-container'>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Apartamento</strong>
+                                                <div>
+                                                    <t t-esc="doc.name" />
+                                                </div>
+                                            </div>
+                                            <!-- <div class='unit-data-item'>
                                 <strong class="m-0">Area Constru.</strong>
                                 <span>
                                     <t t-esc="doc.property_carpet_area"/>
                                 </span>
                             </div> -->
-                            <!-- <div class='unit-data-item'>
+                                            <!-- <div class='unit-data-item'>
                                 <strong class="m-0">Tipo De Inventario</strong>
                                 <span>Apartamento</span>
                             </div> -->
-                            <div class='unit-data-item'>
-                                <strong class="m-0">Precio de la unidad</strong>
-                                <div>
-                                    <t t-esc="doc.property_sale_price"
-                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                </div>
-                            </div>
-                            <div class='unit-data-item'>
-                                <strong class="m-0">Gastos Legales</strong>
-                                <div>
-                                    <t t-esc="doc.first_tenancy_agreement_id.gastos_legales"
-                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                </div>
-                            </div>
-                            <div class='unit-data-item'>
-                                <strong class="m-0">Moneda</strong>
-                                <span>
-                                    <t t-esc="doc.currency_id.name" />
-                                </span>
-                            </div>
-                        </div>
-                        <!-- Inical section -->
-                        <div class='unit-data-container'>
-                            <div class='unit-data-item'>
-                                <strong class="m-0">Capital</strong>
-                                <span>
-                                    <t t-esc="doc.total_cuotas"
-                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                </span>
-                            </div>
-                            <div class='unit-data-item'>
-                                <strong class="m-0">Capital Pagado</strong>
-                                <div>
-                                    <t t-esc="doc.total_paid_subtotal"
-                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                </div>
-                            </div>
-                            <div class='unit-data-item'>
-                                <strong class="m-0">Capital Pendiente</strong>
-                                <div>
-                                    <t t-set="capital_pendiente"
-                                        t-value="doc.total_cuotas - doc.total_paid_subtotal" />
-                                    <t t-esc="capital_pendiente"
-                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                </div>
-                            </div>
-                            <div class='unit-data-item'>
-                                <div class='unit-data-item'>
-                                    <strong class="m-0">Porcentaje Pagado</strong>
-                                    <span>
-                                        <t t-esc="round(doc.percentage_paid, 2)" />% </span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Inicial section final -->
-                        <!-- mora section -->
-                        <div class='unit-data-container'>
-                            <div class='unit-data-item'>
-                                <strong class="m-0">Mora Generada</strong>
-                                <span>
-                                    <t t-esc="doc.total_mora"
-                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                </span>
-                            </div>
-                            <div class='unit-data-item'>
-                                <strong class="m-0">Mora Pagada</strong>
-                                <div>
-                                    <t t-esc="doc.total_paid_mora"
-                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                </div>
-                            </div>
-                            <div class='unit-data-item'>
-                                <strong class="m-0">Mora Pendiente</strong>
-                                <div>
-                                    <t t-set="mora_pendiente"
-                                        t-value="doc.total_mora - doc.total_paid_mora" />
-                                    <t t-esc="mora_pendiente"
-                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                </div>
-                            </div>
-                            <div class='unit-data-item'>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Precio de la unidad</strong>
+                                                <div>
+                                                    <t t-esc="doc.property_sale_price"
+                                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Gastos Legales</strong>
+                                                <div>
+                                                    <t
+                                                        t-esc="doc.first_tenancy_agreement_id.gastos_legales"
+                                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Moneda</strong>
+                                                <div>
+                                                    <t t-esc="doc.currency_id.name" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <!-- Inical section -->
+                                        <div class='unit-data-container'>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Capital</strong>
+                                                <div>
+                                                    <t t-esc="doc.total_cuotas"
+                                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Capital Pagado</strong>
+                                                <div>
+                                                    <t t-esc="doc.total_paid_subtotal"
+                                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Capital Pendiente</strong>
+                                                <div>
+                                                    <t t-set="capital_pendiente"
+                                                        t-value="doc.total_cuotas - doc.total_paid_subtotal" />
+                                                    <t t-esc="capital_pendiente"
+                                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div>
+                                            <div class='unit-data-item'>
+                                                <div class='unit-data-item'>
+                                                    <strong class="m-0">Porcentaje Pagado</strong>
+                                                    <div style="font-size: 1.5rem; color: #4caf50; font-weight: bold;">
+                                                        <t t-esc="round(doc.percentage_paid, 2)" />% 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Inicial section final -->
+                                    </td>
+                                    <td>                        <!-- mora section -->
+                                        <div class='unit-data-container'>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Mora Generada</strong>
+                                                <div>
+                                                    <t t-esc="doc.total_mora"
+                                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Mora Pagada</strong>
+                                                <div>
+                                                    <t t-esc="doc.total_paid_mora"
+                                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Mora Pendiente</strong>
+                                                <div>
+                                                    <t t-set="mora_pendiente"
+                                                        t-value="doc.total_mora - doc.total_paid_mora" />
+                                                    <t t-esc="mora_pendiente"
+                                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div>
+                                            <div class='unit-data-item'>
 
-                            </div>
-                        </div>
-                        <!-- mora section final -->
+                                            </div>
+                                        </div>
+                                        <!-- mora section final -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
                         <!-- All Cuotas Section -->
                         <h4>Desgloce de cuotas de capital</h4>
                         <table class="table table-bordered">
