@@ -181,7 +181,7 @@
                                         <!-- Inical section -->
                                         <div class='unit-data-container'>
                                             <div class='unit-data-item'>
-                                                <strong class="m-0">Capital</strong>
+                                                <strong class="m-0">Inicial</strong>
                                                 <div>
                                                     <t t-esc="doc.total_cuotas"
                                                         t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
@@ -195,7 +195,7 @@
                                                 </div>
                                             </div>
                                             <div class='unit-data-item'>
-                                                <strong class="m-0">Capital Pendiente</strong>
+                                                <strong class="m-0">Inicial Pendiente</strong>
                                                 <div>
                                                     <t t-set="capital_pendiente"
                                                         t-value="doc.total_cuotas - doc.total_paid_subtotal" />
