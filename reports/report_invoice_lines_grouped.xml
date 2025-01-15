@@ -151,7 +151,12 @@
                                             <div class='unit-data-item'>
                                                 <strong class="m-0">Precio de la unidad</strong>
                                                 <div>
-                                                    <t t-esc="doc.property_sale_price"
+                                                    <!-- <t t-esc="doc.property_sale_price"
+                                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' /> -->
+
+                                                        <t t-set="total_precio_unidad"
+                                                        t-value="doc.property_sale_price + doc.total_ajustes" />
+                                                    <t t-esc="total_precio_unidad"
                                                         t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                                 </div>
                                             </div>
@@ -164,9 +169,12 @@
                                                 </div>
                                             </div>
                                             <div class='unit-data-item'>
-                                                <strong class="m-0">Financiamiento Pagado</strong>
-                                                <div>
-                                                    <t t-esc="doc.total_paid_cuota_final" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                <div class='unit-data-item'>
+                                                    <strong class="m-0">Financiamiento</strong>
+                                                    <div>
+                                                        <t t-esc="doc.total_cuota_final"
+                                                            t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class='unit-data-item'>
@@ -204,14 +212,9 @@
                                                 </div>
                                             </div>
                                             <div class='unit-data-item'>
-                                                <div class='unit-data-item'>
-                                                    <strong class="m-0">Financiamiento Pendiente </strong>
-                                                    <div>
-                                                      <t t-set="financiamiento_pendiente"
-                                                        t-value="doc.total_cuota_final - doc.total_paid_cuota_final" />
-                                                    <t t-esc="financiamiento_pendiente"
-                                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                                    </div>
+                                                <strong class="m-0">Financiamiento Pagado</strong>
+                                                <div>
+                                                    <t t-esc="doc.total_paid_cuota_final" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                                 </div>
                                             </div>
                                             <div class='unit-data-item'>
@@ -251,10 +254,12 @@
                                             </div>
                                             <div class='unit-data-item'>
                                                 <div class='unit-data-item'>
-                                                    <strong class="m-0">Financiamiento</strong>
+                                                    <strong class="m-0">Financiamiento Pendiente </strong>
                                                     <div>
-                                                        <t t-esc="doc.total_cuota_final"
-                                                            t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                      <t t-set="financiamiento_pendiente"
+                                                        t-value="doc.total_cuota_final - doc.total_paid_cuota_final" />
+                                                    <t t-esc="financiamiento_pendiente"
+                                                        t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                                     </div>
                                                 </div>
                                             </div>
