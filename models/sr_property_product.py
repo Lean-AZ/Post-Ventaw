@@ -217,6 +217,26 @@ class srPropertytemplate(models.Model):
     string="Total Paid Cuota Final", compute="_compute_all_invoice_lines", store=False
     )
 
+    all_gastos_legales_lines = fields.One2many(
+        'account.move.line',
+        string='All Gastos Legales Lines',
+        compute='_compute_all_invoice_lines',
+        store=False,
+    )
+
+    total_gastos_legales = fields.Float(
+        string='Total Gastos Legales',
+        compute='_compute_all_invoice_lines',
+        store=False,
+    )
+
+    all_gastos_legales_paid_lines = fields.One2many(
+        'account.move.line',
+        string='All Gastos Legales Paid Lines',
+        compute='_compute_all_invoice_lines',
+        store=False,
+    )
+
 
     def _compute_all_invoice_lines(self):
         for record in self:
@@ -243,9 +263,8 @@ class srPropertytemplate(models.Model):
                 lambda l: l.name and 'mora' in l.name.lower()
             )
             ajustes_lines = all_lines.filtered(
-                lambda l: l.name and 'ajuste' in l.name.lower()
+                lambda l: l.name and any(word in l.name.lower() for word in ['ajuste', 'aumento'])
             )
-
             # Filter only lines from PAID invoices
             paid_invoice_lines = cuotas_lines.filtered(
                 lambda l: l.move_id.payment_state == 'paid'
@@ -263,6 +282,17 @@ class srPropertytemplate(models.Model):
                 lambda l: l.move_id.payment_state == 'paid'
             )
 
+            # Filter gastos legales lines
+            gastos_legales_lines = all_lines.filtered(
+                lambda l: l.name and 'legales' in l.name.lower()
+            )
+
+            # Filter gastos legales lines from paid invoices
+            gastos_legales_paid_lines = gastos_legales_lines.filtered(
+                lambda l: l.move_id.payment_state == 'paid'
+            )
+
+
             # Assign the filtered groups to respective fields
             record.all_invoice_lines = all_lines
             record.all_cuotas = cuotas_lines
@@ -273,6 +303,8 @@ class srPropertytemplate(models.Model):
             record.total_ajustes = sum(ajustes_lines.mapped('price_subtotal'))
             record.all_cuota_final_lines = cuota_final_lines
             record.total_cuota_final = sum(cuota_final_lines.mapped('price_subtotal'))
+            record.all_gastos_legales_lines = gastos_legales_lines
+            record.total_gastos_legales = sum(gastos_legales_lines.mapped('price_subtotal'))
 
             # New field: Sum of all subtotals for paid invoices
             record.total_paid_subtotal = sum(paid_invoice_lines.mapped('price_subtotal'))
