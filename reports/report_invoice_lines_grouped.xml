@@ -155,7 +155,7 @@
                                                         t-options='{"widget": "monetary", "display_currency": doc.currency_id}' /> -->
 
                                                         <t t-set="total_precio_unidad"
-                                                        t-value="doc.property_sale_price + doc.total_ajustes" />
+                                                        t-value="doc.total_cuota_final + doc.total_cuotas + doc.total_ajustes" />
                                                     <t t-esc="total_precio_unidad"
                                                         t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                                 </div>
