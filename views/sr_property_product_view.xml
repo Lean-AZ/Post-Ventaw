@@ -311,6 +311,7 @@
             <field name="total_paid_ajustes" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
             <field name="total_paid_mora" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
             <field name="total_cuota_final" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+            <field name="total_paid_cuota_final" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
         </group>
     </page>
 </notebook>

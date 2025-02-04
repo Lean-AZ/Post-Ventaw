@@ -67,7 +67,6 @@ class srProductProduct(models.Model):
 class srPropertytemplate(models.Model):
     _inherit = 'product.template'
 
-
     @api.onchange('property_type')
     def onchage_property_type(self):
         if self.property_type == 'sale':
@@ -237,17 +236,15 @@ class srPropertytemplate(models.Model):
         store=False,
     )
 
-
     def _compute_all_invoice_lines(self):
         for record in self:
             # Fetch all lines related to this product template
             all_lines = self.env['account.move.line'].search([
             ('move_id.property_id.product_tmpl_id', '=', record.id)
             ])
-        
+
             # Sort all_lines by move_id.invoice_date (ascending)
             all_lines = all_lines.sorted(key=lambda l: l.move_id.invoice_date, reverse=False)
-
 
             # Group lines dynamically based on the description
             cuotas_lines = all_lines.filtered(
@@ -279,8 +276,10 @@ class srPropertytemplate(models.Model):
             )
 
             paid_cuota_final_lines = cuota_final_lines.filtered(
-                lambda l: l.move_id.payment_state == 'paid'
+                lambda l: l.move_id.payment_state in ['paid', 'partial']
             )
+
+            first_paid_cuota_final_line = paid_cuota_final_lines[0] if paid_cuota_final_lines else None
 
             # Filter gastos legales lines
             gastos_legales_lines = all_lines.filtered(
@@ -291,7 +290,6 @@ class srPropertytemplate(models.Model):
             gastos_legales_paid_lines = gastos_legales_lines.filtered(
                 lambda l: l.move_id.payment_state == 'paid'
             )
-
 
             # Assign the filtered groups to respective fields
             record.all_invoice_lines = all_lines
@@ -316,8 +314,13 @@ class srPropertytemplate(models.Model):
             record.total_paid_ajustes = sum(paid_ajustes_lines.mapped('price_subtotal'))
 
             # New field: Sum of all cuota final lines where the invoice is paid
-            record.total_paid_cuota_final = sum(paid_cuota_final_lines.mapped('price_subtotal'))
-
+            # record.total_paid_cuota_final = sum(paid_cuota_final_lines.mapped('price_subtotal'))
+            record.total_paid_cuota_final = (
+                first_paid_cuota_final_line.move_id.amount_total
+                - first_paid_cuota_final_line.move_id.amount_residual
+                if first_paid_cuota_final_line
+                else 0.0
+            )
 
     @api.depends('total_paid_subtotal', 'total_paid_ajustes', 'total_cuota_final', 'property_sale_price', 'total_ajustes')
     def _compute_percentage_paid(self):
@@ -336,7 +339,6 @@ class srPropertytemplate(models.Model):
                 record.percentage_paid = (total_paid / total_sale_amount) * 100
             else:
                 record.percentage_paid = 0.0
-
 
     invoices_ids = fields.Many2many(
         'account.move',
@@ -385,7 +387,6 @@ class srPropertytemplate(models.Model):
                         total_amount += invoice.amount_total
                         residual_amount += invoice.amount_residual
 
-
             grouped_invoice = InvoiceGroup(
                 invoice_date=fields.Date.context_today(self),
                 amount_total=total_amount,
@@ -425,7 +426,6 @@ class srPropertytemplate(models.Model):
 
             record.monto_reserva_invoices = [grouped_invoice]
 
-
     def _compute_invoices_ids(self):
         for record in self:
             invoices = self.env['account.move'].search([
@@ -441,7 +441,7 @@ class srPropertytemplate(models.Model):
             ('property_id.product_tmpl_id', '=', self.id),
         ]
         return action
-    
+
     def action_view_property_invoices(self):
         self.ensure_one()
         action = self.env["ir.actions.actions"]._for_xml_id("account.action_move_out_invoice_type")
@@ -459,7 +459,7 @@ class srPropertytemplate(models.Model):
             )
             record.tenancy_agreement_count = len(agreement_ids)
             record.first_tenancy_agreement_id = agreement_ids[:1] if agreement_ids else False
-    
+
     def _compute_property_invoice_count(self):
         invoice_ids = self.env['account.move'].search([('property_id.product_tmpl_id','=',self.id)])
         self.property_invoice_count = len(invoice_ids)
@@ -478,7 +478,7 @@ class srPropertytemplate(models.Model):
 
     def action_reset_draft(self):
         self.state = 'draft'
-    
+
     def set_to_draft_if_no_invoices(self):
         self._compute_property_invoice_count()
         if self.property_invoice_count == 0:
