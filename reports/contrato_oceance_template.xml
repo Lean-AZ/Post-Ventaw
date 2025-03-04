@@ -1,0 +1,928 @@
+<odoo>
+    <template id="contrato_ocean_tamplate">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <link rel="stylesheet" type="text/css"
+                        href="/sr_property_rental_management/static/css/report_styles.css" />
+                    <div class="page">
+                        <div class="oe_structure" />
+                        <div class="content">
+                            <div class="text-center">
+                                <h2>CIVIL TOWER OCEANCE</h2>
+                                <h1>CONTRATO DE PROMESA CONDICIONAL DE COMPRAVENTA DE INMUEBLE</h1>
+                            </div>
+                            <h3>ENTRE:</h3>
+                            <div class="space"></div>
+                            <p>
+                               DE UNA PARTE, FIDUCIARIA UNIVERSAL, S. A., sociedad organizada y existente de conformidad con las leyes de la República Dominicana, inscrita en el Registro Nacional de Contribuyentes (RNC) bajo el número 1-30-95165-9 con domicilio social y asiento principal en la Avenida Winston Churchill No. 1100, Torre Universal, Piso 4, Evaristo Morales, Santo Domingo de Guzmán, Distrito Nacional, capital de la República Dominicana, debidamente representada por su Director de Estructuración de Negocios, el señor NESTOR ALCIDES BELTRE FELIZ, dominicano, mayor de edad, casado, titular de la Cédula de Identidad y Electoral Núm. 402-2147190-3, domiciliado y residente en la ciudad de Santo Domingo de Guzmán, Distrito Nacional, Capital de la República Dominicana, en nombre y representación de la señora REBECCA WACHSMANN FLEISCHMANN, de nacionalidad dominicana, mayor de edad, soltera, titular de la Cédula de Identidad y Electoral 031-0414694-3, domiciliada y residente en la ciudad de Santo Domingo de Guzmán, Distrito Nacional, República Dominicana, en su calidad de Gestora Fiduciaria y Vicepresidente Ejecutiva, en virtud del Poder de Representación otorgado en fecha diecisiete (17) de enero del año dos mil veintitrés (2023), cuyas firmas han sido certificadas por la Doctora Luisa Milagros Castillo Durán, Notario de los del Número del Distrito Nacional, matrícula número 263 en nombre y representación del FIDEICOMISO IRREVOCABLE DE INVERSIÓN Y DESARROLLO INMOBILIARIO CIVIL TOWER OCEANCE, con el Registro Nacional de Contribuyentes No. 1-32-16366-4, patrimonio autónomo respecto del cual ha sido designada como fiduciaria o administradora; quien en lo adelante del presente acto se denominará “EL PROMITENTE VENDEDOR”;
+
+                            </p>
+                            <p>
+                                DE OTRA PARTE, la compañía CONSTRUCTORA CIVILTEC, S.R.L., sociedad comercial debidamente constituida y organizada de conformidad con las leyes de la República Dominicana, provista del Registro Nacional de Contribuyentes (RNC) No. 1-30-57482-2, con su domicilio social y asiento principal ubicado en la calle Doce Juegos No. 54, El Millón, Distrito Nacional, República Dominicana, debidamente representada por su Gerente, el señor PEDRO RENÉ ANTONIO COLUMNA NUÑEZ, de nacionalidad dominicana, mayor de edad, portador de la Cédula de Identidad y Electoral No. 001-1784662-6, domiciliado y residente en esta ciudad de Santo Domingo de Guzmán, Distrito Nacional, capital de la República Dominicana, quien en lo adelante del presente contrato se denominará como “EL FIDEICOMITENTE PROMOTOR”;
+                            </p>
+                            <t t-if="doc.co_owner_relationship == False">
+                                <p>
+                                Y DE LA OTRA PARTE,
+                                    <strong>
+                                        <span t-field="doc.tenant_id.name" />
+                                    </strong>, de nacionalidad
+                                    <span t-field="doc.tenant_id.nacionalidad" />, mayor de edad, de estado civil soltero(a),
+                                    <t t-if="doc.tenant_id.vat or doc.tenant_id.passport_number">
+                                        <t t-if="doc.tenant_id.vat">
+                                            Portador de la Cédula de Identidad y Electoral Núm.
+                                            <span t-field="doc.tenant_id.vat"/>
+                                        </t>
+                                        <t t-if="doc.tenant_id.vat and doc.tenant_id.passport_number">
+                                                y
+                                            </t>
+                                        <t t-if="doc.tenant_id.passport_number and len(doc.tenant_id.passport_number) &gt; 3">
+                                            del Pasaporte Núm.
+                                            <span t-field="doc.tenant_id.passport_number"/>
+                                        </t>
+                                    </t>, domiciliado(a) y residente en
+                                    <span t-field="doc.tenant_id.street" />,
+                                    <span
+                                        t-field="doc.tenant_id.city" />,
+                                    <span t-field="doc.tenant_id.state_id"/>, quien en lo adelante se denominará como quien en lo adelante del presente contrato se denominará
+                                    <strong>EL PROMITENTE COMPRADOR.</strong>
+                                </p>
+                                <t t-if="doc.co_owner_relationship == False and doc.co_tenant_id">
+                                    <p> 
+                                        Y,
+                                        <strong>
+                                            <span t-field="doc.co_tenant_id.name" />
+                                        </strong>, de
+                                        nacionalidad
+                                        <span t-field="doc.co_tenant_id.nacionalidad" />, mayor
+                                        de edad, de estado civil soltero(a)
+                                        <t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
+                                            <t t-if="doc.co_tenant_id.vat">
+                                                titular de la Cédula de Identidad y Electoral Núm.
+                                                <span t-field="doc.co_tenant_id.vat"/>
+                                            </t>
+                                            <t t-if="doc.co_tenant_id.vat and doc.co_tenant_id.passport_number">
+                                                y
+                                            </t>
+                                            <t t-if="doc.co_tenant_id.passport_number and len(doc.co_tenant_id.passport_number) &gt; 3">
+                                                del Pasaporte Núm.
+                                                <span t-field="doc.co_tenant_id.passport_number"/>
+                                            </t>
+                                        </t>, quien, para fines del presente contrato, se encuentra
+                                        domiciliado(a) en
+                                        <span t-field="doc.co_tenant_id.street" />,
+                                        <span
+                                            t-field="doc.co_tenant_id.city" />,
+                                        <span t-field="doc.co_tenant_id.state_id"/>
+                                        <t t-if="doc.co_tenant_id.state_id.name != 'Distrito Nacional (DO)'">
+                                            <span> y accidentalmente en el Distrito Nacional,</span>
+                                        </t>
+                                        <span
+                                            t-field="doc.co_tenant_id.country_id" />.
+                                    </p>
+                                </t>
+                            </t>
+                            <t t-if="doc.co_owner_relationship == 'persona_juridica'">
+    <p>
+        Y DE LA OTRA PARTE,
+        <strong><span t-esc="doc.tenant_id.name" /></strong>,
+        sociedad organizada y existente de acuerdo con las leyes de
+        <span t-field="doc.tenant_id.nacionalidad" />,
+        inscrita en el Registro Nacional de Contribuyentes (RNC) bajo el Núm.
+        <span t-field="doc.tenant_id.vat" />,
+        con su asiento social y domicilio principal ubicado en
+        <span t-field="doc.tenant_id.street" />,
+        <span t-field="doc.tenant_id.city" />,
+        <span t-field="doc.tenant_id.country_id" />,
+        debidamente representada por su
+        <span t-field="doc.co_tenant_id.title" />,
+        señor(a)
+        <strong><span t-esc="doc.co_tenant_id.name" /></strong>,
+        de nacionalidad
+        <span t-field="doc.co_tenant_id.nacionalidad" />,
+        mayor de edad,
+        <t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
+            titular de la Cédula de Identidad y Electoral Núm.
+            <t t-if="doc.co_tenant_id.vat">
+                <span t-field="doc.co_tenant_id.vat" />
+            </t>
+            <t t-if="doc.co_tenant_id.vat and doc.co_tenant_id.passport_number">
+                y/o del Pasaporte Núm.
+            </t>
+            <t t-if="doc.co_tenant_id.passport_number and len(doc.co_tenant_id.passport_number) &gt; 3">
+                <span t-field="doc.co_tenant_id.passport_number"/>
+            </t>
+        </t>,
+        quien, para fines del presente contrato, se encuentra domiciliado(a) en
+        <span t-field="doc.co_tenant_id.street" />,
+        <span t-field="doc.co_tenant_id.city" />,
+        <span t-field="doc.co_tenant_id.country_id" />;
+        quien en lo adelante del presente contrato se denominará
+        <strong>EL PROMITENTE</strong>.
+    </p>
+</t>
+
+                            <t t-if="doc.co_owner_relationship == 'casado'">
+                                <p>
+                                    <!-- Start of new text -->
+        Y DE LA OTRA PARTE,
+                                    <strong>
+                                        <span t-esc="(doc.tenant_id.name or '').upper()" />
+                                    </strong>, 
+        de nacionalidad
+                                    <span t-field="doc.tenant_id.nacionalidad" />, 
+        mayor de edad, de estado civil
+                                    <t t-esc="doc.tenant_id.marital_status or 'casado(a)'" />,
+                                    <!-- Cédula / Pasaporte logic for tenant -->
+                                    <t t-if="doc.tenant_id.vat or doc.tenant_id.passport_number">
+            Portador de la Cédula de Identidad y Electoral Núm.
+                                        <t t-if="doc.tenant_id.vat">
+                                            <span t-field="doc.tenant_id.vat" />
+                                        </t>
+                                        <t t-if="doc.tenant_id.vat and doc.tenant_id.passport_number">
+                y/o del Pasaporte Núm.
+            </t>
+                                        <t t-if="doc.tenant_id.passport_number">
+                                            <span t-field="doc.tenant_id.passport_number"/>
+                                        </t>
+            ,
+                                    </t>
+                                    <!-- Address for tenant -->
+        quien, para fines del presente contrato, se encuentra domiciliado(a) y residente en
+                                    <span t-field="doc.tenant_id.street" />,
+                                    <span t-field="doc.tenant_id.city" />,
+                                    <span t-field="doc.tenant_id.country_id" />,
+                                    <!-- Spouse Info -->
+        cuyo cónyuge es el(la) señor(a)
+                                    <strong>
+                                        <span t-field="doc.co_tenant_id.name" />
+                                    </strong>, 
+        de nacionalidad
+                                    <span t-field="doc.co_tenant_id.nacionalidad" />, 
+        mayor de edad, de estado civil
+                                    <t t-esc="doc.co_tenant_id.marital_status or 'casado(a)'" />,
+                                    <!-- Cédula / Pasaporte logic for spouse -->
+                                    <t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
+            titular de la Cédula de Identidad y Electoral Núm.
+                                        <t t-if="doc.co_tenant_id.vat">
+                                            <span t-field="doc.co_tenant_id.vat"/>
+                                        </t>
+                                        <t t-if="doc.co_tenant_id.vat and doc.co_tenant_id.passport_number">
+                y/o del Pasaporte Núm. 
+            </t>
+                                        <t t-if="doc.co_tenant_id.passport_number">
+                                            <span t-field="doc.co_tenant_id.passport_number"/>
+                                        </t>
+                                    </t>,
+        domiciliado(a) y residente en
+                                    <span t-field="doc.co_tenant_id.street" />,
+                                    <span t-field="doc.co_tenant_id.city" />,
+                                    <span t-field="doc.co_tenant_id.country_id" />,
+        quien en lo adelante del presente contrato se denominará
+                                    <strong>EL PROMITENTE COMPRADOR</strong>.
+                                </p>
+                            </t>
+                            <br></br>
+                            <p>
+                                En lo adelante, cuando se haga referencia a&#160;
+                                <strong> EL VENDEDOR</strong> o EL
+                                FIDEICOMISO,&#160;
+                                <strong>LA CONSTRUCTORA</strong> o
+                                FIDEICOMITENTE DESARROLLADOR y&#160;
+                                <strong>EL INTERESADO EN COMPRAR</strong> de manera
+                                conjunta dentro del presente acto,
+                                se designarán como “
+                                <strong>LAS PARTES</strong>”.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="page">
+                        <div class="oe_structure" />
+                        <div class="header">
+                        </div>
+                        <div class="content">
+                            <br></br>
+                            <p style="text-align: center">
+                                <strong>PREÁMBULO</strong>
+                            </p>
+                            <br></br>
+                            <p>
+                                POR CUANTO (1): FIDUCIARIA UNIVERSAL, S.A., es una sociedad comercial que tiene como objeto exclusivo fungir como fiduciario para la administración y gestión de todo tipo de fideicomisos constituidos de conformidad con las disposiciones de las leyes dominicanas, particularmente la Ley No. 189-11 para el Desarrollo del Mercado Hipotecario y el Fideicomiso en la República Dominicana.
+                            </p>
+                            <p>
+                                POR CUANTO (2): FIDUCIARIA UNIVERSAL, S.A., CONSTRUCTORA CIVILTEC, S.R.L. y SORAYA EUGENIA PÉREZ GAUTIER suscribieron en fecha VEINTICUATRO (24) del mes de Agosto del año DOS MIL VEINTE (2020) el Fideicomiso Irrevocable De Inversión Y Desarrollo Inmobiliario Civil Tower Oceance (en lo adelante el “Contrato de Fideicomiso”).
+                            </p>
+                            <p>
+                                POR CUANTO (3): La Dirección General de Impuestos Internos le otorgó al Fideicomiso el Registro Nacional de Contribuyente (RNC) No. 1-32-16366-4.
+                            </p>
+                            <p>
+                             POR CUANTO (4): El Contrato de Fideicomiso establece que es una obligación de Fiduciaria Universal, S.A., suscribir, en su calidad de representante del Fideicomiso, conjuntamente con EL FIDEICOMITENTE PROMOTOR, las promesas de compraventa y los contratos de compraventas definitivos de las unidades inmobiliarias resultantes del Proyecto.
+                            </p>
+                            <p>
+                                POR CUANTO (5): A que EL PROMITENTE COMPRADOR ha manifestado a EL PROMITENTE VENDEDOR su intención de adquirir un apartamento del proyecto Civil Tower Oceance (en lo adelante “El Proyecto”).
+                            </p>
+                            <p>
+                            POR CUANTO (6): EL PROMITENTE VENDEDOR le ha manifestado a EL PROMITENTE COMPRADOR su disposición de otorgarle una promesa de venta del inmueble a EL PROMITENTE COMPRADOR y EL PROMITENTE COMPRADOR le ha manifestado a EL PROMITENTE VENDEDOR y a EL FIDEICOMITENTE PROMOTOR su interés de adquirirlo, sujeto al estricto cumplimiento de los términos y condiciones contenidos en este Contrato y, de manera particular, a la realización del pago previsto.
+                            </p>
+                            <p>
+                            POR CUANTO (7): Dicho proyecto será sometido al régimen especial que instituye la propiedad horizontal por pisos o departamentos previsto en la Ley 5038, del 21 de noviembre de 1958 y sus modificaciones, según la Declaración de Constitución en Condominios y Reglamentos de la Administración y Co-propiedad del mismo que será elaborado por EL FIDEICOMITENTE PROMOTOR para ser homologados por las autoridades competentes. Además, EL FIDEICOMITENTE PROMOTOR ha informado a EL PROMITENTE COMPRADOR que el INMUEBLE objeto de presente Contrato se encuentra actualmente sometido a trabajos ante ciertas autoridades (en lo adelante “Los Trabajos”).
+                            </p>
+                            <p>
+                            POR TANTO y en el entendido de que el anterior preámbulo forma parte integral del presente contrato, las partes libre y voluntariamente,
+                            </p>
+                        </div>
+                    </div>
+                    <div class="page" style="text-align: justify">
+                     <br></br>
+                            <p style="text-align: center">
+                                <strong>SE HA CONVENIDO Y PACTADO LO SIGUIENTE</strong>
+                            </p>
+    <div>
+        <!-- ARTÍCULO PRIMERO -->
+        <p>
+            <strong>ARTÍCULO PRIMERO: Promesa condicional de compraventa.</strong> -
+            EL PROMITENTE VENDEDOR por medio del presente acto, OTORGA con todas las garantías
+            ordinarias de derecho y sujeto al cumplimiento de las condiciones de pago del precio
+            en la forma y los plazos estipulados en el presente Contrato y las demás estipulaciones
+            contenidas en el mismo, formal promesa condicional de vender EL INMUEBLE, en favor de
+            EL PROMITENTE COMPRADOR quien acepta comprarlo, de acuerdo a las regulaciones del
+            Código Civil Dominicano y a las disposiciones de la Ley 5038, de fecha 21 de noviembre
+            de 1958 que instruye un sistema especial para la propiedad por pisos o departamentos,
+            el Inmueble que se describe a continuación:
+        </p>
+
+        <!-- Descripción del Inmueble -->
+        <p>
+            “Apartamento No. B-18, del Edificio Civil Tower Oceance ubicado en la Av. Avenida España
+            casi esquina avenida 26 de enero, Urbanización Sans Souci, con un área de construcción
+            de Ciento Doce Con Doce Metros Cuadrados (112.12 MTS2). La cual consiste en una
+            edificación: TRES HABITACIONES, HABITACIÓN PRINCIPAL CON WALK-IN CLOSET, DOS BAÑOS,
+            BAÑO PARA VISITAS, SALA – COMEDOR, COCINA, ÁREA PARA LAVADO, CUARTO DE SERVICIO CON BAÑO,
+            BALCÓN, 2 PARQUEOS.”
+            En lo adelante nos referiremos al inmueble descrito, objeto del presente contrato de
+            compra-venta, como <strong>EL APARTAMENTO</strong> o <strong>EL INMUEBLE</strong>.
+        </p>
+
+        <!-- Párrafo I -->
+        <p>
+            <strong>PÁRRAFO I:</strong> EL FIDIECOMITENTE PROMOTOR declara y EL PROMITENTE
+            COMPRADOR así lo acepta, que se compromete y obliga a comprar todos los materiales
+            necesarios para el Proyecto y que por ende, EL FIDIECOMITENTE PROMOTOR otorga la
+            garantía del fabricante, y que cualquier tipo de reclamación por daños, defectos,
+            utilización de materiales de mala calidad en su fabricación, escasez, o daños por
+            instalación, en los materiales de terminación quedará bajo la garantía del suplidor,
+            debiéndose realizar la reclamación directamente al suplidor de dicho material o equipo,
+            por parte de y EL PROMITENTE COMPRADOR.
+        </p>
+
+        <!-- Párrafo II -->
+        <p>
+            <strong>PÁRRAFO II:</strong> EL PROMITENTE COMPRADOR reconoce que debido a que
+            EL INMUEBLE se encuentra actualmente sometido a Trabajos, los metros cuadrados que
+            constituyen la extensión superficial de EL INMUEBLE podrían sufrir variación, resultando
+            diferencia en la medición o en la porción de EL INMUEBLE, y en este sentido declara
+            que acepta como área definitiva la confirmada con la aprobación definitiva de los
+            Trabajos por parte de las autoridades competentes.
+        </p>
+
+        <!-- Párrafo III -->
+        <p>
+            <strong>PÁRRAFO III:</strong> EL FIDEICOMITENTE PROMOTOR declara que el régimen
+            estatutario del Condominio Torre Civil Tower Oceance será redactado por ésta, será
+            elaborado de conformidad con lo previsto por la Ley 5038 del 21 de noviembre de 1958
+            y sus modificaciones, régimen éste que será homologado por las autoridades competentes,
+            y el cual EL PROMITENTE VENDEDOR estará en la obligación de acatar fielmente en todas sus
+            partes.
+        </p>
+
+        <!-- ARTÍCULO SEGUNDO -->
+        <p>
+            <strong>ARTÍCULO SEGUNDO: Justificación de Derecho.</strong> - EL PROMITENTE VENDEDOR
+            justifica el derecho de propiedad sobre el inmueble objeto de la presente promesa de
+            compra en el Contrato de Fideicomiso Irrevocable De Inversión Y Desarrollo Inmobiliario
+            Civil Tower Oceance, descrito en el Por Cuanto 2 del presente contrato, de datos
+            siguientes: Inmueble identificado con la designacion catastral No. 400492236712, con
+            una superficie de 2,004.21 metros cuadrados, Matricula No. 3000201838, ubicado en
+            Santo Domingo.
+        </p>
+
+        <!-- Párrafo I (Art. Segundo) -->
+        <p>
+            <strong>PÁRRAFO I:</strong> EL PROMITENTE VENDEDOR declara y EL PROMITENTE COMPRADOR
+            así reconoce y acepta, que el antes referido inmueble se encuentra en proceso de
+            Refundición, Subdivisión y Solicitud de Régimen de Condominio o División Parcelario
+            y que el Certificado de Título correspondiente al inmueble adquirido por EL PROMITENTE
+            COMPRADOR mediante el presente contrato será entregado a EL PROMITENTE COMPRADOR por
+            EL PROMITENTE VENDEDOR, cuando haya sido debidamente expedido, siempre que EL PROMITENTE
+            COMPRADOR haya pagado la totalidad del precio pactado en el presente contrato, más los
+            gastos accesorios procedentes, es decir los gastos legales, de notificaciones y de
+            cargos por moras.
+        </p>
+        <t t-name="contratos.order_contract_article3">
+    <div>
+        <!-- ARTÍCULO TERCERO -->
+        <p>
+            <strong>ARTÍCULO TERCERO: Precio y Forma de pago.</strong> –
+            EL PROMITENTE COMPRADOR reconoce y acepta que la presente promesa de venta de EL INMUEBLE
+            queda sujeta a la condición de que EL PROMITENTE COMPRADOR cumpla estrictamente con sus
+            obligaciones de pago del precio convenido en la forma y dentro de los plazos establecidos
+            en este Artículo. El precio estimado convenido y pactado entre las partes para la promesa
+            de compraventa de EL INMUEBLE ha sido fijado en la suma de
+            <strong>DOSCIENTOS OCHENTA Y OCHO MIL DOLARES ESTADOUNIDENSES (US$288,000.00)</strong>
+            a ser pagaderos de la siguiente forma (en lo adelante el “Precio”):
+        </p>
+        <!-- Inciso a) -->
+        <p>
+            a) <strong>CIENTO QUINCE MIL DOSCIENTOS DOLARES ESTADOUNIDENSES (US$115,200.00)</strong>,
+            que EL PROMITENTE VENDEDOR declara haber recibido en calidad de avance al momento de la
+            firma del presente contrato, por la cual otorga formal recibo de descargo y finiquito
+            a EL PROMITENTE COMPRADOR por dicha suma, en el entendido de que la misma será aplicada
+            en su totalidad al Precio, si la presente promesa culminara en venta definitiva.
+        </p>
+        <!-- Inciso b) -->
+        <p>
+            b) Y la restante suma de <strong>OCHENTA Y SEIS MIL CUATROCIENTOS DOLARES ESTADOUNIDENSES (US$86,400.00)</strong>
+            que deberá ser pagada en <strong>___________</strong> con la Fecha de Entrega del inmueble.
+        </p>
+
+        <!-- PÁRRAFO I -->
+        <p>
+            <strong>PÁRRAFO I:</strong> Las Partes reconocen y aceptan que el único documento válido
+            y comprobatorio de las obligaciones de pago, lo constituirá UN RECIBO DE PAGO EMITIDO
+            por EL PROMITENTE VENDEDOR, en las mismas fechas en que reciba dichos pagos.
+        </p>
+
+        <!-- PÁRRAFO II -->
+        <p>
+            <strong>PÁRRAFO II:</strong> Queda expresamente convenido entre Las Partes, que todos
+            los pagos deberán efectuarse mediante depósito bancario, en las fechas acordadas sin
+            necesidad de requerimiento alguno, en las cuentas a favor del <strong>FIDEICOMISO IRREVOCABLE
+            DE INVERSIÓN Y DESARROLLO INMOBILIARIO CIVIL TOWER OCEANCE</strong>, de datos siguientes:
+        </p>
+        <p>
+            (RD$)
+            <br/>
+            <strong>Entidad Financiera:</strong> BANCO POPULAR DOMINICANO<br/>
+            <strong>Beneficiario:</strong> FIDEICOMISO IRREVOCABLE DE INVERSIÓN Y DESARROLLO INMOBILIARIO CIVIL TOWER OCEANCE<br/>
+            <strong>Tipo de Cuenta:</strong> Corriente<br/>
+            <strong>Cuenta nº:</strong> 820174712
+        </p>
+        <p>
+            (USD$)
+            <br/>
+            <strong>Entidad Financiera:</strong> BANCO POPULAR DOMINICANO<br/>
+            <strong>Beneficiario:</strong> FIDEICOMISO IRREVOCABLE DE INVERSIÓN Y DESARROLLO INMOBILIARIO CIVIL TOWER OCEANCE<br/>
+            <strong>Tipo de Cuenta:</strong> Ahorro<br/>
+            <strong>Cuenta nº:</strong> 820174720
+        </p>
+
+        <!-- PÁRRAFO III -->
+        <p>
+            <strong>PÁRRAFO III:</strong> EL PROMITENTE COMPRADOR se compromete a remitir a EL
+            PROMITENTE VENDEDOR copia del justificante de pago a la dirección de correo electrónico
+            que sea indicada por este último.
+        </p>
+
+        <!-- PÁRRAFO IV -->
+        <p>
+            <strong>PÁRRAFO IV:</strong> Queda entendido entre las Partes del presente Contrato que
+            EL FIDEICOMITENTE PROMOTOR notificará con sesenta (60) días de anticipación la fecha de
+            entrega y pago definitivo de EL INMUEBLE (“Fecha de Entrega”). A partir de la notificación
+            de la Fecha de Entrega EL PROMITENTE COMPRADOR dispondrá de un plazo de TRES (3) días
+            laborables, para evaluar el estado de EL INMUEBLE e informar por escrito a EL FIDEICOMITENTE
+            PROMOTOR sobre cualquier vicio, elemento incompleto o falta de terminación que resulte
+            en una imposibilidad real y demostrada de habitar y ocupar EL INMUEBLE en la Fecha de Entrega.
+            En el caso en que EL FIDEICOMITENTE PROMOTOR sea informada en este sentido, reparará o
+            finalizará aquellas solicitudes que de manera razonable realice EL PROMITENTE COMPRADOR
+            para recibir EL INMUEBLE en la Fecha de Entrega en condiciones habitables. A la llegada
+            de la Fecha de Entrega EL PROMITENTE COMPRADOR se compromete a recibir conforme
+            EL INMUEBLE y saldar la porción del precio pendiente de pago.
+        </p>
+    </div>
+</t>
+<t t-name="contratos.order_contract_article3_4">
+    <div>
+        <!-- Continuation of ARTÍCULO TERCERO -->
+        <p>
+            <strong>PÁRRAFO V:</strong> En el evento de que EL PROMITENTE COMPRADOR se niegue por 
+            cualquier causa, incluyendo, pero no limitado a un hecho fortuito, de fuerza mayor o 
+            de un tercero, a cumplir su obligación de recibir conforme EL INMUEBLE y saldar el 
+            balance del precio, las disposiciones del Artículo 4 aplican.
+        </p>
+        <p>
+            <strong>PÁRRAFO VI:</strong> Se conviene que con el pago establecido en los ordinales 
+            b y c, se materializará la presente promesa condicional de compraventa y se suscribirá 
+            un contrato de venta definitivo por medio del cual EL PROMITENTE VENDEDOR traspasará 
+            a EL PROMITENTE COMPRADOR EL INMUEBLE en la forma y con las representaciones y garantías 
+            que de manera exclusiva se indican a continuación (en lo adelante el “Cierre”): 
+            i) libre de todas cargas y gravámenes, no estando el derecho de propiedad sobre el mismo 
+            afectado en modo alguno en beneficio de terceros; ii) Al día en el pago de cualquier 
+            impuesto aplicable a la propiedad inmobiliaria, incluyendo el Impuesto Sobre Activos; 
+            y iii) Una garantía de evicción y contrato vicios ocultos de un año que corre a partir 
+            de la Fecha de Entrega, que será proporcionada exclusivamente por EL FIDEICOMITENTE 
+            PROMOTOR, quien es el responsable del desarrollo y construcción del Proyecto. 
+            En el Cierre EL PROMITENTE VENDEDOR entregará a EL PROMITENTE COMPRADOR los siguientes 
+            documentos: i) El certificado de título individual que ampare los derechos de propiedad 
+            sobre EL INMUEBLE objeto del presente contrato; ii) Los documentos corporativos que 
+            autorizan al representante de EL PROMITENTE VENDEDOR a suscribir el contrato de venta 
+            definitivo a ser ejecutado en la fecha del Cierre; y iii) El recibo de pago al día de 
+            cualquier impuesto aplicable a la propiedad inmobiliaria, incluyendo el Impuesto Sobre 
+            Activos.
+        </p>
+        <p>
+            <strong>PÁRRAFO VII:</strong> Los precios consignados precedentemente pudieran variar 
+            en caso de que fluctúen a la alza los precios de los materiales de construcción que se 
+            empleen en el proyecto con relación a los valores existentes a la fecha de suscripción 
+            del presente contrato, tomando como punto de referencia el tiempo en que se dio el alza 
+            y el porcentaje ejecutado en la obra. El incremento a partidas específicas acorde a su 
+            porcentaje de ejecución sólo será aplicada si el precio unitario de los materiales excede 
+            un diez por ciento (10%) de su valor a la fecha de la firma del presente contrato durante 
+            el proceso constructivo.
+        </p>
+
+        <!-- ARTÍCULO CUARTO -->
+        <p>
+            <strong>ARTÍCULO CUARTO: Penalidades.</strong> – En caso de incumplimiento de las 
+            obligaciones a cargo de EL PROMITENTE COMPRADOR establecidas en el Artículo 3, y cinco (5) 
+            días después de la notificación por escrito realizada por EL PROMITENTE VENDEDOR o 
+            EL FIDEICOMITENTE PROMOTOR (en lo adelante la “Notificación”) a EL PROMITENTE COMPRADOR 
+            o a la Fecha de Entrega, plazo que se considerará de gracia, EL PROMITENTE VENDEDOR o 
+            EL FIDEICOMITENTE PROMOTOR tendrán la facultad de cargar y descontar del Aval o cargar 
+            a EL PROMITENTE COMPRADOR a título no compensatorio ni indemnizatorio, y sin necesidad 
+            de intervención judicial alguna ni perjuicio a las demás acciones que pueda tener 
+            disponible, las siguientes penalidades aplicables por cada periodo quincenal en retraso 
+            o fracción de dicho periodo en retraso:
+        </p>
+        <p>
+            a) Si a partir de los cinco (5) días de la Notificación, han transcurrido de dieciséis (16) 
+            a treinta (30) días: aplicará un dos por ciento (2%) de penalidad sobre el monto adeudado 
+            de EL PRECIO por dicho período quincenal en retraso o fracción de dicho periodo;
+        </p>
+        <p>
+            b) Si a partir de los cinco (5) días de la Notificación, han transcurrido de treinta y 
+            un (31) a cuarenta y cinco (45) días; aplicará un tres punto cinco por ciento (3.5%) 
+            de penalidad sobre el monto adeudado de EL PRECIO por dicho periodo quincenal en retraso 
+            o fracción de dicho periodo;
+        </p>
+        <p>
+            c) Si a partir de los cinco (5) días de la Notificación o fecha de vencimiento del Periodo 
+            de Acceso o del Periodo de Desalojo, según el caso, han transcurrido de cuarenta y seis 
+            (46) días a sesenta (60) días: aplicará un cuatro por ciento (4%) de penalidad sobre el 
+            monto adeudado por dicho periodo quincenal en retraso o fracción de dicho periodo o 
+            cualquier otro periodo quincenal o fracción del mismo adicional.
+        </p>
+        <p>
+            <strong>PÁRRAFO I:</strong> No obstante, en caso de incumplimiento continuo y prolongado 
+            de las obligaciones de pago de EL PROMITENTE COMPRADOR por más de sesenta (60) días 
+            contados a partir de la fecha en que sean adeudadas, EL PROMITENTE VENDEDOR o 
+            EL FIDEICOMITENTE PROMOTOR podrán inmediatamente después de haber transcurrido el referido 
+            plazo de sesenta (60) días, poner en mora a EL PROMITENTE COMPRADOR para los fines de 
+            que la misma, dentro del plazo de los cinco (5) días contados a partir de la puesta en 
+            mora, efectúe el pago de las sumas adeudadas, incluyendo capital e intereses, bajo el 
+            entendido de que en caso de que EL PROMITENTE COMPRADOR no efectúe dicho pago dentro 
+            del plazo indicado en el presente Contrato, EL FIDEICOMITENTE PROMOTOR y 
+            EL PROMITENTE VENDEDOR se reservan el derecho de terminar el mismo, sin necesidad de 
+            intervención judicial alguna y retener y cargar del Aval o de cualquier otro pago o 
+            abono al Precio realizado a la fecha por concepto de la penalidad no compensatoria e 
+            indemnizatoria el equivalente al 10% del Precio, bajo el entendido de que una vez 
+            ejercido dicho derecho EL FIDEICOMITENTE PROMOTOR y EL PROMITENTE VENDEDOR podrán ofertar 
+            libremente en el mercado EL INMUEBLE. Queda entendido que la suma restante del Aval o de 
+            cualquier otro pago o abono al Precio realizado a la fecha a ser devuelta a 
+            EL PROMITENTE COMPRADOR serán reembolsada por EL PROMITENTE VENDEDOR dentro de los diez 
+            (10) días de materializada la venta definitiva de EL INMUEBLE a un tercero y luego de 
+            que hayan sido deducidos la penalidad prevista en este Párrafo y los costos, gastos y 
+            honorarios legales establecidos en el Párrafo IV del presente Artículo.
+        </p>
+        <p>
+            <strong>PÁRRAFO II:</strong> En virtud de lo establecido en la presente Párrafo, 
+            EL PROMITENTE COMPRADOR mediante el presente Contrato libera desde hoy y para siempre, 
+            de todo tipo de obligación y/o responsabilidad civil o penal a EL FIDIECOMITENTE y 
+            EL PROMITENTE VENDEDOR y/o cualquier tercero interesado en la adquisición de 
+            EL INMUEBLE objeto del presente Contrato y/o a cualquier tercero que adquiera el mismo. 
+            Asimismo, EL PROMITENTE COMPRADOR reconoce y acepta su renuncia a la interposición de 
+            toda acción legal presente o futura contra EL FIDIECOMITENTE y EL PROMITENTE VENDEDOR 
+            en el caso en que ésta opte por ejercer las facultades que le confiere el presente 
+            Artículo.
+        </p>
+        <p>
+            <strong>PÁRRAFO III:</strong> Aplicación de Pagos. En caso de retraso en el pago de 
+            las sumas adeudadas EL PROMITENTE COMPRADOR expresamente reconoce que los pagos que sean 
+            realizados a EL PROMITENTE VENDEDOR serán aplicados en el siguiente orden: 
+            (i) primero sobre los intereses o penalidades generadas por la deuda de 
+            EL PROMITENTE COMPRADOR ; 
+            (ii) posteriormente sobre el capital adeudado; 
+            y (iii) al pago de suma adeudada.
+        </p>
+        <p>
+            <strong>PÁRRAFO IV:</strong> Pagos de Gastos y Honorarios Legales.- En caso de 
+            terminación del presente Contrato, debido a una falta de cumplimiento de las obligaciones 
+            de pago puestas a cargo de EL PROMITENTE COMPRADOR mediante este acto, 
+            EL PROMITENTE COMPRADOR se compromete a pagar a EL PROMITENTE VENDEDOR todos los costos 
+            a ser generados por concepto de dicha terminación, así como los gastos y desembolsos 
+            que se generen por la misma, incluyendo los honorarios de abogados en que pudiese 
+            incurrir EL PROMITENTE VENDEDOR para llevar a cabo la terminación de este acto.
+        </p>
+    </div>
+</t>
+<t t-name="contratos.order_contract_articles_5_to_10">
+    <div>
+        <!-- ARTÍCULO QUINTO -->
+        <p>
+            <strong>ARTÍCULO QUINTO: Rescisión Unilateral.</strong> –
+            En caso de que EL PROMITENTE COMPRADOR, opte por no suscribir contrato definitivo
+            de compraventa o rescindir de manera unilateral el presente contrato,
+            EL PROMITENTE VENDEDOR sin necesidad de intervención judicial alguna, cargará
+            y retendrá del Aval o de cualquier otro pago o abono al Precio realizado a la fecha
+            por EL PROMITENTE COMPRADOR a título de penalidad no compensatoria ni indemnizatoria
+            y sin perjuicio de cualquier otro derecho o acción disponible por los gastos, daños
+            y perjuicios generados por la rescisión, la suma equivalente al diez por ciento (10%)
+            del Precio. Queda entendido que la suma restante del Aval o de cualquier otro pago o
+            abono al Precio realizado a la fecha a ser devuelta a EL PROMITENTE COMPRADOR serán
+            reembolsada por EL PROMITENTE VENDEDOR dentro de los diez (10) de materializada la
+            venta definitiva de EL INMUEBLE a un tercero y luego de que hayan sido deducidos
+            la penalidad prevista en este Párrafo y cualesquiera costos, gastos y honorarios
+            legales derivados de la rescisión unilateral del presente Contrato. Lo anterior sin
+            perjuicio de la potestad de EL PROMITENTE VENDEDOR o EL FIDEICOMITENTE PROMOTOR de
+            hacer valer cualquier derecho o recurso que por ley o en equidad tenga disponible
+            contra EL PROMITENTE COMPRADOR incluyendo, sin limitaciones, la exigencia del
+            cumplimiento de cláusulas específicas del presente Contrato, en cuyo caso
+            EL PROMITENTE COMPRADOR pagará todos los costos y gastos por cuenta propia incurridos
+            por EL PROMITENTE VENDEDOR, incluyendo, sin limitaciones, costas legales y otros.
+        </p>
+
+        <!-- ARTÍCULO SÉXTO -->
+        <p>
+            <strong>ARTÍCULO SÉXTO: Finalidad y Naturaleza del Contrato.</strong> –
+            LAS PARTES reconocen y aceptan el carácter condicional de la presente promesa de
+            compraventa y entienden que hasta que no se verifique el cumplimiento de las
+            obligaciones de pago del Precio y entrega de la documentación prevista en el
+            Articulo 3 no se perfeccionará ni materializará la venta ni la propiedad de
+            EL INMUEBLE será transferida. Por consiguiente, las partes manifiestan que las
+            disposiciones del Artículo 1589 del Código Civil Dominicano no aplican al presente
+            Contrato.
+        </p>
+        <p>
+            <strong>PÁRRAFO:</strong> Se conviene expresamente, que hasta tanto no haya sido
+            pagado la totalidad del Precio y suscrito entre las partes el contrato de venta
+            definitivo, EL PROMITENTE COMPRADOR no podrá sin el consentimiento escrito de
+            EL PROMITENTE VENDEDOR vender, ceder, traspasar, alquilar o negociar con terceros,
+            los derechos que le confiere el presente contrato, quien se reserva la facultad
+            de aceptar o no dicho traspaso. El traspaso, venta, o cesión realizada sin el
+            consentimiento de EL PROMITENTE VENDEDOR constituirá una causa de terminación
+            anticipada del contrato que podrá ejercer EL PROMITENTE VENDEDOR bajo los términos
+            del presente contrato.
+        </p>
+
+        <!-- ARTÍCULO SÉPTIMO -->
+        <p>
+            <strong>ARTÍCULO SÉPTIMO: DECLARACIONES DE EL PROMITENTE COMPRADOR.</strong> –
+            EL PROMITENTE COMPRADOR declara, reconoce y acepta, que respecto al Proyecto
+            Civil Tower Oceance, la sociedad CONSTRUCTORA CIVILTEC, S.R.L., es la única
+            responsable de:
+        </p>
+        <ol style="margin-left: 2rem;">
+            <li>La construcción, promoción, supervisión, gerencia, venta y desarrollo del Proyecto.</li>
+            <li>El desarrollo, construcción o entrega de los apartamentos en el tiempo acordado.</li>
+            <li>El control y seguimiento de la construcción del Proyecto.</li>
+            <li>La calidad de los apartamentos construidos en este Proyecto.</li>
+            <li>Otorgar la garantía sobre vicios ocultos y de construcción que pudieran tener los
+                apartamentos y en caso de proceder efectuar las reparaciones procedentes.</li>
+            <li>La fijación de los precios de venta de los apartamentos.</li>
+            <li>Los aspectos técnicos, económicos o comerciales del Residencial.</li>
+            <li>De la titularidad o cargas y gravámenes que pudieran pesar sobre el inmueble en el
+                cual se construye el Proyecto.</li>
+            <li>Del cumplimiento de obligaciones legales o contractuales que resulten con ocasión
+                de la realización del Proyecto, o la ejecución de los contratos que se suscriban
+                con EL PROMITENTE COMPRADOR.</li>
+        </ol>
+        <p>
+            En este sentido, EL PROMITENTE COMPRADOR reconoce que cualquier reclamación relacionada
+            con estos puntos deberá ser dirigida contra CONSTRUCTORA CIVILTEC, S.R.L. siempre y cuando,
+            la reclamación esté relacionada con las garantías provistas en el contrato de compraventa.
+        </p>
+
+        <!-- ARTÍCULO OCTAVO -->
+        <p>
+            <strong>ARTÍCULO OCTAVO: OTRAS DECLARACIONES DEL PROMITENTE COMPRADOR.</strong> –
+            De igual forma, EL PROMITENTE COMPRADOR acepta y reconoce:
+        </p>
+        <ol style="margin-left: 2rem;">
+            <li>Que FIDUCIARIA UNIVERSAL, S.A. no financia a CONSTRUCTORA CIVILTEC, S.R.L. o a la
+                construcción del proyecto de apartamentos.</li>
+            <li>Que FIDUCIARIA UNIVERSAL, S.A. podrá rehusarse a recibir pagos de EL PROMITENTE
+                COMPRADOR por la sola sospecha de que los fondos de los mismos se encuentran
+                involucrados directa o indirectamente, de una actividad ilícita tipificada por las
+                leyes dominicanas, en particular, por las disposiciones contempladas en la Ley
+                No. 155-17, contra el Lavado de Activos provenientes del Tráfico Ilícito de Drogas
+                y Sustancias Controladas y Otras Infracciones Graves, y por cualquier otra normativa
+                internacional similar; así como cualquier otra normativa internacional similar.</li>
+            <li>Que la gestión de FIDUCIARIA UNIVERSAL, S.A. es la de un profesional, por tanto,
+                su obligación es de medio y no de resultado.</li>
+            <li>Que, conforme a lo establecido en el Contrato de Fideicomiso FIDUCIARIA UNIVERSAL, S.A.
+                asume la obligación de recibir y administrar, con el debido control, los recursos
+                provenientes de los terceros que separen las unidades de viviendas del Proyecto,
+                los cuales estarán destinados exclusivamente al desarrollo del Proyecto.</li>
+        </ol>
+
+        <!-- ARTÍCULO NOVENO -->
+        <p>
+            <strong>ARTÍCULO NOVENO: TERMINACION DE LA CONSTRUCCION.</strong> –
+            EL FIDEICOMITENTE PROMOTOR se compromete a terminar la construcción objeto
+            de este contrato en fecha treinta (30) del mes de Julio del año Dos Mil Veinticuatro (2024),
+            con un periodo de gracia de seis (6) meses, salvo caso fortuito, de fuerza mayor
+            o por disposiciones e impedimentos que resulten de medidas adoptadas por cualquier
+            institución tanto pública como privada, así como por autoridades municipales
+            o gubernamentales que afecten de alguna manera la ejecución del contrato.
+            EL PROMITENTE COMPRADOR renuncia desde ahora y para siempre de pleno derecho,
+            a todo tipo de reclamación o compensación por este último concepto, es decir en caso
+            de que se produjera tardanza justificada por motivo de las causas anteriormente citadas.
+        </p>
+        <p>
+            <strong>PÁRRAFO I:</strong> De presentarse cualquier caso fortuito o de fuerza mayor,
+            incluyéndose carencia en los materiales de construcción demostrables, desastres naturales,
+            lluvias prolongadas, cambios o disturbios políticos y sociales, huelgas, situaciones
+            de paralización de actividades producto de los periodos pre y post-eleccionario político,
+            y que produzca el incumplimiento de cualesquiera de las obligaciones puestas a cargo
+            de EL FIDEICOMITENTE VENDEDOR lo liberará de cualquier tipo de multa, responsabilidad
+            o reclamación de conformidad con las disposiciones que el Código Civil Dominicano
+            establecidas al efecto.
+        </p>
+
+        <!-- ARTÍCULO DÉCIMO -->
+        <p>
+            <strong>ARTÍCULO DÉCIMO: Derechos De Terminación e Incumplimiento.</strong> – 
+            El presente Contrato podrá ser terminado:
+        </p>
+        <ol style="margin-left: 2rem;">
+            <li>En cualquier momento antes del Cierre mediante acuerdo escrito al efecto
+                entre las Partes.</li>
+            <li>Por EL PROMITENTE VENDEDOR o EL FIDEICOMITENTE PROMOTOR en los casos de
+                incumplimiento de pago del Precio, conforme a los términos del Artículo 3 y 4.</li>
+            <li>Por EL PROMITENTE VENDEDOR o EL FIDEICOMITENTE PROMOTOR mediante notificación
+                por escrito dada a EL PROMITENTE COMPRADOR en el evento de que EL PROMITENTE
+                COMPRADOR incurra en incumplimiento de alguna de sus obligaciones en el presente
+                contrato.</li>
+            <li>Por no haber resultado de manera satisfactoria la depuración realizada a
+                EL PROMITENTE COMPRADOR por parte de EL FIDEICOMITENTE VENDEDOR con respecto
+                a la materia de Lavado de Activos y Financiamiento al Terrorismos, acorde a las
+                disposiciones establecidas en la Ley No. 155-17. No comprometiendo su
+                responsabilidad.</li>
+        </ol>
+    </div>
+</t>
+<t t-name="contratos.order_contract_articles_10plus">
+    <div>
+        <!-- Additional Lines for ARTÍCULO DÉCIMO (Continuing e), PÁRRAFOS, etc. -->
+        <p>
+            e) Por no haberse alcanzado el punto de equilibrio establecido en el Artículo Sexto
+            del Contrato de Fideicomiso, no existiendo las condiciones necesarias para dar
+            inicio a la construcción y desarrollo del Proyecto.
+        </p>
+        <p>
+            <strong>PÁRRAFO I:</strong> Las Partes reconocen y aceptan que los derechos de terminación
+            bajo este Artículo son complementarios o adicionales a cualquier otro derecho del
+            que las Partes puedan gozar bajo el presente Contrato, incluyendo, pero no limitado
+            a los consignados en este Artículo, o cualquier otro, y que el ejercicio del derecho
+            a terminar este Contrato no será considerada como una elección definitiva de una vía
+            de acción o remedio.
+        </p>
+        <p>
+            <strong>PÁRRAFO II:</strong> En caso de que el presente Contrato sea terminado de
+            conformidad con los literales a) y d) de la parte capital de este Artículo sus
+            efectos serán los siguientes: a) Las obligaciones de EL PROMITENTE COMPRADOR,
+            EL FIDEICOMITENTE PROMOTOR y EL PROMITENTE VENDEDOR pautadas para antes o la fecha
+            del Cierre se extinguen; b) EL PROMITENTE COMPRADOR debe recibir a no más tardar
+            de sesenta (60) días, contados a partir de la fecha de terminación o notificación
+            de terminación, el reembolso del Aval o de cualquier otro pago o abono al Precio
+            realizado a la fecha por parte de EL FIDEICOMITENTE VENDEDOR. En el caso del que
+            el presente Contrato sea terminado conforme al literal b) de la parte capital de
+            este Artículo, las reglas previstas en el Artículo 4 aplicarán. Por último, en el
+            caso del que el presente Contrato sea terminado conforme al literal c) de la parte
+            capital de este Artículo EL FIDEICOMITENTE PROMOTOR o EL PROMITENTE VENDEDOR pondrá
+            en mora a EL PROMITENTE COMPRADOR para los fines de que la misma, dentro del plazo
+            de los cinco (5) días contados a partir de la puesta en mora, remedie, solvente o
+            haga cesar su incumpliendo, bajo el entendido de que en caso de que EL PROMITENTE
+            COMPRADOR no cumpla con la puesta en mora dentro del plazo indicado en el presente
+            Contrato, EL PROMITENTE VENDEDOR se reserva el derecho de cancelar el mismo sin
+            necesidad de intervención judicial alguna y retener y cargar del Aval o de
+            cualquier otro pago o abono al Precio realizado a la fecha por concepto de penalidad
+            no compensatoria e indemnizatoria el equivalente al 10% del Precio, bajo el entendido
+            de que una vez ejercido dicho derecho EL PROMITENTE VENDEDOR podrá ofertar libremente
+            en el mercado EL INMUEBLE. Queda entendido que la suma restante del Aval o de cualquier
+            otro pago o abono al Precio realizado a la fecha a ser devuelta a EL PROMITENTE COMPRADOR
+            será reembolsada por EL PROMITENTE VENDEDOR dentro de los diez (10) de materializada
+            la venta definitiva de EL PROMITENTE VENDEDOR a un tercero y luego de que hayan sido
+            deducidos la penalidad prevista en este Párrafo y los costos, gastos y honorarios
+            legales establecidos en el Párrafo IV del Artículo 4.
+        </p>
+
+        <!-- ARTÍCULO DÉCIMO PRIMERO -->
+        <p>
+            <strong>ARTÍCULO DÉCIMO PRIMERO:</strong> Queda convenido que EL FIDEICOMITENTE PROMOTOR
+            es la única responsable de la correcta y adecuada terminación del Condominio Civil Tower
+            Oceance. Sin embargo, EL PROMITENTE COMPRADOR podrá solicitar cambios en el INMUEBLE
+            y trabajos adicionales, cambios éstos que deberán ser solicitados por escrito, y por
+            los cuales EL PROMITENTE COMPRADOR deberá pagar a EL PROMITENTE VENDEDOR las sumas
+            adicionales originadas en los mismos.
+        </p>
+        <p>
+            <strong>PÁRRAFO I:</strong> Queda establecido que, si EL PROMITENTE COMPRADOR decidiera
+            ordenar a EL FIDEICOMITENTE PROMOTOR en EL INMUEBLE objeto del presente contrato,
+            trabajos que no estén contemplados en las especificaciones identificadas como anexo 1,
+            deberá solicitar los mismos por escrito a EL FIDEICOMITENTE PROMOTOR, quien se reserva
+            el derecho de aceptar o no los mismos. Si EL FIDEICOMITENTE PROMOTOR decidiera aceptar
+            los trabajos adicionales solicitados, remitirá por escrito a EL PROMITENTE COMPRADOR
+            su aceptación, conjuntamente con la cotización por los gastos y ejecución de los mismos,
+            así como la fecha de entrega del Inmueble, debiendo en este caso EL PROMITENTE COMPRADOR
+            saldar su totalidad a más tardar diez (10) días posteriores a la fecha de recibo de la
+            cotización. Asimismo, se conviene que una vez EL FIDEICOMITENTE PROMOTOR reciba el pago
+            por los trabajos adicionales, procederá a la realización y ejecución de los mismos.
+        </p>
+        <p>
+            <strong>PÁRRAFO II:</strong> Se conviene que EL PROMITENTE COMPRADOR no podrá ordenar
+            a un tercero ajeno a EL FIDEICOMITENTE PROMOTOR, trabajos adicionales o cambios en la
+            distribución de EL INMUEBLE, hasta que el mismo no fuera entregado definitivamente,
+            salvo que fuera autorizado por escrito por EL FIDEICOMITENTE PROMOTOR. Sin perjuicio
+            a los demás derechos y acciones disponibles a EL FIDEICOMITENTE PROMOTOR en caso de
+            incumplimiento de la presente obligación, EL PROMITENTE COMPRADOR reconoce que pierde
+            la garantía de vicios ocultos previstos en el Artículo Décimo. En caso de que estos
+            trabajos fueran autorizados por EL FIDEICOMITENTE PROMOTOR, los mismos no estarán
+            incluidos en la garantía de vicios ocultos que otorga EL FIDIECOMITENTE mencionada
+            en el Artículo Décimo Segundo del presente Contrato y cualquier vicio, defecto o
+            deterioro en EL INMUEBLE serán de la responsabilidad exclusiva de EL PROMITENTE COMPRADOR.
+        </p>
+
+        <!-- ARTÍCULO DÉCIMO SEGUNDO -->
+        <p>
+            <strong>ARTÍCULO DÉCIMO SEGUNDO: Garantía Contra la Evicción y Vicios Ocultos.</strong> –
+            EL FIDEICOMITENTE PROMOTOR garantiza a EL PROMITENTE COMPRADOR que el inmueble no tendrá
+            vicios ocultos de construcción y que el mismo está siendo construido según los planos,
+            especificaciones y leyes de construcción vigentes de manera satisfactoria, y otorga
+            una garantía a favor de EL PROMITENTE COMPRADOR por un período de un (1) año contra
+            evicción y vicios ocultos que corre a partir de la fecha de Entrega.
+        </p>
+
+        <!-- ARTÍCULO DÉCIMO TERCERO -->
+        <p>
+            <strong>ARTÍCULO DÉCIMO TERCERO: Impuestos y Gastos Legales.</strong> –
+            Queda entendido de que cualquier gasto, impuestos por transferencia, costos y honorarios
+            incurridos para la transferencia de EL INMUEBLE y obtención del Certificado luego de
+            materializada dicha venta será de la única y exclusiva responsabilidad de
+            EL PROMITENTE COMPRADOR. De igual modo, LAS PARTES reconocen que cada una de ellas,
+            será responsable del pago de los gastos legales y honorarios de sus respectivos
+            abogados, generados en ocasión de la elaboración, negociación y firma del presente Contrato.
+        </p>
+        <p>
+            <strong>PÁRRAFO:</strong> En caso de que el presente Contrato culminara en venta
+            definitiva, EL PROMITENTE COMPRADOR se compromete a efectuar el traspaso de
+            EL INMUEBLE en un plazo no mayor de sesenta (60) días contados a partir de la firma
+            del Contrato de Compraventa definitivo. En caso de que EL PROMITENTE COMPRADOR no
+            realice el traspaso en el supraindicado período, será responsable del pago de cualquier
+            tipo de impuesto y gasto que EL INMUEBLE pueda generar a EL PROMITENTE VENDEDOR o
+            EL FIDEICOMITENTE PROMOTOR.
+        </p>
+
+        <!-- ARTÍCULO DÉCIMO CUARTO -->
+        <p>
+            <strong>ARTÍCULO DÉCIMO CUARTO: Jurisdicción Competente y Ley Aplicable.</strong> –
+            Las Partes acuerdan que la jurisdicción competente para dirimir cualquier diferendo
+            relacionado con el presente Contrato, lo será la de los domicilios de elección
+            de las partes y que las únicas leyes aplicables serán las relativas al derecho común
+            de República Dominicana.
+        </p>
+
+        <!-- ARTÍCULO DÉCIMO QUINTO -->
+        <p>
+            <strong>ARTÍCULO DÉCIMO QUINTO: Elección de Domicilio.</strong> –
+            <br/>1) EL PROMITENTE VENDEDOR: En la dirección indicada en sus generales.<br/>
+            2) EL PROMITENTE COMPRADOR: En la dirección indicada en sus generales.<br/>
+            3) EL FIDEICOMITENTE PROMOTOR: En la dirección indicada en sus generales.
+        </p>
+
+        <!-- ARTÍCULO DÉCIMO SEXTO -->
+        <p>
+            <strong>ARTÍCULO DÉCIMO SEXTO: Aceptación de lo acordado.</strong> –
+            Las partes declaran conocer y aprobar todos y cada uno de los términos y condiciones
+            estipuladas en el presente contrato y para suplir lo no previsto en el mismo se remiten
+            a las leyes y al derecho común dominicano.
+        </p>
+
+        <!-- ARTÍCULO DÉCIMO SÉPTIMO -->
+        <p>
+            <strong>ARTÍCULO DÉCIMO SÉPTIMO: Preeminencia de este contrato.</strong> –
+            Queda expresamente entendido y convenido entre las partes que las disposiciones de
+            este contrato son definitivas y concluyentes y que únicamente podrán ser variadas,
+            anuladas o modificadas por acuerdo escrito entre las partes.
+        </p>
+
+        <!-- ARTÍCULO DÉCIMO OCTAVO -->
+        <p>
+            <strong>ARTÍCULO DÉCIMO OCTAVO: Renuncias e Invalidación de partes.</strong> –
+            Ninguna negociación, retraso, falta o actuación de EL PROMITENTE VENDEDOR en reclamar
+            o ejecutar alguna disposición o derecho derivado de este Contrato deberá ser entendido
+            como renuncia a tal derecho, a menos que EL PROMITENTE VENDEDOR lo haya estipulado de
+            manera expresa y por escrito. Si alguna de las disposiciones del presente Contrato es
+            invalidada o dejase de tener vigencia, tal circunstancia no invalidará el contrato total,
+            sino que se considerarán como no incluidos el artículo o la cláusula invalidados y los
+            derechos y obligaciones de las partes contratantes serán ejecutados y validados en la
+            forma en que corresponda, a menos que la cláusula o disposición invalidada, anulada o
+            declarada no ejecutable afecte adversamente el cumplimiento de alguna de las partes
+            de las obligaciones puestas a su cargo en virtud del presente Contrato.
+        </p>
+    </div>
+</t>
+    </div>
+    <div class="page" style="text-align: center">
+    <t t-name="contratos.order_contract_signatures">
+    <div>
+        <!-- Signatures Heading / Sentence -->
+        <p>
+            HECHO, PACTADO y FIRMADO, en cuatro (4) originales de un mismo tenor y efecto.
+            En la ciudad de Santo Domingo, Distrito Nacional, Capital de la República Dominicana,
+            hoy <span t-esc="doc.date_to_spanish_format(doc.agreement_date)" />.
+        </p>
+
+        <!-- Signature for EL PROMINENTE VENDEDOR -->
+        <p>
+            <strong>Por EL PROMINENTE VENDEDOR:</strong>
+            <br/><br/>
+            ________________________________________________________
+            <br/>
+            NESTOR ALCIDES BELTRE FELIZ 
+            <br/>
+            <em>En representación del FIDEICOMISO IRREVOCABLE DE INVERSIÓN Y DESARROLLO INMOBILIARIO CIVIL TOWER OCEANCE</em>
+        </p>
+
+        <!-- Signature for EL FIDEICOMITENTE PROMOTOR -->
+        <p>
+            <strong>Por EL FIDEICOMITENTE PROMOTOR:</strong>
+            <br/><br/>
+            ________________________________________________________
+            <br/>
+            PEDRO RENÉ ANTONIO COLUMNA NÚÑEZ
+            <br/>
+            <em>En representación de CONSTRUCTORA CIVILTEC, S.R.L.</em>
+        </p>
+
+        <!-- Signature for EL PROMITENTE COMPRADOR -->
+        <div class="sign-content">
+
+                            <p>
+                                <strong>POR <strong>EL PROMITENTE COMPRADOR</strong>:</strong>
+                            </p>
+                            <p>
+                                <strong>_______________________________</strong>
+                            </p>
+                            <p>
+                                <strong><span t-esc="doc.tenant_id.name.upper()" /></strong>
+                            </p>
+                        </div>
+
+                        <t t-if="doc.co_owner_relationship == False and doc.co_tenant_id">
+                            <div class="sign-content">
+                                <p>
+                                    <strong>POR <strong>EL PROMITENTE COMPRADOR</strong>:</strong>
+                                </p>
+                                <p>
+                                    <strong>_______________________________</strong>
+                                </p>
+                                <p>
+                                    <strong><span t-esc="doc.co_tenant_id.name.upper()" /></strong>
+                                </p>
+                            </div>
+                        </t>
+
+        <!-- Notary Certification -->
+        <p>
+            YO, ________________________________________________________,
+            Notario Público de los del Número del Distrito Nacional, Portador(a)
+            del Carnet del Colegio Dominicano de Notarios Públicos No.__________,
+            <strong>CERTIFICO</strong>: Que las firmas que anteceden fueron puestas en mi presencia,
+            libre y voluntariamente, por los señores NESTOR ALCIDES BELTRE FELIZ, 
+            PEDRO RENÉ ANTONIO COLUMNA NUÑEZ <t t-if="doc.co_owner_relationship == False and doc.co_tenant_id">,</t>
+                                    <t t-else="">y</t>
+                                    <strong><span t-esc="doc.tenant_id.name.upper()"/></strong> 
+                                    <t t-if="doc.co_owner_relationship == False and doc.co_tenant_id">
+                                        y <strong><span t-esc="doc.co_tenant_id.name.upper()"/></strong>
+                                    </t> , de generales descritas
+            anteriormente, y quienes me han declarado que son las firmas que acostumbran a usar
+            siempre. En Santo Domingo, Distrito Nacional, Capital de la República Dominicana,
+            hoy <span t-esc="doc.date_to_spanish_format(doc.agreement_date)" /> .
+        </p>
+        <p>
+            ________________________________________________________
+            <br/>
+            NOTARIO PÚBLICO
+            <br/>
+            Matricula Núm. __________
+        </p>
+    </div>
+</t>
+
+    </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

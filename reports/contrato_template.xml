@@ -1677,7 +1677,7 @@
                     </div>
                     <div class="content">
                         <p>
-                            <strong>HECHO, LEÍDO Y FIRMADO, en tres (3) originales, uno para cada
+                            <strong>HECHO, LEÍDO Y FIRMADO, en cinco (5) originales, uno para cada
                                 una de <strong>LAS PARTES</strong>, en la ciudad de Santo Domingo, Distrito Nacional,
                                 capital de la República Dominicana, <span
                                     t-esc="doc.date_to_spanish_format(doc.agreement_date)" /> .</strong>
