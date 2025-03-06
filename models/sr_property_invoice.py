@@ -19,6 +19,7 @@ class srAccountMove(models.Model):
     _inherit = 'account.move'
 
     is_property_invoice = fields.Boolean('Is Property Invoice?')
+    is_ajuste_de_precio = fields.Boolean(string="Es Ajuste de precio?", default=False)
     property_id = fields.Many2one('product.product', 'Property')
     tenancy_agreement = fields.Many2one('sr.tenancy.agreement', string="Tenancy Agreement")
     is_property_commission_bill = fields.Boolean('Is Property Commission Invoice?')

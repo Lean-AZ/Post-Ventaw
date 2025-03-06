@@ -490,18 +490,12 @@ class AccountMove(models.Model):
     _inherit = 'account.move'
 
     is_overdue = fields.Boolean(compute='_compute_is_overdue')
-    is_ajuste = fields.Boolean(string="Is Ajuste", default=False)
-
+    
     computed_mora = fields.Float(
         string="Total Mora",
         compute='_compute_computed_mora',
         store=True
     )
-
-    @api.depends('invoice_line_ids.name')
-    def _compute_is_ajuste(self):
-        for move in self:
-            move.is_ajuste = any('precio' in line.name.lower() for line in move.invoice_line_ids)
 
     @api.depends('invoice_line_ids.name', 'invoice_line_ids.price_subtotal')
     def _compute_computed_mora(self):
