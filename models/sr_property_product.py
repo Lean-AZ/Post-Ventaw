@@ -249,7 +249,7 @@ class srPropertytemplate(models.Model):
             # Group lines dynamically based on the description
             cuotas_lines = all_lines.filtered(
                 lambda l: l.name and 
-            any(word in l.name.lower() for word in ['cuota', 'reserva', 'separación']) and 
+            any(word in l.name.lower() for word in ['cuota', 'reserva', 'separación', 'aumento']) and 
             'final' not in l.name.lower())
 
             cuota_final_lines = all_lines.filtered(
@@ -326,8 +326,12 @@ class srPropertytemplate(models.Model):
     def _compute_percentage_paid(self):
         for record in self:
             # Total paid amounts
+            # total_paid = (record.total_paid_subtotal or 0.0) + \
+            #              (record.total_paid_ajustes or 0.0) + \
+            #             (record.total_paid_cuota_final or 0.0)
+
+
             total_paid = (record.total_paid_subtotal or 0.0) + \
-                         (record.total_paid_ajustes or 0.0) + \
                         (record.total_paid_cuota_final or 0.0)
 
             # Total expected amounts
