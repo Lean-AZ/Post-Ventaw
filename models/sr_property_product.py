@@ -335,8 +335,7 @@ class srPropertytemplate(models.Model):
                         (record.total_paid_cuota_final or 0.0)
 
             # Total expected amounts
-            total_sale_amount = (record.property_sale_price or 0.0) + \
-                                (record.total_ajustes or 0.0)
+            total_sale_amount = (record.property_sale_price or 0.0)
 
             # Calculate percentage paid
             if total_sale_amount > 0:
