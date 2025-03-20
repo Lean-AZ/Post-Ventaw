@@ -435,8 +435,8 @@
                         </table>
                     </t>
                     <footer>
-                        <div class="text-center">
-                            <span>Los montos pagados en la parte superir, excluyen los abonos parciales realizados.</span>
+                        <div class="text-center mt-2">
+                            <strong>Los montos pagados en la parte superior, excluyen los abonos parciales realizados.</strong>
                         </div>
                     </footer>
                 </div>
