@@ -79,7 +79,7 @@ msgstr "Agente"
 #. module: sr_property_rental_management
 #: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
 msgid "Agent Commission Details"
-msgstr "Detalles de Comisión del Agente"
+msgstr "Detalles del agente del departamento administrativo"
 
 #. module: sr_property_rental_management
 #: model:ir.actions.act_window,name:sr_property_rental_management.sr_property_agent_commission_lines_action

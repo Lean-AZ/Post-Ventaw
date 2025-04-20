@@ -78,12 +78,12 @@
 					</group>
 					<group>
 						<group string="Agent Commission Details">
-							<field name="agent_id" domain="[('is_agent', '=', True)]" />
+							<field name="agent_id" />
 							<field name="agent_type"/>
-							<field name="agent_payment" />
+							<!-- <field name="agent_payment" />
 
 							<field name="commission_type" widget="radio" attrs="{'invisible': [('agent_id', '=', False)]}" />
-							<field name="agent_commission" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'invisible': [('agent_id', '=', False)]}" />
+							<field name="agent_commission" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" attrs="{'invisible': [('agent_id', '=', False)]}" /> -->
 						</group>
 						<group string="Landloard &amp; Maintenance Information">
 							<field name="landloard_id" />
