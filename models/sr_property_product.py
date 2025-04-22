@@ -8,310 +8,487 @@
 #
 ##############################################################################
 
-from odoo import models, fields, api,  _
+from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 from collections import namedtuple
 
+
 class srProductProduct(models.Model):
-    _inherit = 'product.product'
+    _inherit = "product.product"
 
     def print_invoice_report(self):
         # Directly pass the current recordset to the report
-        return self.env.ref('sr_property_rental_management.product_invoice_report_action').report_action(self)
+        return self.env.ref(
+            "sr_property_rental_management.product_invoice_report_action"
+        ).report_action(self)
 
     def action_confirm(self):
-        if self.property_type == 'sale':
+        if self.property_type == "sale":
             if self.property_sale_price <= 0:
-                raise UserError(_('Please enter a reasonable property sale price'))
-        if self.property_type == 'rent':
+                raise UserError(_("Please enter a reasonable property sale price"))
+        if self.property_type == "rent":
             if self.property_rent_price <= 0:
-                raise UserError(_('Please enter a reasonable property rent price'))
-        self.sudo().write({
-            'state': 'available'
-        })
-        return 
+                raise UserError(_("Please enter a reasonable property rent price"))
+        self.sudo().write({"state": "available"})
+        return
 
-    @api.onchange('property_type')
+    @api.onchange("property_type")
     def onchage_property_type(self):
-        if self.property_type == 'sale':
-            self.property_maintenance_interval_type = 'one_time'
+        if self.property_type == "sale":
+            self.property_maintenance_interval_type = "one_time"
         return
 
     def action_reset_draft(self):
-        self.state = 'draft'
+        self.state = "draft"
 
     def set_to_draft_if_no_invoices(self):
         if self.property_invoice_count == 0:
-            self.state = 'draft'
+            self.state = "draft"
         else:
-            raise UserError(_('Cannot set to draft because there are associated invoices.'))
+            raise UserError(
+                _("Cannot set to draft because there are associated invoices.")
+            )
 
     def action_view_property_invoices(self):
         self.ensure_one()
-        action = self.env["ir.actions.actions"]._for_xml_id("account.action_move_out_invoice_type")
-        action['domain'] = [
-            ('move_type', 'in', ('out_invoice', 'out_refund')),
-            ('invoice_line_ids.product_id', '=', self.id),
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "account.action_move_out_invoice_type"
+        )
+        action["domain"] = [
+            ("move_type", "in", ("out_invoice", "out_refund")),
+            # ('invoice_line_ids.product_id', '=', self.id),
+            ("property_id.product_tmpl_id", "=", self.id),
         ]
-        action['context'] = {'default_move_type': 'out_invoice', 'move_type': 'out_invoice', 'journal_type': 'sale'}
+        action["context"] = {
+            "default_move_type": "out_invoice",
+            "move_type": "out_invoice",
+            "journal_type": "sale",
+        }
         return action
-    
+
     def action_view_tenancy_agreement(self):
         self.ensure_one()
-        action = self.env["ir.actions.actions"]._for_xml_id("sr_property_rental_management.sr_property_tenancy_agreement_action")
-        action['domain'] = [
-            ('property_id', '=', self.id)
-        ]
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "sr_property_rental_management.sr_property_tenancy_agreement_action"
+        )
+        action["domain"] = [("property_id", "=", self.id)]
         return action
 
-class srPropertytemplate(models.Model):
-    _inherit = 'product.template'
 
-    @api.onchange('property_type')
+class srPropertytemplate(models.Model):
+    _inherit = "product.template"
+
+    @api.onchange("property_type")
     def onchage_property_type(self):
-        if self.property_type == 'sale':
-            self.property_maintenance_interval_type = 'one_time'
+        if self.property_type == "sale":
+            self.property_maintenance_interval_type = "one_time"
         return
 
-    unit_id = fields.One2many('unit.unit','property_id')
-    is_property = fields.Boolean('Is Property?')
-    property_type = fields.Selection([('sale', 'Sale'), ('rent', 'Rent')], string="Property For", default="sale")
+    unit_id = fields.One2many("unit.unit", "property_id")
+    is_property = fields.Boolean("Is Property?")
+    property_type = fields.Selection(
+        [("sale", "Sale"), ("rent", "Rent")], string="Property For", default="sale"
+    )
     property_sale_price = fields.Float(
-        'Property Sales Price', default=1.0,
-        digits='Product Price',
-        help="Price at which the Property is sold to Tenants.")
+        "Property Sales Price",
+        default=1.0,
+        digits="Product Price",
+        help="Price at which the Property is sold to Tenants.",
+    )
     property_rent_price = fields.Float(
-        'Property Rent Price', default=1.0,
-        digits='Product Price',
-        help="Price at which the Property is Rented to Tenants.")
-    property_construction_status = fields.Selection([('under_const', 'Under Construction'), ('ready_to_move', 'Ready To Move')], string="Property Status", default="under_const")
-    user_id = fields.Many2one('res.users', string="Sales Person", default=lambda self: self.env.user)
+        "Property Rent Price",
+        default=1.0,
+        digits="Product Price",
+        help="Price at which the Property is Rented to Tenants.",
+    )
+    property_construction_status = fields.Selection(
+        [("under_const", "Under Construction"), ("ready_to_move", "Ready To Move")],
+        string="Property Status",
+        default="under_const",
+    )
+    user_id = fields.Many2one(
+        "res.users", string="Sales Person", default=lambda self: self.env.user
+    )
     street = fields.Char()
     street2 = fields.Char()
     zip = fields.Char(change_default=True)
     city = fields.Char()
-    state_id = fields.Many2one("res.country.state", string='State', ondelete='restrict', domain="[('country_id', '=?', country_id)]")
-    country_id = fields.Many2one('res.country', string='Country', ondelete='restrict') 
-    property_carpet_area = fields.Float('Carpet Area', default=1)
-    property_build_up_area = fields.Float('Build-up Area', default=1)
-    property_floor = fields.Integer('Floor', default=1)
-    property_badrooms = fields.Integer('Badrooms', default=1)
-    property_bathrooms = fields.Integer('Baños', default=1)
-    property_parking_lots = fields.Integer('Parqueos', default=0)
-    property_bloque = fields.Char('Bloque')
-    property_building_number = fields.Char('Edificio')
-    property_balconies = fields.Float('Balconies', default=1)
-    property_maintenance_charge = fields.Float('Maintenance Charge', default=0)
-    property_maintenance_interval_type = fields.Selection([('month', 'Monthly'), ('year', 'Yearly'), ('one_time', 'One Time')], string="Maintenance Interval ", default="month")
-    description = fields.Text('Description')
-    property_interior_ids = fields.Many2many('sr.property.interior', 'temp_property_interior_rel', 'property_id', 'interior_id', string="Interior")
-    property_exterior_ids = fields.Many2many('sr.property.exterior', 'temp_property_exterior_rel', 'property_id', 'exterior_id', string="Exterior")
-    property_facade_ids = fields.Many2many('sr.property.facade', 'temp_property_facade_rel', 'property_id', 'facade_id', string="Facade")
-    property_amenities_ids = fields.Many2many('sr.property.amenities', 'temp_property_amenities_rel', 'property_id', 'amenities_id', string="Amenities")
-    property_neighbourhood_ids = fields.Many2many('sr.property.neighborhood', 'temp_property_neighborhood_rel', 'property_id', 'neighborhood_id', string="Neighborhood")
-    property_transportation_ids = fields.Many2many('sr.property.transportation', 'temp_property_transportation_rel', 'property_id', 'transportation_id', string="Transportation")
-    property_landscape_ids = fields.Many2many('sr.property.landscape', 'temp_property_landscape_rel', 'property_id', 'landscape_id', string="Landscape")
-    property_residential_type_ids = fields.Many2many('sr.property.type', 'temp_property_type_rel', 'property_id', 'type_id', string="Residential Type")
-    gas_safety_exp_date = fields.Date('Gas Safety Expiry Date')
-    gas_safety_exp_attch = fields.Binary('Gas Safety Expiry Attachment')
-    electricity_safety_certificate = fields.Binary('Electricity Safety Certificate Attachment')
-    epc = fields.Char('Energy Performance (EPC)')
-    property_landlord_id = fields.Many2one('res.partner', string="Landloard")
-    property_landlord_email_id = fields.Char(related="property_landlord_id.email", string="Email")
-    property_landlord_phone = fields.Char(related="property_landlord_id.phone", string="Phone")
-    property_agent_id = fields.Many2one('res.partner', string="Agent")
-    property_agent_commission_type = fields.Selection([('fixed', 'Fixed'), ('percentage', 'Percentage')], string="Commission Type", default="fixed")
-    property_agent_commission = fields.Float('Commission')
-    property_agent_email_id = fields.Char(related="property_agent_id.email", string="Email")
-    property_agent_phone = fields.Char(related="property_agent_id.phone", string="Phone")
-    state = fields.Selection([
-        ('draft', 'Draft'),
-        ('available', 'Available'),
-        ('booked', 'Separado'),
-        ('rented', 'Rented'),
-        ('sold', 'Sold'),
-        ], string='Status', readonly=True, copy=False, index=True, track_visibility="onchange")
-    property_invoice_count = fields.Integer(compute='_compute_property_invoice_count', string='Property Invoices Count')
-    tenancy_agreement_count = fields.Integer(compute='_compute_tenancy_agreement_count', string='Tenancy Agreement Count')
-    current_user_id = fields.Many2one('res.partner','Current User')
-    reservation_history_ids = fields.Many2many('res.partner',string="Reservation history")
-    currency_id = fields.Many2one('res.currency', string='Moneda', readonly=False, domain="[('active', '=', True)]", store=True)
-    delivery_date = fields.Date('Fecha de entrega', store=True)
+    state_id = fields.Many2one(
+        "res.country.state",
+        string="State",
+        ondelete="restrict",
+        domain="[('country_id', '=?', country_id)]",
+    )
+    country_id = fields.Many2one("res.country", string="Country", ondelete="restrict")
+    property_carpet_area = fields.Float("Carpet Area", default=1)
+    property_build_up_area = fields.Float("Build-up Area", default=1)
+    property_floor = fields.Integer("Floor", default=1)
+    property_badrooms = fields.Integer("Badrooms", default=1)
+    property_bathrooms = fields.Integer("Baños", default=1)
+    property_parking_lots = fields.Integer("Parqueos", default=0)
+    property_bloque = fields.Char("Bloque")
+    property_building_number = fields.Char("Edificio")
+    property_balconies = fields.Float("Balconies", default=1)
+    property_maintenance_charge = fields.Float("Maintenance Charge", default=0)
+    property_maintenance_interval_type = fields.Selection(
+        [("month", "Monthly"), ("year", "Yearly"), ("one_time", "One Time")],
+        string="Maintenance Interval ",
+        default="month",
+    )
+    description = fields.Text("Description")
+    property_interior_ids = fields.Many2many(
+        "sr.property.interior",
+        "temp_property_interior_rel",
+        "property_id",
+        "interior_id",
+        string="Interior",
+    )
+    property_exterior_ids = fields.Many2many(
+        "sr.property.exterior",
+        "temp_property_exterior_rel",
+        "property_id",
+        "exterior_id",
+        string="Exterior",
+    )
+    property_facade_ids = fields.Many2many(
+        "sr.property.facade",
+        "temp_property_facade_rel",
+        "property_id",
+        "facade_id",
+        string="Facade",
+    )
+    property_amenities_ids = fields.Many2many(
+        "sr.property.amenities",
+        "temp_property_amenities_rel",
+        "property_id",
+        "amenities_id",
+        string="Amenities",
+    )
+    property_neighbourhood_ids = fields.Many2many(
+        "sr.property.neighborhood",
+        "temp_property_neighborhood_rel",
+        "property_id",
+        "neighborhood_id",
+        string="Neighborhood",
+    )
+    property_transportation_ids = fields.Many2many(
+        "sr.property.transportation",
+        "temp_property_transportation_rel",
+        "property_id",
+        "transportation_id",
+        string="Transportation",
+    )
+    property_landscape_ids = fields.Many2many(
+        "sr.property.landscape",
+        "temp_property_landscape_rel",
+        "property_id",
+        "landscape_id",
+        string="Landscape",
+    )
+    property_residential_type_ids = fields.Many2many(
+        "sr.property.type",
+        "temp_property_type_rel",
+        "property_id",
+        "type_id",
+        string="Residential Type",
+    )
+    gas_safety_exp_date = fields.Date("Gas Safety Expiry Date")
+    gas_safety_exp_attch = fields.Binary("Gas Safety Expiry Attachment")
+    electricity_safety_certificate = fields.Binary(
+        "Electricity Safety Certificate Attachment"
+    )
+    epc = fields.Char("Energy Performance (EPC)")
+    property_landlord_id = fields.Many2one("res.partner", string="Landloard")
+    property_landlord_email_id = fields.Char(
+        related="property_landlord_id.email", string="Email"
+    )
+    property_landlord_phone = fields.Char(
+        related="property_landlord_id.phone", string="Phone"
+    )
+    property_agent_id = fields.Many2one("res.partner", string="Agent")
+    property_agent_commission_type = fields.Selection(
+        [("fixed", "Fixed"), ("percentage", "Percentage")],
+        string="Commission Type",
+        default="fixed",
+    )
+    property_agent_commission = fields.Float("Commission")
+    property_agent_email_id = fields.Char(
+        related="property_agent_id.email", string="Email"
+    )
+    property_agent_phone = fields.Char(
+        related="property_agent_id.phone", string="Phone"
+    )
+    state = fields.Selection(
+        [
+            ("draft", "Draft"),
+            ("available", "Available"),
+            ("booked", "Separado"),
+            ("rented", "Rented"),
+            ("sold", "Sold"),
+        ],
+        string="Status",
+        readonly=True,
+        copy=False,
+        index=True,
+        track_visibility="onchange",
+    )
+    property_invoice_count = fields.Integer(
+        compute="_compute_property_invoice_count", string="Property Invoices Count"
+    )
+    tenancy_agreement_count = fields.Integer(
+        compute="_compute_tenancy_agreement_count", string="Tenancy Agreement Count"
+    )
+    current_user_id = fields.Many2one("res.partner", "Current User")
+    reservation_history_ids = fields.Many2many(
+        "res.partner", string="Reservation history"
+    )
+    currency_id = fields.Many2one(
+        "res.currency",
+        string="Moneda",
+        readonly=False,
+        domain="[('active', '=', True)]",
+        store=True,
+    )
+    delivery_date = fields.Date("Fecha de entrega", store=True)
 
     percentage_paid = fields.Float(
-        string="Porcentaje Pagado", 
+        string="Porcentaje Pagado",
         compute="_compute_percentage_paid",
     )
 
     all_invoice_lines = fields.One2many(
-        'account.move.line',
-        string='All Invoice Lines',
-        compute='_compute_all_invoice_lines',
+        "account.move.line",
+        string="All Invoice Lines",
+        compute="_compute_all_invoice_lines",
         store=False,
     )
 
     all_cuotas = fields.One2many(
-        'account.move.line',
-        string='All Cuotas',
-        compute='_compute_all_invoice_lines',
+        "account.move.line",
+        string="All Cuotas",
+        compute="_compute_all_invoice_lines",
         store=False,
     )
+
     total_cuotas = fields.Float(
-        string='Total Cuotas',
-        compute='_compute_all_invoice_lines',
+        string="Total Cuotas",
+        compute="_compute_all_invoice_lines",
         store=False,
     )
 
     all_mora_lines = fields.One2many(
-        'account.move.line',
-        string='All Mora Lines',
-        compute='_compute_all_invoice_lines',
+        "account.move.line",
+        string="All Mora Lines",
+        compute="_compute_all_invoice_lines",
         store=False,
     )
 
     all_cuota_final_lines = fields.One2many(
-        'account.move.line',
-        string='All Cuota Final Lines',
-        compute='_compute_all_invoice_lines',
+        "account.move.line",
+        string="All Cuota Final Lines",
+        compute="_compute_all_invoice_lines",
         store=False,
     )
 
     total_cuota_final = fields.Float(
-        string='Total Cuota Final',
-        compute='_compute_all_invoice_lines',
+        string="Total Cuota Final",
+        compute="_compute_all_invoice_lines",
         store=False,
     )
 
     total_mora = fields.Float(
-        string='Total Mora',
-        compute='_compute_all_invoice_lines',
+        string="Total Mora",
+        compute="_compute_all_invoice_lines",
         store=False,
     )
 
     all_ajustes = fields.One2many(
-        'account.move.line',
-        string='All Ajustes',
-        compute='_compute_all_invoice_lines',
+        "account.move.line",
+        string="All Ajustes",
+        compute="_compute_all_invoice_lines",
         store=False,
     )
     total_ajustes = fields.Float(
-        string='Total Ajustes',
-        compute='_compute_all_invoice_lines',
+        string="Total Ajustes",
+        compute="_compute_all_invoice_lines",
+        store=False,
+    )
+
+    all_cuotas_addon = fields.One2many(
+        "account.move.line",
+        string="Extras",
+        compute="_compute_all_invoice_lines",
+        store=False,
+    )
+
+    total_cuotas_addon = fields.Float(
+        string="Total Extras",
+        compute="_compute_all_invoice_lines",
+        store=False,
+    )
+
+    total_cuotas_addon_debt = fields.Float(
+        string="Total Extras Pendientes",
+        compute="_compute_all_invoice_lines",
         store=False,
     )
 
     total_paid_subtotal = fields.Float(
-    string="Total Cuotas Pagadas", compute="_compute_all_invoice_lines", store=False
+        string="Total Cuotas Pagadas", compute="_compute_all_invoice_lines", store=False
+    )
+
+    total_partial_paid_subtotal = fields.Float(
+        string="Total Cuotas Parcialmente Pagadas",
+        compute="_compute_all_invoice_lines",
+        store=False,
     )
 
     total_paid_mora = fields.Float(
-    string="Total Paid Mora", compute="_compute_all_invoice_lines", store=False
+        string="Total Paid Mora", compute="_compute_all_invoice_lines", store=False
     )
 
     total_paid_ajustes = fields.Float(
-    string="Total Paid Ajustes", compute="_compute_all_invoice_lines", store=False
+        string="Total Paid Ajustes", compute="_compute_all_invoice_lines", store=False
     )
 
     total_paid_cuota_final = fields.Float(
-    string="Total Paid Cuota Final", compute="_compute_all_invoice_lines", store=False
+        string="Total Paid Cuota Final",
+        compute="_compute_all_invoice_lines",
+        store=False,
     )
 
     all_gastos_legales_lines = fields.One2many(
-        'account.move.line',
-        string='All Gastos Legales Lines',
-        compute='_compute_all_invoice_lines',
+        "account.move.line",
+        string="All Gastos Legales Lines",
+        compute="_compute_all_invoice_lines",
         store=False,
     )
 
     total_gastos_legales = fields.Float(
-        string='Total Gastos Legales',
-        compute='_compute_all_invoice_lines',
+        string="Total Gastos Legales",
+        compute="_compute_all_invoice_lines",
         store=False,
     )
 
     all_gastos_legales_paid_lines = fields.One2many(
-        'account.move.line',
-        string='All Gastos Legales Paid Lines',
-        compute='_compute_all_invoice_lines',
+        "account.move.line",
+        string="All Gastos Legales Paid Lines",
+        compute="_compute_all_invoice_lines",
         store=False,
     )
 
     def _compute_all_invoice_lines(self):
         for record in self:
             # Fetch all lines related to this product template
-            all_lines = self.env['account.move.line'].search([
-            ('move_id.property_id.product_tmpl_id', '=', record.id)
-            ])
+            all_lines = self.env["account.move.line"].search(
+                [("move_id.property_id.product_tmpl_id", "=", record.id)]
+            )
 
             # Sort all_lines by move_id.invoice_date (ascending)
-            all_lines = all_lines.sorted(key=lambda l: l.move_id.invoice_date, reverse=False)
+            all_lines = all_lines.sorted(
+                key=lambda l: l.move_id.invoice_date, reverse=False
+            )
 
             # Group lines dynamically based on the description
             cuotas_lines = all_lines.filtered(
-                lambda l: l.name and 
-            any(word in l.name.lower() for word in ['cuota', 'reserva', 'separación', 'aumento']) and 
-            'final' not in l.name.lower())
+                lambda l: l.name
+                and any(
+                    word in l.name.lower()
+                    for word in ["cuota", "reserva", "separación", "aumento"]
+                )
+                and "final" not in l.name.lower()
+            )
 
             cuota_final_lines = all_lines.filtered(
-                lambda l: l.name and 'final' in l.name.lower()
+                lambda l: l.name and "final" in l.name.lower()
             )
 
             mora_lines = all_lines.filtered(
-                lambda l: l.name and 'mora' in l.name.lower()
+                lambda l: l.name and "mora" in l.name.lower()
             )
             ajustes_lines = all_lines.filtered(
-                lambda l: l.name and any(word in l.name.lower() for word in ['ajuste', 'aumento'])
+                lambda l: l.name
+                and any(word in l.name.lower() for word in ["ajuste", "aumento"])
             )
             # Filter only lines from PAID invoices
             paid_invoice_lines = cuotas_lines.filtered(
-                lambda l: l.move_id.payment_state == 'paid'
+                lambda l: l.move_id.payment_state == "paid"
+            )
+            partial_paid_invoice_lines = cuotas_lines.filtered(
+                lambda l: l.move_id.payment_state == "partial"
             )
             # Filter mora lines from paid invoices
             paid_mora_lines = mora_lines.filtered(
-                lambda l: l.move_id.payment_state == 'paid'
+                lambda l: l.move_id.payment_state == "paid"
             )
 
             paid_ajustes_lines = ajustes_lines.filtered(
-                lambda l: l.move_id.payment_state == 'paid'
+                lambda l: l.move_id.payment_state == "paid"
             )
 
             paid_cuota_final_lines = cuota_final_lines.filtered(
-                lambda l: l.move_id.payment_state in ['paid', 'partial']
+                lambda l: l.move_id.payment_state in ["paid", "partial"]
             )
 
-            first_paid_cuota_final_line = paid_cuota_final_lines[0] if paid_cuota_final_lines else None
+            first_paid_cuota_final_line = (
+                paid_cuota_final_lines[0] if paid_cuota_final_lines else None
+            )
 
             # Filter gastos legales lines
             gastos_legales_lines = all_lines.filtered(
-                lambda l: l.name and 'legales' in l.name.lower()
+                lambda l: l.name and "legales" in l.name.lower()
             )
 
             # Filter gastos legales lines from paid invoices
             gastos_legales_paid_lines = gastos_legales_lines.filtered(
-                lambda l: l.move_id.payment_state == 'paid'
+                lambda l: l.move_id.payment_state == "paid"
+            )
+
+            cuotas_addon_lines = all_lines.filtered(
+                lambda l: l.move_id.is_property_addon and l.price_subtotal > 0
+            )
+
+            debt_cuotas_addon_lines = cuotas_addon_lines.filtered(
+                lambda l: l.move_id.payment_state != "paid"
+            )
+
+            total_cuotas_addon_debt = sum(
+                debt_cuotas_addon_lines.mapped("move_id.amount_residual")
             )
 
             # Assign the filtered groups to respective fields
             record.all_invoice_lines = all_lines
             record.all_cuotas = cuotas_lines
-            record.total_cuotas = sum(cuotas_lines.mapped('price_subtotal'))
+            record.all_cuotas_addon = cuotas_addon_lines
+            record.total_cuotas_addon = sum(cuotas_addon_lines.mapped("price_subtotal"))
+            record.total_cuotas_addon_debt = total_cuotas_addon_debt
+            record.total_cuotas = sum(cuotas_lines.mapped("price_subtotal"))
+            record.total_partial_paid_subtotal = (
+                sum(partial_paid_invoice_lines.mapped("move_id.amount_total"))
+                - sum(partial_paid_invoice_lines.mapped("move_id.amount_residual"))
+                + sum(paid_invoice_lines.mapped("price_subtotal"))
+            )
             record.all_mora_lines = mora_lines
-            record.total_mora = sum(mora_lines.mapped('price_subtotal'))
+            record.total_mora = sum(mora_lines.mapped("price_subtotal"))
             record.all_ajustes = ajustes_lines
-            record.total_ajustes = sum(ajustes_lines.mapped('price_subtotal'))
+            record.total_ajustes = sum(ajustes_lines.mapped("price_subtotal"))
             record.all_cuota_final_lines = cuota_final_lines
-            record.total_cuota_final = sum(cuota_final_lines.mapped('price_subtotal'))
+            record.total_cuota_final = sum(cuota_final_lines.mapped("price_subtotal"))
             record.all_gastos_legales_lines = gastos_legales_lines
-            record.total_gastos_legales = sum(gastos_legales_lines.mapped('price_subtotal'))
+            record.total_gastos_legales = sum(
+                gastos_legales_lines.mapped("price_subtotal")
+            )
 
             # New field: Sum of all subtotals for paid invoices
-            record.total_paid_subtotal = sum(paid_invoice_lines.mapped('price_subtotal'))
+            record.total_paid_subtotal = sum(
+                paid_invoice_lines.mapped("price_subtotal")
+            )
 
             # New field: Sum of all mora lines where the invoice is paid
-            record.total_paid_mora = sum(paid_mora_lines.mapped('price_subtotal'))
+            record.total_paid_mora = sum(paid_mora_lines.mapped("price_subtotal"))
 
             # New field: Sum of all ajustes lines where the invoice is paid
-            record.total_paid_ajustes = sum(paid_ajustes_lines.mapped('price_subtotal'))
+            record.total_paid_ajustes = sum(paid_ajustes_lines.mapped("price_subtotal"))
 
             # New field: Sum of all cuota final lines where the invoice is paid
             # record.total_paid_cuota_final = sum(paid_cuota_final_lines.mapped('price_subtotal'))
@@ -322,7 +499,13 @@ class srPropertytemplate(models.Model):
                 else 0.0
             )
 
-    @api.depends('total_paid_subtotal', 'total_paid_ajustes', 'total_cuota_final', 'property_sale_price', 'total_ajustes')
+    @api.depends(
+        "total_paid_subtotal",
+        "total_paid_ajustes",
+        "total_cuota_final",
+        "property_sale_price",
+        "total_ajustes",
+    )
     def _compute_percentage_paid(self):
         for record in self:
             # Total paid amounts
@@ -330,12 +513,12 @@ class srPropertytemplate(models.Model):
             #              (record.total_paid_ajustes or 0.0) + \
             #             (record.total_paid_cuota_final or 0.0)
 
-
-            total_paid = (record.total_paid_subtotal or 0.0) + \
-                        (record.total_paid_cuota_final or 0.0)
+            total_paid = (record.total_paid_subtotal or 0.0) + (
+                record.total_paid_cuota_final or 0.0
+            )
 
             # Total expected amounts
-            total_sale_amount = (record.property_sale_price or 0.0)
+            total_sale_amount = record.property_sale_price or 0.0
 
             # Calculate percentage paid
             if total_sale_amount > 0:
@@ -344,44 +527,49 @@ class srPropertytemplate(models.Model):
                 record.percentage_paid = 0.0
 
     invoices_ids = fields.Many2many(
-        'account.move',
-        string='Invoices',
-        compute='_compute_invoices_ids',
+        "account.move",
+        string="Invoices",
+        compute="_compute_invoices_ids",
         store=False,
     )
     grouped_invoices = fields.One2many(
-        'account.move',
-        string='Grouped Invoices',
-        compute='_compute_grouped_invoices',
+        "account.move",
+        string="Grouped Invoices",
+        compute="_compute_grouped_invoices",
         store=False,
     )
 
     monto_reserva_invoices = fields.One2many(
-        'account.move',
-        string='Monto Reserva Invoices',
-        compute='_compute_monto_reserva_invoices',
+        "account.move",
+        string="Monto Reserva Invoices",
+        compute="_compute_monto_reserva_invoices",
         store=False,
     )
 
     first_tenancy_agreement_id = fields.Many2one(
-        'sr.tenancy.agreement',
+        "sr.tenancy.agreement",
         string="First Tenancy Agreement",
-        compute='_compute_tenancy_agreement_count',
-        store=False
+        compute="_compute_tenancy_agreement_count",
+        store=False,
     )
 
     def _compute_grouped_invoices(self):
-        InvoiceGroup = namedtuple('InvoiceGroup', ['invoice_date', 'amount_total', 'amount_residual', 'payment_state'])
+        InvoiceGroup = namedtuple(
+            "InvoiceGroup",
+            ["invoice_date", "amount_total", "amount_residual", "payment_state"],
+        )
         for record in self:
             # Initialize sum variables
             total_amount = 0
             residual_amount = 0
 
             # Find all relevant invoices
-            invoices = self.env['account.move'].search([
-                ('move_type', 'in', ['out_invoice', 'out_refund']),
-                ('property_id.product_tmpl_id', '=', record.id),
-            ])
+            invoices = self.env["account.move"].search(
+                [
+                    ("move_type", "in", ["out_invoice", "out_refund"]),
+                    ("property_id.product_tmpl_id", "=", record.id),
+                ]
+            )
 
             # Filter and sum the invoices based on the description
             for invoice in invoices:
@@ -394,23 +582,28 @@ class srPropertytemplate(models.Model):
                 invoice_date=fields.Date.context_today(self),
                 amount_total=total_amount,
                 amount_residual=residual_amount,
-                payment_state='N/A'
+                payment_state="N/A",
             )
 
             record.grouped_invoices = [grouped_invoice]
 
     def _compute_monto_reserva_invoices(self):
-        InvoiceGroup = namedtuple('InvoiceGroup', ['invoice_date', 'amount_total', 'amount_residual', 'payment_state'])
+        InvoiceGroup = namedtuple(
+            "InvoiceGroup",
+            ["invoice_date", "amount_total", "amount_residual", "payment_state"],
+        )
         for record in self:
             # Initialize sum variables
             total_amount = 0
             residual_amount = 0
 
             # Find all relevant invoices
-            invoices = self.env['account.move'].search([
-                ('move_type', 'in', ['out_invoice', 'out_refund']),
-                ('property_id.product_tmpl_id', '=', record.id),
-            ])
+            invoices = self.env["account.move"].search(
+                [
+                    ("move_type", "in", ["out_invoice", "out_refund"]),
+                    ("property_id.product_tmpl_id", "=", record.id),
+                ]
+            )
 
             # Filter and sum the invoices based on the description
             for invoice in invoices:
@@ -424,93 +617,111 @@ class srPropertytemplate(models.Model):
                 invoice_date=fields.Date.context_today(self),
                 amount_total=total_amount,
                 amount_residual=residual_amount,
-                payment_state='N/A'  # Custom payment state, or summarize the state if needed
+                payment_state="N/A",  # Custom payment state, or summarize the state if needed
             )
 
             record.monto_reserva_invoices = [grouped_invoice]
 
     def _compute_invoices_ids(self):
         for record in self:
-            invoices = self.env['account.move'].search([
-                ('move_type', 'in', ['out_invoice', 'out_refund']),
-                ('property_id.product_tmpl_id', '=', record.id),
-            ])
+            invoices = self.env["account.move"].search(
+                [
+                    ("move_type", "in", ["out_invoice", "out_refund"]),
+                    ("property_id.product_tmpl_id", "=", record.id),
+                ]
+            )
             record.invoices_ids = invoices
 
     def action_view_tenancy_agreement(self):
         self.ensure_one()
-        action = self.env["ir.actions.actions"]._for_xml_id("sr_property_rental_management.sr_property_tenancy_agreement_action")
-        action['domain'] = [
-            ('property_id.product_tmpl_id', '=', self.id),
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "sr_property_rental_management.sr_property_tenancy_agreement_action"
+        )
+        action["domain"] = [
+            ("property_id.product_tmpl_id", "=", self.id),
         ]
         return action
 
     def action_view_property_invoices(self):
         self.ensure_one()
-        action = self.env["ir.actions.actions"]._for_xml_id("account.action_move_out_invoice_type")
-        action['domain'] = [
-            ('move_type', 'in', ('out_invoice', 'out_refund')),
-            ('property_id.product_tmpl_id', '=', self.id),
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "account.action_move_out_invoice_type"
+        )
+        action["domain"] = [
+            ("move_type", "in", ("out_invoice", "out_refund")),
+            ("property_id.product_tmpl_id", "=", self.id),
         ]
-        action['context'] = {'default_move_type':'out_invoice', 'move_type':'out_invoice', 'journal_type': 'sale', 'search_default_unpaid': 1}
+        action["context"] = {
+            "default_move_type": "out_invoice",
+            "move_type": "out_invoice",
+            "journal_type": "sale",
+            "search_default_unpaid": 1,
+        }
         return action
 
     def _compute_tenancy_agreement_count(self):
         for record in self:
-            agreement_ids = self.env['sr.tenancy.agreement'].search(
-                [('property_id.product_tmpl_id', '=', record.id)]
+            agreement_ids = self.env["sr.tenancy.agreement"].search(
+                [("property_id.product_tmpl_id", "=", record.id)]
             )
             record.tenancy_agreement_count = len(agreement_ids)
-            record.first_tenancy_agreement_id = agreement_ids[:1] if agreement_ids else False
+            record.first_tenancy_agreement_id = (
+                agreement_ids[:1] if agreement_ids else False
+            )
 
     def _compute_property_invoice_count(self):
-        invoice_ids = self.env['account.move'].search([('property_id.product_tmpl_id','=',self.id)])
+        invoice_ids = self.env["account.move"].search(
+            [("property_id.product_tmpl_id", "=", self.id)]
+        )
         self.property_invoice_count = len(invoice_ids)
 
     def action_confirm(self):
-        if self.property_type == 'sale':
+        if self.property_type == "sale":
             if self.property_sale_price <= 0:
-                raise UserError(_('Please enter reasonable property sale price'))
-        if self.property_type == 'rent':
+                raise UserError(_("Please enter reasonable property sale price"))
+        if self.property_type == "rent":
             if self.property_rent_price <= 0:
-                raise UserError(_('Please enter reasonable property rent price'))
-        self.sudo().write({
-            'state' : 'available',
-        })
+                raise UserError(_("Please enter reasonable property rent price"))
+        self.sudo().write(
+            {
+                "state": "available",
+            }
+        )
         return
 
     def action_reset_draft(self):
-        self.state = 'draft'
+        self.state = "draft"
 
     def set_to_draft_if_no_invoices(self):
         self._compute_property_invoice_count()
         if self.property_invoice_count == 0:
-            self.state = 'draft'
+            self.state = "draft"
         else:
-            raise UserError(_('Cannot set to draft because there are associated invoices.')) 
+            raise UserError(
+                _("Cannot set to draft because there are associated invoices.")
+            )
+
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = "account.move"
 
-    is_overdue = fields.Boolean(compute='_compute_is_overdue')
-    
+    is_overdue = fields.Boolean(compute="_compute_is_overdue")
+
     computed_mora = fields.Float(
-        string="Total Mora",
-        compute='_compute_computed_mora',
-        store=True
+        string="Total Mora", compute="_compute_computed_mora", store=True
     )
 
-    @api.depends('invoice_line_ids.name', 'invoice_line_ids.price_subtotal')
+    @api.depends("invoice_line_ids.name", "invoice_line_ids.price_subtotal")
     def _compute_computed_mora(self):
         for move in self:
             # Filter lines that contain 'mora' in their name (case-insensitive)
             mora_lines = move.invoice_line_ids.filtered(
-                lambda line: line.name and 'mora' in line.name.lower()
+                lambda line: line.name and "mora" in line.name.lower()
             )
             # Sum the price_subtotal of those lines
-            move.computed_mora = sum(mora_lines.mapped('price_subtotal'))
+            move.computed_mora = sum(mora_lines.mapped("price_subtotal"))
 
-    @api.depends('invoice_date_due')
+    @api.depends("invoice_date_due")
     def _compute_is_overdue(self):
         for invoice in self:
             if invoice.invoice_date_due:
@@ -526,22 +737,25 @@ class AccountMove(models.Model):
         company = self.company_id
         date = self.invoice_date or fields.Date.today()
 
-        Currency = self.env['res.currency']
-        dop_currency = Currency.search([('name', '=', 'DOP')], limit=1)
+        Currency = self.env["res.currency"]
+        dop_currency = Currency.search([("name", "=", "DOP")], limit=1)
         if not dop_currency:
             raise UserError(_("Currency DOP not found."))
         # Calculate conversion rate
-        conversion_rate = self.env['res.currency']._get_conversion_rate(from_currency, to_currency, company, date)
+        conversion_rate = self.env["res.currency"]._get_conversion_rate(
+            from_currency, to_currency, company, date
+        )
 
-        payments = self.env['account.payment'].search([('reconciled_invoice_ids', 'in', self.ids)])
+        payments = self.env["account.payment"].search(
+            [("reconciled_invoice_ids", "in", self.ids)]
+        )
         payment_date = payments[0].date if payments else None
-    
 
         return {
-            'conversion_rate': conversion_rate,
-            'from_currency': from_currency.name,
-            'to_currency': to_currency.name,
-            'company_name': company.name,
-            'date': payment_date,
+            "conversion_rate": conversion_rate,
+            "from_currency": from_currency.name,
+            "to_currency": to_currency.name,
+            "company_name": company.name,
+            "date": payment_date,
             # Include other data as needed for the report
         }

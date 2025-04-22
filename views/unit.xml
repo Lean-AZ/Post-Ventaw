@@ -90,7 +90,7 @@
     </record>
 
     <!-- This Menu Item must have a parent and an action -->
-    <menuitem id="unit_menu_id" name="Unites" parent="sr_property_management_root" action="unite_id" sequence="2"/>
+    <!-- <menuitem id="unit_menu_id" name="Unites" parent="sr_property_management_root" action="unite_id" sequence="2"/> -->
 
     <!-- Inherit Form View to Modify it -->
 

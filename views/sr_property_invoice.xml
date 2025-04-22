@@ -11,6 +11,7 @@
 			<field name="payment_reference" position="after">
 				<field name="is_property_invoice" />
 				<field name="is_ajuste_de_precio" attrs="{'invisible': [('is_property_invoice', '=', False)]}" />
+				<field name="is_property_addon" attrs="{'invisible': [('is_property_invoice', '=', False)]}" />
 				<field name="property_id" attrs="{'invisible': [('is_property_invoice', '=', False)], 'required':[('is_property_invoice','=', True)]}"  />
 				<field name="tenancy_agreement" attrs="{'invisible': [('is_property_invoice', '=', False)], 'required':[('is_property_invoice','=', True)]}"  />
 				<field name="is_property_commission_bill" invisible="1"/>
