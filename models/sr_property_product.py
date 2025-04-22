@@ -57,7 +57,7 @@ class srProductProduct(models.Model):
         action["domain"] = [
             ("move_type", "in", ("out_invoice", "out_refund")),
             # ('invoice_line_ids.product_id', '=', self.id),
-            ("property_id.product_tmpl_id", "=", self.id),
+            ("property_id", "=", self.id),
         ]
         action["context"] = {
             "default_move_type": "out_invoice",
@@ -649,7 +649,7 @@ class srPropertytemplate(models.Model):
         )
         action["domain"] = [
             ("move_type", "in", ("out_invoice", "out_refund")),
-            ("property_id.product_tmpl_id", "=", self.id),
+            ("property_id", "=", self.id),
         ]
         action["context"] = {
             "default_move_type": "out_invoice",
