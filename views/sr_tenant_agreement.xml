@@ -78,6 +78,7 @@
 					</group>
 					<group>
 						<group string="Agent Commission Details">
+							<field name="notario_publico_id" />
 							<field name="agent_id" />
 							<field name="agent_type"/>
 							<!-- <field name="agent_payment" />
