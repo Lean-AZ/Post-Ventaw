@@ -79,6 +79,7 @@ class srTenancyAgreement(models.Model):
             template.currency_id = template.company_id.sudo().currency_id.id or main_company.currency_id.id
 
     name = fields.Char(string='Tenant Agreement Reference', required=True, copy=False, readonly=True, index=True, default=lambda self: _('New'))
+    notario_publico_id = fields.Many2one("res.partner", "Notario Público")
     active = fields.Boolean(string='Active', default=True)
     agreement_date = fields.Date(string='Agreement Date', required=True, readonly=True, copy=False, default=fields.Datetime.now, index=True, tracking=1, help="Creation date of tenant agreement.")
     agreement_duration = fields.Integer('Agreement Duration', index=True, tracking=2)

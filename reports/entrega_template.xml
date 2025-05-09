@@ -1,0 +1,126 @@
+<odoo>
+    <template id="entrega_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <link rel="stylesheet" type="text/css"
+                        href="/sr_property_rental_management/static/css/report_styles.css" />
+                    <div class="page">
+                        <div class="oe_structure" />
+                        <div class="content">
+                            <div class="text-center">
+                                <h1>CONSTANCIA DE ENTREGA DE INMUEBLE</h1>
+                            </div>
+                            <h3>ENTRE:</h3>
+                            <div class="space"></div>
+                            <p>
+                                De una parte, CONSTRUCTORA CIVILTEC, S.R.L., sociedad constituida y organizada de conformidad con las leyes de la República Dominicana, provista del Registro Nacional de Contribuyentes (RNC) bajo el número 1-30-57482-2, con domicilio social establecido en la Calle XII Juegos, número 54, sector El Millón, en esta ciudad de Santo Domingo de Guzmán, Distrito Nacional, República Dominicana, debidamente representada a los fines del presente contrato por su Gerente, el señor PEDRO RENÉ ANTONIO COLUMNA NÚÑEZ, de nacionalidad dominicana, mayor de edad, casado, titular de la Cédula de Identidad y Electoral Núm. 001-1784662-6, con domicilio en esta ciudad de Santo Domingo de Guzmán, Distrito Nacional, República Dominicana, quien en lo que sigue del presente contrato se denominará LA PRIMERA PARTE; y, de la otra parte,
+                            </p>
+
+                            <t t-if="doc.co_owner_relationship == False">
+                                <p>
+                                    De una última parte, <strong><span t-field="doc.tenant_id.name" /></strong>, de nacionalidad <span t-field="doc.tenant_id.nacionalidad" />, mayor de edad, de estado civil soltero(a), 
+                                    <t t-if="doc.tenant_id.vat or doc.tenant_id.passport_number">
+                                        titular de la Cédula de Identidad y Electoral Núm. <span t-field="doc.tenant_id.vat"/> y/o del Pasaporte Núm. <span t-field="doc.tenant_id.passport_number"/>,
+                                    </t>
+                                    quien, para fines del presente contrato, se encuentra domiciliado(a) en <span t-field="doc.tenant_id.street" />, <span t-field="doc.tenant_id.city" />, <span t-field="doc.tenant_id.state_id"/>, quien en lo adelante se denominará LA SEGUNDA PARTE;
+                                </p>
+                            </t>
+
+                            <t t-if="doc.co_owner_relationship == 'casado'">
+                                <p>
+                                    De una última parte, <strong><span t-field="doc.tenant_id.name" /></strong>, de nacionalidad <span t-field="doc.tenant_id.nacionalidad" />, mayor de edad, de estado civil casado(a), 
+                                    <t t-if="doc.tenant_id.vat or doc.tenant_id.passport_number">
+                                        titular de la Cédula de Identidad y Electoral Núm. <span t-field="doc.tenant_id.vat"/> y/o del Pasaporte Núm. <span t-field="doc.tenant_id.passport_number"/>,
+                                    </t>
+                                    quien, para fines del presente contrato, se encuentra domiciliado(a) en <span t-field="doc.tenant_id.street" />, <span t-field="doc.tenant_id.city" />, <span t-field="doc.tenant_id.state_id"/>, 
+                                    cuyo cónyuge es el(la) señor(a) <strong><span t-field="doc.co_tenant_id.name" /></strong>, de nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, mayor de edad, casado(a), 
+                                    <t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
+                                        titular de la Cédula de Identidad y Electoral Núm. <span t-field="doc.co_tenant_id.vat"/> y del Pasaporte Núm. <span t-field="doc.co_tenant_id.passport_number"/>,
+                                    </t>
+                                    domiciliado(a) y residente en <span t-field="doc.co_tenant_id.street" />, <span t-field="doc.co_tenant_id.city" />, <span t-field="doc.co_tenant_id.state_id"/>, quien en lo adelante se denominará LA SEGUNDA PARTE;
+                                </p>
+                            </t>
+
+                            <t t-if="doc.co_owner_relationship == 'persona_juridica'">
+                                <p>
+                                    De una última parte, <strong><span t-field="doc.tenant_id.name" /></strong>, sociedad organizada y existente de acuerdo con las leyes de <span t-field="doc.tenant_id.nacionalidad" />, inscrita en el Registro Nacional de Contribuyentes (RNC) bajo el Núm. <span t-field="doc.tenant_id.vat" />, con su asiento social y domicilio principal ubicado en <span t-field="doc.tenant_id.street" />, <span t-field="doc.tenant_id.city" />, <span t-field="doc.tenant_id.country_id" />, debidamente representada por su <span t-field="doc.co_tenant_id.title" />, señor(a) <strong><span t-field="doc.co_tenant_id.name" /></strong>, de nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, mayor de edad, 
+                                    <t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
+                                        titular de la Cédula de Identidad y Electoral Núm. <span t-field="doc.co_tenant_id.vat"/> y/o del Pasaporte Núm. <span t-field="doc.co_tenant_id.passport_number"/>,
+                                    </t>
+                                    quien, para fines del presente contrato, se encuentra domiciliado(a) en <span t-field="doc.co_tenant_id.street" />, <span t-field="doc.co_tenant_id.city" />, <span t-field="doc.co_tenant_id.country_id" />; quien en lo adelante se denominará LA SEGUNDA PARTE;
+                                </p>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="page">
+                        <div class="oe_structure" />
+                        <div class="content">
+                            <h3 style="text-align: center;">SE HA CONVENIDO Y PACTADO LO SIGUIENTE:</h3>
+                            <div class="space"></div>
+                            
+                            <p><strong>PRIMERO:</strong> El presente documento hace constar que LA COMPRADORA acepta conforme el inmueble que se describe a continuación:</p>
+                            <p>UNIDAD FUNCIONAL: <span t-field="doc.property_id.name"/>. EL INMUEBLE SE IDENTIFICA CON LA DESIGNACIÓN CATASTRAL <span t-field="doc.property_id.cadastral_designation"/>: <span t-field="doc.property_id.cadastral_number"/>, Matricula <span t-field="doc.property_id.registration_number"/>.</p>
+                            
+                            <p><strong>SEGUNDO:</strong> De igual forma el presente documento hace constar que LA SEGUNDA PARTE está recibiendo y recibe de LA PRIMERA PARTE, de ahora y para siempre, a perpetuidad, a su entera satisfacción, y ésta acepta conforme todas las características, ubicación, distribución, materiales y detalles de construcción, del inmueble descrito, denominado con el No. <span t-field="doc.property_id.name"/> del proyecto CIVIL TOWER OCEANCE ubicado en la Av. España, y amparado en el certificado de título mencionado en el artículo primero del presente documento.</p>
+                            
+                            <p><strong>TERCERO:</strong> LA SEGUNDA PARTE acepta y reconoce que al momento de recibir el aviso para proceder a la recepción de la UNIDAD debe cumplir con el pago de las cuotas para el mantenimiento de las áreas comunes. El pago deberá ser cubierto a partir de la firma del presente documento y no estará condicionado a ninguna otra circunstancia, siempre y cuando, no se vea afectada la habitabilidad de la unidad.</p>
+                            
+                            <p><strong>PARRAFO I:</strong> LA PRIMERA PARTE se compromete a corregir los detalles señalados por LA SEGUNDA PARTE, durante su recepción, como parte del proceso de garantía, siempre y cuando, aplique dentro de la misma.</p>
+                            
+                            <p><strong>CUARTO:</strong> LA PRIMERA PARTE se compromete a responder en garantía por vicios o desperfectos ocultos por un período de un (1) año a partir de la firma del presente documento, esta garantía excluye en todo caso efectos eléctricos, mecánicos e hidráulicos (mezcladoras de agua, inodoros, muebles de baño, tomacorrientes, zócalos de bombillos, interruptores, bombas eléctricas, motores eléctricos de puertas, llavines de puerta, tiradores o cierres de ventanas, entre otros elementos susceptibles al mal uso o agentes externos) de los apartamentos fuera de la garantía que brinde el suplidor de los mismos. De igual forma, esta garantía excluye daños ocasionados por compañías de prestación de servicios de telecomunicaciones, energía eléctrica, aire acondicionado, distribución de agua potable, recolección de aguas negras, suministro de GLP y combustible.</p>
+                            
+                            <p><strong>PARRAFO I:</strong> LA SEGUNDA PARTE es responsable de filtraciones provocadas a apartamentos aledaños por modificaciones hechas sin aprobación previa de la constructora (accesorios de baño, perforar paredes, demoler paredes, malas conexiones de aires acondicionados).</p>
+                            
+                            <p><strong>PARRAFO II:</strong> LA PRIMERA PARTE no se hace responsable de rotura de cerámicas o porcelanato, a la hora de la mudanza, luego de haber recibido el inmueble.</p>
+                            
+                            <p><strong>PARRAFO III:</strong> LA PRIMERA PARTE no se hace responsable si LA SEGUNDA PARTE utiliza productos químicos para limpiar griferías, pisos y/o baños que puedan ocasionar daños o filtraciones a los demás inmuebles.</p>
+                            
+                            <p><strong>PARRAFO IV:</strong> LA PRIMERA PARTE recomienda la revisión y mantenimiento de masilla en ventanas y puertas corredizas de cristal cada año y medio.</p>
+
+                            <div class="space"></div>
+                            <p>HECHO Y FIRMADO de buena fe, en TRES (3) originales de un mismo tenor y efecto, uno para cada una de las partes contratantes, en la ciudad de Santo Domingo, Distrito Nacional, República Dominicana.</p>
+
+                            <div class="signature-section" style="text-align: center;">
+                                <div class="signature-block">
+                                    <p style="text-align: center;"><strong>Por LA PRIMERA PARTE</strong><br/>
+                                    CONSTRUCTORA CIVILTEC SRL</p>
+                                    <div class="signature-line" style="text-align: center;">___________________________________________________</div>
+                                    <p style="text-align: center;">PEDRO RENÉ ANTONIO COLUMNA NÚÑEZ</p>
+                                </div>
+
+                                <div class="signature-block">
+                                    <p style="text-align: center;"><strong>POR LA COMPRADORA</strong></p>
+                                    <div class="signature-line" style="text-align: center;">___________________________________________________</div>
+                                    <p style="text-align: center;"><span t-field="doc.tenant_id.name"/></p>
+                                </div>
+                            </div>
+
+                            <div class="notary-section">
+                                <p>Yo, <span t-field="doc.notario_publico_id.name"/>, Notario Público de los del número del Distrito Nacional, Matrícula Núm. <span t-field="doc.notario_publico_id.vat"/>, CERTIFICO Y DOY FE: Que por ante mi han comparecido personalmente los señores PEDRO RENÉ ANTONIO COLUMNA NÚÑEZ y <span t-field="doc.tenant_id.name"/>, personas cuyas generales y calidades constan, a quienes doy fe conocer y bajo la fe del juramento me han declarado que las firmas que han estampado en mi presencia en el documento que antecede son las mismas que ellos acostumbran a usar en todos sus actos, motivo por el cual se le confiere carácter de autenticidad. En la ciudad de Santo Domingo, Distrito Nacional, capital de la República Dominicana, <span
+                            t-esc="doc.date_to_spanish_format(context_timestamp(datetime.datetime.now()).date())" /></p>
+
+                                <div class="signature-line" style="text-align: center;">______________________________</div>
+                                <p style="text-align: center;">NOTARIO PÚBLICO</p>
+                            </div>
+
+                            <div class="observations-section">
+                                <p>A continuación, se detallan algunas observaciones por parte del cliente al momento de recibir el inmueble y su recepción conforme cuando estas sean solucionadas.</p>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th width="70%">OBSERVACIONES</th>
+                                        <th width="30%">FIRMA CLIENTE</th>
+                                    </tr>
+                                    <tr>
+                                        <td><br/><br/><br/></td>
+                                        <td><br/><br/><br/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

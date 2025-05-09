@@ -172,6 +172,9 @@
                     <group>
                         <group string="Property Information">
                             <field name="company_id"/>
+                            <field name="cadastral_designation" />
+                            <field name="cadastral_number" />
+                            <field name="registration_number" />
                             <field name="property_carpet_area" attrs="{'required': [('is_property', '=',True)],'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="property_build_up_area" attrs="{'required': [('is_property', '=',True)],'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="property_floor" attrs="{'required': [('is_property', '=',True)],'readonly': [('state', '!=', 'draft')]}"/>

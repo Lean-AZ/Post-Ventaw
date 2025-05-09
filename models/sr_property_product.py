@@ -120,6 +120,9 @@ class srPropertytemplate(models.Model):
         domain="[('country_id', '=?', country_id)]",
     )
     country_id = fields.Many2one("res.country", string="Country", ondelete="restrict")
+    cadastral_designation = fields.Char("Designación Catastral")
+    cadastral_number = fields.Char("Número Catastral")
+    registration_number = fields.Char("Número de Matrícula")
     property_carpet_area = fields.Float("Carpet Area", default=1)
     property_build_up_area = fields.Float("Build-up Area", default=1)
     property_floor = fields.Integer("Floor", default=1)
