@@ -10,10 +10,9 @@
 		<field name="arch" type="xml">
 			<field name="payment_reference" position="after">
 				<field name="is_property_invoice" />
-				<field name="computed_mora" />
-				<field name="paid_mora" />
-				<field name="paid_capital" />
-				<field name="amount_paid" />
+				<field name="property_amount_paid" attrs="{'invisible': [('is_property_invoice', '=', False)]}" />
+				<field name="paid_capital" attrs="{'invisible': [('is_property_invoice', '=', False)]}" />
+				<field name="paid_mora" attrs="{'invisible': [('is_property_invoice', '=', False)]}" />
 				<field name="is_ajuste_de_precio" attrs="{'invisible': [('is_property_invoice', '=', False)]}" />
 				<field name="is_property_addon" attrs="{'invisible': [('is_property_invoice', '=', False)]}" />
 				<field name="property_id" attrs="{'invisible': [('is_property_invoice', '=', False)], 'required':[('is_property_invoice','=', True)]}"  />
