@@ -343,7 +343,7 @@
                                                     <t t-esc="capital_pendiente" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                                 </div>
                                             </div> -->
-                                            <div class='unit-data-item'>
+                                            <!-- <div class='unit-data-item'>
                                                 <p class="m-0">
                                                     <strong class="m-0">Financiamiento Pagado</strong>
                                                     <strong class="text-danger">*</strong>
@@ -351,7 +351,7 @@
                                                 <div>
                                                     <t t-esc="doc.total_paid_cuota_final" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class='unit-data-item'>
                                                 <div class='unit-data-item'>
                                                     <strong class="m-0">Porcentaje Pagado</strong>
@@ -384,7 +384,7 @@
                                                     <t t-esc="mora_pendiente" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                                 </div>
                                             </div> -->
-                                            <div class='unit-data-item'>
+                                            <!-- <div class='unit-data-item'>
                                                 <div class='unit-data-item'>
                                                     <strong class="m-0">Financiamiento Pendiente </strong>
                                                     <div>
@@ -392,7 +392,7 @@
                                                         <t t-esc="financiamiento_pendiente" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <!-- mora section final -->
                                     </td>
@@ -544,7 +544,7 @@
                             </tfoot> -->
                         </table>
 
-                        <h4 class="mt-4">Desglose de extras</h4>
+                        <h4 class="mt-4">Desglose de adicionales</h4>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
