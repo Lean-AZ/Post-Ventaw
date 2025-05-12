@@ -758,10 +758,10 @@ class AccountMove(models.Model):
     @api.depends("amount_residual", "computed_mora")
     def _compute_paid_mora(self):
         for move in self:
-            if move.property_amount_paid > move.computed_mora and move.payment_state in ["paid", "partial"]:
-                move.paid_mora = move.computed_mora
-            else:
+            if move.computed_mora == 0:
                 move.paid_mora = 0.0
+            elif move.property_amount_paid > move.computed_mora and move.payment_state in ["paid", "partial"]:
+                move.paid_mora = move.computed_mora
 
 
     @api.depends("amount_residual", "paid_mora")
