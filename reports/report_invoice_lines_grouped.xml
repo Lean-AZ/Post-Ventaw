@@ -333,8 +333,7 @@
                                         </td>
                                         <td>
                                             <t t-esc="lineFinal.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                            <t t-set="total_capital" t-value="total_capital + line.price_subtotal" />
-
+                                            <t t-set="total_capital" t-value="total_capital + lineFinal.price_subtotal" />
                                         </td>
                                         <td>
                                             <t t-esc="lineFinal.move_id.computed_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
@@ -377,7 +376,7 @@
                                         </td>
                                         <td>
                                             <t t-esc="lineLegal.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                            <t t-set="total_capital" t-value="total_capital + line.price_subtotal" />
+                                            <!-- <t t-set="total_capital" t-value="total_capital + lineLegal.price_subtotal" /> -->
 
                                         </td>
                                         <td>
@@ -386,17 +385,17 @@
                                         </td>
                                         <td>
                                             <t t-esc="lineLegal.move_id.amount_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                            <t t-set="total_capital_mora" t-value="total_capital_mora + lineLegal.move_id.amount_total" />
+                                            <!-- <t t-set="total_capital_mora" t-value="total_capital_mora + lineLegal.move_id.amount_total" /> -->
                                         </td>
                                         <td>
                                             <t t-set="monto_pagado" t-value="lineLegal.move_id.amount_total - lineLegal.move_id.amount_residual" />
                                             <t t-esc="monto_pagado" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                            <t t-set="total_pagado" t-value="total_pagado + monto_pagado" />
+                                            <!-- <t t-set="total_pagado" t-value="total_pagado + monto_pagado" /> -->
 
                                         </td>
                                         <td>
                                             <t t-esc="lineLegal.move_id.amount_residual" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                            <t t-set="total_pendiente" t-value="total_pendiente + lineLegal.move_id.amount_residual" />
+                                            <!-- <t t-set="total_pendiente" t-value="total_pendiente + lineLegal.move_id.amount_residual" /> -->
                                         </td>
                                         <td>
                                             <t t-if="lineLegal.move_id.payment_state == 'paid'">
@@ -422,7 +421,7 @@
                                         </td>
                                         <td>
                                             <t t-esc="lineLegal.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                            <t t-set="total_capital" t-value="total_capital + line.price_subtotal" />
+                                            <!-- <t t-set="total_capital" t-value="total_capital + lineLegal.price_subtotal" /> -->
 
                                         </td>
                                         <td>
@@ -431,17 +430,17 @@
                                         </td>
                                         <td>
                                             <t t-esc="lineLegal.move_id.amount_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                            <t t-set="total_capital_mora" t-value="total_capital_mora + lineLegal.move_id.amount_total" />
+                                            <!-- <t t-set="total_capital_mora" t-value="total_capital_mora + lineLegal.move_id.amount_total" /> -->
                                         </td>
                                         <td>
                                             <t t-set="monto_pagado" t-value="lineLegal.move_id.amount_total - lineLegal.move_id.amount_residual" />
                                             <t t-esc="monto_pagado" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                            <t t-set="total_pagado" t-value="total_pagado + monto_pagado" />
+                                            <!-- <t t-set="total_pagado" t-value="total_pagado + monto_pagado" /> -->
 
                                         </td>
                                         <td>
                                             <t t-esc="lineLegal.move_id.amount_residual" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                            <t t-set="total_pendiente" t-value="total_pendiente + lineLegal.move_id.amount_residual" />
+                                            <!-- <t t-set="total_pendiente" t-value="total_pendiente + lineLegal.move_id.amount_residual" /> -->
                                         </td>
                                         <td>
                                             <t t-if="lineLegal.move_id.payment_state == 'paid'">
@@ -463,7 +462,6 @@
                                     </td>
                                     <td>
                                         <t t-esc="total_capital" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
-
                                     </td>
                                     <td>
                                         <t t-esc="total_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
