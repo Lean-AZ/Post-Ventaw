@@ -303,14 +303,6 @@
                                                 </div>
                                             </div>
                                             <div class='unit-data-item'>
-                                                <div class='unit-data-item'>
-                                                    <strong class="m-0">Financiamiento</strong>
-                                                    <div>
-                                                        <t t-esc="doc.total_cuota_final" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class='unit-data-item'>
                                                 <strong class="m-0">Moneda</strong>
                                                 <div>
                                                     <t t-esc="doc.currency_id.name" />
@@ -325,6 +317,20 @@
                                                 <strong class="m-0">Inicial</strong>
                                                 <div>
                                                     <t t-esc="doc.total_cuotas" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div>
+                                            <div class='unit-data-item'>
+                                                <div class='unit-data-item'>
+                                                    <strong class="m-0">Financiamiento</strong>
+                                                    <div>
+                                                        <t t-esc="doc.total_cuota_final" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Mora Generada</strong>
+                                                <div>
+                                                    <t t-esc="doc.total_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                                 </div>
                                             </div>
                                             <!-- <div class='unit-data-item'>
@@ -365,12 +371,6 @@
                                     </td>
                                     <td>                                        <!-- mora section -->
                                         <div class='unit-data-container'>
-                                            <div class='unit-data-item'>
-                                                <strong class="m-0">Mora Generada</strong>
-                                                <div>
-                                                    <t t-esc="doc.total_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
-                                                </div>
-                                            </div>
                                             <!-- <div class='unit-data-item'>
                                                 <strong class="m-0">Mora Pagada</strong>
                                                 <div>
