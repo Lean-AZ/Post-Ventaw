@@ -191,7 +191,7 @@
                                                     <t t-esc="doc.total_cuotas" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                                 </div>
                                             </div>
-                                            <div class='unit-data-item'>
+                                            <!-- <div class='unit-data-item'>
                                                 <p class="m-0">
                                                     <strong class="m-0">Inicial Pagado</strong>
                                                     <strong class="text-danger">*</strong>
@@ -199,14 +199,14 @@
                                                 <div>
                                                     <t t-esc="doc.total_paid_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                                 </div>
-                                            </div>
-                                            <div class='unit-data-item'>
+                                            </div> -->
+                                            <!-- <div class='unit-data-item'>
                                                 <strong class="m-0">Inicial Pendiente</strong>
                                                 <div>
                                                     <t t-set="capital_pendiente" t-value="doc.total_cuotas - doc.total_paid_subtotal" />
                                                     <t t-esc="capital_pendiente" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class='unit-data-item'>
                                                 <p class="m-0">
                                                     <strong class="m-0">Financiamiento Pagado</strong>
@@ -493,12 +493,12 @@
                             </tfoot> -->
                         </table>
                     </t>
-                    <footer>
+                    <!-- <footer>
                         <div class="text-center mt-4">
                             <p>
                                 <strong class="text-danger">*</strong> Los campos <strong>Inicial Pagado</strong> y <strong>Financiamiento Pagado</strong> ubicados en la parte superior, excluyen los abonos parciales realizados.</p>
                         </div>
-                    </footer>
+                    </footer> -->
                 </div>
             </t>
         </t>
