@@ -337,7 +337,7 @@ class srPropertytemplate(models.Model):
     )
 
     total_paid_subtotal = fields.Float(
-        string="Total Cuotas Pagadas", compute="_compute_all_invoices", store=False
+        string="Total Capital Pagado", compute="_compute_all_invoices", store=False
     )
 
     total_partial_paid_subtotal = fields.Float(
@@ -347,7 +347,7 @@ class srPropertytemplate(models.Model):
     )
 
     total_paid_mora = fields.Float(
-        string="Total Paid Mora", compute="_compute_all_invoices", store=False
+        string="Total Mora Pagada", compute="_compute_all_invoices", store=False
     )
 
     total_paid_ajustes = fields.Float(
@@ -386,7 +386,7 @@ class srPropertytemplate(models.Model):
                 [("property_id.product_tmpl_id", "=", record.id)]
             )
             record.total_paid_mora = sum(all_invoices.mapped("mora_pagada_custom_sr"))
-            record.total_paid_capital = sum(all_invoices.mapped("capital_pagado_custom_sr"))
+            record.total_paid_subtotal = sum(all_invoices.mapped("capital_pagado_custom_sr"))
 
     def _compute_all_invoice_lines(self):
         for record in self:

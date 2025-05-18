@@ -242,7 +242,7 @@
                                         <field name="price_subtotal" string="Subtotal"/>
                                     </tree>
                                 </field>
-                                <field name="total_ajustes" string="Total Ajustes" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <!-- <field name="total_ajustes" string="Total Ajustes" widget="monetary" options="{'currency_field': 'currency_id'}"/> -->
                                 <field name="total_paid_subtotal" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                 <!-- <field name="total_partial_paid_subtotal" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/> -->
                                 <!-- <field name="total_paid_ajustes" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/> -->
