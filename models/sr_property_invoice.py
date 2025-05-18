@@ -33,7 +33,7 @@ class srAccountMove(models.Model):
         digits='Product Price',
     )
 
-    @api.depends('payment_state', 'invoice_line_ids')
+    @api.depends('payment_state', 'invoice_line_ids', 'amount_residual')
     def _compute_mora_pagada(self):
         for move in self:
             # Only calculate for property invoices that are customer invoices
@@ -59,7 +59,7 @@ class srAccountMove(models.Model):
                 move.mora_pagada_custom_sr = 0.0
                 move.capital_pagado_custom_sr = 0.0
 
-    @api.depends('invoice_line_ids', 'payment_state')
+    @api.depends('invoice_line_ids', 'payment_state', 'amount_residual')
     def _compute_computed_mora(self):
         for move in self:
             if move.is_property_invoice and move.move_type == 'out_invoice':
