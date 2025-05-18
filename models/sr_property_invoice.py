@@ -8,7 +8,7 @@
 #
 ##############################################################################
 
-from odoo import models, fields, _
+from odoo import models, fields, api, _
 
 class srAccountMove(models.Model):
     _inherit = 'account.move.line'
@@ -25,3 +25,23 @@ class srAccountMove(models.Model):
     tenancy_agreement = fields.Many2one('sr.tenancy.agreement', string="Tenancy Agreement")
     is_property_commission_bill = fields.Boolean('Is Property Commission Invoice?')
 
+    mora_pagada_custom_sr = fields.Float(
+        string="Monto pagado de mora",
+        compute='_compute_mora_pagada',
+        store=True,
+        digits='Product Price',
+    )
+
+    @api.depends('payment_state', 'invoice_line_ids')
+    def _compute_mora_pagada(self):
+        for move in self:
+            # Only calculate for property invoices that are customer invoices
+            if move.is_property_invoice and move.move_type == 'out_invoice' and move.payment_state in ('partial', 'paid'):
+                # Filter lines that are "mora"
+                lineas_mora = move.invoice_line_ids.filtered(
+                    lambda l: l.name.lower() == 'mora'
+                )
+                # Sum the subtotal of those lines
+                move.mora_pagada_custom_sr = sum(lineas_mora.mapped('price_subtotal'))
+            else:
+                move.mora_pagada_custom_sr = 0.0

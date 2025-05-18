@@ -716,61 +716,18 @@ class AccountMove(models.Model):
 
     property_amount_paid = fields.Float(
         string="Monto Pagado",
-        compute="_compute_property_amount_paid",
-        store=True
+        default=0.00
     )
 
     paid_mora = fields.Float(
         string="Mora Pagada",
-        compute="_compute_paid_mora",
-        store=True
+        default=0.00
     )
 
     paid_capital = fields.Float(
         string="Capital Pagado",
-        compute="_compute_paid_capital",
-        store=True
+        default=0.00
     )
-
-    @api.depends("amount_residual", "property_amount_paid")
-    def _compute_property_amount_paid(self):
-        for move in self:
-            move.property_amount_paid = move.amount_total - move.amount_residual
-
-    @api.depends("invoice_date_due")
-    def _compute_is_overdue(self):
-        for invoice in self:
-            if invoice.invoice_date_due:
-                invoice.is_overdue = invoice.invoice_date_due < fields.Date.today()
-            else:
-                invoice.is_overdue = False
-    
-    @api.depends("invoice_line_ids.name", "invoice_line_ids.price_subtotal")
-    def _compute_computed_mora(self):
-        for move in self:
-            # Filter lines that contain 'mora' in their name (case-insensitive)
-            mora_lines = move.invoice_line_ids.filtered(
-                lambda line: line.name and "mora" in line.name.lower()
-            )
-            # Sum the price_subtotal of those lines
-            move.computed_mora = sum(mora_lines.mapped("price_subtotal"))
-
-    @api.depends("amount_residual", "computed_mora")
-    def _compute_paid_mora(self):
-        for move in self:
-            if move.computed_mora == 0:
-                move.paid_mora = 0.0
-            elif move.property_amount_paid > move.computed_mora and move.payment_state in ["paid", "partial"]:
-                move.paid_mora = move.computed_mora
-
-
-    @api.depends("amount_residual", "paid_mora")
-    def _compute_paid_capital(self):
-        for move in self:
-            if move.payment_state in ["paid", "partial"] and move.property_amount_paid > move.computed_mora:
-                move.paid_capital = move.property_amount_paid - move.paid_mora
-            else:
-                move.paid_capital = 0.0
 
     def get_report_data(self):
         # Assuming 'self' is a single record of account.move

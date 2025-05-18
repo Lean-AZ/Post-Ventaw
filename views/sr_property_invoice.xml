@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-
 	<record id="view_move_form_extends_to_add_property_information"
 		model="ir.ui.view">
 		<field name="name">view.move.form.extends.to.add.property.information
@@ -10,9 +9,7 @@
 		<field name="arch" type="xml">
 			<field name="payment_reference" position="after">
 				<field name="is_property_invoice" />
-				<field name="property_amount_paid" attrs="{'invisible': [('is_property_invoice', '=', False)]}" />
-				<field name="paid_capital" attrs="{'invisible': [('is_property_invoice', '=', False)]}" />
-				<field name="paid_mora" attrs="{'invisible': [('is_property_invoice', '=', False)]}" />
+				<field name="mora_pagada_custom_sr" attrs="{'invisible': [('is_property_invoice', '=', False)]}" />
 				<field name="is_ajuste_de_precio" attrs="{'invisible': [('is_property_invoice', '=', False)]}" />
 				<field name="is_property_addon" attrs="{'invisible': [('is_property_invoice', '=', False)]}" />
 				<field name="property_id" attrs="{'invisible': [('is_property_invoice', '=', False)], 'required':[('is_property_invoice','=', True)]}"  />
@@ -28,5 +25,20 @@
 		</field>
 	</record>
 
-
+<record id="view_move_tree_inherit_mora" model="ir.ui.view">
+    <field name="name">account.move.tree.inherit.mora</field>
+    <field name="model">account.move</field>
+    <field name="inherit_id" ref="account.view_out_invoice_tree"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='amount_total_in_currency_signed']" position="before">
+        <field
+          name="mora_pagada_custom_sr"
+          string="Mora Pagada"
+          widget="monetary"
+          options="{'currency_field': 'currency_id'}"
+          optional="show"
+        />
+      </xpath>
+    </field>
+  </record>
 </odoo>
