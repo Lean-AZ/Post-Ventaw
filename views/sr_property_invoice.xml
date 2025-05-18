@@ -9,7 +9,8 @@
 		<field name="arch" type="xml">
 			<field name="payment_reference" position="after">
 				<field name="is_property_invoice" />
-				<field name="mora_pagada_custom_sr" attrs="{'invisible': [('is_property_invoice', '=', False)]}" />
+				<field name="mora_pagada_custom_sr" attrs="{'invisible': [('is_property_invoice', '=', False)]}" widget="monetary" options="{'currency_field': 'currency_id'}" optional="show" />
+				<field name="capital_pagado_custom_sr" attrs="{'invisible': [('is_property_invoice', '=', False)]}" widget="monetary" options="{'currency_field': 'currency_id'}" optional="show" />
 				<field name="is_ajuste_de_precio" attrs="{'invisible': [('is_property_invoice', '=', False)]}" />
 				<field name="is_property_addon" attrs="{'invisible': [('is_property_invoice', '=', False)]}" />
 				<field name="property_id" attrs="{'invisible': [('is_property_invoice', '=', False)], 'required':[('is_property_invoice','=', True)]}"  />
@@ -34,6 +35,13 @@
         <field
           name="mora_pagada_custom_sr"
           string="Mora Pagada"
+          widget="monetary"
+          options="{'currency_field': 'currency_id'}"
+          optional="show"
+        />
+		<field
+          name="capital_pagado_custom_sr"
+          string="Capital Pagado"
           widget="monetary"
           options="{'currency_field': 'currency_id'}"
           optional="show"
