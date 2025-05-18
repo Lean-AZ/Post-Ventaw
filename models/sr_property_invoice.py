@@ -42,6 +42,13 @@ class srAccountMove(models.Model):
                     lambda l: l.name.lower() == 'mora'
                 )
                 # Sum the subtotal of those lines
-                move.mora_pagada_custom_sr = sum(lineas_mora.mapped('price_subtotal'))
+                if lineas_mora:
+                    total_mora = sum(lineas_mora.mapped('price_subtotal'))
+                    if lineas_mora.move_id.amount_residual > total_mora:
+                        move.mora_pagada_custom_sr = total_mora
+                    else:
+                        move.mora_pagada_custom_sr = lineas_mora.move_id.amount_total - lineas_mora.move_id.amount_residual
+                else:
+                    move.mora_pagada_custom_sr = 0.0
             else:
                 move.mora_pagada_custom_sr = 0.0
