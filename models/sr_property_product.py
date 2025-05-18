@@ -337,7 +337,7 @@ class srPropertytemplate(models.Model):
     )
 
     total_paid_subtotal = fields.Float(
-        string="Total Cuotas Pagadas", compute="_compute_all_invoice_lines", store=False
+        string="Total Cuotas Pagadas", compute="_compute_all_invoices", store=False
     )
 
     total_partial_paid_subtotal = fields.Float(
@@ -347,7 +347,7 @@ class srPropertytemplate(models.Model):
     )
 
     total_paid_mora = fields.Float(
-        string="Total Paid Mora", compute="_compute_all_invoice_lines", store=False
+        string="Total Paid Mora", compute="_compute_all_invoices", store=False
     )
 
     total_paid_ajustes = fields.Float(
@@ -379,6 +379,14 @@ class srPropertytemplate(models.Model):
         compute="_compute_all_invoice_lines",
         store=False,
     )
+
+    def _compute_all_invoices(self):
+        for record in self:
+            all_invoices = self.env["account.move"].search(
+                [("property_id.product_tmpl_id", "=", record.id)]
+            )
+            record.total_paid_mora = sum(all_invoices.mapped("mora_pagada_custom_sr"))
+            record.total_paid_capital = sum(all_invoices.mapped("capital_pagado_custom_sr"))
 
     def _compute_all_invoice_lines(self):
         for record in self:
@@ -419,10 +427,6 @@ class srPropertytemplate(models.Model):
             )
             partial_paid_invoice_lines = cuotas_lines.filtered(
                 lambda l: l.move_id.payment_state == "partial"
-            )
-            # Filter mora lines from paid invoices
-            paid_mora_lines = mora_lines.filtered(
-                lambda l: l.move_id.payment_state == "paid"
             )
 
             paid_ajustes_lines = ajustes_lines.filtered(
@@ -482,14 +486,6 @@ class srPropertytemplate(models.Model):
                 gastos_legales_lines.mapped("price_subtotal")
             )
 
-            # New field: Sum of all subtotals for paid invoices
-            record.total_paid_subtotal = sum(
-                paid_invoice_lines.mapped("price_subtotal")
-            )
-
-            # New field: Sum of all mora lines where the invoice is paid
-            record.total_paid_mora = sum(paid_mora_lines.mapped("price_subtotal"))
-
             # New field: Sum of all ajustes lines where the invoice is paid
             record.total_paid_ajustes = sum(paid_ajustes_lines.mapped("price_subtotal"))
 
@@ -511,10 +507,6 @@ class srPropertytemplate(models.Model):
     )
     def _compute_percentage_paid(self):
         for record in self:
-            # Total paid amounts
-            # total_paid = (record.total_paid_subtotal or 0.0) + \
-            #              (record.total_paid_ajustes or 0.0) + \
-            #             (record.total_paid_cuota_final or 0.0)
 
             total_paid = (record.total_paid_subtotal or 0.0) + (
                 record.total_paid_cuota_final or 0.0
