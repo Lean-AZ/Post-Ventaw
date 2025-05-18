@@ -333,6 +333,12 @@
                                                     <t t-esc="doc.total_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
                                                 </div>
                                             </div>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Mora Pagada</strong>
+                                                <div>
+                                                    <t t-esc="doc.total_paid_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div>
                                             <!-- <div class='unit-data-item'>
                                                 <p class="m-0">
                                                     <strong class="m-0">Inicial Pagado</strong>

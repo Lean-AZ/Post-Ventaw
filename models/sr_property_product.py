@@ -702,10 +702,6 @@ class AccountMove(models.Model):
 
     is_overdue = fields.Boolean(compute="_compute_is_overdue")
 
-    computed_mora = fields.Float(
-        string="Total Mora Generada", compute="_compute_computed_mora", store=True
-    )
-
     property_amount_paid = fields.Float(
         string="Monto Pagado",
         default=0.00

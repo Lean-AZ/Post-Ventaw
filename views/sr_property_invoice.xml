@@ -9,6 +9,7 @@
 		<field name="arch" type="xml">
 			<field name="payment_reference" position="after">
 				<field name="is_property_invoice" />
+				<field name="computed_mora" attrs="{'invisible': [('is_property_invoice', '=', False)]}" widget="monetary" options="{'currency_field': 'currency_id'}" optional="show" />
 				<field name="mora_pagada_custom_sr" attrs="{'invisible': [('is_property_invoice', '=', False)]}" widget="monetary" options="{'currency_field': 'currency_id'}" optional="show" />
 				<field name="capital_pagado_custom_sr" attrs="{'invisible': [('is_property_invoice', '=', False)]}" widget="monetary" options="{'currency_field': 'currency_id'}" optional="show" />
 				<field name="is_ajuste_de_precio" attrs="{'invisible': [('is_property_invoice', '=', False)]}" />
@@ -32,6 +33,13 @@
     <field name="inherit_id" ref="account.view_out_invoice_tree"/>
     <field name="arch" type="xml">
       <xpath expr="//field[@name='amount_total_in_currency_signed']" position="before">
+		<field
+          name="computed_mora"
+          string="Mora Computada"
+          widget="monetary"
+          options="{'currency_field': 'currency_id'}"
+          optional="show"
+        />
         <field
           name="mora_pagada_custom_sr"
           string="Mora Pagada"

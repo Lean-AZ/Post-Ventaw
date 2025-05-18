@@ -15,6 +15,10 @@ class srAccountMove(models.Model):
     tenancy_agreement = fields.Many2one('sr.tenancy.agreement', string="Tenancy Agreement")
     is_property_commission_bill = fields.Boolean('Is Property Commission Invoice?')
 
+    computed_mora = fields.Float(
+        string="Total Mora Generada", compute="_compute_computed_mora", store=True
+    )
+
     mora_pagada_custom_sr = fields.Float(
         string="Monto pagado de mora",
         compute='_compute_mora_pagada',
@@ -54,3 +58,14 @@ class srAccountMove(models.Model):
             else:
                 move.mora_pagada_custom_sr = 0.0
                 move.capital_pagado_custom_sr = 0.0
+
+    @api.depends('invoice_line_ids', 'payment_state')
+    def _compute_computed_mora(self):
+        for move in self:
+            if move.is_property_invoice and move.move_type == 'out_invoice':
+                mora_lines = move.invoice_line_ids.filtered(
+                    lambda l: l.name and "mora" in l.name.lower()
+                )
+                move.computed_mora = sum(mora_lines.mapped('price_subtotal'))
+            else:
+                move.computed_mora = 0.0
