@@ -40,21 +40,21 @@ class srAccountMove(models.Model):
             if move.is_property_invoice and move.move_type == 'out_invoice' and move.payment_state in ('partial', 'paid'):
                 # Filter lines that are "mora"
                 amount_paid_temp = move.amount_total - move.amount_residual
-                lineas_mora = move.invoice_line_ids.filtered(
-                    lambda l: l.name.lower() == 'mora'
-                )
-                # Sum the subtotal of those lines
-                if lineas_mora:
-                    total_mora = sum(lineas_mora.mapped('price_subtotal'))
-                    if amount_paid_temp >= total_mora:
-                        move.mora_pagada_custom_sr = total_mora
-                        move.capital_pagado_custom_sr = amount_paid_temp - total_mora
-                    else:
-                        move.mora_pagada_custom_sr = amount_paid_temp
-                        move.capital_pagado_custom_sr = 0.0
-                else:
-                    move.mora_pagada_custom_sr = 0.0
-                    move.capital_pagado_custom_sr = amount_paid_temp
+                # Get all payments related to this invoice
+
+                # Get reconciled payment information
+                payments_info = move._get_reconciled_info_JSON_values()
+                mora_paid_temp = 0.0
+                
+                # Search each payment record and sum mora_pagada_custom_sr
+                for payment_info in payments_info:
+                    payment_id = payment_info.get('account_payment_id')
+                    if payment_id:
+                        payment = move.env['account.payment'].browse(payment_id)
+                        mora_paid_temp += payment.mora_pagada_custom_sr
+                # Initialize total mora paid from all payments
+                move.mora_pagada_custom_sr = mora_paid_temp
+                move.capital_pagado_custom_sr = amount_paid_temp - move.mora_pagada_custom_sr
             else:
                 move.mora_pagada_custom_sr = 0.0
                 move.capital_pagado_custom_sr = 0.0
