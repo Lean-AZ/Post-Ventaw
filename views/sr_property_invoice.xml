@@ -63,9 +63,10 @@
     <field name="model">account.payment.register</field>
     <field name="inherit_id" ref="account.view_account_payment_register_form"/>
     <field name="arch" type="xml">
-        <xpath expr="//field[@name='communication']" position="before">
+        <xpath expr="//field[@name='payment_date']" position="after">
 				<field name="is_property_invoice" invisible="1"/>
             <field name="mora_pagada_custom_sr" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('is_property_invoice', '=', False)]}"/>
+			<field name="capital_pagado_custom_sr" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('is_property_invoice', '=', False)]}" readonly="1"/>
         </xpath>
     </field>
 </record>
@@ -78,6 +79,7 @@
         <xpath expr="//field[@name='date']" position="before">
 			<field name="is_property_invoice" invisible="1"/>
             <field name="mora_pagada_custom_sr" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('is_property_invoice', '=', False)], 'readonly': [('state', '!=', 'draft')]}"/>
+			<field name="capital_pagado_custom_sr" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('is_property_invoice', '=', False)], 'readonly': [('state', '!=', 'draft')]}"/>
         </xpath>
     </field>
 </record>
@@ -89,7 +91,8 @@
     <field name="arch" type="xml">
 		<xpath expr="//field[@name='state']" position="before">
 			<field name="is_property_invoice" invisible="1"/>
-            <field name="mora_pagada_custom_sr" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('is_property_invoice', '=', False)]}"/>
+            <field name="mora_pagada_custom_sr" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('is_property_invoice', '=', False)]}" optional="show"/>
+			<field name="capital_pagado_custom_sr" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible': [('is_property_invoice', '=', False)]}" optional="show"/>
         </xpath>
     </field>
 </record>

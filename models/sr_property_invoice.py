@@ -110,17 +110,38 @@ class srAccountPaymentWizard(models.TransientModel):
     _inherit = 'account.payment.register'
 
     is_property_invoice = fields.Boolean('Is Property Invoice?')
+    capital_pagado_custom_sr = fields.Float(
+        string="Monto pagado de capital",
+        store=True,
+        digits='Product Price',
+        default=0.00,
+        compute='_compute_capital_pagado',
+    )
     mora_pagada_custom_sr = fields.Float(
         string="Monto pagado de mora",
         store=True,
         digits='Product Price',
-        default=0.0,
+        default=0.00,
     )
-    
+
+    @api.depends('is_property_invoice', 'amount', 'mora_pagada_custom_sr')
+    def _compute_capital_pagado(self):
+        for wizard in self:
+            if wizard.is_property_invoice:
+                wizard.capital_pagado_custom_sr = wizard.amount - wizard.mora_pagada_custom_sr
+            else:
+                wizard.capital_pagado_custom_sr = 0.00
 
 class srAccountPayment(models.Model):
     _inherit = 'account.payment'
     is_property_invoice = fields.Boolean('Is Property Invoice?')
+
+    capital_pagado_custom_sr = fields.Float(
+        string="Monto pagado de capital",
+        store=True,
+        digits='Product Price',
+        default=0.0,
+    )
 
     mora_pagada_custom_sr = fields.Float(
         string="Monto pagado de mora",
