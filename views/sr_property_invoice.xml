@@ -57,4 +57,28 @@
       </xpath>
     </field>
   </record>
+
+<record id="view_account_payment_register_form_inherit_mora" model="ir.ui.view">
+    <field name="name">account.payment.register.form.inherit.mora</field>
+    <field name="model">account.payment.register</field>
+    <field name="inherit_id" ref="account.view_account_payment_register_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='communication']" position="before">
+            <field name="mora_pagada_custom_sr" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+        </xpath>
+    </field>
+</record>
+
+<record id="view_account_payment_form_inherit_mora" model="ir.ui.view">
+    <field name="name">account.payment.form.inherit.mora</field>
+    <field name="model">account.payment</field>
+    <field name="inherit_id" ref="account.view_account_payment_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='date']" position="before">
+            <field name="mora_pagada_custom_sr" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+        </xpath>
+    </field>
+</record>
+
+
 </odoo>

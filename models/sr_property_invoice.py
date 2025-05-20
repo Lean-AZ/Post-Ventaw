@@ -69,3 +69,63 @@ class srAccountMove(models.Model):
                 move.computed_mora = sum(mora_lines.mapped('price_subtotal'))
             else:
                 move.computed_mora = 0.0
+
+    def action_register_payment(self):
+        # 1) Lógica previa a abrir el wizard (opcional)
+        for inv in self:
+            # por ejemplo, marcar un log o disparar validaciones
+            _logger = inv.env['ir.logging']
+            _logger.create({
+                'name': 'Registro Mora',
+                'type': 'server',
+                'dbname': inv.env.cr.dbname,
+                'message': _('Se va a registrar pago en factura %s') % inv.name,
+                'level': 'INFO',
+                'path': 'sr_property_rental_management',
+                'line': '10',
+                'func': 'action_register_payment'
+            })
+        # 2) Llamamos al método original para abrir el wizard
+        action = super().action_register_payment()
+        # Set the mora_pagada_custom_sr value in the wizard context
+        if self.is_property_invoice:
+            mora_pendiente = self.computed_mora - self.mora_pagada_custom_sr
+            action['context'].update({
+                'default_mora_pagada_custom_sr': mora_pendiente if mora_pendiente > 0 else 0.0,
+                'default_is_property_invoice': self.is_property_invoice
+            })
+        # 3) Lógica posterior al clic (opcional)
+        #    Aquí no hay pago aún, sólo se abre el wizard.
+
+        # Set the mora_pagada_custom_sr value in the payment when created
+        def _create_payments(self):
+            payments = super().action_create_payments()
+            for payment in payments:
+                payment.mora_pagada_custom_sr = self.mora_pagada_custom_sr
+            return payments
+        return action
+
+
+class srAccountPaymentWizard(models.TransientModel):
+    _inherit = 'account.payment.register'
+
+    is_property_invoice = fields.Boolean('Is Property Invoice?')
+    mora_pagada_custom_sr = fields.Float(
+        string="Monto pagado de mora",
+        store=True,
+        digits='Product Price',
+        default=0.0,
+    )
+    
+
+class srAccountPayment(models.Model):
+    _inherit = 'account.payment'
+    is_property_invoice = fields.Boolean('Is Property Invoice?')
+
+    mora_pagada_custom_sr = fields.Float(
+        string="Monto pagado de mora",
+        store=True,
+        digits='Product Price',
+        default=0.0,
+    )
+    
