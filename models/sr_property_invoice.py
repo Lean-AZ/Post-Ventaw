@@ -72,19 +72,19 @@ class srAccountMove(models.Model):
 
     def action_register_payment(self):
         # 1) Lógica previa a abrir el wizard (opcional)
-        for inv in self:
-            # por ejemplo, marcar un log o disparar validaciones
-            _logger = inv.env['ir.logging']
-            _logger.create({
-                'name': 'Registro Mora',
-                'type': 'server',
-                'dbname': inv.env.cr.dbname,
-                'message': _('Se va a registrar pago en factura %s') % inv.name,
-                'level': 'INFO',
-                'path': 'sr_property_rental_management',
-                'line': '10',
-                'func': 'action_register_payment'
-            })
+        # for inv in self:
+        #     # por ejemplo, marcar un log o disparar validaciones
+        #     _logger = inv.env['ir.logging']
+        #     _logger.create({
+        #         'name': 'Registro Mora',
+        #         'type': 'server',
+        #         'dbname': inv.env.cr.dbname,
+        #         'message': _('Se va a registrar pago en factura %s') % inv.name,
+        #         'level': 'INFO',
+        #         'path': 'sr_property_rental_management',
+        #         'line': '10',
+        #         'func': 'action_register_payment'
+        #     })
         # 2) Llamamos al método original para abrir el wizard
         action = super().action_register_payment()
         # Set the mora_pagada_custom_sr value in the wizard context
