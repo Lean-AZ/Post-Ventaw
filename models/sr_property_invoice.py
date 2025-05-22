@@ -45,7 +45,6 @@ class srAccountMove(models.Model):
                 # Get reconciled payment information
                 payments_info = move._get_reconciled_info_JSON_values()
                 mora_paid_temp = 0.0
-                
                 # Search each payment record and sum mora_pagada_custom_sr
                 for payment_info in payments_info:
                     payment_id = payment_info.get('account_payment_id')
@@ -53,7 +52,10 @@ class srAccountMove(models.Model):
                         payment = move.env['account.payment'].browse(payment_id)
                         mora_paid_temp += payment.mora_pagada_custom_sr
                 # Initialize total mora paid from all payments
-                move.mora_pagada_custom_sr = mora_paid_temp
+                if mora_paid_temp > move.computed_mora:
+                    move.mora_pagada_custom_sr = move.computed_mora
+                else:
+                    move.mora_pagada_custom_sr = mora_paid_temp
                 move.capital_pagado_custom_sr = amount_paid_temp - move.mora_pagada_custom_sr
             else:
                 move.mora_pagada_custom_sr = 0.0
@@ -94,9 +96,11 @@ class srAccountMove(models.Model):
             action = super().action_register_payment()
             if self.is_property_invoice:
                 mora_pendiente = self.computed_mora - self.mora_pagada_custom_sr
+                capital_pendiente = self.amount_residual - self.mora_pagada_custom_sr
                 action['context'].update({
                     'default_mora_pagada_custom_sr': mora_pendiente if mora_pendiente > 0 else 0.0,
-                    'default_is_property_invoice': self.is_property_invoice
+                    'default_is_property_invoice': self.is_property_invoice,
+                    'default_capital_pagado_custom_sr': capital_pendiente if capital_pendiente > 0 else 0.0,
                 })
 
         def _create_payments(self):
@@ -150,5 +154,6 @@ class srAccountPayment(models.Model):
         store=True,
         digits='Product Price',
         default=0.0,
+        tracking=True,
     )
     
