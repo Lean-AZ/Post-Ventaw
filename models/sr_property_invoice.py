@@ -74,13 +74,20 @@ class srAccountMove(models.Model):
         # Handle multiple records case
         if len(self) > 1:
             # If multiple records, only process the first one
-            first_record = self[0]
-            action = super(srAccountMove, first_record).action_register_payment()
-            if first_record.is_property_invoice:
-                mora_pendiente = first_record.computed_mora - first_record.mora_pagada_custom_sr
+            all_records = self
+            total_mora_pendiente = 0.0
+            total_capital_pendiente = 0.0
+            action = super(srAccountMove, all_records).action_register_payment()
+            for record in all_records:
+                if record.is_property_invoice:
+                    mora_pendiente = record.computed_mora - record.mora_pagada_custom_sr
+                    total_mora_pendiente += mora_pendiente
+                    total_capital_pendiente += record.amount_residual
                 action['context'].update({
-                    'default_mora_pagada_custom_sr': mora_pendiente if mora_pendiente > 0 else 0.0,
-                    'default_is_property_invoice': first_record.is_property_invoice
+                    'default_mora_pagada_custom_sr': total_mora_pendiente if total_mora_pendiente > 0 else 0.0,
+                    'default_is_property_invoice': all_records[0].is_property_invoice,
+                    'default_group_payment': True,
+                    'default_capital_pagado_custom_sr': total_capital_pendiente - total_mora_pendiente if total_capital_pendiente - total_mora_pendiente > 0 else 0.0,
                 })
         else:
             # Single record case
