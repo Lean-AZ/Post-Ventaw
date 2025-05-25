@@ -45,11 +45,6 @@ class srResUsers(models.Model):
 class srResPartner(models.Model):
     _inherit = 'res.partner'
 
-    property_agent_ids = fields.Many2one('res.partner', string="Agent")
-    property_agent_email_ids = fields.Char(string="Email")
-    property_agent_phones = fields.Char(string="Phone")
-    agr_id = fields.One2many('sr.tenancy.agreement', 'agent_id', string="Agr Data")
-
     is_landlord = fields.Boolean('Is Landlord?')
     is_agent = fields.Boolean('Is Agent?')
     is_tenant = fields.Boolean('Is Tenant')
@@ -66,10 +61,3 @@ class srResPartner(models.Model):
             ('agent_id', '=', self.id)
         ]
         return action
-
-
-class AgerInfo(models.Model):
-    _name = 'ager.info'
-
-    property = fields.Many2one('product.product', string='Property')
-    agr_id = fields.Many2one('res.partner')

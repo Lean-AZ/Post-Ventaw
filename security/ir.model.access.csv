@@ -1,6 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_sr_agr,Access.ager.info,model_ager_info,,1,1,1,1
-access_sr_property_custom_partial_payment,Access.sr.property.custom.partial.payment.lines,model_sr_property_custom_partial_payment_lines,,1,1,1,1
 access_sr_property_partial_payment,Access.sr.property.partial.payment,model_sr_property_partial_payment,,1,1,1,1
 access_sr_property_type,Access.sr.property.type,model_sr_property_type,,1,1,1,1
 access_sr_property_interior,Access.sr.property.interior,model_sr_property_interior,,1,1,1,1
@@ -27,6 +25,3 @@ read_property_product_write_tenant,Read.property.product.write.tenant,product.mo
 ,,,,,,,
 read_property_template_write_agent,Read.property.template.write.agent,product.model_product_template,sr_property_rental_management.group_agent,1,1,0,0
 read_property_product_write_agent,Read.property.product.write.agent,product.model_product_product,sr_property_rental_management.group_agent,1,1,0,0
-access_property_unit,property.unit,model_property_unit,,1,1,1,1
-access_unit_unit,unit.unit,model_unit_unit,,1,1,1,1
-

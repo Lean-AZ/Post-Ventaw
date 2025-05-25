@@ -51,7 +51,6 @@ class srPropertyAgentCommissionSettlement(models.Model):
     def calculate_agent_commission(self):
         self.agent_commission_line_ids.unlink()
         comm_line = self.env['sr.property.agent.commission.lines'].search([('agent_id', '=', self.agent_id.id), ('is_commission_settled', '=', False)])
-        print ("====comm_line", comm_line)
         for line in comm_line:
             self.write({
                 'agent_commission_line_ids':[
@@ -80,7 +79,15 @@ class srPropertyAgentCommissionSettlement(models.Model):
             })
 
     def action_create_invoice(self):
-        journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
+        # journal_id = self.env['account.move']._search_default_journal(journal_types=['sale'])
+        cid = self.agent_commission_line_ids.tenancy_agreement_id.company_id or self.env.company.id
+        journal_id = self.env['account.journal'].search(
+            domain=[
+                *self.env['account.journal']._check_company_domain(cid),
+                ('type', '=', 'purchase'),
+            ],
+            limit=1,
+        )
         inv_id = self.env['account.move'].create({
             'partner_id':self.agent_id.id,
             'invoice_date':datetime.datetime.today().date(),
