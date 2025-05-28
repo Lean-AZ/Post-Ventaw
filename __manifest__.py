@@ -16,58 +16,12 @@
     'summary': 'Odoo Real Estate Management, Property Sale Management, Property Rent Management, Property Lease Management, Agent Management, Tenant Management, Landlord Management, Tenancy Agreement Management, Commission Management, property contract management',
     'description': """
         odoo Real Estate Management
-        odoo property Management
-        Odoo property Rent Management
-        Odoo Property Sale Management
-        Odoo Property Lease management
-        Manage Agent for property
-        Manage Tenant for property
-        Manage Landlord for property
-        Tenancy agreement for property rent and sale
-        odoo tenancy agreement management
-        property tenancy agreement 
-        commission management
-        property commission management
-        odoo commission management
-        manage commission for property
-        commission settlement to agent
-        agent commission settlement
-        property commission management
-        sell property
-        rent property
-        create property
-        Real Estate property management in odoo
-        auto create invoice based on tenancy agreement date
-        partial payment
-        partial payment for buy property
-        quick buy property
-        quick sell property
-        quick rent property
-        manage real estate property
-        property listing
-        property amenities
-        property invoices
-        commission vendor bills
-        manage property agents
-        manage property owners
-        manage property landlords
-        manage property buyers
-        manage property sellers
-        manage property tenants
-        calculate property commission for agent
-        calculate agent commission for property
-        post property listing
-        easy buy property
-        easy rent property
-        partial payment allow for payment
-        real estate property management flow
-        real estate property  complete work flow
 """,
     "price": 50,
     "currency": 'EUR',
     'author': 'Sitaram',
     'website':"https://www.sitaramsolutions.in",
-    'depends': ['base', 'account', 'utm','product'],
+    'depends': ['base', 'account', 'utm','product', 'civiltec_contact_fields'],
     'data': [
         'security/property_security.xml',
         'security/ir.model.access.csv',
