@@ -1,0 +1,1700 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sr_property_rental_management
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0-20240104\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-14 14:31+0000\n"
+"PO-Revision-Date: 2024-02-14 14:31+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid ""
+"<span class=\"o_form_label o_td_label\" name=\"property_address\">\n"
+"                                <b>Property Address</b>\n"
+"                            </span>"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__access_warning
+msgid "Access warning"
+msgstr "Advertencia de acceso"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__message_needaction
+msgid "Action Needed"
+msgstr "Acción necesaria"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__activity_ids
+msgid "Activities"
+msgstr "Actividades"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decoración de Excepción de Actividad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__activity_state
+msgid "Activity State"
+msgstr "Estado de Actividad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Ícono del Tipo de Actividad"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.unit_inherit_id
+msgid "Add a Unit"
+msgstr "Agregar una Unidad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__address
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_unit_unit__address
+msgid "Address"
+msgstr "Dirección"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_agent_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_agent_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_res_partner__property_agent_ids
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_res_users__property_agent_ids
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_lines__agent_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__agent_id
+#: model:ir.ui.menu,name:sr_property_rental_management.sr_property_agent_menu
+#: model:res.groups,name:sr_property_rental_management.group_agent
+msgid "Agent"
+msgstr "Agente"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
+msgid "Agent Commission Details"
+msgstr "Detalles del agente del departamento administrativo"
+
+#. module: sr_property_rental_management
+#: model:ir.actions.act_window,name:sr_property_rental_management.sr_property_agent_commission_lines_action
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_agent_commission_lines_form_view
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_agent_commission_lines_tree_view
+msgid "Agent Commission Lines"
+msgstr "Líneas de Comisión del Agente"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__agreement_date
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_tree
+msgid "Agreement Date"
+msgstr "Fecha del Contrato"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__agreement_duration
+msgid "Agreement Duration"
+msgstr "Duración del Contrato"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__agreement_duration_type
+msgid "Agreement Duration Type"
+msgstr "Tipo de Duración del Contrato"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__agreement_expiry_date
+msgid "Agreement Expire On"
+msgstr "Fecha de Vencimiento del Contrato"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__agreement_start_date
+msgid "Agreement Start From"
+msgstr "Fecha de Inicio del Contrato"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_amenities_ids
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_amenities_ids
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Amenities"
+msgstr "Comodidades"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_custom_partial_payment_lines__amount
+msgid "Amount"
+msgstr "Monto"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__amount_to_finance
+msgid "Amount To Finance"
+msgstr "Monto Inicial"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_unit_unit__carpet_area
+msgid "Area"
+msgstr "Area"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__message_attachment_count
+msgid "Attachment Count"
+msgstr "Cantidad de Adjuntos"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__product_template__state__available
+msgid "Available"
+msgstr "Disponible"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_badrooms
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_badrooms
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__unit_badrooms
+msgid "Badrooms"
+msgstr "Dormitorios"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_balconies
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_balconies
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__unit_balconies
+msgid "Balconies"
+msgstr "Balcón"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Basic Information"
+msgstr "Información Básica"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_build_up_area
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_build_up_area
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__unit_build_up_area
+msgid "Build-up Area"
+msgstr "Área Construida"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Buy"
+msgstr "Comprar"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_agent_commission_settlement_form_view
+msgid "Calculate Commission"
+msgstr "Calcular Comisión"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__campaign_id
+msgid "Campaign"
+msgstr "Campaña"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_carpet_area
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_carpet_area
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__unit_carpet_area
+msgid "Carpet Area"
+msgstr "Área de Alfombra"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__city
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__city
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "City"
+msgstr "Ciudad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_agent_commission
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_agent_commission
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_lines__commission_amount
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement_lines__commission_amount
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__agent_commission
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__commission_price
+#: model:ir.ui.menu,name:sr_property_rental_management.sr_property_agent_commission_menu
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.view_partner_form_extends_landloard_agent_boolean
+msgid "Commission"
+msgstr "Comisión"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_lines__name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement_lines__commission_line
+msgid "Commission Line Reference"
+msgstr "Referencia de Línea de Comisión"
+
+#. module: sr_property_rental_management
+#: model:ir.ui.menu,name:sr_property_rental_management.sr_property_agent_commission_lines_menu
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_agent_commission_settlement_form_view
+msgid "Commission Lines"
+msgstr "Líneas de Comisión"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_lines__commission_settlement_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement_lines__commission_settlement_id
+msgid "Commission Settlement"
+msgstr "Liquidación de Comisión"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement__agent_commission_line_ids
+msgid "Commission Settlement Lines"
+msgstr "Líneas de Liquidación de Comisión"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement__name
+msgid "Commission Settlement Reference"
+msgstr "Referencia de Liquidación de Comisión"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_agent_commission_type
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_agent_commission_type
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_lines__commission_type
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__commission_type
+msgid "Commission Type"
+msgstr "Tipo de Comisión"
+
+#. module: sr_property_rental_management
+#: model:ir.actions.act_window,name:sr_property_rental_management.sr_property_agent_commission_settlement_action
+#: model:ir.ui.menu,name:sr_property_rental_management.sr_property_agent_commission_settlement_menu
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_agent_commission_settlement_form_view
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_agent_commission_settlement_tree_view
+msgid "Commissions Settlement"
+msgstr "Liquidación de Comisiones"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: sr_property_rental_management
+#: model:ir.ui.menu,name:sr_property_rental_management.sr_property_configuration_menu
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
+msgid "Confirm Agreement"
+msgstr "Confirmar Acuerdo"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Confirm Property"
+msgstr "Confirmar Propiedad"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_agent_commission_settlement_form_view
+msgid "Confirm Settlement"
+msgstr "Confirmar Liquidación"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__sr_property_agent_commission_settlement__state__confirm
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__sr_tenancy_agreement__state__confirm
+msgid "Confirmed"
+msgstr "Confirmado"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
+msgid "Contract Details"
+msgstr "Detalles del Contrato"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__co_tenant_id
+msgid "Copropietario"
+msgstr "Copropietario"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__country_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__country_id
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Country"
+msgstr "País"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.actions.act_window,help:sr_property_rental_management.sr_property_tenancy_agreement_action
+msgid "Create a New Tenancy Agreements."
+msgstr "Crear un Nuevo Contrato."
+
+#. module: sr_property_rental_management
+#: model_terms:ir.actions.act_window,help:sr_property_rental_management.sr_property_agent_action
+msgid "Create a new Agent."
+msgstr "Crear un nuevo Agente."
+
+#. module: sr_property_rental_management
+#: model_terms:ir.actions.act_window,help:sr_property_rental_management.sr_property_landloard_action
+msgid "Create a new Landloard."
+msgstr "Crear un nuevo Propietario."
+
+#. module: sr_property_rental_management
+#: model_terms:ir.actions.act_window,help:sr_property_rental_management.sr_property_tenant_action
+msgid "Create a new Tenant."
+msgstr "Crear un nuevo Inquilino."
+
+#. module: sr_property_rental_management
+#: model_terms:ir.actions.act_window,help:sr_property_rental_management.sr_property_product_action
+msgid "Create a new property."
+msgstr "Crear una nueva propiedad."
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_agent_commission_settlement_form_view
+msgid "Create invoice"
+msgstr "Crear factura"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_ager_info__create_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__create_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_lines__create_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement__create_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement_lines__create_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_amenities__create_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_custom_partial_payment_lines__create_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_exterior__create_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_facade__create_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_interior__create_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_landscape__create_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_neighborhood__create_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_partial_payment__create_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_transportation__create_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_type__create_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__create_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_unit_unit__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_ager_info__create_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__create_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_lines__create_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement__create_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement_lines__create_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_amenities__create_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_custom_partial_payment_lines__create_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_exterior__create_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_facade__create_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_interior__create_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_landscape__create_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_neighborhood__create_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_partial_payment__create_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_transportation__create_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_type__create_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__create_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_unit_unit__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__agreement_date
+msgid "Creation date of tenant agreement."
+msgstr "Fecha de creación del Contrato."
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_partial_payment_form_view
+msgid "Cuotas"
+msgstr "Cuotas"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_partial_payment_form_view
+msgid "Cuotas Tree"
+msgstr "Árbol de cuotas"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_lines__currency_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement_lines__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__current_user_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__current_user_id
+msgid "Current User"
+msgstr "Usuario Actual"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_partial_payment__custom_partial_payment_lines
+msgid "Custom Partial Payment Lines"
+msgstr "Líneas de Pago Parcial Personalizadas"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__access_url
+msgid "Customer Portal URL"
+msgstr "URL del Portal del Cliente"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_lines__date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement__date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement_lines__date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_custom_partial_payment_lines__date
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_agent_commission_settlement_tree_view
+msgid "Date"
+msgstr "Fecha"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__description
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_ager_info__display_name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__display_name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_lines__display_name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement__display_name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement_lines__display_name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_amenities__display_name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_custom_partial_payment_lines__display_name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_exterior__display_name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_facade__display_name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_interior__display_name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_landscape__display_name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_neighborhood__display_name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_partial_payment__display_name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_transportation__display_name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_type__display_name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__display_name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_unit_unit__display_name
+msgid "Display Name"
+msgstr "Nombre"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__product_template__state__draft
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
+msgid "Duration"
+msgstr "Duración"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__electricity_safety_certificate
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__electricity_safety_certificate
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__electricity_safety_certificate
+msgid "Electricity Safety Certificate Attachment"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_agent_email_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_landlord_email_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_agent_email_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_landlord_email_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_res_partner__property_agent_email_ids
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_res_users__property_agent_email_ids
+msgid "Email"
+msgstr "Correo Electrónico"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__epc
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__epc
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__epc
+msgid "Energy Performance (EPC)"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__sr_tenancy_agreement__state__expired
+msgid "Expired"
+msgstr "Experido"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_exterior_ids
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_exterior_ids
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Exterior"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_facade_ids
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_facade_ids
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Facade"
+msgstr "Fachada"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__delivery_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__delivery_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__delivery_date
+msgid "Fecha de entrega"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__final_price
+msgid "Final Price"
+msgstr "Precio Final"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
+msgid "Financial Information"
+msgstr "Información Financiera"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__product_template__property_agent_commission_type__fixed
+msgid "Fixed"
+msgstr "Fijo"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_floor
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_floor
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__unit_floor
+msgid "Floor"
+msgstr "Piso"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Socios)"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__gas_safety_exp_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__gas_safety_exp_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__unit_gas_safety_exp_date
+msgid "Gas Safety Expiry Date"
+msgstr "Fecha de Vencimiento de Seguridad de Gas"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.property_unit_id
+msgid "General Information"
+msgstr "Información General"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
+msgid "Generar Cuotas"
+msgstr "Generar Cuotas"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__has_message
+msgid "Has Message"
+msgstr "Tiene Mensaje"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_ager_info__id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_lines__id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement__id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement_lines__id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_amenities__id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_custom_partial_payment_lines__id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_exterior__id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_facade__id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_interior__id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_landscape__id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_neighborhood__id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_partial_payment__id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_transportation__id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_type__id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_unit_unit__id
+msgid "ID"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__activity_exception_icon
+msgid "Icon"
+msgstr "Ícono"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Ícono para indicar una actividad excepcional."
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__message_needaction
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__message_unread
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcado, los nuevos mensajes requieren tu atención."
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__message_has_error
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si está marcado, algunos mensajes tienen un error de entrega."
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__image_1920
+msgid "Image"
+msgstr "Imagen"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__initial_amount
+msgid "Initial Amount"
+msgstr "Monto De Separación"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__partial_payment_id
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__sr_tenancy_agreement__payment_option__installment
+msgid "Installments"
+msgstr "Cuotas"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_interior_ids
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_interior_ids
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Interior"
+msgstr "Interior"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__sr_property_agent_commission_settlement__state__invoiced
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__sr_tenancy_agreement__state__invoiced
+msgid "Invoiced"
+msgstr "Facturado"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Invoices"
+msgstr "Facturas"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_res_partner__is_agent
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_res_users__is_agent
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.view_partner_form_extends_landloard_agent_boolean
+msgid "Is Agent?"
+msgstr "¿Es Agente?"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_lines__is_commission_settled
+msgid "Is Commission Settled?"
+msgstr "¿Está Comisión Liquidada?"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__message_is_follower
+msgid "Is Follower"
+msgstr "¿Es Seguidor?"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.view_partner_form_extends_landloard_agent_boolean
+msgid "Is Landlord"
+msgstr "¿Es Propietario?"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_res_partner__is_landlord
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_res_users__is_landlord
+msgid "Is Landlord?"
+msgstr "¿Es Propietario?"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_account_bank_statement_line__is_property_commission_bill
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_account_move__is_property_commission_bill
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_account_payment__is_property_commission_bill
+msgid "Is Property Commission Invoice?"
+msgstr "¿Es Factura de Comisión de Propiedad?"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_account_bank_statement_line__is_property_invoice
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_account_move__is_property_invoice
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_account_payment__is_property_invoice
+msgid "Is Property Invoice?"
+msgstr "¿Es Factura de Propiedad?"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__is_property
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__is_property
+msgid "Is Property?"
+msgstr "¿Es Propiedad?"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_res_partner__is_tenant
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_res_users__is_tenant
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.view_partner_form_extends_landloard_agent_boolean
+msgid "Is Tenant"
+msgstr "¿Es Inquilino?"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_account_move
+msgid "Journal Entry"
+msgstr "Asiento contable"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_landlord_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_landlord_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__landloard_id
+msgid "Landloard"
+msgstr "Propietario"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
+msgid "Landloard & Maintenance Information"
+msgstr "Información del Propietario y Mantenimiento"
+
+#. module: sr_property_rental_management
+#: model:res.groups,name:sr_property_rental_management.group_landlord
+msgid "Landlord"
+msgstr "Propietario"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_landscape_ids
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_landscape_ids
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Landscape"
+msgstr "Paisaje"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_ager_info____last_update
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit____last_update
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_lines____last_update
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement____last_update
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement_lines____last_update
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_amenities____last_update
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_custom_partial_payment_lines____last_update
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_exterior____last_update
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_facade____last_update
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_interior____last_update
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_landscape____last_update
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_neighborhood____last_update
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_partial_payment____last_update
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_transportation____last_update
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_type____last_update
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement____last_update
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_unit_unit____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_ager_info__write_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__write_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_lines__write_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement__write_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement_lines__write_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_amenities__write_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_custom_partial_payment_lines__write_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_exterior__write_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_facade__write_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_interior__write_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_landscape__write_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_neighborhood__write_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_partial_payment__write_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_transportation__write_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_type__write_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__write_uid
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_unit_unit__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_ager_info__write_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__write_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_lines__write_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement__write_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement_lines__write_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_amenities__write_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_custom_partial_payment_lines__write_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_exterior__write_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_facade__write_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_interior__write_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_landscape__write_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_neighborhood__write_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_partial_payment__write_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_transportation__write_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_type__write_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__write_date
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_unit_unit__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.module.category,description:sr_property_rental_management.property_management_category_types
+#: model:ir.module.category,name:sr_property_rental_management.property_management_category_types
+msgid "Leas Management"
+msgstr "Gestión de Arrendamiento"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Location Information"
+msgstr "Información de Ubicación"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Adjunto Principal"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
+msgid "Maintenance"
+msgstr "Mantenimiento"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_maintenance_charge
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_maintenance_charge
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__unit_maintenance_charge
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__maintenance_charge
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_unit_unit__maintenance_charge
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
+msgid "Maintenance Charge"
+msgstr "Cargo de Mantenimiento"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Maintenance Information"
+msgstr "Información de Mantenimiento"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_maintenance_interval_type
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_maintenance_interval_type
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__unit_maintenance_interval_type
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__maintenance_interval_type
+msgid "Maintenance Interval "
+msgstr "Intervalo de Mantenimiento"
+
+#. module: sr_property_rental_management
+#: model:res.groups,name:sr_property_rental_management.group_admin
+msgid "Manager/Admin"
+msgstr "Gerente/Administrador"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__medium_id
+msgid "Medium"
+msgstr "Medio"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__message_has_error
+msgid "Message Delivery error"
+msgstr "Error en la Entrega del Mensaje"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__currency_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__currency_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__currency_id
+msgid "Moneda"
+msgstr "Currency"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__sr_tenancy_agreement__agreement_duration_type__month
+msgid "Month"
+msgstr "Mes"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__product_template__property_maintenance_interval_type__month
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__property_unit__unit_maintenance_interval_type__month
+msgid "Monthly"
+msgstr "Mensual"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Fecha Límite de Mi Actividad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_amenities__name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_exterior__name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_facade__name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_interior__name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_landscape__name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_neighborhood__name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_partial_payment__name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_transportation__name
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_type__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_neighbourhood_ids
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_neighbourhood_ids
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Neighborhood"
+msgstr "Sector"
+
+#. module: sr_property_rental_management
+#: code:addons/sr_property_rental_management/models/sr_agent_commission.py:0
+#: code:addons/sr_property_rental_management/models/sr_agent_commission.py:0
+#: code:addons/sr_property_rental_management/models/sr_tenant_agreement.py:0
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__sr_property_agent_commission_settlement__state__new
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__sr_tenancy_agreement__state__new
+#, python-format
+msgid "New"
+msgstr "Nuevo"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__activity_date_deadline
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumen de la Próxima Actividad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__activity_type_id
+msgid "Next Activity Type"
+msgstr "Tipo de Próxima Actividad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_partial_payment__number_of_installments
+msgid "No of Installments"
+msgstr "Número de Cuotas"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de Acciones"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de Errores"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "Número de mensajes que requieren una acción"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de entrega"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__message_unread_counter
+msgid "Number of unread messages"
+msgstr "Número de mensajes no leídos"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__product_template__property_maintenance_interval_type__one_time
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__property_unit__unit_maintenance_interval_type__one_time
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__sr_tenancy_agreement__agreement_duration_type__one_time
+msgid "One Time"
+msgstr "Una Vez"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Other Information"
+msgstr "Otra Información"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__first_installment_date
+msgid "Pago de primer cuota"
+msgstr "Pago de primera cuota"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__agent_payment
+msgid "Payment"
+msgstr "Pago"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__payment_option
+msgid "Payments Option"
+msgstr "Opción de Pagos"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__product_template__property_agent_commission_type__percentage
+msgid "Percentage"
+msgstr "Porcentaje"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_partial_payment__is_custom
+msgid "Personalizado"
+msgstr "Personalizado"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_agent_phone
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_landlord_phone
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_agent_phone
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_landlord_phone
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_res_partner__property_agent_phones
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_res_users__property_agent_phones
+msgid "Phone"
+msgstr "Telefono"
+
+#. module: sr_property_rental_management
+#: code:addons/sr_property_rental_management/models/sr_property_product.py:0
+#: code:addons/sr_property_rental_management/models/sr_property_product.py:0
+#, python-format
+msgid "Please enter reasonable property rent price"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: code:addons/sr_property_rental_management/models/sr_property_product.py:0
+#: code:addons/sr_property_rental_management/models/sr_property_product.py:0
+#, python-format
+msgid "Please enter reasonable property sale price"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: code:addons/sr_property_rental_management/models/sr_tenant_agreement.py:0
+#, python-format
+msgid "Please set proper agreement start date"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__access_url
+msgid "Portal Access URL"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,help:sr_property_rental_management.field_product_product__property_rent_price
+#: model:ir.model.fields,help:sr_property_rental_management.field_product_template__property_rent_price
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__property_rent
+msgid "Price at which the Property is Rented to Tenants."
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,help:sr_property_rental_management.field_product_product__property_sale_price
+#: model:ir.model.fields,help:sr_property_rental_management.field_product_template__property_sale_price
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__property_sale_price
+msgid "Price at which the Property is sold to Tenants."
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,help:sr_property_rental_management.field_property_unit__unit_rent_price
+msgid "Price at which the Unit is Rented to Tenants."
+msgstr ""
+
+#. module: sr_property_rental_management
+#: code:addons/sr_property_rental_management/models/sr_tenant_agreement.py:0
+#, python-format
+msgid "Primero hay que separar la propiedad"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_product_template
+msgid "Product Template"
+msgstr "Plantilla producto"
+
+#. module: sr_property_rental_management
+#: model:ir.actions.act_window,name:sr_property_rental_management.sr_property_product_action
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_account_bank_statement_line__property_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_account_move__property_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_account_payment__property_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_ager_info__property
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_lines__property_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement_lines__property_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__property_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_unit_unit__property_id
+#: model:ir.ui.menu,name:sr_property_rental_management.sr_property_product_menu
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_agent_commission_lines_tree_view
+msgid "Property"
+msgstr "Propiedad"
+
+#. module: sr_property_rental_management
+#: model:ir.actions.act_window,name:sr_property_rental_management.sr_property_agent_action
+msgid "Property Agent"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.actions.act_window,name:sr_property_rental_management.sr_property_amenities_configuration_action
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_amenities_tree_view
+msgid "Property Amenities"
+msgstr "Amenidades"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
+msgid "Property And Price Details"
+msgstr "Detalles de la Propiedad y el Precio"
+
+#. module: sr_property_rental_management
+#: model:ir.actions.act_window,name:sr_property_rental_management.sr_property_exterior_configuration_action
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_exterior_tree_view
+msgid "Property Exterior"
+msgstr "Exterior de la Propiedad"
+
+#. module: sr_property_rental_management
+#: model:ir.actions.act_window,name:sr_property_rental_management.sr_property_facade_configuration_action
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_facade_tree_view
+msgid "Property Facade"
+msgstr "Fachada de la Propiedad"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Property Feature"
+msgstr "Característica de la Propiedad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_type
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_type
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__property_type
+msgid "Property For"
+msgstr "Propiedad Para"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Property Information"
+msgstr "Información de la Propiedad"
+
+#. module: sr_property_rental_management
+#: model:ir.actions.act_window,name:sr_property_rental_management.sr_property_interior_configuration_action
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_interior_tree_view
+msgid "Property Interior"
+msgstr "Interior de la Propiedad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_invoice_count
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_invoice_count
+msgid "Property Invoices Count"
+msgstr "Cantidad de Facturas de la Propiedad"
+
+#. module: sr_property_rental_management
+#: model:ir.actions.act_window,name:sr_property_rental_management.sr_property_landloard_action
+msgid "Property LandLord"
+msgstr "Propietario de la Propiedad"
+
+#. module: sr_property_rental_management
+#: model:ir.actions.act_window,name:sr_property_rental_management.sr_property_landscape_configuration_action
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_landscape_tree_view
+msgid "Property Landscape"
+msgstr "Paisaje de la Propiedad"
+
+#. module: sr_property_rental_management
+#: model:ir.ui.menu,name:sr_property_rental_management.sr_property_management_root
+msgid "Property Management"
+msgstr "Venta de Propiedades"
+
+#. module: sr_property_rental_management
+#: model:ir.actions.act_window,name:sr_property_rental_management.sr_property_neighborhood_configuration_action
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_neighborhood_tree_view
+msgid "Property Neighborhood"
+msgstr "Vecindario de la Propiedad"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_kanban_view_inherit_to_add_property_related_field
+msgid "Property Price :"
+msgstr "Precio de la Propiedad:"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_kanban_view_inherit_to_add_property_related_field
+msgid "Property Rent :"
+msgstr "Alquiler de la Propiedad:"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_rent_price
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_rent_price
+msgid "Property Rent Price"
+msgstr "Precio de Alquiler de la Propiedad"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Property Safety Information"
+msgstr "Información de Seguridad de la Propiedad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_sale_price
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_sale_price
+msgid "Property Sales Price"
+msgstr "Precio de Venta de la Propiedad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_construction_status
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_construction_status
+msgid "Property Status"
+msgstr "Estado de la Propiedad"
+
+#. module: sr_property_rental_management
+#: model:ir.actions.act_window,name:sr_property_rental_management.sr_property_transportation_configuration_action
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_transportation_tree_view
+msgid "Property Transportation"
+msgstr "Transporte de la Propiedad"
+
+#. module: sr_property_rental_management
+#: model:ir.actions.act_window,name:sr_property_rental_management.sr_property_type_configuration_action
+#: model:ir.ui.menu,name:sr_property_rental_management.sr_property_type_configuration_menu
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_property_type_tree_view
+msgid "Property Type"
+msgstr "Tipo de Propiedad"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_kanban_view_inherit_to_add_property_related_field
+msgid "Property Type :"
+msgstr "Tipo de Propiedad:"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
+msgid "Property price"
+msgstr "Precio de la Propiedad"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Provide extra information about your property"
+msgstr "Proporcione información adicional sobre su propiedad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_unit_unit__rate
+msgid "Rate"
+msgstr "Tarifa"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__product_template__property_construction_status__ready_to_move
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__property_unit__unit_construction_status__ready_to_move
+msgid "Ready To Move"
+msgstr "Listo para Moverse"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__property_rent
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__product_template__property_type__rent
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__property_unit__unit_type__rent
+msgid "Rent"
+msgstr "Alquiler"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__product_template__state__rented
+msgid "Rented"
+msgstr "Alquilado"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__reservation_history_ids
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__reservation_history_ids
+msgid "Reservation history"
+msgstr "Historial de reservas"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__reserve_amount
+msgid "Reserve Amount"
+msgstr "Monto de reserva"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Reserve for Rent"
+msgstr "Reservar para alquiler"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Reset To Draft"
+msgstr "Restablecer a borrador"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_residential_type_ids
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_residential_type_ids
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Residential Type"
+msgstr "Tipo de Residencia"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__activity_user_id
+msgid "Responsible User"
+msgstr "Usuario Responsable"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__sr_tenancy_agreement__state__running
+msgid "Running"
+msgstr "En Curso"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Error de Entrega de SMS"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.property_unit_id
+msgid "Safety Information"
+msgstr "Información de Seguridad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__product_template__property_type__sale
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__property_unit__unit_type__sale
+msgid "Sale"
+msgstr "Venta"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__property_sale_price
+msgid "Sale Price"
+msgstr "Precio de Venta"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__user_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__user_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__user_id
+msgid "Sales Person"
+msgstr "Persona de Ventas"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__access_token
+msgid "Security Token"
+msgstr "Token de Seguridad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__product_template__state__booked
+msgid "Separado"
+msgstr "Separado"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
+msgid "Separar Unidad"
+msgstr "Separar Unidad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__sr_tenancy_agreement__payment_option__single
+msgid "Single Payment"
+msgstr "Pago Único"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__product_template__state__sold
+msgid "Sold"
+msgstr "Vendido"
+
+#. module: sr_property_rental_management
+#: code:addons/sr_property_rental_management/models/sr_tenant_agreement.py:0
+#: code:addons/sr_property_rental_management/models/sr_tenant_agreement.py:0
+#, python-format
+msgid "Sorry! You are late. Someone has already occupy this property."
+msgstr "¡Lo siento! Llegaste tarde. Alguien ya ha ocupado esta propiedad."
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__source_id
+msgid "Source"
+msgstr "Fuente"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__state_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__state_id
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "State"
+msgstr "Estado"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__state
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__state
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement__state
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__state
+msgid "Status"
+msgstr "Estado"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_kanban_view_inherit_to_add_property_related_field
+msgid "Status :"
+msgstr "Estado:"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__street
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__street
+msgid "Street"
+msgstr "Calle"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Street 2..."
+msgstr "Calle 2..."
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Street..."
+msgstr "Calle..."
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__street2
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__street2
+msgid "Street2"
+msgstr "Calle2"
+
+#. module: sr_property_rental_management
+#: model:ir.actions.act_window,name:sr_property_rental_management.action_property_tenancy_agreement
+#: model:ir.actions.act_window,name:sr_property_rental_management.sr_property_tenancy_agreement_action
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_account_bank_statement_line__tenancy_agreement
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_account_move__tenancy_agreement
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_account_payment__tenancy_agreement
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement_lines__tenancy_agreement_id
+#: model:ir.ui.menu,name:sr_property_rental_management.sr_property_tenancy_agreement_menu
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_tree
+msgid "Tenancy Agreement"
+msgstr "Contrato"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__tenancy_agreement_count
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__tenancy_agreement_count
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_res_partner__settled_commission_count
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_res_users__settled_commission_count
+msgid "Tenancy Agreement Count"
+msgstr "Cantidad de Contratos de Arrendamiento"
+
+#. module: sr_property_rental_management
+#: model:ir.actions.server,name:sr_property_rental_management.ir_cron_tenancy_agreement_state_check_ir_actions_server
+#: model:ir.cron,cron_name:sr_property_rental_management.ir_cron_tenancy_agreement_state_check
+#: model:ir.cron,name:sr_property_rental_management.ir_cron_tenancy_agreement_state_check
+msgid "Tenancy Agreement: Check Agreement Start and Expiry Date"
+msgstr "Contrato: Verificar Fecha de Inicio y Vencimiento del Contrato"
+
+#. module: sr_property_rental_management
+#: model:ir.actions.act_window,name:sr_property_rental_management.sr_property_tenant_action
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__tenant_id
+#: model:ir.ui.menu,name:sr_property_rental_management.sr_property_tenant_menu
+#: model:res.groups,name:sr_property_rental_management.group_tenant
+msgid "Tenant"
+msgstr "Inquilino"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__name
+msgid "Tenant Agreement Reference"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: code:addons/sr_property_rental_management/models/sr_agent_commission.py:0
+#, python-format
+msgid ""
+"There is no any commission Lines.\n"
+" Please Calculate commission line or contact your administrator"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__campaign_id
+msgid ""
+"This is a name that helps you keep track of your different campaign efforts,"
+" e.g. Fall_Drive, Christmas_Special"
+msgstr ""
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__medium_id
+msgid "This is the method of delivery, e.g. Postcard, Email, or Banner Ad"
+msgstr "Este es el método de entrega, por ejemplo, Tarjeta Postal, Correo Electrónico o Anuncio en Banner"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__source_id
+msgid ""
+"This is the source of the link, e.g. Search Engine, another domain, or name "
+"of email list"
+msgstr ""
+"Esta es la fuente del enlace, por ejemplo, Motor de Búsqueda, otro dominio o nombre "
+"de lista de correo electrónico"
+
+#. module: sr_property_rental_management
+#: code:addons/sr_property_rental_management/models/sr_tenant_agreement.py:0
+#: code:addons/sr_property_rental_management/models/sr_tenant_agreement.py:0
+#, python-format
+msgid "This method can not called with rent property type"
+msgstr "Este método no puede ser llamado con el tipo de propiedad de alquiler"
+
+#. module: sr_property_rental_management
+#: code:addons/sr_property_rental_management/models/sr_tenant_agreement.py:0
+#: code:addons/sr_property_rental_management/models/sr_tenant_agreement.py:0
+#, python-format
+msgid "This property is not confirmed yet by administrator."
+msgstr "Esta propiedad aún no ha sido confirmada por el administrador."
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
+msgid "Total"
+msgstr "Total"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__total_maintenance
+msgid "Total Maintenance"
+msgstr "Mantenimiento Total"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__total_price
+msgid "Total Price"
+msgstr "Precio Total"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__property_transportation_ids
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__property_transportation_ids
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "Transportation"
+msgstr "Transporte"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo de actividad de excepción en el registro."
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__product_template__property_construction_status__under_const
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__property_unit__unit_construction_status__under_const
+msgid "Under Construction"
+msgstr "En Construcción"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__unit_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__unit_id
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__name
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.property_unit_id
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.unit_inherit_id
+msgid "Unit"
+msgstr "Unidad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__unit_type
+msgid "Unit     For"
+msgstr "Unidad     Para"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_unit_unit__name_unit
+msgid "Unit Name"
+msgstr "Nombre de la Unidad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__unit_rent_price
+msgid "Unit Rent Price"
+msgstr "Precio de Alquiler de la Unidad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_property_unit__unit_construction_status
+msgid "Unit Status"
+msgstr "Estado de la Unidad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__unite_id
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.property_unit_id
+msgid "Unite"
+msgstr "Unidad"
+
+#. module: sr_property_rental_management
+#: model:ir.ui.menu,name:sr_property_rental_management.unit_menu_id
+msgid "Unites"
+msgstr "Unidades"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__message_unread
+msgid "Unread Messages"
+msgstr "Mensajes No Leídos"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "Contador de Mensajes No Leídos"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_res_users
+msgid "Users"
+msgstr "Usuarios"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.sr_tenancy_agreement_form
+msgid "Vender Unidad"
+msgstr "Vender Unidad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_tenancy_agreement__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes del Sitio Web"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,help:sr_property_rental_management.field_sr_tenancy_agreement__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicación del sitio web"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__product_template__property_maintenance_interval_type__year
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__property_unit__unit_maintenance_interval_type__year
+msgid "Yearly"
+msgstr "Anualmente"
+
+#. module: sr_property_rental_management
+#: model_terms:ir.ui.view,arch_db:sr_property_rental_management.product_template_form_view_extends_add_property_information
+msgid "ZIP"
+msgstr "Código Postal"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_product__zip
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_product_template__zip
+msgid "Zip"
+msgstr "Código Postal"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields,field_description:sr_property_rental_management.field_sr_property_agent_commission_settlement__agent_id
+msgid "agent"
+msgstr "agente"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_ager_info
+msgid "ager.info"
+msgstr "ager.info"
+
+#. module: sr_property_rental_management
+#: model:ir.actions.act_window,name:sr_property_rental_management.unite_id
+#: model:ir.model,name:sr_property_rental_management.model_property_unit
+msgid "property.unit"
+msgstr "unidad.inmobiliaria"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_sr_property_agent_commission_lines
+msgid "sr.property.agent.commission.lines"
+msgstr "líneas.comisión.agente.inmobiliario"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_sr_property_agent_commission_settlement
+msgid "sr.property.agent.commission.settlement"
+msgstr "acuerdo.comisión.agente.inmobiliario"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_sr_property_agent_commission_settlement_lines
+msgid "sr.property.agent.commission.settlement.lines"
+msgstr "líneas.acuerdo.comisión.agente.inmobiliario"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_sr_property_amenities
+msgid "sr.property.amenities"
+msgstr "amenidades.inmobiliarias"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_sr_property_custom_partial_payment_lines
+msgid "sr.property.custom.partial.payment.lines"
+msgstr "líneas.pago.parcial.personalizado.inmobiliario"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_sr_property_exterior
+msgid "sr.property.exterior"
+msgstr "exterior.inmobiliario"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_sr_property_facade
+msgid "sr.property.facade"
+msgstr "fachada.inmobiliaria"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_sr_property_interior
+msgid "sr.property.interior"
+msgstr "interior.inmobiliario"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_sr_property_landscape
+msgid "sr.property.landscape"
+msgstr "paisaje.inmobiliario"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_sr_property_neighborhood
+msgid "sr.property.neighborhood"
+msgstr "vecindario.inmobiliario"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_sr_property_partial_payment
+msgid "sr.property.partial.payment"
+msgstr "pago.parcial.inmobiliario"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_sr_property_transportation
+msgid "sr.property.transportation"
+msgstr "transporte.inmobiliario"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_sr_property_type
+msgid "sr.property.type"
+msgstr "tipo.inmobiliario"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_sr_tenancy_agreement
+msgid "sr.tenancy.agreement"
+msgstr "acuerdo.arrendamiento"
+
+#. module: sr_property_rental_management
+#: model:ir.model,name:sr_property_rental_management.model_unit_unit
+msgid "unit.unit"
+msgstr "unidad.unidad"
+
+#. module: sr_property_rental_management
+#: model:ir.model.fields.selection,name:sr_property_rental_management.selection__sr_tenancy_agreement__agreement_duration_type__year
+msgid "year"
+msgstr "año"
