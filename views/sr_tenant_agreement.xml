@@ -27,14 +27,12 @@
 		<field name="arch" type="xml">
 			<form string="Tenancy Agreement">
 				<header invisible="context.get('hide_header')">
-					<button name="action_confirm" string="Confirm Agreement"
-						type="object" class="oe_highlight" state="new"  invisible="state == 'confirm'"/>
-<!--						type="object" class="oe_highlight" states="new" />-->
+					<button name="action_confirm" string="Vender Unidad" type="object" class="oe_highlight" state="new" />
+					<button name="action_booked" string="Separar Unidad" type="object" class="oe_highlight" state="new" />
+					<button name="action_create_gatos_legales_invoices" string="Generar Gastos Legales" type="object" class="oe_highlight" invisible="gastos_legales_invoiced != False" />
 
-					<button name="action_create_invoice" string="Create invoice"
-						type="object" class="oe_highlight"
-						invisible="property_type != 'sale' or state != 'confirm'" />
-<!--						attrs="{'invisible': ['|',('property_type', '!=', 'sale'),('state', '!=', 'confirm')]}" />-->
+					<button name="action_create_invoice_civiltec" string="Generar Cuotas" type="object" class="oe_highlight" invisible="property_type != 'sale' or state != 'confirm'" />
+					<button name="cancel_booked_property" string="Cancelar Reserva" type="object" invisible="property_type != 'sale' or state != 'confirm'" />
 
 					<field name="state" widget="statusbar"
 						statusbar_visible="new,running,expired,confirm" />
@@ -49,56 +47,52 @@
 					</div>
 					<group>
 						<group string="Property And Price Details">
+							<field name="company_id"/>
 							<field name="property_id" readonly="state != 'new'" options="{'no_create':True, 'no_create_edit':True, 'no_open':True}"/>
-<!--							<field name="property_id" attrs="{'readonly': [('state', '!=', 'new')]}" options="{'no_create':True, 'no_create_edit':True, 'no_open':True}"/>-->
 							<field name="property_type" />
 							<field name="property_rent" widget="monetary"
 								options="{'currency_field': 'currency_id', 'field_digits': True}"
 								invisible="property_type != 'rent'" />
-<!--								attrs="{'invisible': [('property_type', '!=', 'rent')]}" />-->
 							<field name="property_sale_price" widget="monetary"
 								options="{'currency_field': 'currency_id', 'field_digits': True}"
 								invisible="property_type != 'sale'" />
-<!--								attrs="{'invisible': [('property_type', '!=', 'sale')]}" />-->
+							<field name="reserve_amount" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" invisible="property_type != 'sale'" readonly="state == 'invoiced'" />
+							<field name="initial_amount" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" invisible="property_type != 'sale'" readonly="state == 'invoiced'" />
+							<field name="amount_to_finance" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" invisible="property_type != 'sale'" readonly="state == 'invoiced'" />
+							<field name="financing_amount" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" invisible="property_type != 'sale'" />
+							<field name="formatted_financed_percentage" invisible="property_type != 'sale'" />
+							<field name="gastos_legales" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" invisible="property_type != 'sale'" />
+							<field name="gastos_legales_invoiced" readonly="1"/>
 						</group>
 						<group string="Contract Details">
 							<field name="agreement_date" />
-							<field name="tenant_id" domain="[('is_tenant','=', True)]" readonly="state != 'new'" options="{'no_create':True, 'no_create_edit':True, 'no_open':True}"/>
-<!--							<field name="tenant_id" domain="[('is_tenant','=', True)]" attrs="{'readonly': [('state', '!=', 'new')]}" options="{'no_create':True, 'no_create_edit':True, 'no_open':True}"/>-->
+							<field name="tenant_id" readonly="state != 'new'" options="{'no_create':True, 'no_create_edit':True, 'no_open':True}"/>
+							<field name="co_tenant_id" readonly="state != 'new'" options="{'no_create':True, 'no_create_edit':True, 'no_open':True}"/>
+							<field name="co_owner_relationship"/>
 							<field name="payment_option" widget="radio"
 								invisible="property_type != 'sale'" required="property_type == 'sale'" readonly="state != 'new'" />
-<!--								attrs="{'invisible': [('property_type', '!=', 'sale')], 'required': [('property_type', '=', 'sale')], 'readonly': [('state', '!=', 'new')]}" />-->
 							<field name="partial_payment_id"
-								invisible="property_type != 'sale' or payment_option != 'installment'" required="property_type == 'sale' and payment_option == 'installment'" readonly="state != 'new'" />
-<!--								attrs="{'invisible': ['|',('property_type', '!=', 'sale'),('payment_option', '!=', 'installment')], 'required': [('property_type', '=', 'sale'),('payment_option', '=', 'installment')], 'readonly': [('state', '!=', 'new')]}" />-->
+								invisible="property_type != 'sale' or payment_option != 'installment'" required="property_type == 'sale' and payment_option == 'installment'" readonly="state != 'new'" options="{'no_create': True}" />
 							<field name="agreement_start_date"
 								invisible="property_type != 'rent'" required="property_type == 'rent'" readonly="state != 'new'" />
-<!--								attrs="{'invisible': [('property_type', '!=', 'rent')], 'required': [('property_type', '=', 'rent')], 'readonly': [('state', '!=', 'new')]}" />-->
+							<field name="first_installment_date" invisible="property_type != 'sale' or payment_option != 'installment'" required="property_type == 'sale' and payment_option == 'installment'" readonly="state == 'running'" />
 							<label for="agreement_duration" string="Duration"
 								invisible="property_type != 'rent'" required="property_type == 'rent'" readonly="state != 'new'" />
-<!--								attrs="{'invisible': [('property_type', '!=', 'rent')], 'required': [('property_type', '=', 'rent')], 'readonly': [('state', '!=', 'new')]}" />-->
 							<div invisible="property_type != 'rent'" required="property_type == 'rent'">
-<!--							<div attrs="{'invisible': [('property_type', '!=', 'rent')], 'required': [('property_type', '=', 'rent')]}">-->
 								<field name="agreement_duration" class="oe_inline" required="1" readonly="state != 'new'"/>
-<!--								<field name="agreement_duration" class="oe_inline" required="1" attrs="{'readonly': [('state', '!=', 'new')]}"/>-->
 								<field name="agreement_duration_type" class="oe_inline" required="1" readonly="state != 'new'"/>
-<!--								<field name="agreement_duration_type" class="oe_inline" required="1" attrs="{'readonly': [('state', '!=', 'new')]}"/>-->
 							</div>
 
 							<field name="agreement_expiry_date" invisible="property_type != 'rent'" required="property_type == 'rent'" />
-<!--							<field name="agreement_expiry_date" attrs="{'invisible': [('property_type', '!=', 'rent')], 'required': [('property_type', '=', 'rent')]}" />-->
+							<field name="delivery_date" readonly="state == 'running'" />
 						</group>
 
 					</group>
 					<group>
 						<group string="Agent Commission Details">
+							<field name="notario_publico_id" />
 							<field name="agent_id" />
-							<field name="commission_type" widget="radio" invisible="agent_id == False" />
-<!--							<field name="commission_type" widget="radio" attrs="{'invisible': [('agent_id', '=', False)]}" />-->
-							<field name="agent_commission" widget="monetary"
-								options="{'currency_field': 'currency_id', 'field_digits': True}"
-								invisible="agent_id == False" />
-<!--								attrs="{'invisible': [('agent_id', '=', False)]}" />-->
+							<field name="agent_type"/>
 						</group>
 						<group string="Landloard &amp; Maintenance Information">
 							<field name="landloard_id" />
@@ -132,7 +126,6 @@
 				<footer invisible="not context.get('hide_header')">
 					<button name="action_confirm" string="Confirm Agreement"
 						type="object" class="oe_highlight" state="new" />
-<!--						type="object" class="oe_highlight" states="new" />-->
 				</footer>
 			</form>
 			

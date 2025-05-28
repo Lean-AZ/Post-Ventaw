@@ -51,14 +51,6 @@ class srPropertyPartialPayment(models.Model):
         if self.property_id:
             self.name = f"Plan de Pagos - {self.property_id.name}"
 
-
-
-class srPropertyPartialPayment(models.Model):
-    _name = 'sr.property.partial.payment'
-
-    name = fields.Char('Name', required=True)
-    number_of_installments = fields.Integer("No of Installments", required=True)
-
 class srPropertyType(models.Model):
     _name = 'sr.property.type'
 
