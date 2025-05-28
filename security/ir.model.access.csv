@@ -1,6 +1,8 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_sr_property_partial_payment,Access.sr.property.partial.payment,model_sr_property_partial_payment,,1,1,1,1
 access_sr_property_type,Access.sr.property.type,model_sr_property_type,,1,1,1,1
+access_sr_property_custom_partial_payment,Access.sr.property.custom.partial.payment.lines,model_sr_property_custom_partial_payment_lines,,1,1,1,1
+access_sr_property_partial_payment,Access.sr.property.partial.payment,model_sr_property_partial_payment,,1,1,1,1
 access_sr_property_interior,Access.sr.property.interior,model_sr_property_interior,,1,1,1,1
 access_sr_property_exterior,Access.sr.property.exterior,model_sr_property_exterior,,1,1,1,1
 access_sr_property_facade,Access.sr.property.facade,model_sr_property_facade,,1,1,1,1
