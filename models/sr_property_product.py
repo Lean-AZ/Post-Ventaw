@@ -33,8 +33,6 @@ class srProductProduct(models.Model):
             self.property_maintenance_interval_type = 'one_time'
         return
 
-    def action_reset_draft(self):
-        self.state = 'draft'
 
     def action_view_property_invoices(self):
         self.ensure_one()
@@ -575,13 +573,13 @@ class srPropertytemplate(models.Model):
         )
         return
 
-    def action_reset_draft(self):
-        self.state = "draft"
 
     def set_to_draft_if_no_invoices(self):
         self._compute_property_invoice_count()
         if self.property_invoice_count == 0:
-            self.state = "draft"
+            self.sudo().write({
+                'state' : 'draft'
+            })
         else:
             raise UserError(
                 _("Cannot set to draft because there are associated invoices.")
@@ -677,7 +675,4 @@ class AccountMove(models.Model):
             'state' : 'available',
         })
         return
-
-    def action_reset_draft(self):
-        self.state = 'draft'
     
