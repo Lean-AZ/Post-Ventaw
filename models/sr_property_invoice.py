@@ -50,17 +50,14 @@ class srAccountMove(models.Model):
             if move.is_property_invoice and move.move_type == 'out_invoice' and move.payment_state in ('partial', 'paid'):
                 # Filter lines that are "mora"
                 amount_paid_temp = move.amount_total - move.amount_residual
+                
                 # Get all payments related to this invoice
-
-                # Get reconciled payment information
-                payments_info = move._get_reconciled_info_JSON_values()
-                mora_paid_temp = 0.0
-                # Search each payment record and sum mora_pagada_custom_sr
-                for payment_info in payments_info:
-                    payment_id = payment_info.get('account_payment_id')
-                    if payment_id:
-                        payment = move.env['account.payment'].browse(payment_id)
-                        mora_paid_temp += payment.mora_pagada_custom_sr
+                payments = self.env['account.payment'].search([
+                    ('reconciled_invoice_ids', 'in', move.id)
+                ])
+                
+                mora_paid_temp = sum(payments.mapped('mora_pagada_custom_sr'))
+                
                 # Initialize total mora paid from all payments
                 if mora_paid_temp > move.computed_mora:
                     move.mora_pagada_custom_sr = move.computed_mora
