@@ -27,6 +27,7 @@
         'security/ir.model.access.csv',
         'data/ir_sequence_data.xml',
         'data/ir_cron_data.xml',
+        'data/account_journal_data.xml',
         'views/sr_property_invoice.xml',
         'views/sr_agent_commission.xml',
         'views/sr_tenant_agreement.xml',
@@ -34,13 +35,13 @@
         'views/sr_property_product_view.xml',
         'views/sr_property_management_view.xml',
         'views/sr_property_management_configuration_view.xml',
-        
     ],
     'installable': True,
     'auto_install': False,
     'application': True,
     'live_test_url':'https://youtu.be/MTWHjYuEJng',
     "images":['static/description/banner.png'],
+    'post_init_hook': 'models.account_journal.post_init_hook',
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
