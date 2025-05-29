@@ -12,7 +12,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
 import datetime
 from dateutil.relativedelta import relativedelta
-import logging
+import calendar
 
 
 class srTenancyAgreement(models.Model):
@@ -532,8 +532,13 @@ class srTenancyAgreement(models.Model):
         )
 
         if not journal_id:
-            journal_id = self.env["account.move"]._search_default_journal(
-                journal_types=["sale"]
+            cid = self.company_id or self.env.company.id
+            journal_id = self.env["account.journal"].search(
+                domain=[
+                    *self.env["account.journal"]._check_company_domain(cid),
+                    ("type", "=", "sale"),
+                ],
+                limit=1,
             )
 
         accounts = self.property_id.product_tmpl_id.get_product_accounts()
@@ -548,10 +553,9 @@ class srTenancyAgreement(models.Model):
         )
 
         if self.payment_option == "single":
-            self.env["account.move"].create(
+            invoice = self.env["account.move"].create(
                 {
                     "partner_id": self.tenant_id.id,
-                    "auto_post": True,
                     "invoice_date": datetime.datetime.today().date(),
                     "invoice_date_due": datetime.datetime.today().date()
                     + relativedelta(days=30),
@@ -571,17 +575,19 @@ class srTenancyAgreement(models.Model):
                                 "quantity": 1,
                                 "price_unit": self.total_price,
                                 "account_id": income_account_id,
+                                "tax_ids": [(6, 0, [])],
                             },
                         )
                     ],
                 }
             )
+            invoice.action_post()
+            return invoice
         else:
             if not self.partial_payment_id.is_custom:
-                self.env["account.move"].create(
+                invoice = self.env["account.move"].create(
                     {
                         "partner_id": self.tenant_id.id,
-                        "auto_post": True,
                         "invoice_date": datetime.datetime.today().date(),
                         "invoice_date_due": datetime.datetime.today().date()
                         + relativedelta(days=30),
@@ -601,21 +607,23 @@ class srTenancyAgreement(models.Model):
                                     "quantity": 1,
                                     "price_unit": self.initial_amount,
                                     "account_id": income_account_id,
+                                    "tax_ids": [(6, 0, [])],
                                 },
                             )
                         ],
                     }
                 )
+                invoice.action_post()
+                return invoice
             installment_date = self.first_installment_date
             if self.partial_payment_id.is_custom:
                 amount = 0
                 for index, line in enumerate(
                     self.partial_payment_id.custom_partial_payment_lines, start=1
                 ):
-                    self.env["account.move"].create(
+                    invoice_regular = self.env["account.move"].create(
                         {
                             "partner_id": self.tenant_id.id,
-                            "auto_post": True,
                             "invoice_date": line.date,
                             "invoice_date_due": line.date + relativedelta(days=30),
                             "is_property_invoice": True,
@@ -634,36 +642,17 @@ class srTenancyAgreement(models.Model):
                                         "quantity": 1,
                                         "price_unit": line.amount,
                                         "account_id": income_account_id,
+                                        "tax_ids": [(6, 0, [])],
                                     },
                                 )
                             ],
                         }
                     )
                     amount += line.amount
-
-                # if (self.total_price - self.reserve_amount - self.initial_amount - amount) > 0:
-                #     self.env['account.move'].create({
-                #         'partner_id':self.tenant_id.id,
-                #         'invoice_date': self.property_id.delivery_date,
-                #         'is_property_invoice': True,
-                #         'property_id': self.property_id.id,
-                #         'move_type':'out_invoice',
-                #         'tenancy_agreement':self.id,
-                #         'journal_id':journal_id.id,
-                #         'currency_id': self.currency_id.id,
-                #         'invoice_line_ids':
-                #                 [(0, 0, {
-                #         'product_id':self.property_id.id,
-                #         'name': "Cuota Final :" + self.property_id.name,
-                #         'quantity':1,
-                #         'price_unit': self.total_price - self.reserve_amount - self.initial_amount - amount,
-                #         'account_id': income_account_id,
-                #             })]
-                #         })
-                self.env["account.move"].create(
+                    invoice_regular.action_post()
+                invoice = self.env["account.move"].create(
                     {
                         "partner_id": self.tenant_id.id,
-                        "auto_post": True,
                         "invoice_date": self.property_id.delivery_date,
                         "invoice_date_due": self.property_id.delivery_date
                         + relativedelta(days=30),
@@ -684,13 +673,14 @@ class srTenancyAgreement(models.Model):
                                     "price_unit": self.property_id.property_sale_price
                                     - amount,
                                     "account_id": income_account_id,
+                                    "tax_ids": [(6, 0, [])],
                                 },
                             )
                         ],
                     }
                 )
+                invoice.action_post()
             else:
-
                 def months_between_dates(initial_date_str, final_date_str):
                     initial_date = initial_date_str
                     final_date = final_date_str
@@ -719,10 +709,9 @@ class srTenancyAgreement(models.Model):
                     else:
                         installment_amount = regular_installment_amount
                         allocated_amount += installment_amount
-                    self.env["account.move"].create(
+                    invoice = self.env["account.move"].create(
                         {
                             "partner_id": self.tenant_id.id,
-                            "auto_post": True,
                             "invoice_date": installment_date,
                             "invoice_date_due": installment_date
                             + relativedelta(days=30),
@@ -745,6 +734,7 @@ class srTenancyAgreement(models.Model):
                                         "quantity": 1,
                                         "price_unit": installment_amount,
                                         "account_id": income_account_id,
+                                        "tax_ids": [(6, 0, [])],
                                     },
                                 )
                             ],
@@ -756,11 +746,11 @@ class srTenancyAgreement(models.Model):
                     )
                     installment_date = last_day_of_next_month
                     invoice_date_due = installment_date + relativedelta(days=30)
-
-                self.env["account.move"].create(
+                    invoice.action_post()
+                    return invoice
+                invoice = self.env["account.move"].create(
                     {
                         "partner_id": self.tenant_id.id,
-                        "auto_post": True,
                         "invoice_date": installment_date,
                         "invoice_date_due": invoice_date_due + relativedelta(days=30),
                         "is_property_invoice": True,
@@ -787,22 +777,16 @@ class srTenancyAgreement(models.Model):
                         ],
                     }
                 )
-        self.env["sr.property.agent.commission.lines"].create(
+        self.property_id.write(
             {
-                "name": self.env["ir.sequence"].next_by_code(
-                    "agent.commission.line.sequence",
-                    sequence_date=fields.Datetime.context_timestamp(
-                        self,
-                        fields.Datetime.to_datetime(datetime.datetime.today().date()),
-                    ),
-                ),
-                "tenancy_agreement_id": self.id,
-                "date": datetime.datetime.today().date(),
-                "commission_amount": self.commission_price,
+                "state": "sold",
             }
         )
-        self.property_id.state = "sold"
-        self.state = "invoiced"
+        self.write(
+            {
+                "state": "invoiced",
+            }
+        )
 
     def cancel_booked_property(self):
         if self.property_type != "sale":
@@ -843,19 +827,14 @@ class srTenancyAgreement(models.Model):
         return
 
     def action_booked(self):
-        _logger = logging.getLogger(__name__)
-        _logger.info("Starting action_booked method")
 
         if self.property_id.state in ["rented", "sold"]:
-            _logger.info("Property is already rented or sold")
             raise UserError(
                 _("Sorry! You are late. Someone has already occupy this property.")
             )
         if self.property_id.state == "draft":
-            _logger.info("Property is in draft state")
             raise UserError(_("This property is not confirmed yet by administrator."))
 
-        _logger.info("Updating agreement state to confirm")
         self.write(
             {
                 "state": "confirm",
@@ -869,16 +848,12 @@ class srTenancyAgreement(models.Model):
         )
 
         if self.property_type == "sale":
-            _logger.info("Property type is sale, updating state to booked")
             self.property_id.state = "booked"
             journal_id = self.env["account.journal"].search(
                 [("name", "ilike", "no fiscal")], limit=1
             )
 
             if not journal_id:
-                _logger.info(
-                    "No fiscal journal found, searching for default sale journal"
-                )
                 cid = self.company_id or self.env.company.id
                 journal_id = self.env["account.journal"].search(
                     domain=[
@@ -899,7 +874,6 @@ class srTenancyAgreement(models.Model):
             )
 
             # Create invoice regardless of payment type
-            _logger.info("Creating invoice for reservation")
             move = self.env["account.move"].create(
                 {
                     "partner_id": self.tenant_id.id,
@@ -928,15 +902,11 @@ class srTenancyAgreement(models.Model):
                     ],
                 }
             )
-            # Auto-post the invoice
             move.action_post()
-        else:
-            _logger.info("Property type is not sale, skipping invoice creation")
-
-        _logger.info("Finished action_booked method")
         return
 
     def action_create_gatos_legales_invoices(self):
+        """Create invoice for legal expenses (gastos legales)"""
         if self.property_id.state == "draft":
             raise UserError(_("This property is not confirmed yet by administrator."))
         if self.gastos_legales_invoiced:
@@ -944,32 +914,39 @@ class srTenancyAgreement(models.Model):
         if self.gastos_legales <= 0:
             raise UserError(_("Gastos Legales no pueden ser cero."))
 
+        # Mark as invoiced
         self.write({"gastos_legales_invoiced": True})
 
+        # Find appropriate journal
         journal_id = self.env["account.journal"].search(
             [("name", "ilike", "no fiscal")], limit=1
         )
 
         if not journal_id:
-            journal_id = self.env["account.move"]._search_default_journal(
-                journal_types=["sale"]
-            )
+                cid = self.company_id or self.env.company.id
+                journal_id = self.env["account.journal"].search(
+                    domain=[
+                        *self.env["account.journal"]._check_company_domain(cid),
+                        ("type", "=", "sale"),
+                    ],
+                    limit=1,
+                )
 
+        # Get accounts
         accounts = self.property_id.product_tmpl_id.get_product_accounts()
         advance_account = self.env["account.account"].search(
             [("name", "=", "Avance recibido de clientes")], limit=1
         )
-        # Fall back to the default income account if not found
         income_account_id = (
             advance_account.id if advance_account else accounts["income"].id
         )
-        self.env["account.move"].create(
+
+        # Create invoice
+        invoice = self.env["account.move"].create(
             {
                 "partner_id": self.tenant_id.id,
-                "auto_post": True,
                 "invoice_date": self.property_id.delivery_date,
-                "invoice_date_due": self.property_id.delivery_date
-                + relativedelta(days=30),
+                "invoice_date_due": self.property_id.delivery_date + relativedelta(days=30),
                 "is_property_invoice": True,
                 "property_id": self.property_id.id,
                 "move_type": "out_invoice",
@@ -982,16 +959,19 @@ class srTenancyAgreement(models.Model):
                         0,
                         {
                             "product_id": self.property_id.id,
-                            "name": "Gastos Legales :" + self.property_id.name,
+                            "name": f"Gastos Legales: {self.property_id.name}",
                             "quantity": 1,
                             "price_unit": self.gastos_legales,
                             "account_id": income_account_id,
+                            "tenancy_agreement": self.id,
+                            "tax_ids": [(6, 0, [])],
                         },
                     )
                 ],
             }
         )
-        return
+        invoice.action_post()
+        return invoice
 
     def check_tenancy_agreement_validity(self):
         start_agreement = self.search(
