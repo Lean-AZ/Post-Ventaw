@@ -41,7 +41,7 @@
     'application': True,
     'live_test_url':'https://youtu.be/MTWHjYuEJng',
     "images":['static/description/banner.png'],
-    'post_init_hook': 'models.account_journal.post_init_hook',
+    "post_init_hook": "post_init_hook",
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
