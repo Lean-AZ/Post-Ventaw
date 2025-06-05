@@ -9,18 +9,18 @@
 ##############################################################################
 
 {
-    'name': 'Property Sale, and Rental Management',
+    'name': 'Venta y Gestión de Propiedades',
     'version': '17.0.0.0',
     'category': 'Extra Addons',
     "license": "OPL-1",
-    'summary': 'Odoo Real Estate Management, Property Sale Management, Property Rent Management, Property Lease Management, Agent Management, Tenant Management, Landlord Management, Tenancy Agreement Management, Commission Management, property contract management',
+    'summary': 'Gestión de Venta y Alquiler de Propiedades',
     'description': """
         odoo Real Estate Management
 """,
     "price": 50,
     "currency": 'EUR',
-    'author': 'Sitaram',
-    'website':"https://www.sitaramsolutions.in",
+    'author': 'RhodeTech',
+    'website':"https://www.rhodetec.co",
     'depends': ['base', 'account', 'utm','product', 'civiltec_contact_fields'],
     'data': [
         'security/property_security.xml',
