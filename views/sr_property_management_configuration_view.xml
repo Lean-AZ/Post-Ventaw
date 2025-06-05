@@ -161,12 +161,12 @@
 				<sheet>
 					<group>
 						<group>
-							<field name="name" />
+							<field name="property_id" options="{'no_create': True}" context="{'create': False}" />
 							<field name="number_of_installments" invisible="1" />
 							<field name="is_custom" help="Marca este campo para especificar cuotas personalizadas. Si no está marcado, se generará una cuota mensual hasta la fecha de entrega basada en los valores del contrato."/>
 						</group>
 						<group invisible="is_custom == False">
-							<field name="property_id" options="{'no_create': True}" context="{'create': False}" />
+							<field name="name" />
 							<field name="property_price" invisible="property_id == False"/>
 							<field name="total_custom_payments" invisible="property_id == False"/>
 							<field name="remaining_balance" invisible="property_id == False" help="Este monto genera automáticamente una factura con el concepto de 'Cuota Final'." />
@@ -176,9 +176,9 @@
 						<page string="Cuotas">
 							<field name="custom_partial_payment_lines">
 								<tree string="Cuotas Tree" editable="bottom">
-									<field name="partial_payment_id" invisible="1"/>
-									<field name="date"/>
-									<field name="amount"/>
+									<field name="partial_payment_id" invisible="1" width="1%"/>
+									<field name="date" width="49%"/>
+									<field name="amount" width="50%"/>
 								</tree>
 							</field>
 						</page>

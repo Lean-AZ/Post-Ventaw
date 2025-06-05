@@ -333,6 +333,9 @@ class srTenancyAgreement(models.Model):
                 self.initial_amount = (
                     self.partial_payment_id.custom_partial_payment_lines[0].amount
                 )
+                self.first_installment_date = (
+                    self.partial_payment_id.custom_partial_payment_lines[0].date
+                )
                 self.amount_to_finance = (
                     self.partial_payment_id.total_custom_payments
                     - self.partial_payment_id.custom_partial_payment_lines[0].amount
@@ -1283,13 +1286,13 @@ class srTenancyAgreement(models.Model):
         }
         return ordinals.get(number, str(number))
 
-    @api.onchange("reserve_amount")
-    def _onchange_reserve_amount(self):
-        if self.reserve_amount <= 0:
-            self.reserve_amount = 0.0
-            return {
-                "warning": {
-                    "title": _("Advertencia"),
-                    "message": _("El monto de reserva debe ser mayor que 0."),
-                }
-            }
+
+    # def _onchange_reserve_amount(self):
+    #     if self.reserve_amount <= 0:
+    #         self.reserve_amount = 0.0
+    #         return {
+    #             "warning": {
+    #                 "title": _("Advertencia"),
+    #                 "message": _("El monto de reserva debe ser mayor que 0."),
+    #             }
+    #         }

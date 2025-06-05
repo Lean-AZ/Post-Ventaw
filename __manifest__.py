@@ -27,7 +27,6 @@
         'security/ir.model.access.csv',
         'data/ir_sequence_data.xml',
         'data/ir_cron_data.xml',
-        'data/account_journal_data.xml',
         'views/sr_property_invoice.xml',
         'views/sr_agent_commission.xml',
         'views/sr_tenant_agreement.xml',

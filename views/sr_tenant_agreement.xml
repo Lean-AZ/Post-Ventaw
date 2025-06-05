@@ -72,7 +72,7 @@
 							<field name="payment_option" widget="radio"
 								invisible="property_type != 'sale'" required="property_type == 'sale'" readonly="state != 'new'" />
 							<field name="partial_payment_id"
-								invisible="property_type != 'sale' or payment_option != 'installment'" required="property_type == 'sale' and payment_option == 'installment'" readonly="state != 'new'" options="{'no_create': True}" />
+								invisible="property_type != 'sale' or payment_option != 'installment'" required="property_type == 'sale' and payment_option == 'installment'" readonly="state != 'new'" options="{'no_create': True}" domain="[('property_id', '=', property_id)]" />
 							<field name="agreement_start_date"
 								invisible="property_type != 'rent'" required="property_type == 'rent'" readonly="state != 'new'" />
 							<field name="first_installment_date" invisible="property_type != 'sale' or payment_option != 'installment'" required="property_type == 'sale' and payment_option == 'installment'" readonly="state == 'running'" />

@@ -13,15 +13,21 @@ from odoo import models, fields, api, _
 class srPropertyCustomPartialPaymentLines(models.Model):
     _name = 'sr.property.custom.partial.payment.lines'
     partial_payment_id = fields.Many2one('sr.property.partial.payment', string="Partial Payment")
-    date = fields.Date("Date")
+    date = fields.Date("Date", required=True)
     amount = fields.Float("Amount", digits=(16, 3), required=True)
+
+    @api.constrains('amount')
+    def _check_amount_positive(self):
+        for record in self:
+            if record.amount < 0:
+                raise ValidationError(_("Amount cannot be negative."))
 
 class srPropertyPartialPayment(models.Model):
     _name = 'sr.property.partial.payment'
 
     name = fields.Char('Name', required=True)
     number_of_installments = fields.Integer("No of Installments", compute='_compute_number_of_installments', store=True)
-    is_custom = fields.Boolean("Personalizado", default=False, store=True)
+    is_custom = fields.Boolean("Personalizado", default=True, store=True)
     custom_partial_payment_lines = fields.One2many('sr.property.custom.partial.payment.lines', 'partial_payment_id', string="Custom Partial Payment Lines")
     property_id = fields.Many2one('product.product', 'Unidad', required=True, domain="[('is_property','=', True),('state','=', 'available')]", index=True, tracking=4)
     property_price = fields.Float(related='property_id.property_sale_price', string='Precio de la unidad', store=True, readonly=True)
