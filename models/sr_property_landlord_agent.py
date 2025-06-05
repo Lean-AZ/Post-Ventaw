@@ -61,3 +61,8 @@ class srResPartner(models.Model):
             ('agent_id', '=', self.id)
         ]
         return action
+
+class srResCompany(models.Model):
+    _inherit = 'res.company'
+
+    calcular_mora_cron = fields.Boolean('Calcular Mora Cron', default=False)
