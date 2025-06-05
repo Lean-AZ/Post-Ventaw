@@ -9,6 +9,8 @@
 ##############################################################################
 
 from odoo import models, fields, api, _
+from datetime import date
+from odoo.exceptions import UserError
 
 class srAccountMove(models.Model):
     _inherit = 'account.move.line'
@@ -117,6 +119,157 @@ class srAccountMove(models.Model):
             return payments
 
         return action
+
+    def compute_late_payment_interest(self):
+        """
+        Cron job para Odoo 17: calcula interés/mora sobre facturas
+        de propiedad vencidas y reaplica los pagos anteriores.
+        """
+
+        # Parámetros configurables
+        interest_percent = 5            # 5% (porcentaje anual o como lo necesites)
+        days_to_compute = 30            # prorrateo en 30 días
+        company_ids = self.env['res.company'].search([]).ids
+
+        today = date.today()
+
+        # 1. Recuperar las compañías de trabajo
+        companies = self.env['res.company'].sudo().browse(company_ids)
+
+        for company in companies:
+            # 2. Obtener la cuenta de "Ingresos por Mora e intereses clientes"
+            advance_account = (
+                self.env['account.account']
+                .sudo()
+                .search([
+                    ('name', '=', 'Ingresos por Mora e intereses clientes'),
+                    ('company_id', '=', company.id),
+                ], limit=1)
+            )
+            if not advance_account:
+                raise UserError(_(
+                    'No se encontró la cuenta "Ingresos por Mora e intereses clientes" '
+                    'para la compañía %s.' % company.name
+                ))
+            income_account_id = advance_account.id
+
+            # 3. Buscar facturas vigentes (posted), de tipo cliente, con residual > 0 y vencidas
+            invoices = (
+                self.search([
+                    ('company_id', '=', company.id),
+                    ('state', '=', 'posted'),
+                    ('move_type', '=', 'out_invoice'),
+                    ('amount_residual', '>', 0.0),
+                    ('invoice_date_due', '<', today),
+                    ('is_property_invoice', '=', True),
+                    ('is_ajuste_de_precio', '=', False),
+                ])
+                .sudo()
+            )
+
+            for inv in invoices:
+                # Trabajaremos el record sin validar estrictamente movimientos
+                inv = inv.with_context(check_move_validity=False)
+                due_days = (today - inv.invoice_date_due).days
+                if due_days <= 0:
+                    continue
+
+                # --- Paso 1: Capturar los pagos parciales ya conciliados ---
+                payment_data = []
+                # En v17, cada línea de "receivable" que ya esté conciliada
+                # tendrá un campo payment_id apuntando al record de account.payment.
+                receivable_lines = inv.line_ids.filtered(
+                    lambda l: l.account_id.account_type == 'asset_receivable' and l.payment_id
+                )
+                for line in receivable_lines:
+                    payment_data.append({
+                        'payment_id': line.payment_id.id,
+                        # El monto que se aplicó de ese pago a la factura 
+                        # es el valor absoluto de la cantidad reconciliada: 
+                        # en la línea de pago, balance será negativo o positivo según débito/crédito.
+                        'amount': abs(line.balance),
+                    })
+
+                # --- Paso 2: Desconciliar todos esos pagos de la factura ---
+                # Quitamos la conciliación de las líneas de tipo "receivable"
+                for line in receivable_lines:
+                    # `remove_move_reconcile()` es válido en v17
+                    line.remove_move_reconcile()
+
+                # --- Paso 3: Calcular o actualizar la línea de "Mora" en la factura ---
+                # Filtrar si ya existe una línea cuyo nombre contenga "mora"
+                mora_line = inv.invoice_line_ids.filtered(
+                    lambda l: l.name and 'mora' in l.name.lower()
+                )
+
+                # Monto que aún resta por pagar (sin contar la línea de mora previa)
+                amount_due = inv.amount_residual
+
+                if mora_line:
+                    # Si ya existía línea de "Mora", la actualizamos
+                    mora_total_prev = sum(mora_line.mapped('price_total'))
+                    amount_due -= mora_total_prev
+                    daily_mora = amount_due * (interest_percent / 100.0) / days_to_compute
+                    nueva_mora = daily_mora * due_days
+                    mora_line.write({'price_unit': nueva_mora})
+                    # Usamos onchange para recalcular impuestos, totales, etc.
+                    inv._compute_amount()
+                else:
+                    # Si no existe, la creamos nueva bajo el nombre "Mora"
+                    daily_mora = amount_due * (interest_percent / 100.0) / days_to_compute
+                    nueva_mora = daily_mora * due_days
+                    inv.write({
+                        'invoice_line_ids': [
+                            (0, 0, {
+                                'name': 'Mora',
+                                'quantity': 1.0,
+                                'price_unit': nueva_mora,
+                                'account_id': income_account_id,
+                                'tax_ids': [(6, 0, [])],
+                            })
+                        ]
+                    })
+                    # Disparar el onchange para recalcular líneas dinámicas (impuestos, totales, etc.)
+                    inv._compute_amount()
+
+                # --- Paso 4: Reaplicar cada pago guardado en payment_data ---
+                for p_data in payment_data:
+                    payment = self.env['account.payment'].browse(p_data['payment_id'])
+                    if not payment:
+                        continue
+
+                    # En Odoo 17, para reasignar un pago a una factura,
+                    # usamos `js_assign_outstanding_line()` indicando el ID de la línea de move 
+                    # que corresponde al registro "receivable" del pago.
+                    # Encontramos primero la línea de move de ese pago que sea receivable:
+                    payment_move = payment.move_id
+                    payment_receivable_line = payment_move.line_ids.filtered(
+                        lambda l: l.account_id.account_type == 'asset_receivable'
+                    )
+                    # Si la concilación se hiciera sobre varias líneas, puedes filtrar
+                    # adicionalmente por balance = -p_data['amount'] o algo similar.
+
+                    if payment_receivable_line:
+                        try:
+                            inv.js_assign_outstanding_line(payment_receivable_line.id)
+                        except Exception as e:
+                            # Loguear el error pero no interrumpir el proceso de lote
+                            log_vals = {
+                                'name': 'cron_compute_interest_and_mora',
+                                'type': 'server',
+                                'dbname': self.env.cr.dbname,
+                                'message': _(
+                                    'Error reasignando pago %s a factura %s: %s'
+                                ) % (payment.name, inv.name, str(e)),
+                                'level': 'ERROR',
+                                'path': 'cron_interest.py',
+                                'func': '_cron_compute_interest_and_mora',
+                            }
+                            self.env['ir.logging'].sudo().create(log_vals)
+                            continue
+
+        return True
+
 
 class srAccountPaymentWizard(models.TransientModel):
     _inherit = 'account.payment.register'
