@@ -16,7 +16,7 @@ def _create_no_fiscal_journal(env):
             env['account.journal'].create({
                 'name': 'No Fiscal Journal',
                 'code': 'NFJ',
-                'type': 'general',
+                'type': 'sale',
                 'company_id': company.id,
             })
 
@@ -37,7 +37,7 @@ def _create_advance_account(env):
                 'name': 'Avance recibido de clientes',
                 'code': '430000',  # Using a standard code for customer advances
                 'company_id': company.id,
-                'account_type': 'asset_receivable',
+                'account_type': 'liability_non_current',
                 'reconcile': True,
             })
 

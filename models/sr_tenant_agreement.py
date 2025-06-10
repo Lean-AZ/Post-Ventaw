@@ -584,7 +584,7 @@ class srTenancyAgreement(models.Model):
                     ],
                 }
             )
-            invoice.action_post()
+            # invoice.action_post()
             return invoice
         else:
             if not self.partial_payment_id.is_custom:
@@ -616,7 +616,7 @@ class srTenancyAgreement(models.Model):
                         ],
                     }
                 )
-                invoice.action_post()
+                # invoice.action_post()
                 return invoice
             installment_date = self.first_installment_date
             if self.partial_payment_id.is_custom:
@@ -652,7 +652,7 @@ class srTenancyAgreement(models.Model):
                         }
                     )
                     amount += line.amount
-                    invoice_regular.action_post()
+                    # invoice_regular.action_post()
                 invoice = self.env["account.move"].create(
                     {
                         "partner_id": self.tenant_id.id,
@@ -682,7 +682,7 @@ class srTenancyAgreement(models.Model):
                         ],
                     }
                 )
-                invoice.action_post()
+                # invoice.action_post()
             else:
                 def months_between_dates(initial_date_str, final_date_str):
                     initial_date = initial_date_str
@@ -749,7 +749,7 @@ class srTenancyAgreement(models.Model):
                     )
                     installment_date = last_day_of_next_month
                     invoice_date_due = installment_date + relativedelta(days=30)
-                    invoice.action_post()
+                    # invoice.action_post()
                     return invoice
                 invoice = self.env["account.move"].create(
                     {
@@ -905,7 +905,7 @@ class srTenancyAgreement(models.Model):
                     ],
                 }
             )
-            move.action_post()
+            # move.action_post()
         return
 
     def action_create_gatos_legales_invoices(self):
@@ -973,7 +973,7 @@ class srTenancyAgreement(models.Model):
                 ],
             }
         )
-        invoice.action_post()
+        # invoice.action_post()
         return invoice
 
     def check_tenancy_agreement_validity(self):

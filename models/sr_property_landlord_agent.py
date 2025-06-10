@@ -17,7 +17,6 @@ class srResUsers(models.Model):
     def create(self, vals_list):
         users = super(srResUsers, self).create(vals_list)
         for user in users:
-            # if partner is global we keep it that way
             if user.has_group('sr_property_rental_management.group_landlord'):
                 user.partner_id.is_landlord = True
             if user.has_group('sr_property_rental_management.group_agent'):
@@ -28,18 +27,23 @@ class srResUsers(models.Model):
     
     def write(self, values):
         res = super(srResUsers, self).write(values)
-        if self.has_group('sr_property_rental_management.group_landlord'):
-            self.partner_id.is_landlord = True
-        else:
-            self.partner_id.is_landlord = False
-        if self.has_group('sr_property_rental_management.group_agent'):
-            self.partner_id.is_agent = True
-        else:
-            self.partner_id.is_agent = False
-        if self.has_group('sr_property_rental_management.group_tenant'):
-            self.partner_id.is_tenant = True
-        else:
-            self.partner_id.is_tenant = False
+        for user in self:
+            if user.has_group('sr_property_rental_management.group_landlord'):
+                user.partner_id.is_landlord = True
+            else:
+                user.partner_id.is_landlord = False
+
+            if user.has_group('sr_property_rental_management.group_agent'):
+                user.partner_id.is_agent = True
+            else:
+                user.partner_id.is_agent = False
+
+            if user.has_group('sr_property_rental_management.group_tenant'):
+                user.partner_id.is_tenant = True
+            else:
+                user.partner_id.is_tenant = False
+
+        return res
 
 
 class srResPartner(models.Model):
