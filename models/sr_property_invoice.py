@@ -98,7 +98,7 @@ class srAccountMove(models.Model):
                     'default_mora_pagada_custom_sr': total_mora_pendiente if total_mora_pendiente > 0 else 0.0,
                     'default_is_property_invoice': all_records[0].is_property_invoice,
                     'default_group_payment': True,
-                    'default_capital_pagado_custom_sr': total_capital_pendiente - total_mora_pendiente if total_capital_pendiente - total_mora_pendiente > 0 else 0.0,
+                    # 'default_capital_pagado_custom_sr': total_capital_pendiente - total_mora_pendiente if total_capital_pendiente - total_mora_pendiente > 0 else 0.0,
                 })
         else:
             # Single record case
@@ -109,7 +109,7 @@ class srAccountMove(models.Model):
                 action['context'].update({
                     'default_mora_pagada_custom_sr': mora_pendiente if mora_pendiente > 0 else 0.0,
                     'default_is_property_invoice': self.is_property_invoice,
-                    'default_capital_pagado_custom_sr': capital_pendiente if capital_pendiente > 0 else 0.0,
+                    # 'default_capital_pagado_custom_sr': capital_pendiente if capital_pendiente > 0 else 0.0,
                 })
 
         def _create_payments(self):
@@ -296,6 +296,30 @@ class srAccountPaymentWizard(models.TransientModel):
                 wizard.capital_pagado_custom_sr = wizard.amount - wizard.mora_pagada_custom_sr
             else:
                 wizard.capital_pagado_custom_sr = 0.00
+
+    def action_create_payments(self):
+        # Call parent method - it returns True/False, not payments
+        result = super().action_create_payments()
+        
+        # Since the parent method returns a boolean, we need to find the created payments
+        # We'll use the wizard's context to identify the payments
+        if result and self.is_property_invoice:
+            # Find payments created for this wizard session
+            # We can identify them by looking for recent payments with the same amount and date
+            payments = self.env['account.payment'].search([
+                ('amount', '=', self.amount),
+                ('date', '=', self.payment_date),
+                ('payment_method_line_id', '=', self.payment_method_line_id.id),
+            ], order='id desc', limit=1)
+            
+            if payments:
+                for payment in payments:
+                    payment.capital_pagado_custom_sr = self.capital_pagado_custom_sr
+                    payment.mora_pagada_custom_sr = self.mora_pagada_custom_sr
+                    payment.is_property_invoice = self.is_property_invoice
+        
+        return result
+
 
 class srAccountPayment(models.Model):
     _inherit = 'account.payment'
