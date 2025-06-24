@@ -211,7 +211,7 @@
 							placeholder="Provide extra information about your property" />
 					</group>
 				</page>
-				<page string="Property Feature"
+				<!-- <page string="Property Feature"
 					name="property_feature_information"
 					invisible="is_property == False">
 					<group>
@@ -266,9 +266,9 @@
 								readonly="state != 'draft'" />
 						</group>
 					</group>
-				</page>
+				</page> -->
 
-				<page string="Property Safty Information"
+				<!-- <page string="Property Safty Information"
 					name="property_safty_information"
 					invisible="is_property == False">
 					<group>
@@ -281,9 +281,9 @@
 							<field name="epc" readonly="state != 'draft'" />
 						</group>
 					</group>
-				</page>
+				</page> -->
 
-				<page string="Landlord(Owner) Information"
+				<!-- <page string="Landlord(Owner) Information"
 					name="property_owner_information"
 					invisible="is_property == False">
 					<group>
@@ -294,8 +294,8 @@
 						<field name="property_landlord_email_id" />
 						<field name="property_landlord_phone" />
 					</group>
-				</page>
-				<page string="Agent Information"
+				</page> -->
+				<!-- <page string="Agent Information"
 					name="property_agent_information"
 					invisible="is_property == False">
 					<group>
@@ -310,7 +310,7 @@
 						<field name="property_agent_email_id" />
 						<field name="property_agent_phone" />
 					</group>
-				</page>
+				</page> -->
 			</xpath>
 
 		</field>
