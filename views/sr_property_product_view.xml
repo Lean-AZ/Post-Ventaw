@@ -85,7 +85,7 @@
 						invisible="is_property == False or state not in ['draft']"
 						groups="sr_property_rental_management.group_landlord,sr_property_rental_management.group_admin" />
 
-					<button name="set_to_draft_if_no_invoices" type="object" class="btn-primary" string="Reset To Draft" state="sold" groups="sr_property_rental_management.group_landlord,sr_property_rental_management.group_admin"/>
+					<button name="set_to_draft_if_no_invoices" type="object" class="btn-primary" string="Reset To Draft" groups="sr_property_rental_management.group_admin"/>
 
 					<button name="%(action_property_tenancy_agreement)d"
 						type="action" class="btn-primary" string="Reserve for Rent"
