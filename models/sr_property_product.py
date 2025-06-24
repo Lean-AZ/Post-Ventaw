@@ -56,7 +56,7 @@ class srProductProduct(models.Model):
 
     def _compute_property_invoice_count(self):
         invoice_ids = self.env["account.move"].search(
-            [("property_id.product_tmpl_id", "=", self.id)]
+            [("property_id", "=", self.id)]
         )
         self.property_invoice_count = len(invoice_ids)
 
