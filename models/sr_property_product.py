@@ -75,6 +75,12 @@ class srProductProduct(models.Model):
 class srPropertytemplate(models.Model):
     _inherit = 'product.template'
 
+    @api.model
+    def default_get(self, fields):
+        res = super(srPropertytemplate, self).default_get(fields)
+        if 'company_id' in fields:
+            res['company_id'] = self.env.company.id
+        return res
 
     @api.onchange('property_type')
     def onchage_property_type(self):

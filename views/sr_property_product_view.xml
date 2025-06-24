@@ -139,6 +139,7 @@
 				<page string="General Information" name="property_general_information" invisible="is_property == False">
 					<group>
 						<group string="Basic Information">
+							<field name="company_id" required="is_property == True" readonly="state != 'draft'" options="{'no_open': True, 'no_quick_create': True}" />
 							<field name="property_type" required="is_property == True" readonly="state != 'draft'" />
 							<field name="property_sale_price" widget="monetary"
 								options="{'currency_field': 'currency_id', 'field_digits': True}"
