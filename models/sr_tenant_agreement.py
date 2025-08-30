@@ -20,6 +20,26 @@ class srTenancyAgreement(models.Model):
     _description = "Tenant Agreement"
     _inherit = ["portal.mixin", "mail.thread", "mail.activity.mixin", "utm.mixin"]
 
+
+    @api.depends('agent_commission', 'agent_id')
+    def _compute_commission_price(self):
+        for record in self:
+            if record.agent_id:
+                # Find the commission structure that contains this agent
+                commission_structure = self.env['sr.agent.commission.structure'].search([
+                    ('agents_ids', 'in', record.agent_id.id)
+                ], limit=1)
+                
+                if commission_structure:
+                    # Calculate commission based on the structure percentage
+                    record.commission_price = record.total_price * (commission_structure.percentage / 100.0)
+                else:
+                    # Default commission if no structure found
+                    record.commission_price = 0.0
+            else:
+                record.commission_price = 0.0
+
+
     @api.depends(
         "property_id",
         "agreement_start_date",
@@ -86,7 +106,6 @@ class srTenancyAgreement(models.Model):
                         "total_price": num_months
                         * order.property_id.property_rent_price,
                         "total_maintenance": maintenance_charge,
-                        "commission_price": commission,
                         "final_price": (
                             num_months * order.property_id.property_rent_price
                         )
@@ -105,7 +124,6 @@ class srTenancyAgreement(models.Model):
                     {
                         "total_price": order.property_sale_price,
                         "total_maintenance": order.maintenance_charge,
-                        "commission_price": commission,
                         "final_price": commission
                         + order.maintenance_charge
                         + order.property_sale_price,
@@ -116,7 +134,6 @@ class srTenancyAgreement(models.Model):
                     {
                         "total_price": 0,
                         "total_maintenance": 0,
-                        "commission_price": 0,
                         "final_price": 0,
                     }
                 )
@@ -224,7 +241,7 @@ class srTenancyAgreement(models.Model):
         "Total Price", compute="_compute_amount_all", store=True
     )
     commission_price = fields.Monetary(
-        "Commission", compute="_compute_amount_all", store=True
+        "Commission", compute="_compute_commission_price", store=True
     )
     final_price = fields.Monetary(
         "Final Price", compute="_compute_amount_all", store=True
@@ -553,6 +570,21 @@ class srTenancyAgreement(models.Model):
         # Fall back to the default income account if not found
         income_account_id = (
             advance_account.id if advance_account else accounts["income"].id
+        )
+
+        self.env["sr.property.agent.commission.lines"].create(
+            {
+                "name": self.env["ir.sequence"].next_by_code(
+                    "agent.commission.line.sequence",
+                    sequence_date=fields.Datetime.context_timestamp(
+                        self,
+                        fields.Datetime.to_datetime(datetime.datetime.today().date()),
+                    ),
+                ),
+                "tenancy_agreement_id": self.id,
+                "date": datetime.datetime.today().date(),
+                "commission_amount": self.commission_price,
+            }
         )
 
         if self.payment_option == "single":

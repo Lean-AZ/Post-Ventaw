@@ -212,6 +212,10 @@
 						</group>
 					</group>
 					<group string="Other Information">
+					    <group string="Website Information">
+                            <field name="sale_ok" />
+                            <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                        </group>
 						<field name="description" nolabel="1"
 							readonly="state != 'draft'"
 							placeholder="Provide extra information about your property" />

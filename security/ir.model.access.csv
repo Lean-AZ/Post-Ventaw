@@ -27,3 +27,4 @@ read_property_product_write_tenant,Read.property.product.write.tenant,product.mo
 ,,,,,,,
 read_property_template_write_agent,Read.property.template.write.agent,product.model_product_template,sr_property_rental_management.group_agent,1,1,0,0
 read_property_product_write_agent,Read.property.product.write.agent,product.model_product_product,sr_property_rental_management.group_agent,1,1,0,0
+access_sr_agent_commission_structure,Access.sr.agent.commission.structure,model_sr_agent_commission_structure,,1,1,1,1

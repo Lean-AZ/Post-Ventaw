@@ -70,3 +70,11 @@ class srResCompany(models.Model):
     _inherit = 'res.company'
 
     calcular_mora_cron = fields.Boolean('Calcular Mora Cron', default=False)
+
+class srAgentCommissionStructure(models.Model):
+    _name = 'sr.agent.commission.structure'
+    _description = 'Agent Commission Structure'
+
+    name = fields.Char('Name')
+    percentage = fields.Float('Percentage')
+    agents_ids = fields.Many2many('res.partner', string='Agents')

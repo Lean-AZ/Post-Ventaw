@@ -102,7 +102,7 @@ class srPropertyAgentCommissionSettlement(models.Model):
                             'invoice_line_ids':
                         [(0, 0, {
                             'product_id':record.property_id.id,
-                            'name': record.property_id.name + "Maintenance. Agreement No:" + str(record.tenancy_agreement_id.name),
+                            'name': record.property_id.name + "Comisión. Contrato No:" + str(record.tenancy_agreement_id.name),
                             'quantity':1,
                             'price_unit':record.commission_amount,
                             'account_id': accounts['income'].id,
