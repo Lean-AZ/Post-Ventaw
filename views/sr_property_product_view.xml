@@ -78,6 +78,12 @@
 					<field string="Invoices" name="property_invoice_count"
 						widget="statinfo" />
 				</button>
+
+				<button type="object" class="oe_stat_button"
+					icon="fa-pencil-square-o" name="action_view_property_leads_crm">
+					<field string="Leads" name="property_leads_count"
+						widget="statinfo" />
+				</button>
 			</div>
 			<xpath expr="//header" position="inside">
 					<button name="action_confirm" type="object"

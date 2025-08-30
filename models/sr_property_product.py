@@ -89,6 +89,24 @@ class srPropertytemplate(models.Model):
         return
 
 
+    # CRM Support
+    property_leads_ids = fields.One2many(comodel_name='crm.lead', inverse_name='property_id', string='Property Leads')
+    property_leads_count = fields.Integer(compute='_compute_property_leads_count', string='Property Leads Count')
+
+    def _compute_property_leads_count(self):
+        for record in self:
+            record.property_leads_count = self.env['crm.lead'].search_count([('property_id', '=', record.id)])
+
+    def action_view_property_leads_crm(self):
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id("crm.crm_case_kanban_view_leads")
+        action['domain'] = [
+            ('property_id', '=', self.id)
+        ]
+        return action
+    # End CRM Support
+
+
     is_property = fields.Boolean('Is Property?')
     property_type = fields.Selection([('sale', 'Sale'), ('rent', 'Rent')], string="Property For", default="sale")
     property_sale_price = fields.Float(

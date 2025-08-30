@@ -21,7 +21,7 @@
     "currency": 'EUR',
     'author': 'RhodeTech',
     'website':"https://www.rhodetec.co",
-    'depends': ['base', 'account', 'utm','product', 'civiltec_contact_fields'],
+    'depends': ['base', 'account', 'utm','product', 'civiltec_contact_fields', 'crm'],
     'data': [
         'security/property_security.xml',
         'security/ir.model.access.csv',
