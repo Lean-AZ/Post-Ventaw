@@ -35,6 +35,7 @@
         'views/sr_property_product_view.xml',
         'views/sr_property_management_view.xml',
         'views/sr_property_management_configuration_view.xml',
+        'views/sr_property_lead.xml',
     ],
     'installable': True,
     'auto_install': False,

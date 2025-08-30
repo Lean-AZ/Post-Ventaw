@@ -70,6 +70,23 @@ class srProductProduct(models.Model):
             raise UserError(
                 _("Cannot set to draft because there are associated invoices.")
             )
+
+    # CRM Support
+    property_leads_ids = fields.One2many(comodel_name='crm.lead', inverse_name='property_id', string='Property Leads')
+    property_leads_count = fields.Integer(compute='_compute_property_leads_count', string='Property Leads Count')
+
+    def _compute_property_leads_count(self):
+        for record in self:
+            record.property_leads_count = self.env['crm.lead'].search_count([('property_id', '=', record.id)])
+
+    def action_view_property_leads_crm(self):
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id("crm.crm_case_kanban_view_leads")
+        action['domain'] = [
+            ('property_id', '=', self.id)
+        ]
+        return action
+    # End CRM Support
     
 
 class srPropertytemplate(models.Model):
