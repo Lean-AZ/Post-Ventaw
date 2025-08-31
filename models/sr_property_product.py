@@ -81,7 +81,8 @@ class srProductProduct(models.Model):
 
     def action_view_property_leads_crm(self):
         self.ensure_one()
-        action = self.env["ir.actions.actions"]._for_xml_id("crm.crm_case_kanban_view_leads")
+        # More robust approach for Odoo 17
+        action = self.env.ref('crm.crm_lead_action_pipeline').read()[0]
         action['domain'] = [
             ('property_id', '=', self.id)
         ]
@@ -116,7 +117,8 @@ class srPropertytemplate(models.Model):
 
     def action_view_property_leads_crm(self):
         self.ensure_one()
-        action = self.env["ir.actions.actions"]._for_xml_id("crm.crm_case_kanban_view_leads")
+        # Use the correct CRM action for Odoo 17
+        action = self.env["ir.actions.actions"]._for_xml_id("crm.crm_lead_action_pipeline")
         action['domain'] = [
             ('property_id', '=', self.id)
         ]
