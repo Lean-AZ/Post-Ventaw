@@ -1,0 +1,40 @@
+<odoo>
+    <template id="retenciones_itbis_tamplate">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-family: Arial, Helvetica, sans-serif; font-size: 20px; text-align: justify; line-height: 1.5;">
+                    <div class="date-axel" style="margin-bottom: 10px;">
+                        <t t-set="current_datetime" t-value="datetime.datetime.now()"/>
+                        <p>Santo Domingo, <t t-esc="doc.date_to_spanish_format(current_datetime.date())" /></p>
+                    </div>
+
+                    <p><strong>Señores:</strong> Dirección General de Impuestos Internos (DGII)<br/>Ciudad.- Santo Domingo</p>
+                    <p><strong>Asunto:</strong> Certificación de Retención de ITBIS</p>
+                    <br/>
+
+                    <p>
+                        Por medio de la presente, <strong><t t-esc="doc.company_id.name"/></strong>,
+                        RNC <t t-esc="doc.company_id.vat"/>, con domicilio en
+                        <t t-esc="doc.company_id.street"/>, certifica que durante el mes de
+                        <t t-esc="doc.date_to_spanish_format(doc.date)"/>, conforme a la Norma General No. 02-05,
+                        hemos retenido a la sociedad <t t-esc="doc.partner_id.name"/>, RNC
+                        <t t-esc="doc.partner_id.vat"/>, la suma de RD$<t t-esc="doc.retention_amount_itbis"/>
+                        (<t t-esc="doc.price_to_words(doc.retention_amount_itbis)"/>) por concepto del 100% del ITBIS
+                        facturado, correspondiente a la factura No.
+                        <t t-esc="doc.l10n_latam_document_number"/>.
+                    </p>
+
+                    <p>
+                        <br/>Esta certificación se expide a solicitud de la parte interesada.
+                        <br/>Atentamente,
+                    </p>
+
+                    <br/><br/><br/><br/><br/><br/>
+                    <p><strong>Lic. Marcel Núñez</strong><br/>Encargada de Pagos</p>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+</odoo>

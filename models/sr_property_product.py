@@ -125,7 +125,7 @@ class srPropertytemplate(models.Model):
         return action
     # End CRM Support
 
-
+    sr_property_project_id = fields.Many2one('sr.property.project', string='Proyecto')
     is_property = fields.Boolean('Is Property?')
     property_type = fields.Selection([('sale', 'Sale'), ('rent', 'Rent')], string="Property For", default="sale")
     property_sale_price = fields.Float(
@@ -190,7 +190,7 @@ class srPropertytemplate(models.Model):
         readonly=True,
         copy=False,
         index=True,
-        track_visibility="onchange",
+        tracking=True,
     )
     property_invoice_count = fields.Integer(compute='_compute_property_invoice_count', string='Property Invoices Count')
     tenancy_agreement_count = fields.Integer(compute='_compute_tenancy_agreement_count', string='Tenancy Agreement Count')

@@ -1,0 +1,366 @@
+<odoo>
+    <template id="contrato_ocean_tamplate">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <link rel="stylesheet" type="text/css"
+                        href="/sr_property_rental_management/static/css/report_styles.css" />
+                    <div class="page">
+                        <div class="oe_structure" />
+                        <div class="content">
+                            <div class="text-center">
+                                <h2>CIVIL TOWER OCEANCE</h2>
+                                <h1>CONTRATO DEFINITIVO DE COMPRAVENTA DE INMUEBLE</h1>
+                            </div>
+                            <h3>ENTRE:</h3>
+                            <div class="space"></div>
+                            <p>
+                               De una parte, el FIDEICOMISO IRREVOCABLE DE INVERSIÓN Y DESARROLLO INMOBILIARIO CIVIL TOWER OCEANCE, patrimonio autónomo inscrito en el Registro Nacional de Contribuyentes (RNC) bajo el núm. 1-32-16366-4, debidamente representada como fiduciaria o administradora, FIDUCIARIA UNIVERSAL, S.A., sociedad comercial debidamente organizada y existente de conformidad con las leyes de la República Dominicana, matriculada en el Registro Mercantil de la Cámara de Comercio y Producción de Santo Domingo, Inc. bajo el Núm. 92634SD, inscrita en el Registro Nacional de Contribuyentes (RNC) bajo el Núm. 1-30-95165-9, con su domicilio social y asiento principal ubicado en la Avenida Winston Churchill 1100, cuarto piso de la Torre Universal, Ensanche Evaristo Morales, de esta ciudad de Santo Domingo, Distrito Nacional, República Dominicana, debidamente representada a los fines del presente Contrato, por su Vicepresidente Ejecutiva y Gestora Fiduciaria, la señora REBECCA WACHSMANN FLEISCHMANN, de nacionalidad dominicana, mayor de edad, soltera, titular de la Cédula de Identidad y Electoral  Núm. 031-0414694-3, domiciliada y residente en esta ciudad de Santo Domingo de Guzmán, Distrito Nacional, Capital de la República Dominicana, actuando en virtud de la designación hecha mediante Décima Resolución del Acta de Asamblea General Ordinaria Anual de la sociedad Fiduciaria Universal, S.A., de fecha diecinueve (19) de marzo del año dos mil veinticuatro (2024);  patrimonio autónomo que en lo adelante se denominará “LA VENDEDORA” o por su denominación social completa, indistintamente; 
+                            </p>
+                            <p>
+                               De otra parte, la compañía CONSTRUCTORA CIVILTEC, S.R.L., sociedad comercial debidamente constituida y organizada de conformidad con las leyes de la República Dominicana, provista del Registro Nacional de Contribuyentes (RNC) No. 1-30-57482-2, con su domicilio social y asiento principal ubicado en la calle XII Juegos No. 54, El Millón, Distrito Nacional, República Dominicana, debidamente representada por su Gerente, el señor PEDRO RENÉ ANTONIO COLUMNA NUÑEZ, de nacionalidad dominicana, mayor de edad, portador de la Cédula de Identidad y Electoral No. 001-1784662-6, domiciliado y residente en esta ciudad de Santo Domingo de Guzmán, Distrito Nacional, capital de la República Dominicana, quien en lo adelante del presente contrato se denominará como “EL FIDEICOMITENTE PROMOTOR”;
+                            </p>
+                            <t t-if="doc.co_owner_relationship == False">
+                                <p>
+                                De la otra parte, <strong><span t-field="doc.tenant_id.name" /></strong>, de nacionalidad <span t-field="doc.tenant_id.nacionalidad" />, mayor de edad, soltero(a), titular de la Cédula de Identidad y Electoral Núm. <span t-field="doc.tenant_id.vat"/> y/o del Pasaporte Núm. <span t-field="doc.tenant_id.passport_number"/>, teléfono <span t-field="doc.tenant_id.phone"/>,quien para fines del presente contrato, se encuentra domiciliado(a) en esta ciudad de San Pedro de Macorís, Provincia San Pedro, República Dominicana, quien en lo adelante se denominara <strong>"LA COMPRADORA"</strong>.
+                                </p>
+                                <t t-if="doc.co_owner_relationship == False and doc.co_tenant_id">
+                                    <p> 
+                                        Y,
+                                        <strong>
+                                            <span t-field="doc.co_tenant_id.name" />
+                                        </strong>, de
+                                        nacionalidad
+                                        <span t-field="doc.co_tenant_id.nacionalidad" />, mayor
+                                        de edad, de estado civil soltero(a)
+                                        <t t-if="doc.co_tenant_id.vat or doc.co_tenant_id.passport_number">
+                                            <t t-if="doc.co_tenant_id.vat">
+                                                titular de la Cédula de Identidad y Electoral Núm.
+                                                <span t-field="doc.co_tenant_id.vat"/>
+                                            </t>
+                                            <t t-if="doc.co_tenant_id.vat and doc.co_tenant_id.passport_number">
+                                                y
+                                            </t>
+                                            <t t-if="doc.co_tenant_id.passport_number and len(doc.co_tenant_id.passport_number) &gt; 3">
+                                                del Pasaporte Núm.
+                                                <span t-field="doc.co_tenant_id.passport_number"/>
+                                            </t>
+                                        </t>, quien, para fines del presente contrato, se encuentra
+                                        domiciliado(a) en
+                                        <span t-field="doc.co_tenant_id.street" />,
+                                        <span
+                                            t-field="doc.co_tenant_id.city" />,
+                                        <span t-field="doc.co_tenant_id.state_id"/>
+                                        <t t-if="doc.co_tenant_id.state_id.name != 'Distrito Nacional (DO)'">
+                                            <span> y accidentalmente en el Distrito Nacional,</span>
+                                        </t>
+                                        <span
+                                            t-field="doc.co_tenant_id.country_id" />.
+                                    </p>
+                                </t>
+                            </t>
+                            <t t-if="doc.co_owner_relationship == 'persona_juridica'">
+    <p>
+        De la otra parte, <strong><span t-esc="doc.tenant_id.name" /></strong>, sociedad organizada y existente de conformidad con las leyes de la República Dominicana, inscrita en el Registro Nacional de Contribuyentes (RNC) bajo el número <span t-field="doc.tenant_id.vat" />, teléfono <span t-field="doc.tenant_id.phone"/>, con domicilio social y asiento principal en <span t-field="doc.tenant_id.street" />, <span t-field="doc.tenant_id.city" />, de esta ciudad de Santo Domingo de Guzmán, Distrito Nacional, Capital de la República Dominicana, representada por <strong><span t-esc="doc.co_tenant_id.name" /></strong>, de nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, mayor de edad, titular de la Cédula de Identidad y Electoral número <span t-field="doc.co_tenant_id.vat"/> y/o del Pasaporte número <span t-field="doc.co_tenant_id.passport_number"/>, de Estado Civil <t t-esc="doc.co_tenant_id.marital_status or 'soltero(a)'" />, domiciliado(a) y residente en la ciudad de Santo Domingo, República Dominicana; sociedad que en lo sucesivo del presente contrato se denominará como <strong>"LA COMPRADORA"</strong> o por su denominación social completa, indistintamente.
+    </p>
+</t>
+
+                            <t t-if="doc.co_owner_relationship == 'casado'">
+                                <p>
+                                    De la otra parte, <strong><span t-esc="(doc.tenant_id.name or '').upper()" /></strong>, de nacionalidad <span t-field="doc.tenant_id.nacionalidad" />, mayor de edad, titular de la Cédula de Identidad y Electoral número <span t-field="doc.tenant_id.vat"/> y/o del Pasaporte número <span t-field="doc.tenant_id.passport_number"/>, de Estado Civil <t t-esc="doc.tenant_id.marital_status or 'casado(a)'" />, teléfono <span t-field="doc.tenant_id.phone"/>, cuyo cónyuge es el(la) señor(a) <strong><span t-field="doc.co_tenant_id.name" /></strong>, de nacionalidad <span t-field="doc.co_tenant_id.nacionalidad" />, mayor de edad, titular de la Cédula de Identidad y Electoral número <span t-field="doc.co_tenant_id.vat"/> o del Pasaporte Número <span t-field="doc.co_tenant_id.passport_number"/>, teléfono <span t-field="doc.co_tenant_id.phone"/>,ambos domiciliados y residentes en la ciudad de Santo Domingo, República Dominicana, persona que en lo sucesivo del presente contrato se denominará como <strong>"LA COMPRADORA"</strong> o por su nombre completo, indistintamente.
+                                </p>
+                            </t>
+                            <br></br>
+                            <p>
+                                Cuando LA VENDEDORA, EL FIDEICOMITENTE PROMOTOR y LA COMPRADORA sean referidos conjuntamente a los fines del presente Contrato se designarán como <strong>"LAS PARTES"</strong>.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="page">
+                        <div class="oe_structure" />
+                        <div class="header">
+                        </div>
+                        <div class="content">
+                            <br></br>
+                            <p style="text-align: center">
+                                <strong>PREÁMBULO</strong>
+                            </p>
+                            <br></br>
+                            <p> 
+POR CUANTO (1): FIDUCIARIA UNIVERSAL, S. A. es una sociedad comercial que tiene como objeto exclusivo fungir como fiduciario para la administración y gestión de todo tipo de fideicomisos constituidos de conformidad con las disposiciones de las leyes dominicanas, particularmente la Ley Núm. 189-11 para el Desarrollo del Mercado Hipotecario y el Fideicomiso en la República Dominicana.
+                            </p>
+                            <p>
+                                POR CUANTO (2): FIDUCIARIA UNIVERSAL, S.A., CONSTRUCTORA CIVILTEC, S.R.L. y SORAYA EUGENIA PÉREZ GAUTIER suscribieron el Contrato de Fideicomiso Irrevocable de Inversión y Desarrollo Inmobiliario Civil Tower Oceance en fecha veinticuatro (24) de agosto del dos mil veinte (2020) (en lo adelante, "Contrato De Fideicomiso"). 
+                            </p>
+                            <p>
+                                POR CUANTO (3): las sociedades FIDUCIARIA UNIVERSAL, S.A., CONSTRUCTORA CIVILTEC, S.R.L. y el señor/a <span t-field="doc.co_tenant_id.name" /> suscribieron un Contrato de Promesa de Compraventa de Inmueble, en fecha <span t-esc="doc.date_to_spanish_format(doc.agreement_date)" /> (en lo adelante: "el Contrato de Promesa de Compraventa de Inmueble"), mediante el cual LA VENDEDORA cedió a favor de LA COMPRADORA, un inmueble dentro del Proyecto.
+                            </p>
+                            <p>
+                             POR CUANTO (4): EL FIDEICOMITENTE PROMOTOR  es el responsable de la ejecución directa, por su cuenta y riesgo, del desarrollo técnico, de diseño y construcción del Proyecto, de la gerencia, promoción, comercialización y venta de las unidades inmobiliarias del Proyecto. EL FIDEICOMITENTE PROMOTOR desarrolló el Proyecto, bajo su exclusiva y única responsabilidad técnica, financiera, jurídica y administrativa. LA VENDEDORA, en ningún momento asume obligaciones derivadas de la construcción, promoción, supervisión, gerencia, venta y desarrollo del Proyecto. Por tanto, no contrae ninguna obligación frente al control y seguimiento de la construcción del Proyecto, calidad, saneamiento, entrega o precio de las unidades que conforman dicho Proyecto, ni demás aspectos técnicos, económicos o comerciales, que hayan determinado la viabilidad para su realización, obligación que quedó a cargo del FIDEICOMITENTE PROMOTOR.
+                            </p>
+                            <p>
+                                POR CUANTO (5): El Contrato de Fideicomiso establece que es una obligación de FIDUCIARIA UNIVERSAL, S. A., suscribir en su calidad de representante del Fideicomiso, conjuntamente con EL FIDEICOMITENTE PROMOTOR, las promesas de compraventa y los contratos definitivos de compraventas de las unidades inmobiliarias del Proyecto.
+                            </p>
+                            <p>
+                            POR CUANTO (6): Que, como consecuencia del interés y voluntad de LAS PARTES, estas han convenido suscribir el presente Contrato, a los fines de establecer los términos y condiciones de la compraventa y transferencia de la unidad por parte de LA COMPRADORA.
+                            </p>
+                            <p>
+                            POR TANTO, y en el entendido que el presente preámbulo forma parte integral de este Contrato, LAS PARTES, libre y voluntariamente:
+                            </p>
+                        </div>
+                    </div>
+                    <div class="page" style="text-align: justify">
+                     <br></br>
+                            <p style="text-align: center">
+                                <strong>HAN CONVENIDO LO SIGUIENTE</strong>
+                            </p>
+    <div>
+        <!-- ARTÍCULO PRIMERO -->
+        <p>
+            <strong>ARTÍCULO PRIMERO: REGLAS DE INTERPRETACIÓN.</strong> Para la interpretación de este Contrato, las reglas siguientes deberán ser tomadas en cuenta:
+        </p>
+        <p>
+            Términos como "en el presente", y otros compuestos similares de la palabra "presente" significarán y se referirán a este Acuerdo en su totalidad y no a cualquier parte específica; y las referencias a artículos y párrafos se refieren a artículos y párrafos del presente Acuerdo.
+        </p>
+        <p>
+            Toda referencia a días se refiere a días calendario, a menos que el texto indique lo contrario.
+        </p>
+        <p>
+            Los encabezamientos serán utilizados únicamente como referencia, en el entendido de que los mismos no pretenden limitar o restringir la interpretación del texto a que anteceden.
+        </p>
+        <p>
+            Cualquier singular utilizado será interpretado como incluyendo el plural y viceversa.
+        </p>
+        <p>
+            Las palabras que impliquen cualquier género incluyen el género opuesto.
+        </p>
+        <p>
+            Los términos establecidos en este Acuerdo, vencidos en días no laborables, deberán considerarse extendidos hasta el siguiente día laborable en la República Dominicana.
+        </p>
+
+        <!-- ARTÍCULO SEGUNDO -->
+        <p>
+            <strong>ARTÍCULO SEGUNDO: OBJETO.</strong> LA VENDEDORA, por medio del presente contrato, VENDE, CEDE y TRANSFIERE, real y efectivamente, sin impedimento alguno, libre de cargas y gravámenes, y/o afectaciones sobre el Inmueble ni ocupación de ningún tipo, sin reclamaciones hechas por terceros, litis, ni deudas de índole privadas o públicas a favor de LA COMPRADORA, quien acepta, el bien inmueble que se describe a continuación (en lo adelante: "el Inmueble"):
+        </p>
+        <p>
+            <span t-field="doc.property_id.property_acto_de_venta_description" />
+        </p>
+
+        <!-- ARTÍCULO TERCERO -->
+        <p>
+            <strong>ARTÍCULO TERCERO: JUSTIFICACIÓN DE LA PROPIEDAD.</strong> LA VENDEDORA, justifica su derecho de propiedad sobre el inmueble objeto de la presente venta, mediante la presentación del Certificado de Título Matrícula Núm. <span t-field="doc.property_id.registration_number" /> ,expedido en fecha <span t-field="doc.property_id.property_acto_de_venta_date" />, por el Registro de Títulos del Distrito Nacional, cuyo original se entrega al LA COMPRADORA en la fecha de firma del presente contrato, y por el cual LA COMPRADORA otorga formal recibo de descargo y finiquito legal a favor de LA VENDEDORA.
+        </p>
+
+        <!-- ARTÍCULO CUARTO -->
+        <!-- <p>
+            <strong>ARTÍCULO CUARTO: PRECIO Y FORMA DE PAGO.</strong> El precio convenido y pactado entre LAS PARTES ha sido fijado en la suma de <span t-field="doc.property_id.property_sale_price" />, por la compra del inmueble antes descrito, suma esta que declara LA VENDEDORA haber recibido a su entera satisfacción al momento de la firma del presente contrato, de manos de LA COMPRADORA, mediante transferencia bancaria, otorgándole formal recibo de descargo y finiquito legal por dicha suma.
+        </p> -->
+        <p>
+            <strong>ARTÍCULO CUARTO: PRECIO Y FORMA DE PAGO.</strong> El precio convenido y pactado entre LAS PARTES ha sido fijado en la suma de <t t-esc="env['sr.tenancy.agreement'].number_to_words_es(doc.property_id.property_sale_price, doc.property_id.currency_id)" /> (<span t-esc="doc.property_id.property_sale_price" t-options='{"widget": "monetary", "display_currency": doc.property_id.currency_id}'/>), por la compra del inmueble antes descrito, suma esta que declara LA VENDEDORA haber recibido a su entera satisfacción al momento de la firma del presente contrato, de manos de LA COMPRADORA, mediante transferencia bancaria, otorgándole formal recibo de descargo y finiquito legal por dicha suma.
+        </p>
+        <p>
+            <strong>Párrafo I:</strong> LA COMPRADORA declara bajo la fe del juramento y garantiza a LA VENDEDORA que los fondos con los que realiza el pago del precio de compraventa provienen de la realización de actividades lícitas, y cumplen cabalmente con las disposiciones de la Ley Núm. 155-17, que prevé y sanciona el lavado de activos en la República Dominicana.
+        </p>
+        <!-- ARTÍCULO QUINTO -->
+        <p>
+            <strong>ARTÍCULO QUINTO: ENTREGA DE DOCUMENTOS.</strong> LA VENDEDORA, junto con la firma del presente Contrato, entrega a LA COMPRADORA los siguientes documentos:
+        </p>
+        <p>
+            Original del Certificado de Título, referente al Inmueble identificado con la designación catastral número <span t-field="doc.property_id.cadastral_number" /> con una superficie en metros cuadrados de <span t-field="doc.property_id.property_carpet_area" /> (m2), con la matrícula Núm. <span t-field="doc.property_id.registration_number" />, ubicado en el Distrito Nacional.
+        </p>
+        <p>
+            Original de una Certificación del Estado Jurídico del Inmueble, con menos de 30 días de vigencia, expedida por el Registro de Títulos del Distrito Nacional.
+        </p>
+        <p>
+            Original de una Certificación de IPI del Inmueble, con menos de 30 días de vigencia, expedida por la Dirección General de Impuestos Internos.
+        </p>
+        <p>
+            Cualesquiera otros documentos necesarios, útiles o pertinentes para materializar el traspaso del derecho de propiedad sobre el Inmueble a favor de LA COMPRADORA, de conformidad con el presente Contrato.
+        </p>
+        <!-- ARTÍCULO SEXTO -->
+        <p>
+            <strong>ARTÍCULO SEXTO: SOBRE EL RÉGIMEN DE FIDEICOMISO.</strong> LA COMPRADORA acepta y reconoce que el Proyecto se desarrolló bajo el régimen de fideicomiso, figura instituida por la Ley Núm. 189-11, para el Desarrollo del Mercado Hipotecario y el Fideicomiso en la República Dominicana, y su Reglamento de Aplicación, así como que FIDUCIARIA UNIVERSAL, S. A., es la sociedad designada como fiduciaria y administradora del Fideicomiso Irrevocable de Inversión y Desarrollo Inmobiliario Civil Tower Oceance, patrimonio autónomo cuyo objeto es recibir y administrar los recursos aportados por los compradores de viviendas.
+        </p>
+        <p>
+            <strong>Párrafo I:</strong> LA COMPRADORA acepta y reconoce que EL FIDEICOMITENTE PROMOTOR es el único responsable de:
+        </p>
+        <p>
+            La construcción, promoción, supervisión, gerencia, venta y desarrollo del Proyecto;
+        </p>
+        <p>
+            La calidad de las viviendas construidas;
+        </p>
+        <p>
+            Los vicios de construcción que puedan ser detectados en el Proyecto o en las unidades habitacionales que conforman el mismo, sin perjuicio;
+        </p>
+        <p>
+            Los aspectos técnicos, económicos, o comerciales del Proyecto;
+        </p>
+        <p>
+            Del cumplimiento de las obligaciones legales o contractuales que haya asumido frente a los compradores de las unidades que conforman el Proyecto, sea en virtud de los contratos suscritos al efecto o de la Ley;
+        </p>
+        <p>
+            <strong>Párrafo II:</strong> De igual forma, LA COMPRADORA acepta y reconoce lo siguiente:
+        </p>
+        <p>
+            Que FIDUCIARIA UNIVERSAL, S. A., no financia a CONSTRUCTORA CIVILTEC, S.R.L., o la construcción del Proyecto.
+        </p>
+        <p>
+            Que FIDUCIARIA UNIVERSAL, S. A., podrá rehusarse a recibir pagos de LA COMPRADORA, por la sola sospecha de que los fondos de los mismos se encuentran involucrados directa o indirectamente de una actividad ilícita tipificada por las leyes dominicanas, en particular, por las contempladas en la Ley Núm. 155-17, Contra Lavado de Activos y Financiamiento al Terrorismo, y por cualquier otra normativa internacional similar.
+        </p>
+        <p>
+            Que FIDUCIARIA UNIVERSAL, S.A., es la administradora del Fideicomiso, por lo que actúa por orden y cuenta de éste, y no asume, en ningún momento, obligaciones derivadas de este Contrato. No responderá con sus bienes o los bienes de sus filiales o matrices por las obligaciones contraídas en la ejecución de este Contrato.
+        </p>
+        <p>
+            <strong>Párrafo III:</strong> LA COMPRADORA declara bajo la fe del juramento a favor de LA VENDEDORA que son lícitos los fondos con los que realizarán el pago del precio de venta acordado. En ese sentido, declara así mismo conocer las disposiciones contenidas en la Ley No.155-17, Contra Lavado de Activos y Financiamiento al Terrorismo, de fecha Primero (01) del mes de junio del año dos mil diecisiete (2017), debiendo explicar y documentar la información pertinente con relación a la procedencia de los recursos o, sin que implique responsabilidad para LA VENDEDORA. LA COMPRADORA reconoce y acepta que cualquier documentación que sea requerida por LA VENDEDORA para justificar la proveniencia de los fondos utilizados, deberá ser aportada y gestionada por LA COMPRADORA a su solo costo y responsabilidad, y en caso de no hacerlo, esto podrá ser objeto de rescisión sin responsabilidad por parte de LA VENDEDORA del presente acuerdo, y/o de denuncia a las autoridades correspondientes conforme a la ley No. 155-17. LA COMPRADORA exonera LA VENDEDORA y EL FIDEICOMITENTE PROMOTOR, de cualquier responsabilidad que se puedan derivar de las actividades investigadas o perseguidas contra LA COMPRADORA, al mismo tiempo se obliga a indemnizarla por cualquier perjuicio que sufra en ocasión de esta eventualidad. De igual manera, LA COMPRADORA, declara que no actúa a nombre de terceros si no por cuenta propia y que no es una persona políticamente expuesta.
+        </p>
+        <!-- ARTÍCULO SÉPTIMO -->
+        <p>
+            <strong>ARTÍCULO SÉPTIMO: REPRESENTACIONES Y GARANTÍAS.</strong> LAS PARTES afirman que el presente Contrato crea obligaciones y derechos recíprocos entre ellas, y que dichas obligaciones y derechos pueden ser válidamente ejecutados y exigidos según sea el caso. En ese sentido, LAS PARTES se declaran y garantizan lo siguiente:
+        </p>
+        <p>
+            <strong>Poder y Autorización.</strong> LAS PARTES declaran poseer todos los poderes, y calidades requeridas para conducir sus negocios como lo hacen al presente.
+        </p>
+        <p>
+            <strong>Litigios.</strong> LAS PARTES garantizan que no hay pendiente ante ningún tribunal, departamento de gobierno, agencia gubernamental o embajada, procedimiento de arbitraje, litigio, reclamación ni procedimiento alguno en su contra que pueda afectar o causar un cambio adverso sustancial en las condiciones generales del presente Contrato. Además, que han cumplido con todas las leyes, reglamentos de las autoridades gubernamentales con jurisdicción sobre ellas y no están en rebeldía con respecto de ninguna ordenanza, resolución, norma o mandamiento de estas.
+        </p>
+        <p>
+            De manera especial, LA VENDEDORA y EL FIDEICOMITENTE PROMOTOR declaran en beneficio de LA COMPRADORA lo siguiente:
+        </p>
+        <p>
+            Que LA VENDEDORA es el legítimo y único propietario del inmueble objeto del presente contrato, cuya descripción es completamente consistente con la posesión y derechos de propiedad que LA VENDEDORA declara poseer sobre el mismo y a la fecha ninguna tercera persona tiene derecho sobre dichos inmuebles.
+        </p>
+        <p>
+            Que EL derecho de propiedad sobre el Inmueble se encuentra legalmente establecido y que el Inmueble se encuentra libre de todo tipo de ocupantes, cargas, gravámenes o litigios que cuestionen o tengan vocación de limitar su derecho de propiedad.
+        </p>
+        <p>
+            Que la propiedad y posesión del Inmueble no está afectada por ningún contrato de administración, arrendamiento, comisiones por propiedad o renta, servicios, cuota-litis, mantenimiento, empleo u otros contratos u obligaciones de naturaleza convencional o de cualquier otra índole, que en la actualidad se encuentre en vigencia o cuya exigibilidad actualmente se encuentre limitada por una condición.
+        </p>
+        <p>
+            Que no existen sentencias, autos y/o decisiones de ningún tipo contra de LA VENDEDORA en ningún tribunal de la República Dominicana y/o de una nación extranjera; y que no existe ningún litigio pendiente o inminente que pueda afectar o limitar su derecho de propiedad sobre el Inmueble, o su capacidad de transferirlos a LA COMPRADORA.
+        </p>
+        <p>
+            Que en relación con el Inmueble no existen deudas pendientes, ni contingentes por ningún concepto, incluyendo, pero no limitado a: los servicios de agua, energía eléctrica, vigilancia, recogida de basura, mantenimiento, teléfono, o cualquier otro servicio.
+        </p>
+        <p>
+            Que la garantía contra vicios ocultos que recae sobre EL FIDEICOMITENTE PROMOTOR a un (1) año, plazo este último contado a partir de suscripción del presente documento.
+        </p>
+        <p>
+            Que LA COMPRADORA ha inspeccionado la unidad habitacional y lo acepta en su entera satisfacción y sin reservas, y que son las mismas condiciones en que indican las especificaciones del proyecto.
+        </p>
+        <p>
+            <strong>Párrafo:</strong> LAS PARTES reconocen el carácter esencial y determinante de estas declaraciones y garantías hechas por LA VENDEDORA sin las cuales LA COMPRADORA no hubiese contratado, quedando entendido que LA COMPRADORA podrá, en caso de que las mismas no resultaren ser verídicas o no se cumplieren, ejercer las acciones que le faculta la ley.
+        </p>
+        <!-- ARTÍCULO OCTAVO -->
+        <p>
+            <strong>ARTÍCULO OCTAVO: AUTORIZACIÓN AL REGISTRO DE TÍTULOS.</strong> LA VENDEDORA, autoriza por medio del presente contrato al Registrador de Títulos del Distrito Nacional, a transferir todos los derechos que le corresponden sobre el inmueble antes descrito que son objeto de la presente venta en favor de LA COMPRADORA.
+        </p>
+
+        <!-- ARTÍCULO NOVENO -->
+        <p>
+            <strong>ARTÍCULO NOVENO: DISPOSICIONES MISCELÁNEAS.</strong>
+        </p>
+        <p>
+            <strong>Obligatoriedad del Contrato.</strong> LAS PARTES reconocen expresamente que todos los acuerdos incluidos en este Contrato obligarán a sus respectivos herederos, ejecutores, administradores, sucesores, cesionarios y causahabientes. Del mismo modo, LAS PARTES declaran y afirman que intervienen en el presente Contrato para cumplir con la finalidad contemplada en este, sin que lo anterior implique o genera una relación distinta al negocio jurídico que por este medio se documenta.
+        </p>
+        <p>
+            <strong>Impuestos, Costas y Gastos Legales.</strong> De conformidad con lo establecido en el Artículo 1593 del Código Civil Dominicano, el pago del impuesto de transferencia del Inmueble correrá por cuenta exclusiva de LA COMPRADORA. Cada parte asumirá los demás impuestos, cargas o tributos que les correspondan pagar de conformidad con las leyes de la República Dominicana, así como los gastos y honorarios de los abogados o asesores que hayan contratado para asistirle en relación con el presente contrato.
+        </p>
+        <p>
+            <strong>Individualidad y Autonomía de Previsiones.</strong> LAS PARTES están de acuerdo en que, si una cualesquiera de la cláusulas, términos o disposiciones del presente Contrato fuese declarada nula o contraria a las leyes de la República Dominicana, esto no afectará la validez de las demás cláusulas y disposiciones de este, las cuales permanecerán en pleno vigor y efecto.
+        </p>
+        <p>
+            <strong>Celeridad en Todos los Actos Necesarios.</strong> Cada una de las Partes aquí incluidas, dará rápidamente todos los pasos, hará todos los actos dentro de su poder y ejecutará todos los documentos y actos que puedan ser requeridos, para dar efecto a este Contrato.
+        </p>
+        <p>
+            <strong>Separabilidad.</strong> LAS PARTES acuerdan que, si cualquiera de las cláusulas, términos o disposiciones del presente Contrato fuese declarada nula por una autoridad competente, esta situación no afectará la validez y ejecutoriedad de las demás cláusulas y disposiciones del presente Contrato, las cuales permanecerán en pleno vigor y efecto.
+        </p>
+        <p>
+            <strong>Alcance.</strong> Cualquier cambio, variación o modificación a los términos del presente Contrato no será válido, a menos que se hiciera de común acuerdo y mediante documento por escrito y firmado por LAS PARTES.
+        </p>
+        <p>
+            <strong>Ley Aplicable y Jurisdicción Competente.</strong> El presente Contrato estará gobernado y será interpretado de conformidad con las leyes de la República Dominicana, y en el caso de surgir dificultades o controversias en su interpretación, cumplimiento o ejecución, las mismas serán de la competencia de los tribunales del Distrito Nacional, República Dominicana.
+        </p>
+        <p>
+            <strong>Derecho Común.</strong> Para todo lo no expresamente pactado en el presente Contrato, las Partes se remiten al derecho común.
+        </p>
+        <p>
+            <strong>Elección de Domicilio.</strong> Para todos los fines y consecuencias legales del presente Contrato, las Partes hacen elección de domicilio conforme las direcciones descritas y establecidas en las generales del presente.
+        </p>
+    </div>
+    <div class="page" style="text-align: center">
+    <t t-name="contratos.order_contract_signatures">
+    <div>
+        <!-- Signatures Heading / Sentence -->
+        <p>
+            HECHO Y FIRMADO, de buena fe en cuatro (4) originales de un mismo tenor y efecto, uno para cada una de las partes. En la ciudad de Santo Domingo, Distrito Nacional, República Dominicana,  <span t-esc="doc.date_to_spanish_format(doc.agreement_date)"/>.
+        </p>
+
+        <!-- Signature for LA VENDEDORA -->
+        <p>
+            <strong>Por LA VENDEDORA:</strong>
+            <br/><br/>
+            ________________________________________________________
+            <br/>
+            REBECCA WACHSMANN FLEISCHMANN
+            <br/>
+            <em>En representación del FIDEICOMISO IRREVOCABLE DE INVERSIÓN Y DESARROLLO INMOBILIARIO CIVIL TOWER OCEANCE</em>
+        </p>
+
+        <!-- Signature for EL FIDEICOMITENTE PROMOTOR -->
+        <p>
+            <strong>Por EL FIDEICOMITENTE PROMOTOR:</strong>
+            <br/><br/>
+            ________________________________________________________
+            <br/>
+            PEDRO RENÉ ANTONIO COLUMNA NÚÑEZ
+            <br/>
+            <em>En representación de CONSTRUCTORA CIVILTEC, S.R.L.</em>
+        </p>
+
+        <!-- Signature for LA COMPRADORA -->
+        <div class="sign-content">
+            <p>
+                <strong>Por LA COMPRADORA:</strong>
+            </p>
+            <p>
+                <strong>_______________________________</strong>
+            </p>
+            <p>
+                <strong><span t-esc="doc.tenant_id.name.upper()" /></strong>
+            </p>
+        </div>
+
+        <t t-if="doc.co_owner_relationship == False and doc.co_tenant_id">
+            <div class="sign-content">
+                <p>
+                    <strong>Por LA COMPRADORA:</strong>
+                </p>
+                <p>
+                    <strong>_______________________________</strong>
+                </p>
+                <p>
+                    <strong><span t-esc="doc.co_tenant_id.name.upper()" /></strong>
+                </p>
+            </div>
+        </t>
+
+        <!-- Notary Certification -->
+        <p>
+            Yo, <strong><span t-esc="doc.notario_publico_id.name" /></strong>, Abogado, Notario Público de los del Número del Distrito Nacional, Matrícula Núm. <span t-esc="doc.notario_publico_id.vat" />, CERTIFICO Y DOY FE: que las firmas que anteceden fueron puestas libre y voluntariamente por los señores REBECCA WACHSMANN FLEISCHMANN, PEDRO RENÉ ANTONIO COLUMNA NÚÑEZ y NOMBRE DEL COMPRADOR, cuyas generales y calidades constan en el documento que antecede y voluntariamente lo firmaron, y declaran, bajo la fe del juramento, que las firmas puestas por ellos son las que acostumbran usar en todos los actos de su vida, tanto pública como privada, por lo que he procedido a legalizarlas. En la ciudad de Santo Domingo, Distrito Nacional, República Dominicana, <span t-esc="doc.date_to_spanish_format(doc.agreement_date)"/>.
+        </p>
+        <p>
+            ________________________________________________________
+            <br/>
+            NOTARIO PÚBLICO
+        </p>
+    </div>
+</t>
+
+    </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

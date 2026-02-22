@@ -1,0 +1,39 @@
+<odoo>
+    <data>
+        <record id="agent_commission_wizzard_invoice_form_view" model="ir.ui.view">
+        <field name="name">agent_commission_wizzard_invoice_form_view</field>
+        <field name="model">sr.property.commission.wizzard.invoice</field>
+        <field name="arch" type="xml">
+            <form string="Facturar Comisiones">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="commission_amount" readonly="1"/>
+                            <field name="date" readonly="1"/>
+                            <field name="currency_id" readonly="1" invisible="1"/>
+                            <field name="journal_id" domain="[('type', '=', 'purchase')]"/>
+                            <field name="invoice_type" widget="radio" />
+                            <field name="percetage_to_pay" invisible="invoice_type != 'percentage'" widget="percent"/>
+                            <field name="fixed_amount_to_pay" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="commission_line_id" readonly="1"/>
+                            <field name="commission_structure_id" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="generate_commission_invoices" type="object" string="Generar Facturas"></button>
+                </footer>
+            </form>
+
+        </field>
+    </record>
+        <record id="agent_commission_wizzard_invoice" model="ir.actions.act_window" >
+            <field name="name">Facturar Comisiones</field>
+            <field name="target">new</field>
+            <field name="res_model">sr.property.commission.wizzard.invoice</field>
+            <field name="view_id" ref="agent_commission_wizzard_invoice_form_view"></field>
+        </record>
+    </data>
+</odoo>

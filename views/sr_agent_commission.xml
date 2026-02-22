@@ -164,7 +164,7 @@
 			<tree string="Commission Structure" class="o_sale_order">
 				<field name="name" string="Name" />
 				<field name="percentage" string="Percentage" />
-				<field name="agents_ids" string="Agents" />
+				<!-- <field name="agents_ids" string="Agents" /> -->
 			</tree>
 		</field>
 	</record>
@@ -178,7 +178,7 @@
 				<sheet>
 					<field name="name" />
 					<field name="percentage" />
-					<field name="agents_ids" />
+					<!-- <field name="agents_ids" /> -->
 				</sheet>
 			</form>
 		</field>

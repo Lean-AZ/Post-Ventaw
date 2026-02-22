@@ -1,0 +1,85 @@
+<odoo>
+    <template id="payment_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <style>
+                   table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+                </style>
+                <div class="page">
+                    <h3 style="text-align: center;">Reporte de Pagos</h3>
+                    <t t-foreach="docs" t-as="doc">
+                        <div>
+                            <h4>Pagos de la propiedad: <t t-esc="doc.name" />
+                            </h4>
+                        </div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Concepto</th>
+                                    <th>Fecha</th>
+                                    <th>Monto a pagar</th>
+                                    <th>Monto pagado de mora</th>
+                                    <th>Monto pagado de capital</th>
+                                </tr>
+                            </thead>
+                            <t t-set="total_amount" t-value="0" />
+                            <t t-set="total_mora" t-value="0" />
+                            <t t-set="total_capital" t-value="0" />
+                            <tbody>
+                                <t t-foreach="doc.buyer_payments_ids" t-as="payment">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="payment.ref" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="payment.date" t-options='{"widget": "date"}' />
+                                        </td>
+                                        <td>
+                                            <t t-esc="payment.amount" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_amount" t-value="total_amount + payment.amount" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="payment.mora_pagada_custom_sr" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_mora" t-value="total_mora + payment.mora_pagada_custom_sr" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="payment.capital_pagado_custom_sr" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_capital" t-value="total_capital + payment.capital_pagado_custom_sr" />
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td>Total</td>
+                                    <td></td>
+                                    <td>
+                                        <t t-esc="total_amount" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                    </td>
+                                    <td>
+                                        <t t-esc="total_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                    </td>
+                                    <td>
+                                        <t t-esc="total_capital" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </odoo>

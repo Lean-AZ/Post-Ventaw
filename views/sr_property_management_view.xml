@@ -32,11 +32,6 @@
               parent="sr_property_agent_commission_menu" sequence="1"
               groups="sr_property_rental_management.group_admin,sr_property_rental_management.group_agent"/>
 
-    <menuitem id="sr_property_agent_commission_settlement_menu" name="Commissions Settlement"
-              action="sr_property_agent_commission_settlement_action"
-              parent="sr_property_agent_commission_menu" sequence="2"
-              groups="sr_property_rental_management.group_admin,sr_property_rental_management.group_agent"/>
-
     <menuitem id="sr_property_configuration_menu"
               name="Configuration" parent="sr_property_management_root" sequence="7"
               groups="sr_property_rental_management.group_admin"/>
@@ -49,5 +44,9 @@
               action="sr_agent_commission_structure_action"
               parent="sr_property_agent_commission_menu" sequence="3"
               groups="sr_property_rental_management.group_admin,sr_property_rental_management.group_agent"/>
+
+    <menuitem id="sr_property_project_menu" name="Proyectos"
+             action="sr_property_project_action"  parent="sr_property_management_root" sequence="11"/>
+
 
 </odoo>

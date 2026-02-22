@@ -1,0 +1,570 @@
+<odoo>
+    <template id="report_invoice_lines_grouped">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <style>
+                    .table {
+                    margin-bottom: 0px;
+                    }
+                    .personal-data-container {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                    width: 100%;
+                    justify-content: center;
+                    border-radius: 5px;
+                    padding: 0.5rem;
+                    margin-bottom: 1rem;
+                    }
+                    .date-axel {
+                    width: 100%;
+                    text-align: right;
+                    margin-bottom: 1rem;
+                    }
+                    .title-acel {
+                    width: 100%;
+                    text-align: center;
+                    margin-bottom: 1rem;
+                    margin-top: 1rem;
+                    }
+                    .unit-data-container {
+                    display: flex;
+                    flex-direction: column;
+                    flex-wrap: nowrap;
+                    gap: 0.5rem;
+                    width: 100%;
+                    justify-content: center;
+                    padding: 0.5rem;
+                    margin-bottom: 1rem;
+                    }
+                    .unit-data-item {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                    width: 100%;
+                    justify-content: center;
+                    align-items: baseline;
+                    text-align: left;
+                    }
+                    td.title-table {
+                    font-weight: bold;
+                    text-align: left;
+                    }
+                    td {
+                    text-align: right;
+                    width: auto;
+                    }
+                    .date-inv {
+                    text-align: left;
+                    }
+                    .custom-inv-table {
+                    width: 100%;
+                    margin-top: 2rem;
+                    }
+                    thead {
+                    background-color: #f5f5f5;
+                    }
+                    .start-header {
+                    text-align: left;
+                    }
+                    th {
+                    text-align: right;
+                    }
+
+                    /* Table styles */
+                    table.custom-inv-table {
+                    border-collapse: separate !important;
+                    border-spacing: 0 10px;
+                    }
+                    table.custom-inv-table td, table.custom-inv-table th {
+                    border: none !important;
+                    padding: 8px;
+                    }
+                    /* Narration row styles */
+                    .narration-row td {
+                    border-top: none !important;
+                    border-bottom: 1px solid #dee2e6 !important;
+                    font-style: italic;
+                    padding-top: 0;
+                    padding-bottom: 0;
+                    }
+                </style>
+                <div class="page">
+                    <!-- <h3 style="text-align: center;">Estado de Cuenta</h3> -->
+                    <t t-foreach="docs" t-as="doc">
+                        <!-- suma de campos principales  -->
+                        <t t-set="total_capital" t-value="0" />
+                        <t t-set="total_mora" t-value="0" />
+                        <t t-set="total_capital_mora" t-value="0" />
+                        <t t-set="total_pagado" t-value="0" />
+                        <t t-set="total_pendiente" t-value="0" />
+                        <!-- fin de suma de campos principales  -->
+                        <!-- suma de campos extras -->
+                        <t t-set="total_capital_extras" t-value="0" />
+                        <t t-set="total_mora_extras" t-value="0" />
+                        <t t-set="total_capital_mora_extras" t-value="0" />
+                        <t t-set="total_pagado_extras" t-value="0" />
+                        <t t-set="total_pendiente_extras" t-value="0" />
+                        <!-- fin de suma de campos extras -->
+
+                        <div class='date-axel'>
+                            <span>
+                                <t t-set="current_datetime" t-value="datetime.datetime.now()" />
+                                <t t-esc="current_datetime.strftime('%Y-%m-%d %I:%M:%S %p')" />
+                            </span>
+                        </div>
+                        <div class='title-acel'>
+                            <span>
+                                <strong>Estado de Cuenta</strong>
+                            </span>
+                        </div>
+                        <!-- Datos de la unidad -->
+                        <div class='personal-data-container'>
+                            <div class='personal-data-item'>
+                                <strong class="m-0">Proyecto</strong>
+                                <span>
+                                    <t t-esc="doc.company_id.name" />
+                                </span>
+                            </div>
+                            <div class='personal-data-item'>
+                                <strong class="m-0">Cliente</strong>
+                                <t t-esc="doc.first_tenancy_agreement_id.tenant_id.name" />
+                            </div>
+                            <div class='personal-data-item' t-if="doc.first_tenancy_agreement_id.co_tenant_id">
+                                <strong class="m-0">Copropietario</strong>
+                                <t t-esc="doc.first_tenancy_agreement_id.co_tenant_id.name" />
+                                <span t-if="not doc.first_tenancy_agreement_id.co_tenant_id.name">
+                                    NINGUNO
+                                </span>
+                            </div>
+                            <div class='personal-data-item'>
+                                <strong class="m-0">Dirección</strong>
+                                <t t-esc="doc.first_tenancy_agreement_id.tenant_id.street" />
+                            </div>
+                        </div>
+                        <!-- Datos de la unidad -->
+
+                        <table class="table">
+                            <thead style="display: none">
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class='unit-data-container'>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Apartamento</strong>
+                                                <div>
+                                                    <t t-esc="doc.name" />
+                                                </div>
+                                            </div>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Precio de la unidad</strong>
+                                                <div>
+                                                    <t t-set="total_precio_unidad" t-value="doc.total_cuota_final + doc.total_cuotas" />
+                                                    <t t-esc="total_precio_unidad" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Gastos Legales</strong>
+                                                <div>
+                                                    <t t-esc="doc.first_tenancy_agreement_id.gastos_legales" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Moneda</strong>
+                                                <div>
+                                                    <t t-esc="doc.currency_id.name" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <!-- Inical section -->
+                                        <div class='unit-data-container'>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Inicial</strong>
+                                                <div>
+                                                    <t t-esc="doc.total_cuotas" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div>
+                                            <div class='unit-data-item'>
+                                                <div class='unit-data-item'>
+                                                    <strong class="m-0">Financiamiento</strong>
+                                                    <div>
+                                                        <t t-esc="doc.total_cuota_final" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Mora Generada</strong>
+                                                <div>
+                                                    <t t-esc="doc.total_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Mora Pagada</strong>
+                                                <div>
+                                                    <t t-esc="doc.total_paid_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div>
+                                            <!-- <div class='unit-data-item'>
+                                                <p class="m-0">
+                                                    <strong class="m-0">Inicial Pagado</strong>
+                                                    <strong class="text-danger">*</strong>
+                                                </p>
+                                                <div>
+                                                    <t t-esc="doc.total_paid_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class='unit-data-item'>
+                                                <strong class="m-0">Inicial Pendiente</strong>
+                                                <div>
+                                                    <t t-set="capital_pendiente" t-value="doc.total_cuotas - doc.total_paid_subtotal" />
+                                                    <t t-esc="capital_pendiente" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div> -->
+
+                                        </div>
+                                        <!-- Inicial section final -->
+                                    </td>
+                                    <td>                                        <!-- mora section -->
+                                        <div class='unit-data-container'>
+                                            <div class='unit-data-item'>
+                                                <strong class="m-0">Porcentaje Pagado</strong>
+                                                <div style="color: #4caf50; font-weight: bold;">
+                                                    <t t-esc="round(doc.total_paid_subtotal / total_precio_unidad * 100, 2)" />
+                                                %</div>
+                                            </div>
+                                            <div class='unit-data-item'>
+                                                <p class="m-0">
+                                                    <strong class="m-0">Capital Pagado</strong>
+                                                    <!-- <strong class="text-danger">*</strong> -->
+                                                </p>
+                                                <div>
+                                                    <t t-esc="doc.total_paid_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div>
+                                            <!-- <div class='unit-data-item'>
+                                                <strong class="m-0">Mora Pagada</strong>
+                                                <div>
+                                                    <t t-esc="doc.total_paid_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class='unit-data-item'>
+                                                <strong class="m-0">Mora Pendiente</strong>
+                                                <div>
+                                                    <t t-set="mora_pendiente" t-value="doc.total_mora - doc.total_paid_mora" />
+                                                    <t t-esc="mora_pendiente" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class='unit-data-item'>
+                                                <div class='unit-data-item'>
+                                                    <strong class="m-0">Financiamiento Pendiente </strong>
+                                                    <div>
+                                                        <t t-set="financiamiento_pendiente" t-value="doc.total_cuota_final - doc.total_paid_cuota_final" />
+                                                        <t t-esc="financiamiento_pendiente" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                        </div>
+                                        <!-- mora section final -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <!-- All Cuotas Section -->
+                        <t t-set="total_capital" t-value="0" />
+                        <t t-set="total_mora" t-value="0" />
+                        <t t-set="total_capital_mora" t-value="0" />
+                        <t t-set="total_pagado" t-value="0" />
+                        <t t-set="total_pendiente" t-value="0" />
+                        <h4>Desglose de cuotas de capital</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Concepto</th>
+                                    <th>Fecha</th>
+                                    <th>Capital</th>
+                                    <th>Mora</th>
+                                    <th>Capital + Mora</th>
+                                    <th>Monto Pagado</th>
+                                    <th>Monto Pendiente</th>
+                                    <th>Estado De Pago</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.all_cuotas" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="line.name" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.move_id.invoice_date" t-options='{"widget": "date"}' />
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_capital" t-value="total_capital + line.price_subtotal" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.move_id.computed_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_mora" t-value="total_mora + line.move_id.computed_mora" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.move_id.amount_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_capital_mora" t-value="total_capital_mora + line.move_id.amount_total" />
+                                        </td>
+                                        <td>
+                                            <t t-set="monto_pagado" t-value="line.move_id.amount_total - line.move_id.amount_residual" />
+                                            <t t-esc="monto_pagado" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_pagado" t-value="total_pagado + monto_pagado" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.move_id.amount_residual" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_pendiente" t-value="total_pendiente + line.move_id.amount_residual" />
+                                        </td>
+                                        <td>
+                                            <t t-if="line.move_id.payment_state == 'paid'">
+                                                Pagado
+                                            </t>
+                                            <t t-elif="line.move_id.payment_state == 'partial'">
+                                                Abono parcial
+                                            </t>
+                                            <t t-else="">
+                                                Pendiente
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-foreach="doc.all_cuota_final_lines" t-as="lineFinal">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="lineFinal.name" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="lineFinal.move_id.invoice_date" t-options='{"widget": "date"}' />
+                                        </td>
+                                        <td>
+                                            <t t-esc="lineFinal.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_capital" t-value="total_capital + lineFinal.price_subtotal" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="lineFinal.move_id.computed_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t set="total_mora" t-value="total_mora + lineFinal.move_id.computed_mora" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="lineFinal.move_id.amount_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_capital_mora" t-value="total_capital_mora + lineFinal.move_id.amount_total" />
+                                        </td>
+                                        <td>
+                                            <t t-set="monto_pagado" t-value="lineFinal.move_id.amount_total - lineFinal.move_id.amount_residual" />
+                                            <t t-esc="monto_pagado" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_pagado" t-value="total_pagado + monto_pagado" />
+
+                                        </td>
+                                        <td>
+                                            <t t-esc="lineFinal.move_id.amount_residual" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_pendiente" t-value="total_pendiente + lineFinal.move_id.amount_residual" />
+                                        </td>
+                                        <td>
+                                            <t t-if="lineFinal.move_id.payment_state == 'paid'">
+                                                Pagado
+                                            </t>
+                                            <t t-elif="lineFinal.move_id.payment_state == 'partial'">
+                                                Abono parcial
+                                            </t>
+                                            <t t-else="">
+                                                Pendiente
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="2" class="start-header">
+                                        <strong>Total</strong>
+                                    </td>
+                                    <td>
+                                        <t t-esc="total_capital" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="total_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="total_capital_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="total_pagado" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                    </td>
+                                    <td>
+                                        <t t-esc="total_pendiente" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                    </td>
+                                    <td class="text-center">
+                                        -
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <!-- <tfoot>
+                                <tr>
+                                    <td colspan="3" style="text-align: right;">
+                                        <strong>Total Capital:</strong>
+                                    </td>
+                                    <td>
+                                        <t t-esc="doc.total_cuotas" t-options='{"widget": "monetary", "display_currency":
+                            doc.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tfoot> -->
+                        </table>
+
+                        <h4 class="mt-4">Desglose de adicionales</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Concepto</th>
+                                    <th>Fecha</th>
+                                    <th>Capital</th>
+                                    <th>Mora</th>
+                                    <th>Capital + Mora</th>
+                                    <th>Monto Pagado</th>
+                                    <th>Monto Pendiente</th>
+                                    <th>Estado De Pago</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.all_gastos_legales_lines" t-as="lineLegal">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="lineLegal.name" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="lineLegal.move_id.invoice_date" t-options='{"widget": "date"}' />
+                                        </td>
+                                        <td>
+                                            <t t-esc="lineLegal.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_capital_extras" t-value="total_capital_extras + lineLegal.price_subtotal" />
+
+                                        </td>
+                                        <td>
+                                            <t t-esc="lineLegal.move_id.computed_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_mora_extras" t-value="total_mora_extras + lineLegal.move_id.computed_mora" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="lineLegal.move_id.amount_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_capital_mora_extras" t-value="total_capital_mora_extras + lineLegal.move_id.amount_total" />
+                                        </td>
+                                        <td>
+                                            <t t-set="monto_pagado" t-value="lineLegal.move_id.amount_total - lineLegal.move_id.amount_residual" />
+                                            <t t-esc="monto_pagado" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_pagado_extras" t-value="total_pagado_extras + monto_pagado" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="lineLegal.move_id.amount_residual" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_pendiente_extras" t-value="total_pendiente_extras + lineLegal.move_id.amount_residual" />
+                                        </td>
+                                        <td>
+                                            <t t-if="lineLegal.move_id.payment_state == 'paid'">
+                                                Pagado
+                                            </t>
+                                            <t t-elif="lineLegal.move_id.payment_state == 'partial'">
+                                                Abono parcial
+                                            </t>
+                                            <t t-else="">
+                                                Pendiente
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+
+                                <t t-foreach="doc.all_cuotas_addon" t-as="lineLegal">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="lineLegal.name" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="lineLegal.move_id.invoice_date" t-options='{"widget": "date"}' />
+                                        </td>
+                                        <td>
+                                            <t t-esc="lineLegal.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_capital_extras" t-value="total_capital_extras + lineLegal.price_subtotal" />
+
+                                        </td>
+                                        <td>
+                                            <t t-esc="lineLegal.move_id.computed_mora" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_mora_extras" t-value="total_mora_extras + lineLegal.move_id.computed_mora" />
+                                        </td>
+                                        <td>
+                                            <t t-esc="lineLegal.move_id.amount_total" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_capital_mora_extras" t-value="total_capital_mora_extras + lineLegal.move_id.amount_total" />
+                                        </td>
+                                        <td>
+                                            <t t-set="monto_pagado" t-value="lineLegal.move_id.amount_total - lineLegal.move_id.amount_residual" />
+                                            <t t-esc="monto_pagado" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_pagado_extras" t-value="total_pagado_extras + monto_pagado" />
+
+                                        </td>
+                                        <td>
+                                            <t t-esc="lineLegal.move_id.amount_residual" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                            <t t-set="total_pendiente_extras" t-value="total_pendiente_extras + lineLegal.move_id.amount_residual" />
+                                        </td>
+                                        <td>
+                                            <t t-if="lineLegal.move_id.payment_state == 'paid'">
+                                                Pagado
+                                            </t>
+                                            <t t-elif="lineLegal.move_id.payment_state == 'partial'">
+                                                Abono parcial
+                                            </t>
+                                            <t t-else="">
+                                                Pendiente
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+
+                                <tr>
+                                    <td colspan="2" class="start-header">
+                                        <strong>Total</strong>
+                                    </td>
+                                    <td>
+                                        <t t-esc="total_capital_extras" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="total_mora_extras" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="total_capital_mora_extras" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="total_pagado_extras" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                    </td>
+                                    <td>
+                                        <t t-esc="total_pendiente_extras" t-options='{"widget": "monetary", "display_currency": doc.currency_id}' />
+                                    </td>
+                                    <td class="text-center">
+                                        -
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <!-- <tfoot>
+                                <tr>
+                                    <td colspan="3" style="text-align: right;">
+                                        <strong>Total Capital:</strong>
+                                    </td>
+                                    <td>
+                                        <t t-esc="doc.total_cuotas" t-options='{"widget": "monetary", "display_currency":
+                            doc.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tfoot> -->
+                        </table>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

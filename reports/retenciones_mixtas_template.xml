@@ -1,0 +1,92 @@
+<odoo>
+    <template id="retenciones_mixtas_tamplate">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+<!-- Bloque de fecha con mismo tamaño de texto -->
+                <div class="date-axel" style="font-size: 20px; text-align: justify;">
+                    <span>
+                        <t t-set="current_datetime" t-value="datetime.datetime.now()"/>
+                        <p>Santo Domingo, <t t-esc="doc.date_to_spanish_format(current_datetime.date())"/></p>
+                    </span>
+                </div>
+
+                <div class="page">
+                    <div class="oe_structure"/>
+
+                    <!-- Contenido principal -->
+                    <div class="content" style="text-align: justify; font-size: 20px;">
+
+                        <!-- Diccionario de meses en español -->
+                        <t t-set="meses" t-value="{
+                            'January': 'enero',
+                            'February': 'febrero',
+                            'March': 'marzo',
+                            'April': 'abril',
+                            'May': 'mayo',
+                            'June': 'junio',
+                            'July': 'julio',
+                            'August': 'agosto',
+                            'September': 'septiembre',
+                            'October': 'octubre',
+                            'November': 'noviembre',
+                            'December': 'diciembre'
+                        }"/>
+
+                        <p><strong>Señores:</strong> Dirección General de Impuestos Internos (DGII)<br/>Ciudad.- Santo Domingo</p>
+                        <p><strong>Asunto:</strong> Certificación de Retenciones de Impuestos</p>
+                        <br/>
+
+                        <span>
+                            Por medio de la presente, 
+                            <span t-esc="doc.company_id.name"/>, 
+                            RNC <span t-esc="doc.company_id.vat"/>, 
+                            certifica que durante el mes de 
+                            <t t-if="doc.invoice_date">
+                                <span t-esc="meses.get(doc.invoice_date.strftime('%B'),'')"/>,
+                            </t>
+                            <t t-else="">
+                                <span>[MES NO DISPONIBLE]</span>,
+                            </t> 
+                            hemos realizado las siguientes retenciones al señor(a) 
+                            <span t-esc="doc.partner_id.name"/>, 
+                            portador de la Cédula de Identidad No. 
+                            <span t-esc="doc.partner_id.vat"/>:
+                            <br/><br/>
+                        </span>
+
+                        <ol>
+                            <li>
+                                La suma de RD$<span t-esc="doc.retention_amount"/> 
+                                (<span t-esc="doc.price_to_words(doc.retention_amount)"/>) 
+                                por concepto de Impuesto Sobre la Renta (ISR), conforme a lo dispuesto en el Código Tributario 11-92 y el Reglamento 139-98.
+                            </li>
+                            <li>
+                                La suma de RD$<span t-esc="doc.retention_amount_itbis"/> 
+                                (<span t-esc="doc.price_to_words(doc.retention_amount_itbis)"/>) 
+                                por concepto de Impuesto a la Transferencia de Bienes Industrializados y Servicios (ITBIS), conforme a lo establecido en el Reglamento 293-11.
+                            </li>
+                        </ol>    
+                    
+                        <span>
+                            Dichas retenciones fueron pagadas a la Dirección General de Impuestos Internos (DGII) y corresponden a los servicios prestados según la factura No. 
+                            <span t-esc="doc.l10n_latam_document_number"/>.
+                        </span>
+
+                        <span>
+                            <br/><br/><br/>
+                            Esta certificación se expide a solicitud de la parte interesada. <br/> 
+                            Atentamente, <br/>
+                        </span>
+
+                        <span>
+                            <br/><br/><br/><br/><br/><br/>
+                            <strong>Lic. Marcel Núñez.</strong> <br/> Encargada de Pagos
+                        </span>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+</odoo>

@@ -75,6 +75,22 @@ class srAgentCommissionStructure(models.Model):
     _name = 'sr.agent.commission.structure'
     _description = 'Agent Commission Structure'
 
-    name = fields.Char('Name')
-    percentage = fields.Float('Percentage')
-    agents_ids = fields.Many2many('res.partner', string='Agents')
+    name = fields.Char('Nombre de la Estructura de Comisión')
+    percentage = fields.Float('Porcentaje de Total de Comisión')
+    available_agents_ids = fields.Many2many('res.partner', string='Agentes de la Estructura de Comisión', compute='_compute_available_agents_ids')
+    agent_commission_structure_lines_ids = fields.One2many('sr.agent.commission.structure.lines', 'agent_commission_structure_id', string='Agent Commission Structure Lines')
+
+
+    @api.depends('agent_commission_structure_lines_ids')
+    def _compute_available_agents_ids(self):
+        for record in self:
+            record.available_agents_ids = record.agent_commission_structure_lines_ids.mapped('agent_id')
+
+class srAgentCommissionStructureLines(models.Model):
+    _name = 'sr.agent.commission.structure.lines'
+    _description = 'Agent Commission Structure Lines'
+
+    name = fields.Char('Rango')
+    percentage = fields.Float('Porcentaje')
+    agent_id = fields.Many2one('res.partner', string='Agente')
+    agent_commission_structure_id = fields.Many2one('sr.agent.commission.structure', string='Agent Commission Structure')

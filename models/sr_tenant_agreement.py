@@ -164,6 +164,7 @@ class srTenancyAgreement(models.Model):
     )
     notario_publico_id = fields.Many2one("res.partner", "Notario Público")
     active = fields.Boolean(string="Active", default=True)
+    commission_structure_id = fields.Many2one("sr.agent.commission.structure", string="Estructura de Comisión")
     agreement_date = fields.Date(
         string="Agreement Date",
         required=True,
@@ -280,8 +281,7 @@ class srTenancyAgreement(models.Model):
         readonly=True,
         copy=False,
         index=True,
-        track_visibility="onchange",
-        tracking=5,
+        tracking=True,
         default="new",
     )
 
@@ -339,6 +339,32 @@ class srTenancyAgreement(models.Model):
     formatted_financed_percentage = fields.Char(
         "Porcentaje Financiado", compute="_compute_formatted_financed_percentage"
     )
+
+
+    commission_structure_id = fields.Many2one('sr.agent.commission.structure', string='Estructura de Comisión')
+    linked_commission_line_ids = fields.One2many('sr.property.agent.commission.lines', 'tenancy_agreement_id', string='Linked Commission Lines')
+    linked_commission_line_count = fields.Integer(string='Linked Commission Lines Count', compute='_compute_linked_commission_line_count')
+
+
+    @api.depends('linked_commission_line_ids')
+    def _compute_linked_commission_line_count(self):
+        for record in self:
+            record.linked_commission_line_count = len(record.linked_commission_line_ids)
+
+    @api.depends('commission_structure_id')
+    def _compute_commission_price(self):
+        for record in self:
+            record.commission_price = record.total_price * (record.commission_structure_id.percentage / 100.0)
+
+    def action_view_linked_commission_lines(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Linked Commission Lines',
+            'res_model': 'sr.property.agent.commission.lines',
+            'view_mode': 'tree,form',
+            'domain': [('tenancy_agreement_id', '=', self.id)]
+        }
 
     @api.onchange("partial_payment_id")
     def _onchange_partial_payment_id(self):
@@ -572,21 +598,6 @@ class srTenancyAgreement(models.Model):
             advance_account.id if advance_account else accounts["income"].id
         )
 
-        self.env["sr.property.agent.commission.lines"].create(
-            {
-                "name": self.env["ir.sequence"].next_by_code(
-                    "agent.commission.line.sequence",
-                    sequence_date=fields.Datetime.context_timestamp(
-                        self,
-                        fields.Datetime.to_datetime(datetime.datetime.today().date()),
-                    ),
-                ),
-                "tenancy_agreement_id": self.id,
-                "date": datetime.datetime.today().date(),
-                "commission_amount": self.commission_price,
-            }
-        )
-
         if self.payment_option == "single":
             invoice = self.env["account.move"].create(
                 {
@@ -812,6 +823,22 @@ class srTenancyAgreement(models.Model):
                         ],
                     }
                 )
+
+        self.env["sr.property.agent.commission.lines"].create(
+            {
+                "name": self.env["ir.sequence"].next_by_code(
+                    "agent.commission.line.sequence",
+                    sequence_date=fields.Datetime.context_timestamp(
+                        self,
+                        fields.Datetime.to_datetime(datetime.datetime.today().date()),
+                    ),
+                ),
+                "tenancy_agreement_id": self.id,
+                "date": datetime.datetime.today().date(),
+                "commission_amount": self.commission_price,
+            }
+        )
+
         self.property_id.write(
             {
                 "state": "sold",
@@ -939,6 +966,29 @@ class srTenancyAgreement(models.Model):
             )
             # move.action_post()
         return
+
+    def action_create_commission_record(self):
+        commission_line = self.env['sr.property.agent.commission.lines'].create({
+                'name': self.env['ir.sequence'].next_by_code('agent.commission.line.sequence', sequence_date=fields.Datetime.context_timestamp(self, fields.Datetime.to_datetime(datetime.datetime.today().date()))),
+                'tenancy_agreement_id': self.id,
+                'date': datetime.datetime.today().date(),
+                'commission_amount': self.commission_price,
+                'commission_structure_id': self.commission_structure_id.id,
+            })
+
+        if self.commission_structure_id and self.commission_structure_id.agent_commission_structure_lines_ids:
+            for line in self.commission_structure_id.agent_commission_structure_lines_ids:
+                self.env['sr.property.agent.commission.invoiceable.lines'].create({
+                    'name': line.name,
+                    'property_id': self.property_id.id,
+                    'tenancy_agreement_id': self.id,
+                    'date': datetime.datetime.today().date(),
+                    'agent_id': line.agent_id.id,
+                    'currency_id': self.currency_id.id,
+                    'amount': self.commission_price * line.percentage / 100,
+                    'commission_line_id': commission_line.id
+                })
+    
 
     def action_create_gatos_legales_invoices(self):
         """Create invoice for legal expenses (gastos legales)"""
@@ -1127,6 +1177,18 @@ class srTenancyAgreement(models.Model):
                                     ]
                                 }
                             )
+
+                invoiceable_line_ids = []
+                for line in record.commission_structure_id.agent_commission_structure_lines_ids:
+                    invoiceable_line_ids.append((0, 0, {
+                        'name': line.name,
+                        'property_id': record.property_id.id,
+                        'tenancy_agreement_id': record.id,
+                        'date': datetime.datetime.today().date(),
+                        'agent_id': line.agent_id.id,
+                        'currency_id': record.currency_id.id,
+                        'amount': record.commission_price * line.percentage / 100
+                    }))
                 self.env["sr.property.agent.commission.lines"].create(
                     {
                         "name": self.env["ir.sequence"].next_by_code(
@@ -1141,46 +1203,15 @@ class srTenancyAgreement(models.Model):
                         "tenancy_agreement_id": record.id,
                         "date": datetime.datetime.today().date(),
                         "commission_amount": record.commission_price,
+                        'commission_structure_id':record.commission_structure_id.id,
+                    'invoiceable_line_ids':invoiceable_line_ids
                     }
                 )
 
     def number_to_spanish_words(self, number):
-        units = [
-            "",
-            "uno",
-            "dos",
-            "tres",
-            "cuatro",
-            "cinco",
-            "seis",
-            "siete",
-            "ocho",
-            "nueve",
-        ]
-        tens = [
-            "",
-            "diez",
-            "veinte",
-            "treinta",
-            "cuarenta",
-            "cincuenta",
-            "sesenta",
-            "setenta",
-            "ochenta",
-            "noventa",
-        ]
-        hundreds = [
-            "",
-            "ciento",
-            "doscientos",
-            "trescientos",
-            "cuatrocientos",
-            "quinientos",
-            "seiscientos",
-            "setecientos",
-            "ochocientos",
-            "novecientos",
-        ]
+        units = ["", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"]
+        tens = ["", "diez", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"]
+        hundreds = ["", "ciento", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"]
         thousands = ["", "mil", "millón", "mil millones", "billón"]
 
         def spanish_number(n):
@@ -1224,14 +1255,11 @@ class srTenancyAgreement(models.Model):
                 if rem > 0:
                     parts.append(spanish_number(rem) + " " + thousands[i])
 
-            return " ".join(reversed(parts)).strip()
+            return ' '.join(reversed(parts)).strip()
 
     def price_to_words(self, amount):
-        if self.property_sale_price:
-            price_in_words = self.number_to_spanish_words(int(amount))
-            return price_in_words.upper()
-        else:
-            return "El precio de venta del inmueble no está definido."
+        price_in_words = self.number_to_spanish_words(int(amount))
+        return price_in_words.upper()
 
     def get_invoices_by_property(self, property_id):
         """Retrieve all unpaid invoices related to a specific property ID sorted by date."""
@@ -1252,31 +1280,23 @@ class srTenancyAgreement(models.Model):
 
         # Dictionary of Spanish months
         months = {
-            1: "enero",
-            2: "febrero",
-            3: "marzo",
-            4: "abril",
-            5: "mayo",
-            6: "junio",
-            7: "julio",
-            8: "agosto",
-            9: "septiembre",
-            10: "octubre",
-            11: "noviembre",
-            12: "diciembre",
+            1: 'enero', 2: 'febrero', 3: 'marzo',
+            4: 'abril', 5: 'mayo', 6: 'junio',
+            7: 'julio', 8: 'agosto', 9: 'septiembre',
+            10: 'octubre', 11: 'noviembre', 12: 'diciembre'
         }
-
+        
         # Extract day, month and year from the date object
         day = date_obj.day
         month = date_obj.month
         year = date_obj.year
         year_str = str(year)
-
+        
         # Convert day and year to their respective ordinal representations
         day_str = self._number_to_ordinal_spanish(day)
         year_suffix = year_str[2:]  # Get the last two digits of the year
         year_str = self._number_to_ordinal_spanish(int(year_suffix))
-
+        
         # Format the string with the Spanish month and ordinal numbers
         formatted_date = f"a los {day_str} ({day}) días del mes de {months[month]} del año dos mil {year_str} (20{year_suffix})"
         return formatted_date
@@ -1284,47 +1304,19 @@ class srTenancyAgreement(models.Model):
     def _number_to_ordinal_spanish(self, number):
         """Converts a number to its Spanish ordinal representation (text)."""
         ordinals = {
-            1: "uno",
-            2: "dos",
-            3: "tres",
-            4: "cuatro",
-            5: "cinco",
-            6: "seis",
-            7: "siete",
-            8: "ocho",
-            9: "nueve",
-            10: "diez",
-            11: "once",
-            12: "doce",
-            13: "trece",
-            14: "catorce",
-            15: "quince",
-            16: "dieciséis",
-            17: "diecisiete",
-            18: "dieciocho",
-            19: "diecinueve",
-            20: "veinte",
-            21: "veintiuno",
-            22: "veintidós",
-            23: "veintitrés",
-            24: "veinticuatro",
-            25: "veinticinco",
-            26: "veintiséis",
-            27: "veintisiete",
-            28: "veintiocho",
-            29: "veintinueve",
-            30: "treinta",
-            31: "treinta y uno",
+            1: 'uno', 2: 'dos', 3: 'tres', 4: 'cuatro',
+            5: 'cinco', 6: 'seis', 7: 'siete', 8: 'ocho',
+            9: 'nueve', 10: 'diez', 11: 'once', 12: 'doce',
+            13: 'trece', 14: 'catorce', 15: 'quince', 16: 'dieciséis',
+            17: 'diecisiete', 18: 'dieciocho', 19: 'diecinueve', 20: 'veinte', 21: 'veintiuno',
+            22: 'veintidós', 23: 'veintitrés', 24: 'veinticuatro', 25: 'veinticinco', 26: 'veintiséis',
+            27: 'veintisiete', 28: 'veintiocho', 29: 'veintinueve', 30: 'treinta', 31: 'treinta y uno',
         }
         return ordinals.get(number, str(number))
 
-
-    # def _onchange_reserve_amount(self):
-    #     if self.reserve_amount <= 0:
-    #         self.reserve_amount = 0.0
-    #         return {
-    #             "warning": {
-    #                 "title": _("Advertencia"),
-    #                 "message": _("El monto de reserva debe ser mayor que 0."),
-    #             }
-    #         }
+    @api.model
+    def number_to_words_es(self, amount, currency):
+        """Convierte número a letras en español, con símbolo de moneda."""
+        if not amount:
+            amount = 0.0
+        return number_to_word.to_word(amount, currency)

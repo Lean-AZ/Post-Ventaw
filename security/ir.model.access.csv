@@ -28,3 +28,7 @@ read_property_product_write_tenant,Read.property.product.write.tenant,product.mo
 read_property_template_write_agent,Read.property.template.write.agent,product.model_product_template,sr_property_rental_management.group_agent,1,1,0,0
 read_property_product_write_agent,Read.property.product.write.agent,product.model_product_product,sr_property_rental_management.group_agent,1,1,0,0
 access_sr_agent_commission_structure,Access.sr.agent.commission.structure,model_sr_agent_commission_structure,,1,1,1,1
+access_sr_agent_commission_structure_lines,Access.sr.agent.commission.structure.lines,model_sr_agent_commission_structure_lines,,1,1,1,1
+access_sr_property_agent_commission_invoiceable_lines,Access.sr.property.agent.commission.invoiceable.lines,model_sr_property_agent_commission_invoiceable_lines,,1,1,1,1
+access_sr_property_commission_wizzard_invoice,Access.sr.property.commission.wizzard.invoice,model_sr_property_commission_wizzard_invoice,,1,1,1,1
+access_sr_property_project,Access.sr.property.project,model_sr_property_project,,1,1,1,1

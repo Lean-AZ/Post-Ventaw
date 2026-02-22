@@ -1,0 +1,38 @@
+<odoo>
+    <template id="retenciones_tamplate">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class='date-axel'>
+                        <span>
+                            <t t-set="current_datetime" t-value="datetime.datetime.now()" />
+                            <p>Santo Domingo, <t t-esc="doc.date_to_spanish_format(current_datetime.date())" /></p>
+                        </span>
+                    </div>
+                    <div class="page">
+                        <div class="oe_structure" />
+                        <div class="content" style="text-align: justify">
+                            <p><strong>Señores:</strong> Dirección General de Impuestos Internos (DGII) Ciudad.- Santo Domingo</p>
+                            <p><strong>Asunto:</strong> Certificación de Retención de Impuesto Sobre la Renta (ISR)</p>
+                            <span>
+                            Por medio de la presente, <span t-esc="doc.company_id.name" />, RNC <span t-esc="doc.company_id.vat" />, certifica que durante el mes de <span t-esc="doc.date_to_spanish_format(doc.payment_date)" />, hemos realizado la retención al señor(a) <span t-esc="doc.partner_id.name" />, portador de la Cédula de Identidad No. <span t-esc="doc.partner_id.vat" />, de la suma de RD$<span t-esc="doc.retention_amount" /> (<span t-esc="doc.price_to_words(doc.retention_amount)" />). <br/>
+                            </span>
+                            <span>
+                            <br/>
+                            Dicha retención fue pagada a la Dirección General de Impuestos Internos (DGII) por concepto de Impuesto Sobre la Renta (ISR), conforme a lo dispuesto en el Código Tributario de la República Dominicana, Ley 11-92, y su Reglamento de Aplicación No. 139-98. <br/>
+                            <br/>
+                            </span>
+                            <span>
+                                Esta certificación se expide a solicitud de la parte interesada. <br/> Atentamente, <br/>
+                            </span>
+                            <span>
+                            <br/>
+                            <strong>Lic. Marcel Núñez.</strong> <br/> Encargada de Pagos
+                            </span>
+                        </div>
+                    </div>
+            </t>
+        </t>
+    </t>
+</template>
+</odoo>

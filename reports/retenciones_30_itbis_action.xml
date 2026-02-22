@@ -1,0 +1,11 @@
+<odoo>
+    <record id="retenciones_30_itbis_action" model="ir.actions.report">
+        <field name="name">Carta de Retención - ITBIS (30%)</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sr_property_rental_management.retenciones_itbis_30_template</field>
+        <field name="report_file">sr_property_rental_management.retenciones_itbis_30_template</field>
+        <field name="binding_model_id" ref="model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

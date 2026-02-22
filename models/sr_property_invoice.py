@@ -12,7 +12,7 @@ from odoo import models, fields, api, _
 from datetime import date
 from odoo.exceptions import UserError
 
-class srAccountMove(models.Model):
+class srAccountMoveLine(models.Model):
     _inherit = 'account.move.line'
     
     tenancy_agreement = fields.Many2one('sr.tenancy.agreement', 'Agreement')
@@ -20,6 +20,7 @@ class srAccountMove(models.Model):
 class srAccountMove(models.Model):
     _inherit = 'account.move'
 
+    commission_line_id = fields.Many2one('sr.property.agent.commission.lines', string="Comisión de Propiedad")
     is_property_invoice = fields.Boolean('Is Property Invoice?')
     is_ajuste_de_precio = fields.Boolean(string="Es Ajuste de precio?", default=False)
     is_property_addon = fields.Boolean('Es un producto adicional de propiedad?', default=False)
@@ -112,11 +113,11 @@ class srAccountMove(models.Model):
                     # 'default_capital_pagado_custom_sr': capital_pendiente if capital_pendiente > 0 else 0.0,
                 })
 
-        def _create_payments(self):
-            payments = super().action_create_payments()
-            for payment in payments:
-                payment.mora_pagada_custom_sr = self.mora_pagada_custom_sr
-            return payments
+        # def _create_payments(self):
+        #     payments = super().action_create_payments()
+        #     for payment in payments:
+        #         payment.mora_pagada_custom_sr = self.mora_pagada_custom_sr
+        #     return payments
 
         return action
 
