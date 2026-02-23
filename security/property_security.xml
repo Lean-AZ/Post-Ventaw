@@ -58,6 +58,13 @@
 		</record>
 
 
+		<record id="admin_agreement_rule" model="ir.rule">
+			<field name="name">Admin: See All Agreements</field>
+			<field name="model_id" ref="sr_property_rental_management.model_sr_tenancy_agreement" />
+			<field name="domain_force">[(1, '=', 1)]</field>
+			<field name="groups" eval="[(4, ref('sr_property_rental_management.group_admin'))]" />
+		</record>
+
 		<record id="tenent_agreement_rule" model="ir.rule">
 			<field name="name">Tenent: agreement rules</field>
 			<field name="model_id" ref="sr_property_rental_management.model_sr_tenancy_agreement" />
