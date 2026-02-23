@@ -158,6 +158,9 @@
 							<field name="property_construction_status" required="is_property == True" readonly="state != 'draft'" />
 							<field name="user_id" readonly="state != 'draft'" />
 							<field name="delivery_date" required="is_property == True" readonly="state != 'draft'" />
+							<field name="cadastral_designation" />
+                            <field name="cadastral_number" />
+                            <field name="registration_number" />
 						</group>
 						<group string="Location Information">
 							<span class="o_form_label o_td_label" name="property_address">
