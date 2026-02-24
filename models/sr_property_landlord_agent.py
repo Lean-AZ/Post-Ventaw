@@ -66,10 +66,10 @@ class srResPartner(models.Model):
         ]
         return action
 
-class srResCompany(models.Model):
-    _inherit = 'res.company'
+# class srResCompany(models.Model):
+#     _inherit = 'res.company'
 
-    calcular_mora_cron = fields.Boolean('Calcular Mora Cron', default=False)
+#     calcular_mora_cron = fields.Boolean('Calcular Mora Cron', default=False)
 
 class srAgentCommissionStructure(models.Model):
     _name = 'sr.agent.commission.structure'

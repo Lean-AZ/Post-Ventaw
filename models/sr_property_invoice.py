@@ -130,7 +130,9 @@ class srAccountMove(models.Model):
         # Parámetros configurables
         interest_percent = 5            # 5% (porcentaje anual o como lo necesites)
         days_to_compute = 30            # prorrateo en 30 días
-        company_ids = self.env['res.company'].search([('calcular_mora_cron', '=', True)]).ids
+        # company_ids = self.env['res.company'].search([('calcular_mora_cron', '=', True)]).ids
+        company_ids = self.env['res.company'].ids
+
 
         today = date.today()
 
