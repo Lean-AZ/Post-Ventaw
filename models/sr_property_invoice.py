@@ -325,7 +325,7 @@ class srAccountPaymentWizard(models.TransientModel):
 class srAccountPayment(models.Model):
     _inherit = 'account.payment'
     is_property_invoice = fields.Boolean('Is Property Invoice?')
-    is_reservation_payment = fields.Boolean('Es Pago de Reserva?', default=False)
+    is_reserva = fields.Boolean('Es Pago de Reserva?', default=False)
 
 
     capital_pagado_custom_sr = fields.Float(

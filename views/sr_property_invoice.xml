@@ -61,6 +61,14 @@
 				<field name="is_property_invoice" invisible="1"/>
 				<field name="mora_pagada_custom_sr" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="is_property_invoice == False" readonly="state != 'draft'"/>
 				<field name="capital_pagado_custom_sr" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="is_property_invoice == False" readonly="state != 'draft'"/>
+				<field name="is_reserva"/>
+				<field name="monto_en_rd" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="is_property_invoice == False" readonly="state != 'draft'"/>
+        <field name="metodo_de_pago" />
+        <field name="numero_de_referencia" />
+        <field name="banco_emisor" />
+        <field name="banco_receptor" />
+        <field name="is_property_invoice" readonly="1"/>
+        <field name="property_id" widget="many2one_avatar" invisible="is_property_invoice == False" domain="[('is_property', '=', True)]"/>
 			</xpath>
 		</field>
 	</record>
