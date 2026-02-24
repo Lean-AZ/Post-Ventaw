@@ -325,6 +325,8 @@ class srAccountPaymentWizard(models.TransientModel):
 class srAccountPayment(models.Model):
     _inherit = 'account.payment'
     is_property_invoice = fields.Boolean('Is Property Invoice?')
+    is_reservation_payment = fields.Boolean('Es Pago de Reserva?', default=False)
+
 
     capital_pagado_custom_sr = fields.Float(
         string="Monto pagado de capital",
@@ -340,3 +342,88 @@ class srAccountPayment(models.Model):
         default=0.0,
         tracking=True,
     )
+
+    monto_en_rd = fields.Float(
+        string="Monto en RD",
+        store=True,
+        digits='Product Price',
+        default=0.0,
+        compute='compute_monto_en_rd',
+    )
+
+    metodo_de_pago = fields.Selection(
+        string="Método de Pago",
+        selection=[
+            ('efectivo', 'Efectivo'),
+            ('deposito', 'Depósito'),
+            ('transferencia', 'Transferencia'),
+        ],
+        default='transferencia',
+    )
+
+    numero_de_referencia = fields.Char(
+        string="Número de Referencia o Comprobante de operación",
+        default='',
+        tracking=True,
+    )
+
+    banco_emisor = fields.Many2one(
+        'res.bank',
+        string="Banco Emisor",
+        tracking=True,
+    )
+
+    banco_receptor = fields.Many2one(
+        'res.bank',
+        string="Banco Receptor",
+        tracking=True,
+    )
+
+    @api.depends('amount', 'manual_currency_exchange_rate', 'apply_manual_currency_exchange')
+    def compute_monto_en_rd(self):
+        for payment in self:            
+            if payment.apply_manual_currency_exchange:
+                # Apply manual exchange rate
+                payment.monto_en_rd = payment.amount * payment.manual_currency_exchange_rate
+            else:
+                # Default behavior: use the amount as is
+                payment.monto_en_rd = payment.amount
+
+class AccountInvoiceReport(models.Model):
+    _inherit = 'account.invoice.report'
+
+    amount_total_in_currency_signed = fields.Float(
+        string='Total Facturado',
+        readonly=True,
+        group_operator='sum'
+    )
+
+    amount_residual = fields.Float(
+        string='Total Pendiente',
+        readonly=True,
+        group_operator='sum'
+    )
+
+    amount_paid = fields.Float(
+        string='Total Pagado',
+        readonly=True,
+        store=True,
+        group_operator='sum'
+    )
+
+    computed_mora = fields.Float(
+        string='Mora Computada',
+        readonly=True,
+        store=True,
+        group_operator='sum'
+    )
+
+    mora_pagada_custom_sr = fields.Float(
+        string='Mora Pagada',
+        readonly=True,
+        store=True,
+        group_operator='sum'
+    )
+
+    def _select(self):
+        return super()._select() + ", move.amount_total_in_currency_signed, move.amount_residual, (move.amount_total_in_currency_signed - move.amount_residual) as amount_paid, move.computed_mora, move.mora_pagada_custom_sr"
