@@ -54,6 +54,17 @@ class srProductProduct(models.Model):
         ]
         return action
 
+    
+    def action_view_buyer_payments(self):
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "account.action_account_payments"
+        )
+        action["domain"] = [
+            ("partner_id", "=", self.sr_buyer_id.id),
+        ]
+        return action
+
     def _compute_property_invoice_count(self):
         invoice_ids = self.env["account.move"].search(
             [("property_id", "=", self.id)]
@@ -615,6 +626,17 @@ class srPropertytemplate(models.Model):
         )
         action["domain"] = [
             ("property_id.product_tmpl_id", "=", self.id),
+        ]
+        return action
+
+    
+    def action_view_buyer_payments(self):
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "account.action_account_payments"
+        )
+        action["domain"] = [
+            ("partner_id", "=", self.sr_buyer_id.id),
         ]
         return action
 

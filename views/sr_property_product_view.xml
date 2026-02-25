@@ -73,6 +73,10 @@
 						widget="statinfo" />
 				</button>
 
+				<button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_buyer_payments">
+                    <field string="Pagos" name="buyer_payments_count" widget="statinfo"/>
+                </button>
+
 				<button type="object" class="oe_stat_button"
 					icon="fa-pencil-square-o" name="action_view_property_invoices">
 					<field string="Invoices" name="property_invoice_count"
