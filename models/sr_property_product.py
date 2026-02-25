@@ -332,6 +332,35 @@ class srPropertytemplate(models.Model):
         store=False,
     )
 
+    sr_buyer_id = fields.Many2one('res.partner', string='Comprador', compute='_compute_sr_buyer_id')
+
+
+    @api.depends('all_cuotas')
+    def _compute_sr_buyer_id(self):
+        for record in self:
+            if record.all_cuotas and len(record.all_cuotas) > 0:
+                record.sr_buyer_id = record.all_cuotas[0].partner_id
+            else:
+                record.sr_buyer_id = False
+
+
+    buyer_payments_ids = fields.Many2many('account.payment', string='Pagos del Comprador', compute='_compute_buyer_payments_ids')
+
+    buyer_payments_count = fields.Integer('Pagos del Comprador', compute='_compute_buyer_payments_count')
+
+    @api.depends('buyer_payments_ids')
+    def _compute_buyer_payments_count(self):
+        for record in self:
+            record.buyer_payments_count = len(record.buyer_payments_ids) if record.buyer_payments_ids else 0
+
+    @api.depends('sr_buyer_id')
+    def _compute_buyer_payments_ids(self):
+        for record in self:
+            if record.sr_buyer_id:
+                record.buyer_payments_ids = self.env['account.payment'].search([('property_id', '=', record.id), ('payment_type', '=', 'inbound')])
+            else:
+                record.buyer_payments_ids = False
+
     def _compute_all_invoices(self):
         for record in self:
             all_invoices = self.env["account.move"].search(
@@ -653,6 +682,12 @@ class AccountMove(models.Model):
 
     is_overdue = fields.Boolean(compute="_compute_is_overdue")
 
+    def _compute_is_overdue(self):
+        for record in self:
+            record.is_overdue = False
+            if record.invoice_date_due and record.amount_residual > 0:
+                record.is_overdue = fields.Date.today() > record.invoice_date_due
+
     property_amount_paid = fields.Float(
         string="Monto Pagado",
         default=0.00
@@ -717,6 +752,44 @@ class AccountMove(models.Model):
         ]
         action['context'] = {'default_move_type':'out_invoice', 'move_type':'out_invoice', 'journal_type': 'sale', 'search_default_unpaid': 1}
         return action
+
+    property_invoice_count = fields.Integer(
+        compute="_compute_property_invoice_count", string="Property Invoices Count"
+    )
+
+    tenancy_agreement_count = fields.Integer(compute='_compute_tenancy_agreement_count', string='Tenancy Agreement Count')
+
+    property_type = fields.Selection(
+        [("sale", "Sale"), ("rent", "Rent")], string="Property For", default="sale"
+    )
+
+    property_sale_price = fields.Float(
+        "Property Sales Price",
+        default=1.0,
+        digits="Product Price",
+        help="Price at which the Property is sold to Tenants.",
+    )
+    property_rent_price = fields.Float(
+        "Property Rent Price",
+        default=1.0,
+        digits="Product Price",
+        help="Price at which the Property is Rented to Tenants.",
+    )
+
+    state = fields.Selection(
+        [
+            ("draft", "Draft"),
+            ("available", "Available"),
+            ("booked", "Separado"),
+            ("rented", "Rented"),
+            ("sold", "Sold"),
+        ],
+        string="Status",
+        readonly=True,
+        copy=False,
+        index=True,
+        track_visibility="onchange",
+    )
 
     def _compute_tenancy_agreement_count(self):
         agreement_ids = self.env['sr.tenancy.agreement'].search([('property_id.product_tmpl_id','=',self.id)])
