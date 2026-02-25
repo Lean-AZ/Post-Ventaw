@@ -55,15 +55,15 @@ class srProductProduct(models.Model):
         return action
 
     
-    # def action_view_buyer_payments(self):
-    #     self.ensure_one()
-    #     action = self.env["ir.actions.actions"]._for_xml_id(
-    #         "account.action_account_payments"
-    #     )
-    #     action["domain"] = [
-    #         ("partner_id", "=", self.sr_buyer_id.id),
-    #     ]
-    #     return action
+    def action_view_buyer_payments(self):
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "account.action_account_payments"
+        )
+        action["domain"] = [
+            ("partner_id", "=", self.sr_buyer_id.id),
+        ]
+        return action
 
     def _compute_property_invoice_count(self):
         invoice_ids = self.env["account.move"].search(
@@ -343,33 +343,33 @@ class srPropertytemplate(models.Model):
         store=False,
     )
 
-    # sr_buyer_id = fields.Many2one('res.partner', string='Comprador', compute='_compute_sr_buyer_id')
+    sr_buyer_id = fields.Many2one('res.partner', string='Comprador', compute='_compute_sr_buyer_id')
 
-    # @api.depends('all_cuotas')
-    # def _compute_sr_buyer_id(self):
-    #     for record in self:
-    #         if record.all_cuotas and len(record.all_cuotas) > 0:
-    #             record.sr_buyer_id = record.all_cuotas[0].partner_id
-    #         else:
-    #             record.sr_buyer_id = False
+    @api.depends('all_cuotas')
+    def _compute_sr_buyer_id(self):
+        for record in self:
+            if record.all_cuotas and len(record.all_cuotas) > 0:
+                record.sr_buyer_id = record.all_cuotas[0].partner_id
+            else:
+                record.sr_buyer_id = False
 
 
-    # buyer_payments_ids = fields.Many2many('account.payment', string='Pagos del Comprador', compute='_compute_buyer_payments_ids')
+    buyer_payments_ids = fields.Many2many('account.payment', string='Pagos del Comprador', compute='_compute_buyer_payments_ids')
 
-    # buyer_payments_count = fields.Integer('Pagos del Comprador', compute='_compute_buyer_payments_count')
+    buyer_payments_count = fields.Integer('Pagos del Comprador', compute='_compute_buyer_payments_count')
 
-    # @api.depends('buyer_payments_ids')
-    # def _compute_buyer_payments_count(self):
-    #     for record in self:
-    #         record.buyer_payments_count = len(record.buyer_payments_ids) if record.buyer_payments_ids else 0
+    @api.depends('buyer_payments_ids')
+    def _compute_buyer_payments_count(self):
+        for record in self:
+            record.buyer_payments_count = len(record.buyer_payments_ids) if record.buyer_payments_ids else 0
 
-    # @api.depends('sr_buyer_id')
-    # def _compute_buyer_payments_ids(self):
-    #     for record in self:
-    #         if record.sr_buyer_id:
-    #             record.buyer_payments_ids = self.env['account.payment'].search([('property_id', '=', record.id), ('payment_type', '=', 'inbound')])
-    #         else:
-    #             record.buyer_payments_ids = False
+    @api.depends('sr_buyer_id')
+    def _compute_buyer_payments_ids(self):
+        for record in self:
+            if record.sr_buyer_id:
+                record.buyer_payments_ids = self.env['account.payment'].search([('property_id', '=', record.id), ('payment_type', '=', 'inbound')])
+            else:
+                record.buyer_payments_ids = False
 
     def _compute_all_invoices(self):
         for record in self:
@@ -629,15 +629,15 @@ class srPropertytemplate(models.Model):
         return action
 
     
-    # def action_view_buyer_payments(self):
-    #     self.ensure_one()
-    #     action = self.env["ir.actions.actions"]._for_xml_id(
-    #         "account.action_account_payments"
-    #     )
-    #     action["domain"] = [
-    #         ("partner_id", "=", self.sr_buyer_id.id),
-    #     ]
-    #     return action
+    def action_view_buyer_payments(self):
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "account.action_account_payments"
+        )
+        action["domain"] = [
+            ("partner_id", "=", self.sr_buyer_id.id),
+        ]
+        return action
 
     def action_view_property_invoices(self):
         self.ensure_one()
