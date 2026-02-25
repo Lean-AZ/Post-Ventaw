@@ -329,6 +329,19 @@ class srAccountPayment(models.Model):
     is_property_invoice = fields.Boolean('Is Property Invoice?')
     is_reserva = fields.Boolean('Es Pago de Reserva?', default=False)
 
+    # Ensure state selection accepts 'posted' (fixes ValueError when another module
+    # or delegation restricts account.payment.state selection)
+    state = fields.Selection(
+        selection=[
+            ('draft', 'Draft'),
+            ('posted', 'Posted'),
+            ('cancel', 'Cancelled'),
+        ],
+        related='move_id.state',
+        readonly=True,
+    )
+
+
 
     capital_pagado_custom_sr = fields.Float(
         string="Monto pagado de capital",
