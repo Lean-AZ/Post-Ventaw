@@ -797,21 +797,6 @@ class AccountMove(models.Model):
         help="Price at which the Property is Rented to Tenants.",
     )
 
-    state = fields.Selection(
-        [
-            ("draft", "Draft"),
-            ("available", "Available"),
-            ("booked", "Separado"),
-            ("rented", "Rented"),
-            ("sold", "Sold"),
-        ],
-        string="Status",
-        readonly=True,
-        copy=False,
-        index=True,
-        track_visibility="onchange",
-    )
-
     def _compute_tenancy_agreement_count(self):
         agreement_ids = self.env['sr.tenancy.agreement'].search([('property_id.product_tmpl_id','=',self.id)])
         self.tenancy_agreement_count = len(agreement_ids)
