@@ -386,9 +386,10 @@ class srPropertytemplate(models.Model):
                 [("move_id.property_id.product_tmpl_id", "=", record.id)]
             )
 
-            # Sort all_lines by move_id.invoice_date (ascending)
+            # Sort all_lines by move_id.invoice_date (ascending); treat False/None as old date
             all_lines = all_lines.sorted(
-                key=lambda l: l.move_id.invoice_date, reverse=False
+                key=lambda l: l.move_id.invoice_date or fields.Date.from_string("1900-01-01"),
+                reverse=False,
             )
 
             # Group lines dynamically based on the description
