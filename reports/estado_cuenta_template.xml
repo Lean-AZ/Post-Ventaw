@@ -89,22 +89,6 @@
                             padding-bottom: 0;
                         }
 
-                        /* Estilos para columnas numéricas y monetarias */
-                        .amount-cell,
-                        td.amount-cell {
-                            text-align: right !important;
-                            font-variant-numeric: tabular-nums;
-                            white-space: nowrap;
-                            padding-left: 0.75rem;
-                            padding-right: 0.75rem;
-                            min-width: 5rem;
-                        }
-                        th.amount-cell {
-                            text-align: right !important;
-                            font-variant-numeric: tabular-nums;
-                            padding-left: 0.75rem;
-                            padding-right: 0.75rem;
-                        }
                     </style>
                     <!-- Directly access the properties of the product model -->
                     <t t-foreach="docs" t-as="doc">
@@ -186,18 +170,18 @@
                                 <thead>
                                     <tr>
                                         <th class='start-header'>Concepto</th>
-                                        <th class="amount-cell">Capital + Mora</th>
-                                        <th class="amount-cell">Pendiente</th>
-                                        <th class="amount-cell">Mora Generada</th>
-                                        <th class="amount-cell">Capital</th>
-                                        <th class="amount-cell">Pagado</th>
+                                        <th>Capital + Mora</th>
+                                        <th>Pendiente</th>
+                                        <th>Mora Generada</th>
+                                        <th>Capital</th>
+                                        <th>Pagado</th>
                                         <!-- <th>C V</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td class='title-table'>Inicial</td>
-                                        <td class="amount-cell">
+                                        <td>
                                             <!-- Initialize all the totals -->
                                             <t t-set="total_amount_cuota" t-value="0"/>
                                             <t t-set="total_residual_cuota" t-value="0"/>
@@ -243,22 +227,22 @@
                                         </td>
                                     
                                         <!-- Display the residual amount -->
-                                        <td class="amount-cell">
+                                        <td>
                                             <t t-esc="total_residual_cuota" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                     
                                         <!-- Display the sum of "Mora" -->
-                                        <td class="amount-cell">
+                                        <td>
                                             <t t-esc="mora_subtotal_cuota" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                     
                                         <!-- Display the subtotal for "Inicial" -->
-                                        <td class="amount-cell">
+                                        <td>
                                             <t t-esc="subtotal_cuota" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
                                     
                                         <!-- Calculate and display the amount paid -->
-                                        <td class="amount-cell">
+                                        <td>
                                             <t t-set="cuota_difference" t-value="total_amount_cuota - total_residual_cuota"/>
                                             <t t-esc="cuota_difference" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
@@ -266,7 +250,7 @@
                                     
                                     <tr>
                                         <td class='title-table'>Financiamiento</td>
-                                        <td class="amount-cell">
+                                        <td>
                                             <t t-set="total_amount_cuota_final" t-value="0"/>
                                             <t t-set="total_residual_cuota_final" t-value="0"/>
                                             <t t-set="mora_subtotal_cuota_final" t-value="0"/>
@@ -307,16 +291,16 @@
 
                                             <t t-esc="total_amount_cuota_final" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
-                                        <td class="amount-cell">
+                                        <td>
                                             <t t-esc="total_residual_cuota_final" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
-                                        <td class="amount-cell">
+                                        <td>
                                             <t t-esc="mora_subtotal_cuota_final" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
-                                        <td class="amount-cell">
+                                        <td>
                                             <t t-esc="first_line_subtotal" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
-                                        <td class="amount-cell">
+                                        <td>
                                             <t t-set="cuota_final_difference" t-value="total_amount_cuota_final - total_residual_cuota_final"/>
                                             <t t-esc="cuota_final_difference" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                         </td>
@@ -341,10 +325,10 @@
                                     <tr>
                                         <th class='start-header'>Fecha Venc</th>
                                         <th class='start-header'>Concepto</th>
-                                        <th class="amount-cell">Monto</th>
-                                        <th class="amount-cell">Mora</th>
-                                        <th class="amount-cell">Pendiente</th>
-                                        <th class="amount-cell">Pagado</th>
+                                        <th>Monto</th>
+                                        <th>Mora</th>
+                                        <th>Pendiente</th>
+                                        <th>Pagado</th>
                                         <th>Estado de pago</th>
                                     </tr>
                                 </thead>
@@ -384,19 +368,19 @@
                                                 </t>
                                             </td>
                                             <!-- Monto -->
-                                            <td class="amount-cell" style="border-top: 1px solid #dee2e6 !important">
+                                            <td style="border-top: 1px solid #dee2e6 !important">
                                                 <t t-esc="regular_amount" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                             </td>
                                             <!-- Mora -->
-                                            <td class="amount-cell" style="border-top: 1px solid #dee2e6 !important">
+                                            <td style="border-top: 1px solid #dee2e6 !important">
                                                 <t t-esc="mora_amount" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                             </td>
                                             <!-- Pendiente -->
-                                            <td class="amount-cell" style="border-top: 1px solid #dee2e6 !important">
+                                            <td style="border-top: 1px solid #dee2e6 !important">
                                                 <t t-esc="invoice.amount_residual" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                             </td>
                                             <!-- Pagado -->
-                                            <td class="amount-cell" style="border-top: 1px solid #dee2e6 !important">
+                                            <td style="border-top: 1px solid #dee2e6 !important">
                                                 <t t-esc="invoice.amount_total - invoice.amount_residual" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
                                             </td>
                                             <!-- Estado de pago -->

@@ -88,6 +88,43 @@
                     padding-top: 0;
                     padding-bottom: 0;
                     }
+
+                    /* Report invoice grouped: column alignment and number styling */
+                    table.report-invoice-grouped-table {
+                    width: 100%;
+                    }
+                    table.report-invoice-grouped-table th:nth-child(1),
+                    table.report-invoice-grouped-table td:nth-child(1) {
+                    text-align: left;
+                    width: auto;
+                    }
+                    table.report-invoice-grouped-table th:nth-child(2),
+                    table.report-invoice-grouped-table td:nth-child(2) {
+                    text-align: left;
+                    white-space: nowrap;
+                    }
+                    /* Monetary columns: right-align, tabular numbers for decimal alignment */
+                    table.report-invoice-grouped-table th:nth-child(n+3):nth-child(-n+7),
+                    table.report-invoice-grouped-table td:nth-child(n+3):nth-child(-n+7) {
+                    text-align: right;
+                    font-variant-numeric: tabular-nums;
+                    white-space: nowrap;
+                    min-width: 6rem;
+                    padding-left: 0.5rem;
+                    padding-right: 0.75rem;
+                    }
+                    table.report-invoice-grouped-table th:nth-child(8),
+                    table.report-invoice-grouped-table td:nth-child(8) {
+                    text-align: center;
+                    }
+                    /* Total row: bold amounts */
+                    table.report-invoice-grouped-table tr.total-row td:nth-child(n+3):nth-child(-n+7) {
+                    font-weight: bold;
+                    }
+                    table.report-invoice-grouped-table tr.total-row td:nth-child(1),
+                    table.report-invoice-grouped-table tr.total-row td:nth-child(2) {
+                    font-weight: bold;
+                    }
                 </style>
                 <div class="page">
                     <!-- <h3 style="text-align: center;">Estado de Cuenta</h3> -->
@@ -237,7 +274,7 @@
                                             <div class='unit-data-item'>
                                                 <strong class="m-0">Porcentaje Pagado</strong>
                                                 <div style="color: #4caf50; font-weight: bold;">
-                                                    <t t-esc="round(doc.total_paid_subtotal / total_precio_unidad * 100, 2)" />
+                                                    <t t-esc="round(doc.total_paid_subtotal / total_precio_unidad * 100, 2) if total_precio_unidad else 0" />
                                                 %</div>
                                             </div>
                                             <div class='unit-data-item'>
@@ -286,7 +323,7 @@
                         <t t-set="total_pagado" t-value="0" />
                         <t t-set="total_pendiente" t-value="0" />
                         <h4>Desglose de cuotas de capital</h4>
-                        <table class="table table-bordered">
+                        <table class="table table-bordered report-invoice-grouped-table">
                             <thead>
                                 <tr>
                                     <th>Concepto</th>
@@ -385,7 +422,7 @@
                                         </td>
                                     </tr>
                                 </t>
-                                <tr>
+                                <tr class="total-row">
                                     <td colspan="2" class="start-header">
                                         <strong>Total</strong>
                                     </td>
@@ -423,7 +460,7 @@
                         </table>
 
                         <h4 class="mt-4">Desglose de adicionales</h4>
-                        <table class="table table-bordered">
+                        <table class="table table-bordered report-invoice-grouped-table">
                             <thead>
                                 <tr>
                                     <th>Concepto</th>
@@ -526,7 +563,7 @@
                                     </tr>
                                 </t>
 
-                                <tr>
+                                <tr class="total-row">
                                     <td colspan="2" class="start-header">
                                         <strong>Total</strong>
                                     </td>
