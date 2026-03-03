@@ -195,7 +195,7 @@
                             <div class='personal-data-item'>
                                 <strong class="m-0">Proyecto</strong>
                                 <span>
-                                    <t t-esc="doc.company_id.name" />
+                                    <t t-esc="doc.sr_property_project_id.name" />
                                 </span>
                             </div>
                             <div class='personal-data-item'>
