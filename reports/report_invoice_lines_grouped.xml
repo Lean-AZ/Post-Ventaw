@@ -125,6 +125,35 @@
                     table.report-invoice-grouped-table tr.total-row td:nth-child(2) {
                     font-weight: bold;
                     }
+
+                    /* Print styles: ensure report looks good when printed */
+                    @media print {
+                    body, .page { background: #fff !important; }
+                    table.report-invoice-grouped-table,
+                    table.report-invoice-grouped-table th,
+                    table.report-invoice-grouped-table td {
+                        border: 1pt solid #333 !important;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
+                    }
+                    table.report-invoice-grouped-table thead th {
+                        background-color: #e8e8e8 !important;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
+                        font-weight: bold;
+                    }
+                    table.report-invoice-grouped-table tr.total-row td {
+                        border-top: 2pt solid #333 !important;
+                        font-weight: bold;
+                    }
+                    .report-invoice-grouped-table td:nth-child(n+3):nth-child(-n+7),
+                    .report-invoice-grouped-table th:nth-child(n+3):nth-child(-n+7) {
+                        font-variant-numeric: tabular-nums;
+                    }
+                    table { page-break-inside: auto; }
+                    tr { page-break-inside: avoid; page-break-after: auto; }
+                    thead { display: table-header-group; }
+                    }
                 </style>
                 <div class="page">
                     <!-- <h3 style="text-align: center;">Estado de Cuenta</h3> -->
