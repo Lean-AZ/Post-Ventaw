@@ -1,0 +1,49 @@
+.content {
+    text-align: justify;
+}
+
+.header {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.space {
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.table-contract {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid darkgray;
+}
+
+.table-contract th {
+    background-color: lightgray;
+    border: 1px solid darkgray;
+    text-align: center;
+}
+
+.table-contract td {
+    border: 1px solid darkgray;
+}
+
+.sign-content {
+    text-align: center;
+    margin-top: 50px;
+}

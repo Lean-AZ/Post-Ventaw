@@ -63,6 +63,11 @@
         'reports/retenciones_30_itbis_action.xml',
         'reports/retenciones_itbis_30_template.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'sr_property_rental_management/static/css/report_styles.css',
+        ],
+    },
     'installable': True,
     'auto_install': False,
     'application': True,
