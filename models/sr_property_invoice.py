@@ -20,7 +20,35 @@ class srAccountMoveLine(models.Model):
 class srAccountMove(models.Model):
     _inherit = 'account.move'
 
-    commission_line_id = fields.Many2one('sr.property.agent.commission.lines', string="Comisión de Propiedad")
+    commission_line_id = fields.Many2one(
+        'sr.property.agent.commission.lines',
+        string="Comisión (legacy)",
+        help="Campo legacy; usar Líneas de comisión vinculadas.",
+    )
+    commission_line_ids = fields.Many2many(
+        comodel_name='sr.property.agent.commission.lines',
+        relation='account_move_commission_rel',
+        column1='move_id',
+        column2='commission_line_id',
+        string="Líneas de comisión vinculadas",
+        help="Comisiones de agente a las que aplica esta factura. Solo se permiten líneas cuyo agente (o agentes de la estructura) coincida con el proveedor de la factura.",
+    )
+
+    @api.constrains("commission_line_ids", "partner_id")
+    def _check_commission_line_partner(self):
+        for move in self:
+            if not move.partner_id or not move.commission_line_ids:
+                continue
+            for line in move.commission_line_ids:
+                if move.partner_id not in line.allowed_agent_ids:
+                    raise UserError(
+                        _(
+                            "La factura no puede vincularse a la línea de comisión %(name)s: "
+                            "el proveedor %(partner)s no es uno de los agentes permitidos para esa comisión.",
+                            name=line.name,
+                            partner=move.partner_id.name,
+                        )
+                    )
     is_property_invoice = fields.Boolean('Is Property Invoice?')
     is_ajuste_de_precio = fields.Boolean(string="Es Ajuste de precio?", default=False)
     is_property_addon = fields.Boolean('Es un producto adicional de propiedad?', default=False)

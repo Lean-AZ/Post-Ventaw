@@ -159,6 +159,7 @@
 								invisible="property_type != 'rent'" required="property_type == 'rent' and is_property == True" readonly="state != 'draft'"
 								widget="monetary"
 								options="{'currency_field': 'currency_id', 'field_digits': True}" />
+							<field name="currency_id" readonly="state != 'draft'" options="{'no_create': True}"/>
 							<field name="property_construction_status" required="is_property == True" readonly="state != 'draft'" />
 							<field name="user_id" readonly="state != 'draft'" />
 							<field name="delivery_date" required="is_property == True" readonly="state != 'draft'" />

@@ -278,11 +278,25 @@ class srPropertyAgentCommissionLines(models.Model):
         "commission_line_id",
         string="Invoiceable Lines",
     )
-    linked_invoices_ids = fields.One2many(
-        "account.move", "commission_line_id", string="Linked Invoices"
+    linked_invoices_ids = fields.Many2many(
+        "account.move",
+        "account_move_commission_rel",
+        "commission_line_id",
+        "move_id",
+        string="Linked Invoices",
     )
     linked_invoice_count = fields.Integer(
         string="Linked Invoices Count", compute="_compute_linked_invoice_count"
+    )
+    allowed_agent_ids = fields.Many2many(
+        "res.partner",
+        "sr_commission_line_allowed_agent_rel",
+        "commission_line_id",
+        "partner_id",
+        string="Agentes permitidos",
+        compute="_compute_allowed_agent_ids",
+        store=True,
+        help="Agentes que pueden tener facturas vinculadas a esta línea de comisión (agente del contrato + agentes de la estructura).",
     )
     state = fields.Selection(
         [
@@ -308,6 +322,15 @@ class srPropertyAgentCommissionLines(models.Model):
     property_client_id = fields.Many2one("res.partner", string="Cliente", compute="_compute_property_client_id")
 
     commission_percetage = fields.Float(string="Porcentaje de Comisión", compute="_compute_commission_percentage")
+
+    @api.depends("agent_id", "commission_structure_id", "commission_structure_id.agent_commission_structure_lines_ids.agent_id")
+    def _compute_allowed_agent_ids(self):
+        for record in self:
+            agents = record.agent_id
+            if record.commission_structure_id:
+                structure_agents = record.commission_structure_id.agent_commission_structure_lines_ids.mapped("agent_id")
+                agents |= structure_agents
+            record.allowed_agent_ids = agents
 
     @api.depends("commission_structure_id")
     def _compute_commission_percentage(self):
@@ -370,7 +393,7 @@ class srPropertyAgentCommissionLines(models.Model):
             "name": "Linked Invoices",
             "res_model": "account.move",
             "view_mode": "tree,form",
-            "domain": [("commission_line_id", "=", self.id)],
+            "domain": [("id", "in", self.linked_invoices_ids.ids)],
         }
 
 

@@ -76,7 +76,7 @@ class srAgentCommissionStructure(models.Model):
     _description = 'Agent Commission Structure'
 
     name = fields.Char('Nombre de la Estructura de Comisión')
-    percentage = fields.Float('Porcentaje de Total de Comisión')
+    percentage = fields.Float('Porcentaje de la venta')
     available_agents_ids = fields.Many2many('res.partner', string='Agentes de la Estructura de Comisión', compute='_compute_available_agents_ids')
     agent_commission_structure_lines_ids = fields.One2many('sr.agent.commission.structure.lines', 'agent_commission_structure_id', string='Agent Commission Structure Lines')
 

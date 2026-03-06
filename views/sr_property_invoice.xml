@@ -16,6 +16,7 @@
 				<field name="property_id" invisible="is_property_invoice == False" required="is_property_invoice == True" />
 				<field name="tenancy_agreement" invisible="is_property_invoice == False" required="is_property_invoice == True" />
 				<field name="is_property_commission_bill" invisible="1"/>
+				<field name="commission_line_ids" string="Comisiones vinculadas" invisible="move_type not in ('in_invoice', 'in_refund') or not is_property_invoice" domain="[('allowed_agent_ids', 'in', [partner_id])]" options="{'no_create': True}" placeholder="Vincular líneas de comisión de agente..."/>
 			</field>
 			<xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="before">
 				<field name="tenancy_agreement" invisible="1"/>
