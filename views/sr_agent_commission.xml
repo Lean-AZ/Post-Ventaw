@@ -5,7 +5,7 @@
 		<field name="name">sr.property.agent.commission.invoiceable.lines.tree.view</field>
 		<field name="model">sr.property.agent.commission.invoiceable.lines</field>
 		<field name="arch" type="xml">
-			<tree string="Agent Commission Invoiceable Lines" class="o_sale_order" create="false" edit="false" sample="1">
+			<tree string="Lineas de comisión facturables" class="o_sale_order" create="false" edit="false" sample="1">
 				<field name="name" string="Number" readonly="1" decoration-bf="1" />
 				<field name="agent_id" />
 				<field name="property_id" string="Property" />
@@ -21,7 +21,7 @@
 		<field name="name">sr.property.agent.commission.invoiceable.lines.form.view</field>
 		<field name="model">sr.property.agent.commission.invoiceable.lines</field>
 		<field name="arch" type="xml">
-			<form string="Agent Commission Invoiceable Lines" create="false" edit="false">
+			<form string="Lineas de comisión facturables" create="false" edit="false">
 				<sheet>
 					<div class="oe_button_box" name="button_box">
 					</div>
@@ -45,7 +45,7 @@
 	</record>
 
 	<record id="sr_property_agent_commission_invoiceable_lines_action" model="ir.actions.act_window">
-		<field name="name">Agent Commission Invoiceable Lines</field>
+		<field name="name">Lineas de comisión facturables</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">sr.property.agent.commission.invoiceable.lines</field>
 		<field name="view_mode">tree,form</field>
@@ -78,16 +78,16 @@
 		<field name="name">sr.property.agent.commission.lines.form.view</field>
 		<field name="model">sr.property.agent.commission.lines</field>
 		<field name="arch" type="xml">
-			<form string="Agent Commission Lines" create="false" edit="false">
+			<form string="Agent Commission Lines" create="false">
 				<header>
 					<field name="state" widget="statusbar"/>
 				</header>
 				<sheet>
-					<div class="oe_button_box" name="button_box">
+					<!-- <div class="oe_button_box" name="button_box">
 						<button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_linked_invoices">
 							<field string="Invoices" name="linked_invoice_count" widget="statinfo"/>
 						</button>
-					</div>
+					</div> -->
 					<div class="oe_title">
 						<h1>
 							<field name="name" readonly="1" />
@@ -105,17 +105,17 @@
 							<field name="currency_id" />
 							<field name="commission_amount" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
 						</group>
-						<group string="Informacion de la Contable">
+						<!-- <group string="Informacion Contable">
 							<field name="invoiced_amount" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" readonly="1"/>
 							<field name="paid_amount" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" readonly="1"/>
 							<field name="remaining_amount" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" readonly="1"/>
-						</group>
+						</group> -->
 					</group>
 					<field name="allowed_agent_ids" invisible="1"/>
 					<notebook>
-						<page string="Invoiceable Lines">
+						<page string="Lineas de comisión facturables">
 							<field name="invoiceable_line_ids">
-								<tree>
+								<tree editable="bottom" delete="false">
 									<field name="name" />
 									<field name="property_id" />
 									<field name="tenancy_agreement_id" />
@@ -123,10 +123,16 @@
 									<field name="agent_id" />
 									<field name="currency_id" />
 									<field name="amount" />
+									<field name="paid_amount" readonly="1"/>
+									<field name="remaining_amount" readonly="1"/>
+									<field name="state" readonly="1"/>
+									<field name="linked_invoice_count" readonly="1"/>
+									<button name="action_view_linked_invoices" type="object" string="Ver facturas" icon="fa-file-text-o" class="btn-link" invisible="linked_invoice_count == 0"/>
+									<field name="linked_invoices_ids" widget="many2many_tags" options="{'no_create': True}" domain="[('partner_id', '=', agent_id), ('move_type', 'in', ['in_invoice', 'in_refund'])]"/>
 								</tree>
 							</field>
 						</page>
-						<page string="Facturas vinculadas">
+						<!-- <page string="Facturas vinculadas">
 							<field name="linked_invoices_ids" nolabel="1" domain="[('partner_id', 'in', allowed_agent_ids), ('move_type', 'in', ['in_invoice', 'in_refund'])]">
 								<tree create="false" delete="true">
 									<field name="name"/>
@@ -137,7 +143,7 @@
 									<field name="currency_id" invisible="1"/>
 								</tree>
 							</field>
-						</page>
+						</page> -->
 					</notebook>
 				</sheet>
 			</form>

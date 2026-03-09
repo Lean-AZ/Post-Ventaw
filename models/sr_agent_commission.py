@@ -276,7 +276,7 @@ class srPropertyAgentCommissionLines(models.Model):
     invoiceable_line_ids = fields.One2many(
         "sr.property.agent.commission.invoiceable.lines",
         "commission_line_id",
-        string="Invoiceable Lines",
+        string="Lineas de comisión facturables",
     )
     linked_invoices_ids = fields.Many2many(
         "account.move",
@@ -428,3 +428,50 @@ class srPropertyAgentCommissionInvoiceableLines(models.Model):
     commission_line_id = fields.Many2one(
         "sr.property.agent.commission.lines", string="Commission Line"
     )
+    paid_amount = fields.Monetary(string="Monto Pagado", currency_field="currency_id", compute="_compute_paid_amount")
+    remaining_amount = fields.Monetary(string="Monto Pendiente", currency_field="currency_id", compute="_compute_remaining_amount")
+    state = fields.Selection(
+        [
+            ("draft", "Borrador"),
+            ("partially_paid", "Parcialmente Pagado"),
+            ("paid", "Pagado"),
+        ],
+        string="Estado",
+        default="draft",
+    )
+    @api.depends("linked_invoices_ids", "linked_invoices_ids.amount_total", "linked_invoices_ids.amount_residual")
+    def _compute_paid_amount(self):
+        for record in self:
+            record.paid_amount = sum(record.linked_invoices_ids.mapped("amount_total")) - sum(record.linked_invoices_ids.mapped("amount_residual"))
+    
+    @api.depends("linked_invoices_ids", "linked_invoices_ids.amount_total", "linked_invoices_ids.amount_residual", "amount", "paid_amount")
+    def _compute_remaining_amount(self):
+        for record in self:
+            record.remaining_amount = record.amount - record.paid_amount
+
+    linked_invoices_ids = fields.Many2many(
+        "account.move",
+        "account_move_commission_invoiceable_rel",
+        "invoiceable_line_id",
+        "move_id",
+        string="Facturas Vinculadas",
+    )
+    linked_invoice_count = fields.Integer(
+        string="Linked Invoice Count", compute="_compute_linked_invoice_count"
+    )
+
+    @api.depends("linked_invoices_ids")
+    def _compute_linked_invoice_count(self):
+        for record in self:
+            record.linked_invoice_count = len(record.linked_invoices_ids)
+
+    def action_view_linked_invoices(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Facturas vinculadas"),
+            "res_model": "account.move",
+            "view_mode": "tree,form",
+            "domain": [("id", "in", self.linked_invoices_ids.ids)],
+            "context": {"create": False},
+        }

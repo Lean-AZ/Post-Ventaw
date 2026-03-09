@@ -33,6 +33,14 @@ class srAccountMove(models.Model):
         string="Líneas de comisión vinculadas",
         help="Comisiones de agente a las que aplica esta factura. Solo se permiten líneas cuyo agente (o agentes de la estructura) coincida con el proveedor de la factura.",
     )
+    commission_line_line_ids = fields.Many2many(
+        comodel_name='sr.property.agent.commission.lines',
+        relation='account_move_commission_rel',
+        column1='move_id',
+        column2='commission_line_id',
+        string="Líneas de comisión vinculadas",
+        help="Comisiones de agente a las que aplica esta factura. Solo se permiten líneas cuyo agente (o agentes de la estructura) coincida con el proveedor de la factura.",
+    )
 
     @api.constrains("commission_line_ids", "partner_id")
     def _check_commission_line_partner(self):
