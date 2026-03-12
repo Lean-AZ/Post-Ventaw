@@ -46,7 +46,13 @@
               groups="sr_property_rental_management.group_admin,sr_property_rental_management.group_agent"/>
 
     <menuitem id="sr_property_project_menu" name="Proyectos"
-             action="sr_property_project_action"  parent="sr_property_management_root" sequence="11"/>
+             parent="sr_property_management_root" sequence="11"/>
 
+    <menuitem id="menu_sr_property_project_list" name="Proyectos y Torres"
+              parent="sr_property_project_menu" action="sr_property_project_action" sequence="10"/>
+    <menuitem id="menu_sr_property_units_list" name="Unidades Inmobiliarias"
+              parent="sr_property_project_menu" action="sr_property_product_action" sequence="20"/>
+    <menuitem id="menu_sr_property_category_list" name="Categorías de Fallas"
+              parent="sr_property_project_menu" action="action_helpdesk_ticket_category" sequence="30"/>
 
 </odoo>

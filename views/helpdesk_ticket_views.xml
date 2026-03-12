@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="helpdesk_ticket_view_form_ghr_v2" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.ghr.v2</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header" position="inside">
+                <button name="action_start_diagnostic" 
+                        string="Iniciar Diagnóstico" 
+                        type="object" 
+                        class="oe_highlight"
+                        invisible="stage_id != %(helpdesk.stage_new)d"/>
+                
+                <button name="action_mark_as_closed" 
+                        string="Cerrar y Notificar Cliente" 
+                        type="object" 
+                        class="oe_highlight"
+                        invisible="signature_client == False or stage_id == %(sr_property_rental_management.stage_closed)d"/> 
+            </xpath>
+
+            <xpath expr="//div[@class='oe_title']" position="replace">
+                <div class="oe_title">
+                    <label for="name" string="Asunto del Ticket"/>
+                    <h1>
+                        <field name="name" placeholder="Ej: Filtración en el techo del baño principal"/>
+                    </h1>
+                    <h2 class="text-primary" style="font-size: 1.3rem; margin-top: 5px;">
+                        <span style="font-weight: bold;">N° Radicado: </span>
+                        <field name="radicado" readonly="1" class="oe_inline"/>
+                    </h2>
+                </div>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="unit_id" 
+                       options="{'no_create': True}" 
+                       domain="[('is_property', '=', True), ('product_tmpl_id.owner_ids', 'in', partner_id)]"/>
+
+                <field name="unit_project_id" readonly="1" force_save="1"/>
+
+                <label for="warranty_status" string="Estado de Garantía"/>
+                <div class="o_row">
+                    <field name="warranty_status" widget="boolean_button" readonly="1"
+                           options="{'terminology': {'True': 'En Garantía', 'False': 'Expirada'}}"/>
+                </div>
+            </xpath>
+
+            <xpath expr="//page[@name='description']" position="before">
+                <page string="Ingeniería y Post-Venta GHR" name="ghr_details">
+                    <group>
+                        <group string="Clasificación de Incidencia">
+                            <field name="category_inm_id" options="{'no_create': False, 'no_open': False}"/>
+                            <field name="question_inm_id" 
+                                   domain="[('category_id', '=', category_inm_id)]"
+                                   context="{'default_category_id': category_inm_id}"
+                                   options="{'no_create': False, 'no_open': False}"/>
+                        </group>
+                        <group string="Planificación de Visita">
+                            <field name="preferred_visit_days"/>
+                            <field name="preferred_time_slot"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group string="Personal Asignado">
+                            <field name="inspector_id" widget="many2one_avatar_user"/>
+                            <field name="technician_id" widget="many2one_avatar_user"/>
+                        </group>
+                        <group string="Evidencias">
+                            <field name="ticket_photos" widget="many2many_binary" string="Fotos del Hallazgo"/>
+                        </group>
+                    </group>
+
+                    <group string="Firmas de Conformidad">
+                        <group string="Cliente">
+                            <field name="signature_client" widget="signature"/>
+                        </group>
+                        <group string="Ingeniería">
+                            <field name="signature_engineer" widget="signature"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

@@ -10,6 +10,7 @@
 
 from odoo import models, fields, api,  _
 from odoo.exceptions import UserError
+from datetime import timedelta
 
 
 class srProductProduct(models.Model):
@@ -158,7 +159,30 @@ class srPropertytemplate(models.Model):
     cadastral_designation = fields.Char("Designación Catastral")
     cadastral_number = fields.Char("Número Catastral")
     registration_number = fields.Char("Número de Matrícula")
-    property_carpet_area = fields.Float('Carpet Area', default=1)
+    # ghr units integration fields
+    property_carpet_area = fields.Float('Mts2 del apartamento', default=1)
+    property_balcony_area = fields.Float('Mts2 de Balcón', default=1)
+    property_parqueo_area = fields.Float('Mts2 de Parqueo', default=1)
+    area_total = fields.Float('Mts2 Totales', compute='_compute_area_total', store=True)
+    floor = fields.Char(string='Nivel/Piso')
+    unit_type = fields.Selection([
+        ('apartment', 'Apartamento'),
+        ('house', 'Casa/Villa'),
+        ('penthouse', 'Penthouse'),
+        ('local', 'Local Comercial')
+    ], string='Tipo de Inmueble')
+    bedrooms = fields.Integer(string='Habitaciones')
+    bathrooms = fields.Float(string='Baños')
+    parking_slots = fields.Integer(string='Parqueos')
+    owner_ids = fields.Many2many(
+        'res.partner',
+        'product_template_owner_rel',
+        'product_tmpl_id',
+        'partner_id',
+        string='Propietarios',
+    )
+    sold_price = fields.Monetary(string='Precio de Venta Real', currency_field='currency_id')
+    # ghr units integration fields end
     property_build_up_area = fields.Float('Build-up Area', default=1)
     property_floor = fields.Integer('Floor', default=1)
     property_badrooms = fields.Integer('Badrooms', default=1)
@@ -207,7 +231,13 @@ class srPropertytemplate(models.Model):
     property_invoice_count = fields.Integer(compute='_compute_property_invoice_count', string='Property Invoices Count')
     tenancy_agreement_count = fields.Integer(compute='_compute_tenancy_agreement_count', string='Tenancy Agreement Count')
     current_user_id = fields.Many2one('res.partner','Current User')
-    reservation_history_ids = fields.Many2many('res.partner',string="Reservation history")
+    reservation_history_ids = fields.Many2many(
+        'res.partner',
+        'product_template_reservation_history_rel',
+        'product_tmpl_id',
+        'partner_id',
+        string="Reservation history",
+    )
     currency_id = fields.Many2one(
         "res.currency",
         string="Moneda",
@@ -698,6 +728,26 @@ class srPropertytemplate(models.Model):
             raise UserError(
                 _("Cannot set to draft because there are associated invoices.")
             )
+    
+    # ghr units integration
+    warranty_end_date = fields.Date(string='Vencimiento Garantía', compute='_compute_warranty', store=True)
+    warranty_status = fields.Boolean(string='Garantía Válida', compute='_compute_warranty', store=True)
+
+    @api.depends('property_carpet_area', 'property_balcony_area', 'property_parqueo_area')
+    def _compute_area_total(self):
+        for record in self:
+            record.area_total = record.property_carpet_area + record.property_balcony_area + record.property_parqueo_area
+
+    @api.depends('delivery_date')
+    def _compute_warranty(self):
+        for rec in self:
+            if rec.delivery_date:
+                rec.warranty_end_date = rec.delivery_date + timedelta(days=365)
+                rec.warranty_status = fields.Date.today() <= rec.warranty_end_date
+            else:
+                rec.warranty_status = False
+
+    # ghr units integration end 
 
 class AccountMove(models.Model):
     _inherit = "account.move"

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stage_diagnostic" model="helpdesk.stage">
+        <field name="name">1. Diagnóstico / Asignación</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="stage_execution" model="helpdesk.stage">
+        <field name="name">2. En Ejecución</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="stage_validation" model="helpdesk.stage">
+        <field name="name">3. Validación / Firma</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="stage_closed" model="helpdesk.stage">
+    <field name="name">4. Finalizado / Cerrado</field>
+    <field name="sequence">40</field>
+    <field name="fold" eval="True"/> </record>
+</odoo>

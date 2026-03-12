@@ -23,8 +23,7 @@
 						</h3>
 					</strong>
 					<div class="o_kanban_tags_section">
-						<field name="product_template_attribute_value_ids"
-							groups="product.group_product_variant" />
+						<field name="product_template_attribute_value_ids" groups="product.group_product_variant" />
 					</div>
 					<t t-if="record.property_type.raw_value == 'sale'">
 						<strong>
@@ -67,61 +66,41 @@
 		<field name="arch" type="xml">
 			<div name="button_box" position="inside">
 
-				<button type="object" class="oe_stat_button"
-					icon="fa-handshake-o" name="action_view_tenancy_agreement">
-					<field string="Agreement" name="tenancy_agreement_count"
-						widget="statinfo" />
+				<button type="object" class="oe_stat_button" icon="fa-handshake-o" name="action_view_tenancy_agreement">
+					<field string="Agreement" name="tenancy_agreement_count" widget="statinfo" />
 				</button>
 
 				<button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_buyer_payments">
-                    <field string="Pagos" name="buyer_payments_count" widget="statinfo"/>
-                </button>
-
-				<button type="object" class="oe_stat_button"
-					icon="fa-pencil-square-o" name="action_view_property_invoices">
-					<field string="Invoices" name="property_invoice_count"
-						widget="statinfo" />
+					<field string="Pagos" name="buyer_payments_count" widget="statinfo"/>
 				</button>
 
-				<button type="object" class="oe_stat_button"
-					icon="fa-pencil-square-o" name="action_view_property_leads_crm">
-					<field string="Leads" name="property_leads_count"
-						widget="statinfo" />
+				<button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_property_invoices">
+					<field string="Invoices" name="property_invoice_count" widget="statinfo" />
+				</button>
+
+				<button type="object" class="oe_stat_button" icon="fa-pencil-square-o" name="action_view_property_leads_crm">
+					<field string="Leads" name="property_leads_count" widget="statinfo" />
 				</button>
 			</div>
 			<xpath expr="//header" position="inside">
-					<button name="action_confirm" type="object"
-						class="btn-primary" string="Confirm Property"
-						invisible="is_property == False or state not in ['draft']"
-						groups="sr_property_rental_management.group_landlord,sr_property_rental_management.group_admin" />
+				<button name="action_confirm" type="object" class="btn-primary" string="Confirm Property" invisible="is_property == False or state not in ['draft']" groups="sr_property_rental_management.group_landlord,sr_property_rental_management.group_admin" />
 
-					<button name="set_to_draft_if_no_invoices" type="object" class="btn-primary" string="Reset To Draft" groups="sr_property_rental_management.group_admin"/>
+				<button name="set_to_draft_if_no_invoices" type="object" class="btn-primary" string="Reset To Draft" groups="sr_property_rental_management.group_admin"/>
 
-					<button name="%(action_property_tenancy_agreement)d"
-						type="action" class="btn-primary" string="Reserve for Rent"
-						context="{'search_default_property_id': active_id, 'default_property_id': active_id, 'hide_header':1}"
-						invisible="property_type != 'rent' or state not in ['available']"
-						groups="sr_property_rental_management.group_agent,sr_property_rental_management.group_tenant,sr_property_rental_management.group_admin" />
+				<button name="%(action_property_tenancy_agreement)d" type="action" class="btn-primary" string="Reserve for Rent" context="{'search_default_property_id': active_id, 'default_property_id': active_id, 'hide_header':1}" invisible="property_type != 'rent' or state not in ['available']" groups="sr_property_rental_management.group_agent,sr_property_rental_management.group_tenant,sr_property_rental_management.group_admin" />
 
 
-					<button name="%(action_property_tenancy_agreement)d"
-						type="action" class="btn-primary" string="Buy"
-						context="{'search_default_property_id': active_id, 'default_property_id': active_id, 'hide_header':1}"
-						invisible="property_type != 'sale' or state not in ['available']"
-						groups="sr_property_rental_management.group_agent,sr_property_rental_management.group_tenant,sr_property_rental_management.group_admin" />
+				<button name="%(action_property_tenancy_agreement)d" type="action" class="btn-primary" string="Buy" context="{'search_default_property_id': active_id, 'default_property_id': active_id, 'hide_header':1}" invisible="property_type != 'sale' or state not in ['available']" groups="sr_property_rental_management.group_agent,sr_property_rental_management.group_tenant,sr_property_rental_management.group_admin" />
 
 
 
-					<field name="state" widget="statusbar"
-						statusbar_visible="draft,available"
-						invisible="is_property == False" />
+				<field name="state" widget="statusbar" statusbar_visible="draft,available" invisible="is_property == False" />
 			</xpath>
 			<xpath expr="//sheet/div[@name='options']" position="inside">
-					<span class="d-inline-block">
-						<field name="is_property" invisible="1"
-							readonly="state != 'draft'" />
-						<label for="is_property" invisible="1" />
-					</span>
+				<span class="d-inline-block">
+					<field name="is_property" invisible="1" readonly="state != 'draft'" />
+					<label for="is_property" invisible="1" />
+				</span>
 			</xpath>
 			<field name="name" position="attributes">
 				<attribute name="readonly">is_property == True and state != 'draft'</attribute>
@@ -152,144 +131,105 @@
 							<field name="sr_property_project_id" required="is_property == True" />
 							<field name="company_id" required="is_property == True and state == 'draft'" readonly="state != 'draft'" options="{'no_open': True, 'no_quick_create': True}" />
 							<field name="property_type" required="is_property == True" readonly="state != 'draft'" />
-							<field name="property_sale_price" widget="monetary"
-								options="{'currency_field': 'currency_id', 'field_digits': True}"
-								invisible="property_type != 'sale'" required="property_type == 'sale' and is_property == True" readonly="state != 'draft'" />
-							<field name="property_rent_price"
-								invisible="property_type != 'rent'" required="property_type == 'rent' and is_property == True" readonly="state != 'draft'"
-								widget="monetary"
-								options="{'currency_field': 'currency_id', 'field_digits': True}" />
+							<field name="property_sale_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" invisible="property_type != 'sale'" required="property_type == 'sale' and is_property == True" readonly="state != 'draft'" />
+							<field name="property_rent_price" invisible="property_type != 'rent'" required="property_type == 'rent' and is_property == True" readonly="state != 'draft'" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
 							<field name="currency_id" readonly="state != 'draft'" options="{'no_create': True}"/>
 							<field name="property_construction_status" required="is_property == True" readonly="state != 'draft'" />
 							<field name="user_id" readonly="state != 'draft'" />
 							<field name="delivery_date" required="is_property == True" readonly="state != 'draft'" />
-							<field name="cadastral_designation" />
-                            <field name="cadastral_number" />
-                            <field name="registration_number" />
+
 						</group>
 						<group string="Location Information">
 							<span class="o_form_label o_td_label" name="property_address">
-								<b>Property Address</b>
+								<b>Dirección</b>
 							</span>
 							<div class="o_address_format">
-								<field name="street" placeholder="Street..."
-									class="o_address_street"
-									required="is_property == True and state == 'draft'" readonly="state != 'draft'" />
-								<field name="street2" placeholder="Street 2..."
-									class="o_address_street"
-									required="is_property == True and state == 'draft'" readonly="state != 'draft'" />
-								<field name="city" placeholder="City"
-									class="o_address_city"
-									required="is_property == True and state == 'draft'" readonly="state != 'draft'" />
-								<field name="state_id" class="o_address_state"
-									placeholder="State"
-									required="is_property == True and state == 'draft'" readonly="state != 'draft'"
-									options="{'no_open': True, 'no_quick_create': True}"
-									context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}" />
-								<field name="zip" placeholder="ZIP" class="o_address_zip"
-									required="is_property == True and state == 'draft'" readonly="state != 'draft'" />
-								<field name="country_id" placeholder="Country"
-									class="o_address_country"
-									options='{"no_open": True, "no_create": True}'
-									required="is_property == True and state == 'draft'" readonly="state != 'draft'" />
+								<field name="street" placeholder="Street..." class="o_address_street" required="is_property == True and state == 'draft'" readonly="state != 'draft'" />
+								<field name="street2" placeholder="Street 2..." class="o_address_street" required="is_property == True and state == 'draft'" readonly="state != 'draft'" />
+								<field name="city" placeholder="City" class="o_address_city" required="is_property == True and state == 'draft'" readonly="state != 'draft'" />
+								<field name="state_id" class="o_address_state" placeholder="State" required="is_property == True and state == 'draft'" readonly="state != 'draft'" options="{'no_open': True, 'no_quick_create': True}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}" />
+								<field name="zip" placeholder="ZIP" class="o_address_zip" required="is_property == True and state == 'draft'" readonly="state != 'draft'" />
+								<field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}' required="is_property == True and state == 'draft'" readonly="state != 'draft'" />
 							</div>
+							<field name="cadastral_designation" />
+							<field name="cadastral_number" />
+							<field name="registration_number" />
 						</group>
 					</group>
 
 					<group>
-						<group string="Property Information">
-							<field name="property_carpet_area"
-								required="is_property == True" readonly="state != 'draft'" />
-							<field name="property_build_up_area"
-								required="is_property == True" readonly="state != 'draft'" />
-							<field name="property_floor"
-								required="is_property == True" readonly="state != 'draft'" />
+						<group string="Información de la unidad">
+							<field name="property_carpet_area" required="is_property == True" readonly="state != 'draft'" />
+							<field name="property_build_up_area" required="is_property == True" readonly="state != 'draft'" />
+							<field name="property_floor" required="is_property == True" readonly="state != 'draft'" />
 							<field name="property_badrooms" readonly="state != 'draft'" />
-							<field name="property_balconies"
-								required="is_property == True" readonly="state != 'draft'" />
+							<field name="property_balconies" required="is_property == True" readonly="state != 'draft'" />
+							<field name="property_parqueo_area" required="is_property == True" readonly="state != 'draft'" />
+							<field name="area_total" required="is_property == True" readonly="state != 'draft'" />
+							<field name="floor" readonly="state != 'draft'" />
+							<field name="unit_type" readonly="state != 'draft'" />
 						</group>
-						<group string="Maintenance Information">
-							<label for="property_maintenance_charge"
-								string="Maintenance Charge" />
+						<group string="Información de la unidad">
+							<label for="property_maintenance_charge" string="Maintenance Charge" />
 							<div>
 								<field name="property_maintenance_charge" class="oe_inline" readonly="state != 'draft'" />
-								<field name="property_maintenance_interval_type"
-									class="oe_inline"
-									readonly="property_type == 'sale' or state != 'draft'"
-									force_save="1" />
+								<field name="property_maintenance_interval_type" class="oe_inline" readonly="property_type == 'sale' or state != 'draft'" force_save="1" />
 							</div>
+							<field name="bedrooms" readonly="state != 'draft'" />
+							<field name="bathrooms" readonly="state != 'draft'" />
+							<field name="parking_slots" readonly="state != 'draft'" />
+							<field name="sold_price" readonly="state != 'draft'" />
+							<field name="warranty_status" readonly="state != 'draft'" />
+							<field name="warranty_end_date" readonly="state != 'draft'" />
 						</group>
 					</group>
-					<group string="Other Information">
-					    <group string="Website Information">
-                            <field name="sale_ok" />
-                            <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
-                        </group>
-						<field name="description" nolabel="1"
-							readonly="state != 'draft'"
-							placeholder="Provide extra information about your property" />
+					<group string="Propietarios">
+						<field name="owner_ids" readonly="state != 'draft'" />
 					</group>
+					<group string="Website Information">
+						<field name="sale_ok" />
+						<field name="list_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+					</group>
+					<field name="description" nolabel="1" readonly="state != 'draft'" placeholder="Provide extra information about your property" />
 				</page>
-				<!-- <page string="Property Feature"
-					name="property_feature_information"
-					invisible="is_property == False">
+				<!-- <page string="Property Feature" name="property_feature_information" invisible="is_property == False">
 					<group>
 						<group name="property_interior" string="Interior">
-							<field name="property_interior_ids"
-								widget="many2many_checkboxes" nolabel="1"
-								readonly="state != 'draft'"  style="width: 300%"/>
+							<field name="property_interior_ids" widget="many2many_checkboxes" nolabel="1" readonly="state != 'draft'" style="width: 300%"/>
 						</group>
 						<group name="property_exterior" string="Exterior">
-							<field name="property_exterior_ids"
-								widget="many2many_checkboxes" nolabel="1"
-								readonly="state != 'draft'"  style="width: 300%"/>
+							<field name="property_exterior_ids" widget="many2many_checkboxes" nolabel="1" readonly="state != 'draft'" style="width: 300%"/>
 						</group>
 					</group>
 					<group>
 
 						<group name="property_facade" string="Facade">
-							<field name="property_facade_ids"
-								widget="many2many_checkboxes" nolabel="1" style="width: 300%"
-								readonly="state != 'draft'" />
+							<field name="property_facade_ids" widget="many2many_checkboxes" nolabel="1" style="width: 300%" readonly="state != 'draft'" />
 						</group>
 						<group name="property_amenities" string="Amenities">
-							<field name="property_amenities_ids"
-								widget="many2many_checkboxes" nolabel="1" style="width: 300%"
-								readonly="state != 'draft'" />
+							<field name="property_amenities_ids" widget="many2many_checkboxes" nolabel="1" style="width: 300%" readonly="state != 'draft'" />
 						</group>
 					</group>
 					<group>
 						<group name="property_neighborhood" string="Neighborhood">
-							<field name="property_neighbourhood_ids"
-								widget="many2many_checkboxes" nolabel="1" style="width: 300%"
-								readonly="state != 'draft'" />
+							<field name="property_neighbourhood_ids" widget="many2many_checkboxes" nolabel="1" style="width: 300%" readonly="state != 'draft'" />
 						</group>
-						<group name="property_transportation"
-							string="Transportation">
-							<field name="property_transportation_ids"
-								widget="many2many_checkboxes" nolabel="1" style="width: 300%"
-								readonly="state != 'draft'" />
+						<group name="property_transportation" string="Transportation">
+							<field name="property_transportation_ids" widget="many2many_checkboxes" nolabel="1" style="width: 300%" readonly="state != 'draft'" />
 						</group>
 					</group>
 
 					<group>
 						<group name="property_landscape" string="Landscape">
-							<field name="property_landscape_ids"
-								widget="many2many_checkboxes" nolabel="1" style="width: 300%"
-								readonly="state != 'draft'" />
+							<field name="property_landscape_ids" widget="many2many_checkboxes" nolabel="1" style="width: 300%" readonly="state != 'draft'" />
 						</group>
-						<group name="property_residential_type"
-							string="Residential Type">
-							<field name="property_residential_type_ids"
-								widget="many2many_checkboxes" nolabel="1"
-								readonly="state != 'draft'" />
+						<group name="property_residential_type" string="Residential Type">
+							<field name="property_residential_type_ids" widget="many2many_checkboxes" nolabel="1" readonly="state != 'draft'" />
 						</group>
 					</group>
 				</page> -->
 
-				<!-- <page string="Property Safty Information"
-					name="property_safty_information"
-					invisible="is_property == False">
+				<!-- <page string="Property Safty Information" name="property_safty_information" invisible="is_property == False">
 					<group>
 						<group>
 							<field name="gas_safety_exp_date" readonly="state != 'draft'" />
@@ -302,30 +242,18 @@
 					</group>
 				</page> -->
 
-				<!-- <page string="Landlord(Owner) Information"
-					name="property_owner_information"
-					invisible="is_property == False">
+				<!-- <page string="Landlord(Owner) Information" name="property_owner_information" invisible="is_property == False">
 					<group>
-						<field name="property_landlord_id"
-							domain="[('is_landlord','=', True)]"
-							context="{'default_is_landlord':True}"
-							readonly="state != 'draft'" />
+						<field name="property_landlord_id" domain="[('is_landlord','=', True)]" context="{'default_is_landlord':True}" readonly="state != 'draft'" />
 						<field name="property_landlord_email_id" />
 						<field name="property_landlord_phone" />
 					</group>
 				</page> -->
-				<!-- <page string="Agent Information"
-					name="property_agent_information"
-					invisible="is_property == False">
+				<!-- <page string="Agent Information" name="property_agent_information" invisible="is_property == False">
 					<group>
-						<field name="property_agent_id"
-							domain="[('is_agent','=', True)]"
-							context="{'default_is_agent':True}"
-							readonly="state != 'draft'" />
-						<field name="property_agent_commission_type" widget="radio"
-							invisible="property_agent_id == False" readonly="state != 'draft'" />
-						<field name="property_agent_commission"
-							invisible="property_agent_id == False" readonly="state != 'draft'" />
+						<field name="property_agent_id" domain="[('is_agent','=', True)]" context="{'default_is_agent':True}" readonly="state != 'draft'" />
+						<field name="property_agent_commission_type" widget="radio" invisible="property_agent_id == False" readonly="state != 'draft'" />
+						<field name="property_agent_commission" invisible="property_agent_id == False" readonly="state != 'draft'" />
 						<field name="property_agent_email_id" />
 						<field name="property_agent_phone" />
 					</group>
@@ -335,8 +263,7 @@
 		</field>
 	</record>
 
-	<record id="sr_property_product_action"
-		model="ir.actions.act_window">
+	<record id="sr_property_product_action" model="ir.actions.act_window">
 		<field name="name">Property</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">product.product</field>

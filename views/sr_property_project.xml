@@ -12,6 +12,8 @@
 				<field name="number_of_units" string="Cantidad de Unidades" />
 				<field name="interest_percent" string="Interés Percent" />
 				<field name="days_to_compute" string="Días para Computar" />
+                <field name="default_inspector_id" widget="many2one_avatar_user"/>
+                <field name="default_technician_id" widget="many2one_avatar_user"/>
 			</tree>
 		</field>
 	</record>
@@ -24,14 +26,24 @@
 			<form string="Proyectos">
 				<sheet>
 					<div class="oe_title">
-						<h1>
-							<field name="name" />
-						</h1>
-					</div>
-					<group>
+                        <label for="name" string="Nombre del Proyecto"/>
+                        <h1>
+                            <field name="name" placeholder="Ej: Residencial Las Palmeras"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Información General">
 							<field name="number_of_units" readonly="1" />
 							<field name="interest_percent" />
 							<field name="days_to_compute" />
+					</group>
+					 <group>
+                        <group string="Personal Asignado por Defecto">
+                            <field name="code" placeholder="P-001"/>
+                            <field name="default_inspector_id" widget="many2one_avatar_user" options="{'no_create': True}"/>
+                            <field name="default_technician_id" widget="many2one_avatar_user" options="{'no_create': True}"/>
+                        </group>
+					</group>
 					</group>
                     <field name="property_id">
                         <tree create="false" edit="false">
@@ -40,6 +52,11 @@
                         </tree>
                     </field>
 				</sheet>
+				<div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
 			</form>
 		</field>
 	</record>
@@ -47,9 +64,40 @@
 
 	<record id="sr_property_project_action"
 		model="ir.actions.act_window">
-		<field name="name">Proyectos</field>
+		<field name="name">Proyectos y Torres</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">sr.property.project</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<!-- Categorías de Fallas (helpdesk.ticket.category) -->
+	<record id="helpdesk_ticket_category_tree_view" model="ir.ui.view">
+		<field name="name">helpdesk.ticket.category.tree</field>
+		<field name="model">helpdesk.ticket.category</field>
+		<field name="arch" type="xml">
+			<tree string="Categorías de Fallas">
+				<field name="name"/>
+				<field name="active"/>
+			</tree>
+		</field>
+	</record>
+	<record id="helpdesk_ticket_category_form_view" model="ir.ui.view">
+		<field name="name">helpdesk.ticket.category.form</field>
+		<field name="model">helpdesk.ticket.category</field>
+		<field name="arch" type="xml">
+			<form string="Categoría de Fallas">
+				<sheet>
+					<group>
+						<field name="name"/>
+						<field name="active"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="action_helpdesk_ticket_category" model="ir.actions.act_window">
+		<field name="name">Categorías de Fallas</field>
+		<field name="res_model">helpdesk.ticket.category</field>
 		<field name="view_mode">tree,form</field>
 	</record>
 

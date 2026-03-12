@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_ghr_radicado" model="ir.sequence">
+            <field name="name">Secuencia Radicado GHR</field>
+            <field name="code">radicado</field>
+            <field name="prefix">RAD-</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

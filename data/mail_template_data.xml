@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="email_template_ticket_closed" model="mail.template">
+            <field name="name">Notificación de Ticket Cerrado</field>
+            <field name="model_id" ref="helpdesk.model_helpdesk_ticket"/>
+            <field name="subject">Ticket Finalizado: {{ object.radicado }} - {{ object.name }}</field>
+            <field name="body_html" type="html">
+                <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
+                    <h2 style="color: #004a99;">¡Trabajo Finalizado!</h2>
+                    <p>Hola <strong>{{ object.partner_id.name }}</strong>,</p>
+                    <p>Te informamos que el ticket con radicado <strong>{{ object.radicado }}</strong> ha sido cerrado satisfactoriamente.</p>
+                    
+                    <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 15px 0;">
+                        <h4 style="margin-top: 0; color: #333;">Resumen del servicio:</h4>
+                        <table width="100%" style="font-size: 14px;">
+                            <tr>
+                                <td width="30%"><strong>Proyecto:</strong></td>
+                                <td>{{ object.unit_project_id.name }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Unidad:</strong></td>
+                                <td>{{ object.unit_id.display_name }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Técnico:</strong></td>
+                                <td>{{ object.technician_id.name }}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <t t-if="object.signature_client">
+                        <p><strong>Firma de conformidad recibida:</strong></p>
+                        <div style="border: 1px dashed #ccc; padding: 10px; width: fit-content; background: #fff;">
+                            <img t-att-src="'data:image/png;base64,%s' % object.signature_client.decode('utf-8')" 
+                                 style="max-height: 80px;" 
+                                 alt="Firma del cliente"/>
+                        </div>
+                    </t>
+
+                    <p style="margin-top: 20px;">Gracias por confiar en el servicio de Post-Venta de <strong>Inmobiliaria</strong>.</p>
+                    <hr style="border: 0; border-top: 1px solid #eee;"/>
+                    <p style="font-size: 11px; color: #888;">Este es un correo automático, por favor no responda.</p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>
