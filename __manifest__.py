@@ -31,6 +31,7 @@
         'data/helpdesk_stage_data.xml',
         'data/mail_template_data.xml',
         'data/cron.xml',
+        'views/sr_property_product_view.xml',
         'views/sr_property_project.xml',
         'views/sr_property_management_view.xml',
         'views/sr_property_invoice.xml',
