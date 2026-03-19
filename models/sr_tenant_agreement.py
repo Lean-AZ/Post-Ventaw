@@ -13,6 +13,7 @@ from odoo.exceptions import UserError, ValidationError
 import datetime
 from dateutil.relativedelta import relativedelta
 import calendar
+from . import number_to_word
 
 
 class srTenancyAgreement(models.Model):

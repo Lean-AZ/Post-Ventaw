@@ -28,7 +28,7 @@
                                     <t t-if="doc.tenant_id.vat">titular de la Cédula de Identidad y Electoral Número <span t-field="doc.tenant_id.vat"/></t>
                                     <t t-if="doc.tenant_id.vat and doc.tenant_id.passport_number"> y/o </t>
                                     <t t-if="doc.tenant_id.passport_number and len(doc.tenant_id.passport_number) &gt; 3">del Pasaporte Número <span t-field="doc.tenant_id.passport_number"/>,</t>
-                                    de Estado Civil <t t-esc="doc.tenant_id.marital_status or 'soltero(a)'"/>,
+                                    de Estado Civil soltero(a),
                                     Domiciliado(a) y Residente en <span t-field="doc.tenant_id.street"/>, <span t-field="doc.tenant_id.city"/>,
                                     <span t-field="doc.tenant_id.state_id"/>
                                     <t t-if="doc.tenant_id.state_id.name != 'Distrito Nacional (DO)'"> y accidentalmente en el Distrito Nacional,</t>
@@ -54,7 +54,7 @@
                                     <t t-if="doc.tenant_id.vat">titular de la Cédula de Identidad y Electoral Número <span t-field="doc.tenant_id.vat"/></t>
                                     <t t-if="doc.tenant_id.vat and doc.tenant_id.passport_number"> y/o </t>
                                     <t t-if="doc.tenant_id.passport_number and len(doc.tenant_id.passport_number) &gt; 3">del Pasaporte Número <span t-field="doc.tenant_id.passport_number"/>,</t>
-                                    de Estado Civil <t t-esc="doc.tenant_id.marital_status or 'casado(a)'"/>,
+                                    de Estado Civil casado(a),
                                     Domiciliado(a) y Residente en <span t-field="doc.tenant_id.street"/>, <span t-field="doc.tenant_id.city"/>, <span t-field="doc.tenant_id.state_id"/>, <span t-field="doc.tenant_id.country_id"/>,
                                     cuyo cónyuge es el(la) señor(a) <strong><span t-field="doc.co_tenant_id.name"/></strong>, de Nacionalidad <span t-field="doc.co_tenant_id.nacionalidad"/>, Mayor de Edad,
                                     <t t-if="doc.co_tenant_id.vat">titular de la Cédula de Identidad y Electoral Número <span t-field="doc.co_tenant_id.vat"/></t>
@@ -114,7 +114,7 @@
                         <div class="oe_structure" />
                         <div class="content">
                             <p><strong>ARTÍCULO PRIMERO: OBJETO Y DESCRIPCION DEL INMUEBLE.</strong> LA PROMITENTE VENDEDORA, se compromete a vender y posteriormente traspasar con todas las garantías ordinarias de ley, libre de toda carga o gravamen a favor del PROMITENTE COMPRADOR, quien acepta conforme y a su vez se compromete a comprar, pagar y recibir la unidad que se describe a continuación (en lo adelante: "el Inmueble"):</p>
-                            <p><span t-field="doc.property_id.property_acto_de_venta_description"/></p>
+                            <p><span t-field="doc.property_id.name"/> <span t-field="doc.property_id.description"/></p>
                             <p>Las unidades serán construidas con las siguientes características: MODULARES CON TOPE DE GRANITO NATURAL, PUERTAS DE INGENIERÍA LAMINADAS, REVESTIMIENTO DE PISOS EN IMITACIÓN DE MADERA, PERFILERÍA EN ALUMINIO, GRIFERÍA IMPORTADA. Constará con las siguientes áreas y facilidades comunes: LOBBY CON SALA DE ESPERA, GIMNASIO, TERRAZA, PISCINA, SALON MULTIUSOS, BAÑOS, AREA DE BBQ, AREA DE NIÑOS.</p>
                             <p>Las unidades serán construidas con las siguientes características: cocinas modulares con tope de granito natural, puertas de ingeniería laminadas, revestimiento de pisos en imitación de madera, perfilería en aluminio, grifería importada.</p>
                             <p>Constará con las siguientes áreas y facilidades comunes: lobby con sala de espera, gimnasio, terraza, piscina, salón multiusos, baños, área de BBQ, área de niños.</p>
@@ -184,7 +184,7 @@
                         <div class="content">
                             <p>
                                 HECHO Y FIRMADO DE BUENA FE, en cuatro (4) originales de un mismo tenor y efecto, uno para cada una de las partes suscribientes, en la ciudad de Santo Domingo, Distrito Nacional, República Dominicana, a los
-                                <span t-esc="doc.date_to_spanish_format(doc.agreement_date) if hasattr(doc, 'date_to_spanish_format') else doc.agreement_date"/>.
+                                <span t-esc="doc.date_to_spanish_format(doc.agreement_date)"/>.
                             </p>
                             <br/><br/>
                             <p>-Firmas y legalización notarial al dorso-</p>
