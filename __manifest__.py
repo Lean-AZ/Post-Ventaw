@@ -51,6 +51,8 @@
         'reports/ladano_contrato_template.xml',
         'reports/contrato_oceance_action.xml',
         'reports/contrato_oceance_template.xml',
+        'reports/contrato_ocean_v_action.xml',
+        'reports/contrato_ocean_v_template.xml',
         'reports/entrega_action.xml',
         'reports/entrega_template.xml',
         'reports/report_invoice_lines_grouped_action.xml',

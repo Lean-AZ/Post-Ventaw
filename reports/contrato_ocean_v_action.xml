@@ -1,0 +1,11 @@
+<odoo>
+    <record id="contrato_ocean_v_action" model="ir.actions.report">
+        <field name="name">Contrato Ocean V</field>
+        <field name="model">sr.tenancy.agreement</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sr_property_rental_management.contrato_ocean_v_tamplate</field>
+        <field name="report_file">sr_property_rental_management.contrato_ocean_v_tamplate</field>
+        <field name="binding_model_id" ref="model_sr_tenancy_agreement"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
