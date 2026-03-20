@@ -21,7 +21,7 @@
     "currency": 'EUR',
     'author': 'RhodeTech',
     'website':"https://www.rhodetec.co",
-    'depends': ['base', 'account', 'utm','product', 'civiltec_contact_fields', 'crm', 'sr_manual_currency_exchange_rate', 'helpdesk', 'project', 'mail'],
+    'depends': ['base', 'account', 'utm','product', 'civiltec_contact_fields', 'crm', 'sr_manual_currency_exchange_rate', 'helpdesk', 'project', 'mail', 'website'],
     'data': [
         'security/property_security.xml',
         'security/ir.model.access.csv',
@@ -29,6 +29,7 @@
         'data/ir_cron_data.xml',
         'data/ir_sequence_data.xml',     
         'data/helpdesk_stage_data.xml',
+        'data/helpdesk_ticket_category_data.xml',
         'data/mail_template_data.xml',
         'data/cron.xml',
         'views/sr_tenant_agreement.xml',
@@ -68,6 +69,7 @@
         'reports/retenciones_30_itbis_action.xml',
         'reports/retenciones_itbis_30_template.xml',
         'views/helpdesk_ticket_views.xml',
+        'views/warranty_portal_templates.xml',
     ],
     'assets': {
         'web.assets_backend': [

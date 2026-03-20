@@ -3,7 +3,6 @@
     <!-- Top menu item -->
     <menuitem id="sr_property_management_root"
               name="Property Management"
-              web_icon="sr_property_rental_management,static/description/web_icon.png"
               groups="sr_property_rental_management.group_admin,sr_property_rental_management.group_landlord,sr_property_rental_management.group_agent,sr_property_rental_management.group_tenant"/>
 
     <menuitem id="sr_property_product_menu" name="Property"
@@ -54,5 +53,7 @@
               parent="sr_property_project_menu" action="sr_property_product_action" sequence="20"/>
     <menuitem id="menu_sr_property_category_list" name="Categorías de Fallas"
               parent="sr_property_project_menu" action="action_helpdesk_ticket_category" sequence="30"/>
+    <menuitem id="menu_sr_project_engineer_list" name="Encargados de Proyecto"
+              parent="sr_property_project_menu" action="action_sr_project_engineer" sequence="40"/>
 
 </odoo>

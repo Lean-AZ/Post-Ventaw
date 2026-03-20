@@ -417,14 +417,16 @@ class srAccountPayment(models.Model):
         tracking=True,
     )
 
-    @api.depends('amount', 'manual_currency_exchange_rate', 'apply_manual_currency_exchange')
+    @api.depends('amount')
     def compute_monto_en_rd(self):
-        for payment in self:            
-            if payment.apply_manual_currency_exchange:
-                # Apply manual exchange rate
+        for payment in self:
+            if (
+                'apply_manual_currency_exchange' in payment._fields
+                and 'manual_currency_exchange_rate' in payment._fields
+                and payment.apply_manual_currency_exchange
+            ):
                 payment.monto_en_rd = payment.amount * payment.manual_currency_exchange_rate
             else:
-                # Default behavior: use the amount as is
                 payment.monto_en_rd = payment.amount
 
 class AccountInvoiceReport(models.Model):

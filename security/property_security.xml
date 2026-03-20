@@ -26,6 +26,21 @@
 			<field name="category_id" ref="property_management_category_types" />
 		</record>
 
+		<record id="group_customer_service" model="res.groups">
+			<field name="name">Servicio al Cliente</field>
+			<field name="category_id" ref="property_management_category_types" />
+		</record>
+
+		<record id="group_pre_delivery_1" model="res.groups">
+			<field name="name">Pre-entrega 1</field>
+			<field name="category_id" ref="property_management_category_types" />
+		</record>
+
+		<record id="group_pre_delivery_2" model="res.groups">
+			<field name="name">Pre-entrega 2</field>
+			<field name="category_id" ref="property_management_category_types" />
+		</record>
+
 		<record id="see_all_property_admin_rule" model="ir.rule">
 			<field name="name">Admin: See All Property</field>
 			<field name="model_id" ref="product.model_product_product" />

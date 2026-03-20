@@ -85,7 +85,7 @@
                                                     </div>
                                                     <div style="width:33%" class="flex-column">
                                                         <strong class="m-0">Tasa:</strong>
-                                                        <t t-if="doc.apply_manual_currency_exchange">
+                                                        <t t-if="'apply_manual_currency_exchange' in doc._fields and doc.apply_manual_currency_exchange and 'manual_currency_exchange_rate' in doc._fields">
                                                             <span t-esc="doc.manual_currency_exchange_rate" t-options='{"widget": "float", "precision": 4}'/>
                                                         </t>
                                                         <t t-else="">

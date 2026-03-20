@@ -66,7 +66,10 @@
                     <group>
                         <group string="Personal Asignado">
                             <field name="inspector_id" widget="many2one_avatar_user"/>
-                            <field name="technician_id" widget="many2one_avatar_user"/>
+                            <field name="technician_ids" widget="many2many_avatar_user"/>
+                            <field name="engineer_id"
+                                   domain="[('project_id', '=', unit_project_id)]"
+                                   options="{'no_create': False, 'no_open': False}"/>
                         </group>
                         <group string="Evidencias">
                             <field name="ticket_photos" widget="many2many_binary" string="Fotos del Hallazgo"/>
@@ -79,6 +82,15 @@
                         </group>
                         <group string="Ingeniería">
                             <field name="signature_engineer" widget="signature"/>
+                        </group>
+                    </group>
+                    <group string="Control y Métricas">
+                        <group>
+                            <field name="estimated_cost"/>
+                        </group>
+                        <group>
+                            <field name="closed_at" readonly="1"/>
+                            <field name="resolution_hours" readonly="1"/>
                         </group>
                     </group>
                 </page>

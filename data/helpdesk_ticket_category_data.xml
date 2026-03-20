@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="ticket_category_agrietamiento" model="helpdesk.ticket.category">
+            <field name="name">Agrietamiento</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_aires_acondicionados" model="helpdesk.ticket.category">
+            <field name="name">Aires acondicionados</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_albanileria" model="helpdesk.ticket.category">
+            <field name="name">Albanilería</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_aparatos_sanitarios" model="helpdesk.ticket.category">
+            <field name="name">Aparatos sanitarios</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_ascensor" model="helpdesk.ticket.category">
+            <field name="name">Ascensor</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_baranda" model="helpdesk.ticket.category">
+            <field name="name">Baranda</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_carpinteria_madera" model="helpdesk.ticket.category">
+            <field name="name">Carpintería de madera</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_carpinteria_aluminio_vidrio" model="helpdesk.ticket.category">
+            <field name="name">Carpintería de aluminio y vidrio</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_cerrajeria" model="helpdesk.ticket.category">
+            <field name="name">Cerrajería</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_cielo_raso_yeso" model="helpdesk.ticket.category">
+            <field name="name">Cielo raso / yeso</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_cisterna_bombas" model="helpdesk.ticket.category">
+            <field name="name">Cisterna y bombas</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_cocina_topes_muebles" model="helpdesk.ticket.category">
+            <field name="name">Cocina (topes y muebles)</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_electricidad" model="helpdesk.ticket.category">
+            <field name="name">Electricidad</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_fachada" model="helpdesk.ticket.category">
+            <field name="name">Fachada</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_filtraciones_humedad" model="helpdesk.ticket.category">
+            <field name="name">Filtraciones / humedad</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_gabinetes_closets" model="helpdesk.ticket.category">
+            <field name="name">Gabinetes y closets</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_gas" model="helpdesk.ticket.category">
+            <field name="name">Gas</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_impermeabilizacion_techos" model="helpdesk.ticket.category">
+            <field name="name">Impermeabilización de techos</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_intercom" model="helpdesk.ticket.category">
+            <field name="name">Intercom</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_pintura" model="helpdesk.ticket.category">
+            <field name="name">Pintura</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_plomeria" model="helpdesk.ticket.category">
+            <field name="name">Plomería</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_puertas_ventanas" model="helpdesk.ticket.category">
+            <field name="name">Puertas y ventanas</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_revestimientos_pisos_paredes" model="helpdesk.ticket.category">
+            <field name="name">Revestimientos (pisos y paredes)</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_sellos_juntas" model="helpdesk.ticket.category">
+            <field name="name">Sellos y juntas</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_sistema_contra_incendios" model="helpdesk.ticket.category">
+            <field name="name">Sistema contra incendios</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_sistema_drenaje" model="helpdesk.ticket.category">
+            <field name="name">Sistema de drenaje</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_techos" model="helpdesk.ticket.category">
+            <field name="name">Techos</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_terminaciones_generales" model="helpdesk.ticket.category">
+            <field name="name">Terminaciones generales</field>
+            <field name="active">1</field>
+        </record>
+        <record id="ticket_category_verjas_portones" model="helpdesk.ticket.category">
+            <field name="name">Verjas y portones</field>
+            <field name="active">1</field>
+        </record>
+    </data>
+</odoo>

@@ -10,4 +10,5 @@
 
 from .hooks import post_init_hook
 from . import models
+from . import controllers
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

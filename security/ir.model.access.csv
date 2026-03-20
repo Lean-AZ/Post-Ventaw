@@ -33,5 +33,9 @@ access_sr_property_agent_commission_invoiceable_lines,Access.sr.property.agent.c
 access_sr_property_commission_wizzard_invoice,Access.sr.property.commission.wizzard.invoice,model_sr_property_commission_wizzard_invoice,,1,1,1,1
 access_sr_property_project,Access.sr.property.project,model_sr_property_project,,1,1,1,1
 access_helpdesk_ticket,Access.helpdesk.ticket,model_helpdesk_ticket,,1,1,1,1
+access_helpdesk_ticket_customer_service,Access.helpdesk.ticket.customer.service,model_helpdesk_ticket,sr_property_rental_management.group_customer_service,1,1,1,0
+access_helpdesk_ticket_pre_delivery_1,Access.helpdesk.ticket.pre.delivery.1,model_helpdesk_ticket,sr_property_rental_management.group_pre_delivery_1,1,1,1,0
+access_helpdesk_ticket_pre_delivery_2,Access.helpdesk.ticket.pre.delivery.2,model_helpdesk_ticket,sr_property_rental_management.group_pre_delivery_2,1,1,1,0
 access_helpdesk_ticket_category,Access.helpdesk.ticket.category,model_helpdesk_ticket_category,,1,1,1,1
 access_helpdesk_ticket_question,Access.helpdesk.ticket.question,model_helpdesk_ticket_question,,1,1,1,1
+access_sr_project_engineer,Access.sr.project.engineer,model_sr_project_engineer,,1,1,1,1

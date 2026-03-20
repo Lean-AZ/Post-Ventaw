@@ -25,6 +25,15 @@ class srPropertyProject(models.Model):
     code = fields.Char('Code')
     default_inspector_id = fields.Many2one('res.users', string='Inspector Predeterminado')
     default_technician_id = fields.Many2one('res.users', string='Técnico Predeterminado')
+    engineer_ids = fields.One2many('sr.project.engineer', 'project_id', string='Ingenieros')
+
+
+class SrProjectEngineer(models.Model):
+    _name = 'sr.project.engineer'
+    _description = 'Encargado de Proyecto'
+
+    name = fields.Char(string='Nombre', required=True)
+    project_id = fields.Many2one('sr.property.project', string='Proyecto', required=True, ondelete='cascade')
 
  # MODELO: Categoría personalizada para tickets inmobiliarios
 class HelpdeskTicketCategory(models.Model):
@@ -51,6 +60,7 @@ class HelpdeskTicket(models.Model):
     unit_id = fields.Many2one('product.product', string='Unidad Inmobiliaria', domain=[('is_property', '=', True)], required=True)
      # Proyecto relacionado automáticamente desde la unidad
     unit_project_id = fields.Many2one('sr.property.project', related='unit_id.product_tmpl_id.sr_property_project_id', string='Proyecto Inmobiliario', store=True, readonly=True)
+    engineer_id = fields.Many2one('sr.project.engineer', string='Encargado de Proyecto')
       # Categoría personalizada
     category_inm_id = fields.Many2one('helpdesk.ticket.category', string='Categoría Inmobiliaria')
      # Problema específico relacionado a la categoría seleccionada
@@ -67,8 +77,12 @@ class HelpdeskTicket(models.Model):
     ], string='Horario Preferido')
       # Inspector asignado
     inspector_id = fields.Many2one('res.users', string='Inspector Asignado')
-        # Técnico asignado
-    technician_id = fields.Many2one('res.users', string='Técnico Asignado')
+    # Técnicos asignados
+    technician_ids = fields.Many2many('res.users', string='Técnicos Asignados')
+    currency_id = fields.Many2one('res.currency', related='company_id.currency_id', string='Moneda', readonly=True, store=True)
+    estimated_cost = fields.Monetary(string='Costo Estimado', currency_field='currency_id')
+    closed_at = fields.Datetime(string='Fecha de Cierre', readonly=True, copy=False)
+    resolution_hours = fields.Float(string='Horas de Solución', compute='_compute_resolution_hours', store=True)
      # Firma digital del cliente (campo binario tipo imagen)
     signature_client = fields.Binary(string='Firma del Cliente')
        # Firma del ingeniero (campo binario tipo imagen)
@@ -87,11 +101,36 @@ class HelpdeskTicket(models.Model):
         if self.unit_id and self.unit_id.product_tmpl_id.sr_property_project_id:
             project = self.unit_id.product_tmpl_id.sr_property_project_id
             self.inspector_id = project.default_inspector_id
-            self.technician_id = project.default_technician_id
+            self.technician_ids = [(6, 0, [project.default_technician_id.id])] if project.default_technician_id else [(5, 0, 0)]
+            self.engineer_id = False
 
     @api.onchange('category_inm_id')
     def _onchange_category_inm_id(self):
         self.question_inm_id = False
+
+    @api.depends('create_date', 'closed_at')
+    def _compute_resolution_hours(self):
+        for ticket in self:
+            if ticket.create_date and ticket.closed_at:
+                delta = ticket.closed_at - ticket.create_date
+                ticket.resolution_hours = delta.total_seconds() / 3600.0
+            else:
+                ticket.resolution_hours = 0.0
+
+    def _is_resolution_end_stage(self, stage):
+        if not stage:
+            return False
+        closed_stage = self.env.ref('sr_property_rental_management.stage_closed', raise_if_not_found=False)
+        if closed_stage and stage.id == closed_stage.id:
+            return True
+        stage_name = (stage.name or '').lower()
+        return (
+            'rechaz' in stage_name
+            or 'reject' in stage_name
+            or 'resuelto' in stage_name
+            or 'resolved' in stage_name
+            or 'cancel' in stage_name
+        )
 
     # --- RESTRICCIONES ---
     @api.constrains('preferred_visit_days', 'preferred_time_slot')
@@ -141,4 +180,13 @@ class HelpdeskTicket(models.Model):
                 for record in self:
                     if not record.signature_client:
                         raise UserError("⚠️ No se puede mover a 'Finalizado': Falta la firma del cliente.")
-        return super(HelpdeskTicket, self).write(vals)
+        res = super(HelpdeskTicket, self).write(vals)
+        if 'stage_id' in vals:
+            now = fields.Datetime.now()
+            for record in self:
+                if record._is_resolution_end_stage(record.stage_id):
+                    if not record.closed_at:
+                        record.closed_at = now
+                else:
+                    record.closed_at = False
+        return res

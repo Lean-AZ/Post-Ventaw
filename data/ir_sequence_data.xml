@@ -2,6 +2,14 @@
 <odoo>
     <data noupdate="1">
 
+        <record id="seq_ghr_radicado" model="ir.sequence">
+            <field name="name">Ticket Radicado</field>
+            <field name="code">ghr.radicado</field>
+            <field name="prefix">RAD/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
         <!-- Sequences for Tenancy Agreement -->
         <record id="seq_tenancy_agreement" model="ir.sequence">
             <field name="name">tenancy.agreement</field>
