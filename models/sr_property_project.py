@@ -66,6 +66,8 @@ class HelpdeskTicket(models.Model):
      # Problema específico relacionado a la categoría seleccionada
     question_inm_id = fields.Many2one('helpdesk.ticket.question', string='Problema Específico')
     ticket_photos = fields.Many2many('ir.attachment', string='Fotos del Hallazgo')
+    contact_person_name = fields.Char(string='Persona de Contacto')
+    contact_phone = fields.Char(string='Telefono del Contacto')
        # Día preferido de visita
     preferred_visit_days = fields.Selection([
         ('lunes', 'Lunes'), ('martes', 'Martes'), ('miercoles', 'Miércoles'),

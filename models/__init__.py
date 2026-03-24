@@ -16,5 +16,7 @@ from . import sr_agent_commission
 from . import sr_property_invoice
 from . import sr_property_lead
 from . import sr_property_project
+from . import res_partner
+from . import mail_compose_message
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

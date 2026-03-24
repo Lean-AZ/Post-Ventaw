@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <data>
+        <record id="email_template_warranty_link" model="mail.template">
+            <field name="name">Link de Garantia para Cliente</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="email_to">{{ object.email or '' }}</field>
+            <field name="subject">Reporte de Garantia - {{ object.name }}</field>
+            <field name="body_html" type="html">
+                <div style="font-family: Arial, sans-serif; padding: 20px;">
+                    <p>Hola <strong>${object.name}</strong>,</p>
+                    <p>
+                        Para reportar una incidencia de post-venta, usa el siguiente enlace seguro:
+                    </p>
+                    <p style="margin: 20px 0;">
+                        <a href="${object.get_base_url()}/warranty/request/${object.warranty_access_token}?db=prueba3"
+                           style="background:#875A7B; color:#fff; text-decoration:none; padding:10px 16px; border-radius:4px;">
+                            Reportar Garantia
+                        </a>
+                    </p>
+                    <p>Si no solicitaste este enlace, puedes ignorar este correo.</p>
+                </div>
+            </field>
+        </record>
+    </data>
+
     <data noupdate="1">
         <record id="email_template_ticket_closed" model="mail.template">
             <field name="name">Notificación de Ticket Cerrado</field>

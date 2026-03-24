@@ -41,6 +41,7 @@
         'views/sr_property_invoice.xml',
         'views/sr_property_management_configuration_view.xml',
         'views/sr_property_lead.xml',
+        'views/res_partner_warranty_actions.xml',
         'views/wizzards/sr_agent_comission_wizzard.xml',
         'reports/reporte_separacion_action.xml',
         'reports/reporte_separacion_template.xml',

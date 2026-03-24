@@ -34,6 +34,9 @@
             </xpath>
 
             <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="contact_person_name" string="Persona de contacto"/>
+                <field name="contact_phone" string="Telefono del contacto"/>
+
                 <field name="unit_id" 
                        options="{'no_create': True}" 
                        domain="[('is_property', '=', True), ('product_tmpl_id.owner_ids', 'in', partner_id)]"/>
